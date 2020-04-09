@@ -4,11 +4,14 @@ from django.contrib.postgres.fields import JSONField
 # Create your models here.
 class Agency(models.Model):
     name = models.CharField(max_length=20, null=False, unique=True)
-    website = models.TextField(null=False)
-    crawl_interval = models.IntegerField(default=12)
+    website = models.CharField(max_length=100, null=False)
+    crawl_headers = JSONField(null=True)
     status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 class CrawlReport(models.Model):
     agency = models.ForeignKey(Agency, on_delete=models.DO_NOTHING)
@@ -18,5 +21,7 @@ class CrawlReport(models.Model):
 
 class AgencyPageStructure(models.Model):
     agency = models.ForeignKey(Agency, on_delete=models.DO_NOTHING)
-    page = models.TextField(null=False)
-    structure = JSONField()
+    page = models.CharField(max_length=300, null=False)
+    crawl_interval = models.IntegerField(default=12)
+    news_links_structure = JSONField()
+    news_meta_structure = JSONField()
