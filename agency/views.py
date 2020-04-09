@@ -8,7 +8,17 @@ from agency.serializer import AgencySerializer
 @csrf_exempt
 def agency_list(request, version):
     if version == "v1":
-        return JsonResponse({'status': 'ok'})
+        if request.method == 'GET':
+            agencies = Agency.objects.all()
+            serializer = AgencySerializer(agencies, many=True)
+            return JsonResponse(serializer.data, safe=False)
+        elif request.method == 'POST':
+            data = JSONParser().parse(request)
+            serializer = AgencySerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse(serializer.data, status=201)
+            return JsonResponse({'status':'error', 'msg': serializer.errors})
     else:
         return JsonResponse({'status': 'error', 'msg': 'version is not defined'}, status=404)
 
