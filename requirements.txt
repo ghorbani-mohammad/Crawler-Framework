@@ -4,3 +4,4 @@ beautifulsoup4==4.9.0
 requests==2.23.0
 newspaper3k==0.2.8
 redis==3.4.1
+psycopg2==2.8.5
