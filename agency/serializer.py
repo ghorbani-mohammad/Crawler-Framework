@@ -6,11 +6,11 @@ class AgencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Agency
         fields = [
+                    'id',
                     'name',
                     'website',
-                    'crawl_interval',
+                    'crawl_headers',
                     'status',
-                    'number_of_crawls',
                     'created_at',
                     'updated_at',
         ]
@@ -23,13 +23,20 @@ class CrawlReportSerializer(serializers.ModelSerializer):
                     'last_crawl',
                     'last_crawl_duration',
                     'last_crawl_status',
+                    'created_at',
+                    'updated_at',
         ]
 
 class AgencyPageStructureSerializer(serializers.ModelSerializer):
     class Meta:
         model = AgencyPageStructure
         fields = [
+                    'id',
                     'agency',
                     'page',
-                    'structure',
+                    'crawl_interval',
+                    'news_links_structure',
+                    'news_meta_structure',
+                    'created_at',
+                    'updated_at',
         ]

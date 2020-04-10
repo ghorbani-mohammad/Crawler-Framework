@@ -20,6 +20,8 @@ class CrawlReport(models.Model):
     last_crawl = models.DateTimeField(null=True)
     last_crawl_duration = models.DateTimeField(null=True)
     last_crawl_status = models.BooleanField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class AgencyPageStructure(models.Model):
     agency = models.ForeignKey(Agency, on_delete=models.DO_NOTHING)
@@ -27,3 +29,9 @@ class AgencyPageStructure(models.Model):
     crawl_interval = models.IntegerField(default=12)
     news_links_structure = jsonfield.JSONField()
     news_meta_structure = jsonfield.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.page
+    
