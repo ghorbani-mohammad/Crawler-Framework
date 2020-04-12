@@ -136,3 +136,38 @@ CRON_CLASSES = [
     "agency.cron.Crawler",
     # ...
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'info.log',
+            'formatter':'main_formatter'
+        },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+    'formatters': {
+        'main_formatter': {
+            'format': '(%(asctime)s; %(filename)s:%(lineno)d)'
+                      '%(levelname)s:%(name)s: %(message)s ',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['null'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
