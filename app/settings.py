@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     # Our apps
     'rest_framework',
-    'agency.apps.AgencyConfig'
+    'agency.apps.AgencyConfig',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,9 @@ REST_FRAMEWORK = {
     # that corresponds to the version requested in the incoming client request.
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 }
+
+
+CRON_CLASSES = [
+    "agency.cron.Crawler",
+    # ...
+]
