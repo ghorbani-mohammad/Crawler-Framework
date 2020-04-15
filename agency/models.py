@@ -1,5 +1,4 @@
 from django.db import models
-# from django.contrib.postgres.fields import JSONField
 import jsonfield
 
 
@@ -25,13 +24,15 @@ class CrawlReport(models.Model):
 
 class AgencyPageStructure(models.Model):
     agency = models.ForeignKey(Agency, on_delete=models.DO_NOTHING)
-    page = models.CharField(max_length=300, null=False)
+    url = models.CharField(max_length=300, null=False)
     crawl_interval = models.IntegerField(default=12)
+    last_crawl = models.DateTimeField(null=True, blank=True)
     news_links_structure = jsonfield.JSONField()
     news_meta_structure = jsonfield.JSONField()
+    status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.page
+        return self.url
     

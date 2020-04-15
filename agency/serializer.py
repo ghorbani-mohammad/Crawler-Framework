@@ -33,8 +33,9 @@ class AgencyPageStructureSerializer(serializers.ModelSerializer):
         fields = [
                     'id',
                     'agency',
-                    'page',
+                    'url',
                     'crawl_interval',
+                    'last_crawl',
                     'news_links_structure',
                     'news_meta_structure',
                     'created_at',

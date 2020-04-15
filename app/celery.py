@@ -1,6 +1,10 @@
 from __future__ import absolute_import, unicode_literals
+import os
 from celery import Celery
 # from agency.tasks import add
+
+# set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 
 app = Celery('app',
              broker='redis://localhost:6379/10',
@@ -13,10 +17,10 @@ app.conf.update(
 )
 
 app.conf.beat_schedule = {
-    'add-every-30-seconds': {
-        'task': 'add_two_number',
-        'schedule': 30.0,
-        'args': (16, 16)
+    'check-every-10-seconds': {
+        'task': 'check_agencies',
+        'schedule': 30,
+        # 'args': (16, 16)
     },
 }
 
