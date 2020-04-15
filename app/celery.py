@@ -17,10 +17,13 @@ app.conf.update(
 )
 
 app.conf.beat_schedule = {
-    'check-every-10-seconds': {
+    'check-agencies-60-seconds': {
         'task': 'check_agencies',
+        'schedule': 60,
+    },
+    'redis-exporter-30-seconds': {
+        'task': 'redis_exporter',
         'schedule': 30,
-        # 'args': (16, 16)
     },
 }
 
