@@ -10,6 +10,7 @@ logger = logging.getLogger('django')
 
 @app.task(name='check_agencies')
 def check():
+    logger.info("---> Check_agencies is started")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
     pages = AgencyPageStructure.objects.filter(agency__in=agencies)
     now = datetime.datetime.now()
@@ -22,5 +23,10 @@ def check():
 
 @app.task(name='page_crawl')
 def page_crawl(page_structure):
-    logger.info("page crawling is started")
-    x = CrawlerEngine(page_structure)
+    logger.info("---> Page crawling is started")
+    CrawlerEngine(page_structure)
+
+@app.task(name='redis_exporter')
+def redis_exporter():
+    logger.info("---> Redis exporter is started")
+    
