@@ -8,6 +8,7 @@ class AgencySerializer(serializers.ModelSerializer):
         fields = [
                     'id',
                     'name',
+                    'country',
                     'website',
                     'crawl_headers',
                     'status',

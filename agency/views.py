@@ -98,3 +98,4 @@ def reset_crawl_memory(request,version):
     redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
     redis_duplicate_checker.flushall()
     redis_news.flushall()
+    return JsonResponse({'status': 'ok', 'msg': 'crawl memory reset was successful'}, status=200)
