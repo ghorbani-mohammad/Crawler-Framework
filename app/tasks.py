@@ -53,6 +53,7 @@ def redis_exporter():
                 redis_news.delete(key)
             else:
                 logging.error('Masoud Exporter error: %s', str(response.status_code))
+                logging.error('Error is: %s', str(response.text))
                 logging.error('Key is: %s', str(key))
     except Exception:
         logging.error('Masoud Exporter error: %s',str(Exception))
