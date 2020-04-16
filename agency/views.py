@@ -1,3 +1,4 @@
+import redis
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -91,3 +92,9 @@ def page_structure_detail(request, agency_id, page_id, version):
             return HttpResponse(status=202)
     else:
         return JsonResponse({'status': 'error', 'msg': 'version is not defined'}, status=404)
+
+def reset_crawl_memory(request,version):
+    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
+    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_duplicate_checker.flushall()
+    redis_news.flushall()

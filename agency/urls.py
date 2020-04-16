@@ -6,4 +6,5 @@ urlpatterns = [
     path('agency/<int:agency_id>/', views.agency_detail),
     path('agency/<int:agency_id>/pagestructure/', views.page_structure),
     path('agency/<int:agency_id>/pagestructure/<int:page_id>/', views.page_structure_detail),
+    path('reset_crawl_memory', views.reset_crawl_memory),
 ]
