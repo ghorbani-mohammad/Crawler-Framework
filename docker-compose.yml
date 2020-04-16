@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  crawler:
+    image: crawler
+    container_name: crawler
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # ports:
+    #   - 8000:8000
+    network_mode: host
+  
+  redis:
+    image: redis
+    container_name: redis
+    volumes: 
+      - ./redis:/data
+    restart: always
+    network_mode: host
+  
+  celery_worker:
+    image: crawler
+    container_name: celery_worker
+    command: ["celery", "-A", "app", "worker", "-l", "info"]
+    network_mode: host
+  
+  celery_scheduler:
+    image: crawler
+    container_name: celery_scheduler
+    command: ["celery", "-A", "app", "beat", "-l", "info"]
+    network_mode: host
+  
+  chrome_browser:
+    image: selenium/standalone-chrome
+    container_name: chrome_browser
+    logging:
+      driver: none
+    network_mode: host
+  
+      

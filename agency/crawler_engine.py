@@ -20,7 +20,7 @@ class CrawlerEngine():
     """
     def __init__(self, page, header=None):
         # TODO: ip and port of webdriver must be dynamic
-        self.driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub",
+        self.driver = webdriver.Remote("http://localhost:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
         # TODO: ip and port of redis must be dynamic

@@ -6,6 +6,7 @@ from celery import Celery
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 
+# TODO: redis port and ip and db must be dynamic
 app = Celery('app',
              broker='redis://localhost:6379/10',
              backend='redis://localhost:6379/10',
