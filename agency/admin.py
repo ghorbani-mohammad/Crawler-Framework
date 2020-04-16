@@ -5,4 +5,4 @@ from agency.models import Agency, AgencyPageStructure, CrawlReport
 
 admin.site.register(Agency)
 admin.site.register(AgencyPageStructure)
-admin.site.register(CrawlReport)
+# admin.site.register(CrawlReport)

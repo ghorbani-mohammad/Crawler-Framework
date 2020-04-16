@@ -3,17 +3,21 @@ version: '3.4'
 services:
   crawler:
     image: crawler
-    container_name: crawler
+    container_name: crawler_django
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8200 app.wsgi:application"
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - .:/app
     # ports:
-    #   - 8000:8000
+    #   - 8200:8000
+    restart: always
     network_mode: host
   
   redis:
     image: redis
-    container_name: redis
+    container_name: crawler_redis
     volumes: 
       - ./redis:/data
     restart: always
@@ -21,21 +25,28 @@ services:
   
   celery_worker:
     image: crawler
-    container_name: celery_worker
+    container_name: crawler_celery_worker
+    volumes:
+      - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info"]
+    restart: always
     network_mode: host
   
   celery_scheduler:
     image: crawler
-    container_name: celery_scheduler
+    container_name: crawler_celery_scheduler
+    volumes:
+      - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info"]
+    restart: always
     network_mode: host
   
   chrome_browser:
     image: selenium/standalone-chrome
-    container_name: chrome_browser
+    container_name: crawler_chrome_browser
     logging:
       driver: none
+    restart: always
     network_mode: host
   
       
