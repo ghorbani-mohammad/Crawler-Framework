@@ -5,7 +5,7 @@ import jsonfield
 # Create your models here.
 class Agency(models.Model):
     name = models.CharField(max_length=20, null=False, unique=True)
-    country = models.CharField(max_length=20, null=False)
+    country = models.CharField(max_length=20, default='NA')
     website = models.CharField(max_length=100, null=False)
     crawl_headers = jsonfield.JSONField(null=True, blank=True, default={})
     status = models.BooleanField(default=1)
