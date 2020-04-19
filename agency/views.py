@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from agency.models import Agency, AgencyPageStructure
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
+from app.messages import *
 
 
 @csrf_exempt
@@ -93,9 +94,23 @@ def page_structure_detail(request, agency_id, page_id, version):
     else:
         return JsonResponse({'status': 'error', 'msg': 'version is not defined'}, status=404)
 
-def reset_crawl_memory(request,version):
+
+def crawl(request, version):
+    AgencyPageStructure.objects.all().update(last_crawl=None)
+    return JsonResponse({'status':'ok', 'msg': msg['fa']['crawl']['success_crawl_all']})
+
+def crawl_page(request, version, page_id):
+    AgencyPageStructure.objects.filter(id=page_id).update(last_crawl=None)
+    return JsonResponse({'status':'ok', 'msg': msg['fa']['crawl']['success_crawl_page']})
+
+def crawl_agency(request, version, agency_id):
+    AgencyPageStructure.objects.filter(agency=agency_id).update(last_crawl=None)
+    return JsonResponse({'status':'ok', 'msg':msg['fa']['crawl']['success_crawl_agency']})
+
+
+def crawl_memory_reset(request,version):
     redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
     redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
     redis_duplicate_checker.flushall()
     redis_news.flushall()
-    return JsonResponse({'status': 'ok', 'msg': 'crawl memory reset was successful'}, status=200)
+    return JsonResponse({'status': 'ok', 'msg': msg['fa']['crawl']['success_crawl_memory_reset']}, status=200)
