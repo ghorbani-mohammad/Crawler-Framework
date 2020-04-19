@@ -1,13 +1,12 @@
 from django.db import models
-import jsonfield
+from django.contrib.postgres.fields import JSONField
 
 
-# Create your models here.
 class Agency(models.Model):
     name = models.CharField(max_length=20, null=False, unique=True)
     country = models.CharField(max_length=20, default='NA')
     website = models.CharField(max_length=100, null=False)
-    crawl_headers = jsonfield.JSONField(null=True, blank=True, default={})
+    crawl_headers = JSONField(null=True, blank=True, default=dict)
     status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -27,9 +26,9 @@ class AgencyPageStructure(models.Model):
     agency = models.ForeignKey(Agency, on_delete=models.DO_NOTHING)
     url = models.CharField(max_length=300, null=False)
     crawl_interval = models.IntegerField(default=12)
-    last_crawl = models.DateTimeField(null=True, blank=True)
-    news_links_structure = jsonfield.JSONField()
-    news_meta_structure = jsonfield.JSONField()
+    last_crawl = models.DateTimeField(null=True, editable=False)
+    news_links_structure = JSONField()
+    news_meta_structure = JSONField()
     status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

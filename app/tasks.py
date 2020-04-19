@@ -34,7 +34,10 @@ def check():
             serializer = AgencyPageStructureSerializer(page)
             page_crawl.delay(serializer.data)
         else:
-            logger.info(page.last_crawl)
+            if (now.hour % page.last_crawl.hour) >= page.crawl_interval:
+                logger.info("---> Page %s must be crawlerd", page.url)
+                serializer = AgencyPageStructureSerializer(page)
+                page_crawl.delay(serializer.data)
 
 @app.task(name='page_crawl')
 def page_crawl(page_structure):
@@ -48,9 +51,15 @@ def redis_exporter():
         for key in redis_news.keys('*'):
             data = (redis_news.get(key).decode('utf-8'))
             response = requests.request("GET", Exporter_API_URI, data=data, headers=Exporter_API_headers)
-            logging.error(response.status_code)
             if response.status_code == 200 or response.status_code == 406:
+                logging.error(response.status_code)
                 redis_news.delete(key)
+            elif response.status_code == 400:
+                logging.error(response.status_code)
+                redis_news.delete(key)
+                logging.error('Masoud Exporter error: %s', str(response.status_code))
+                logging.error('Error is: %s', str(response.text))
+                logging.error('Key is: %s', str(key))
             else:
                 logging.error('Masoud Exporter error: %s', str(response.status_code))
                 logging.error('Error is: %s', str(response.text))

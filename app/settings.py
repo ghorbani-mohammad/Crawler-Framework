@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Our apps
     'rest_framework',
     'agency.apps.AgencyConfig',
+    'clear_cache',
 ]
 
 MIDDLEWARE = [

@@ -1,11 +1,12 @@
 """
     Required modules for requests and bs4
 """
-import logging, redis, json
+import logging, redis, json, time, datetime
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+from agency.models import Agency, AgencyPageStructure, CrawlReport
 
 logger = logging.getLogger('django')
 options = Options()
@@ -35,7 +36,10 @@ class CrawlerEngine():
         self.driver.get(self.page['url'])
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
-        # logger.info(attribute)
+        logger.info(type(attribute))
+        attribute = json.dumps(attribute)
+        attribute = json.loads(attribute)
+        logger.info(attribute)
         tag = attribute['tag']
         del attribute['tag']
         code = ''
@@ -66,26 +70,52 @@ class CrawlerEngine():
         article = {}
         article['link'] = link
         self.driver.get(link)
+        # TODO: sleep to page load must be dynamic
+        time.sleep(4)
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         for key in meta.keys():
             attribute = meta[key].copy()
-            # logger.info(attribute)
+            # logger.info("Getting %s", attribute)
             tag = attribute['tag']
             del attribute['tag']
+            if tag == 'value':
+                article[key] = attribute['value']
+                continue
+            if tag == 'code':
+                code = attribute['code']
+                temp_code = """
+{0}
+                """
+                temp_code = temp_code.format(code)
+                try:
+                    exec(temp_code)
+                except Exception as e:
+                    logger.info("Getting attr %s got error", key)
+                    logger.info("The code was:\n %s ", temp_code)
+                    logger.info("Error was:\n %s", str(e))
+                continue
             code = ''
             if 'code' in attribute.keys():
                 code = attribute['code']
                 del attribute['code']
             element = doc.find(tag, attribute)
             if element is None:
+                logger.info("element is null")
+                logger.info(attribute)
                 break
             if code != '':
                 temp_code = """
 {0}
                 """
                 temp_code = temp_code.format(code)
-                exec(temp_code)
-            article[key] = element.text
+                try:
+                    exec(temp_code)
+                except Exception as e:
+                    logger.info("Getting attr %s got error", key)
+                    logger.info("The code was:\n %s ", temp_code)
+                    logger.info("Error was:\n %s", str(e))
+            else:
+                article[key] = element.text
         logger.info(article)
         self.save_to_redis(article)
 
@@ -103,6 +133,9 @@ class CrawlerEngine():
                 continue
             else:
                 self.crawl_one_page(link)
+        page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
+        page_structure.last_crawl = datetime.datetime.now()
+        page_structure.save()
 
     def run(self):
         logger.info("------> Fetching links from %s started", self.page['url'])
