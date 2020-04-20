@@ -61,14 +61,14 @@ def redis_exporter():
             elif response.status_code == 400:
                 logging.error(response.status_code)
                 redis_news.delete(key)
-                logging.error('Masoud Exporter error: %s', str(response.status_code))
-                logging.error('Error is: %s', str(response.text))
-                logging.error('Redis-key is: %s', str(key))
-            else:
-                logging.error('Masoud Exporter error: %s', str(response.status_code))
-                logging.error('Error is: %s', str(response.text))
-                logging.error('Redis-key is: %s', str(key))
-                logger.info(data)
+                logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
+                logging.error('Redis-key: %s', str(key))
+            elif response.status_code == 500:
+                logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
+                logging.error('Redis-key: %s', str(key))
                 return
+            else:
+                logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
+                logging.error('Redis-key: %s', str(key))
     except Exception:
-        logging.error('Masoud Exporter error: %s',str(Exception))
+        logging.error('Exporter error code: %s',str(Exception))
