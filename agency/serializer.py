@@ -20,9 +20,10 @@ class CrawlReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = CrawlReport
         fields = [
-                    'agency',
-                    'last_crawl',
-                    'last_crawl_duration',
+                    'id',
+                    'page',
+                    'fetched_links',
+                    'new_links',
                     'last_crawl_status',
                     'created_at',
                     'updated_at',

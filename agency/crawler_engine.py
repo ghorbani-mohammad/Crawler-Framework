@@ -61,7 +61,8 @@ class CrawlerEngine():
                 links.append(element['href'])
         logger.info("Fetched links are:")
         logger.info(links)
-        self.news_links = links
+        self.fetched_links = links
+        self.fetched_links_count = len(links)
     
     # TODO: Maek crawl_news_page as task function
     def crawl_one_page(self, link):
@@ -127,18 +128,25 @@ class CrawlerEngine():
         self.redis_duplicate_checker.set(article['link'], "", ex=432000)
     
     def check_links(self):
-        for link in self.news_links:
+        counter = self.fetched_links_count
+        for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link):
-                logger.info("duplicate")
+                # logger.info("duplicate")
+                counter -= 1
                 continue
             else:
                 self.crawl_one_page(link)
         page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         page_structure.last_crawl = datetime.datetime.now()
         page_structure.save()
+        self.report.fetched_links = self.fetched_links_count
+        self.report.new_links = counter
+        self.report.save()
+        
 
     def run(self):
         logger.info("------> Fetching links from %s started", self.page['url'])
+        self.report = CrawlReport.objects.create(page_id=self.page['id'])
         self.fetch_links()
-        logger.info("------> We found %s number of links: ", len(self.news_links))
+        logger.info("------> We found %s number of links: ", self.fetched_links_count)
         self.check_links()
