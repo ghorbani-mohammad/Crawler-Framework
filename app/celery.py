@@ -18,13 +18,13 @@ app.conf.update(
 )
 
 app.conf.beat_schedule = {
-    'check-agencies-60-seconds': {
+    'check-agencies-600-seconds': {
         'task': 'check_agencies',
-        'schedule': 120,
+        'schedule': 600,
     },
-    'redis-exporter-30-seconds': {
+    'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
-        'schedule': 30,
+        'schedule': 300,
     },
 }
 

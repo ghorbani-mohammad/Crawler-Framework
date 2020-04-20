@@ -29,12 +29,16 @@ def check():
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
     pages = AgencyPageStructure.objects.filter(agency__in=agencies)
     now = datetime.datetime.now()
-    for page in pages:
+    for index, page in enumerate(pages):
+        logger.info(index)
         if page.last_crawl is None:
             serializer = AgencyPageStructureSerializer(page)
             page_crawl.delay(serializer.data)
         else:
-            if (now.hour % page.last_crawl.hour) >= page.crawl_interval:
+            # logger.info(now.hour % page.last_crawl.hour)
+            # if (now.hour % page.last_crawl.hour) >= page.crawl_interval:
+            # FIXME: what if the page crawling is started?
+            if (now.hour % page.crawl_interval) == 0:
                 logger.info("---> Page %s must be crawlerd", page.url)
                 serializer = AgencyPageStructureSerializer(page)
                 page_crawl.delay(serializer.data)
@@ -59,10 +63,12 @@ def redis_exporter():
                 redis_news.delete(key)
                 logging.error('Masoud Exporter error: %s', str(response.status_code))
                 logging.error('Error is: %s', str(response.text))
-                logging.error('Key is: %s', str(key))
+                logging.error('Redis-key is: %s', str(key))
             else:
                 logging.error('Masoud Exporter error: %s', str(response.status_code))
                 logging.error('Error is: %s', str(response.text))
-                logging.error('Key is: %s', str(key))
+                logging.error('Redis-key is: %s', str(key))
+                logger.info(data)
+                return
     except Exception:
         logging.error('Masoud Exporter error: %s',str(Exception))
