@@ -1,7 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 import logging, datetime, redis, requests
 from .celery import app
-from agency.models import Agency, AgencyPageStructure
+from celery import current_app
+from agency.models import Agency, AgencyPageStructure, CrawlReport
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
@@ -29,24 +30,33 @@ def check():
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
     pages = AgencyPageStructure.objects.filter(agency__in=agencies)
     now = datetime.datetime.now()
-    for index, page in enumerate(pages):
-        logger.info(index)
+    for page in pages:
         if page.last_crawl is None:
-            serializer = AgencyPageStructureSerializer(page)
-            page_crawl.delay(serializer.data)
+            crawl(page)
         else:
-            # logger.info(now.hour % page.last_crawl.hour)
-            # if (now.hour % page.last_crawl.hour) >= page.crawl_interval:
             # FIXME: what if the page crawling is started?
-            if (now.hour % page.crawl_interval) == 0:
-                logger.info("---> Page %s must be crawlerd", page.url)
-                serializer = AgencyPageStructureSerializer(page)
-                page_crawl.delay(serializer.data)
+            if ((now.hour - page.last_crawl.hour) >= page.crawl_interval) or True:
+                x = CrawlReport.objects.filter(page=page.id, status='pending')
+                if x.count() == 0:
+                    crawl(page)
+                else:
+                    last_report = x.last()
+                    if(now.hour - last_report.created_at.hour) >= page.crawl_interval:
+                        last_report.status = 'failed'
+                        crawl(page)
+
+
+def crawl(page):
+    logger.info("---> Page %s must be crawled", page.url)
+    serializer = AgencyPageStructureSerializer(page)
+    page_crawl.delay(serializer.data)
+
 
 @app.task(name='page_crawl')
 def page_crawl(page_structure):
     logger.info("---> Page crawling is started")
     CrawlerEngine(page_structure)
+
 
 @app.task(name='redis_exporter')
 def redis_exporter():

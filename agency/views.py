@@ -1,19 +1,28 @@
 import redis
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from agency.models import Agency, AgencyPageStructure, CrawlReport
-from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer
+from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer, \
+    ReportListSerializer
 from app.messages import *
+from rest_framework.viewsets import ReadOnlyModelViewSet
+
+
+class PostPagination(PageNumberPagination):
+    page_size = 10
+
 
 class AgencyView(viewsets.ModelViewSet):
+    pagination_class = PostPagination
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
 
+
 class PageView(viewsets.ModelViewSet):
+    pagination_class = PostPagination
     queryset = AgencyPageStructure.objects.all()
     serializer_class = AgencyPageStructureSerializer
 
@@ -46,8 +55,14 @@ def crawl_memory_reset(request,version):
     redis_news.flushall()
     return JsonResponse({'status': 'ok', 'msg': msg['fa']['crawl']['success_crawl_memory_reset']}, status=200)
 
-# @api_view(['GET'])
-class ReportView(viewsets.ModelViewSet):
+
+class ReportView(ReadOnlyModelViewSet):
+    pagination_class = PostPagination
     queryset = CrawlReport.objects.all()
-    serializer_class = CrawlReportSerializer
+    serializers = {
+        'list': ReportListSerializer,
+        'retrieve': ReportListSerializer
+    }
+    def get_serializer_class(self):
+        return self.serializers.get(self.action)
 

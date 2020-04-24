@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
-# from agency.tasks import add
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
@@ -14,13 +13,13 @@ app = Celery('app',
 
 # Optional configuration, see the application user guide.
 app.conf.update(
-    result_expires=3600,
+    result_expires=7200,
 )
 
 app.conf.beat_schedule = {
-    'check-agencies-600-seconds': {
+    'check-agencies-60-seconds': {
         'task': 'check_agencies',
-        'schedule': 600,
+        'schedule': 60,
     },
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',

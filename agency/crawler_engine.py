@@ -32,14 +32,16 @@ class CrawlerEngine():
         self.run()
 
     def fetch_links(self):
+        """ Extract links in a page. Links that have specified structure will be extracted.
+        """        
         links = []
         self.driver.get(self.page['url'])
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
-        logger.info(type(attribute))
+        # logger.info(type(attribute))
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        logger.info(attribute)
+        # logger.info(attribute)
         tag = attribute['tag']
         del attribute['tag']
         code = ''
@@ -52,21 +54,25 @@ class CrawlerEngine():
 {0}
             """
             temp_code = temp_code.format(code)
-            logger.info("Executing code")
-            logger.info(temp_code)
+            # logger.info("Executing code")
+            # logger.info(temp_code)
             exec(temp_code)
-            logger.info("executed code")
+            # logger.info("executed code")
         else:
             for element in elements:
                 links.append(element['href'])
-        logger.info("Fetched links are:")
-        logger.info(links)
+        # logger.info("Fetched links are:")
+        # logger.info(links)
         self.fetched_links = links
         self.fetched_links_count = len(links)
     
     # TODO: Maek crawl_news_page as task function
     def crawl_one_page(self, link):
-        logger.info("Fetching news started for %s", link)
+        """Gets one page and crawl it
+        
+        Arguments:
+            link {[string]} -- [link of page]
+        """        
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
@@ -76,7 +82,6 @@ class CrawlerEngine():
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         for key in meta.keys():
             attribute = meta[key].copy()
-            # logger.info("Getting %s", attribute)
             tag = attribute['tag']
             del attribute['tag']
             if tag == 'value':
@@ -117,17 +122,25 @@ class CrawlerEngine():
                     logger.info("Error was:\n %s", str(e))
             else:
                 article[key] = element.text
+        # article['source'] = str(self.page['agency'])
         logger.info(article)
         self.save_to_redis(article)
 
 
     def save_to_redis(self, article):
+        """ Save fetched article(news) into redis
+        
+        Arguments:
+            article {[aticle]} -- [a json of article attribute]
+        """        
         # save to redis for 5 days
         # TODO: expiration must be dynamic
         self.redis_news.set(article['link'], json.dumps(article))
         self.redis_duplicate_checker.set(article['link'], "", ex=432000)
     
     def check_links(self):
+        """ Cheking links in a page. If a link is not crawled before we will crawl it now
+        """        
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link):
@@ -135,18 +148,21 @@ class CrawlerEngine():
                 counter -= 1
                 continue
             else:
+                # logger.info("Fetching news started for %s", link)
                 self.crawl_one_page(link)
         page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         page_structure.last_crawl = datetime.datetime.now()
         page_structure.save()
         self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
+        self.report.status = 'complete'
         self.report.save()
+        self.driver.quit()
         
 
     def run(self):
         logger.info("------> Fetching links from %s started", self.page['url'])
-        self.report = CrawlReport.objects.create(page_id=self.page['id'])
+        self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.fetch_links()
         logger.info("------> We found %s number of links: ", self.fetched_links_count)
         self.check_links()
