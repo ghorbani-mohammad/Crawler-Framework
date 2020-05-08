@@ -21,12 +21,12 @@ class CrawlAdmin(admin.ModelAdmin):
 
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'country', 'website')
+    list_display = ('id', 'name', 'country', 'website', 'status')
 
 
 @admin.register(AgencyPageStructure)
 class AgencyPageStructureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'url', 'crawl_interval', 'last_crawl')
+    list_display = ('id', 'agency', 'url', 'crawl_interval', 'last_crawl', 'status')
 
     def agency(self, obj):
         return obj.page.agency.name

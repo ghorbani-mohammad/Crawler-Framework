@@ -3,7 +3,8 @@
 """
 import logging, redis, json, time, datetime
 from bs4 import BeautifulSoup
-from selenium import webdriver
+# from selenium import webdriver
+from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 from agency.models import Agency, AgencyPageStructure, CrawlReport
@@ -11,6 +12,9 @@ from agency.models import Agency, AgencyPageStructure, CrawlReport
 logger = logging.getLogger('django')
 options = Options()
 options.add_argument('--headless')
+# options.add_argument('User-Agent: Mozilla/5.0 (X11; Linux x86_64)')
+# options.add_argument('Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
+# options.add_argument('Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3')
 options.add_argument('--disable-gpu')
 options.add_argument('--disable-dev-shm-usage')
 
@@ -24,10 +28,21 @@ class CrawlerEngine():
         self.driver = webdriver.Remote("http://localhost:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
+        self.driver.header_overrides = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
+            'AppleWebKit/537.11 (KHTML, like Gecko) '
+            'Chrome/23.0.1271.64 Safari/537.11',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+            'Accept-Encoding': 'none',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Connection': 'keep-alive'
+        }
         # TODO: ip and port of redis must be dynamic
         self.redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
         self.page = page
+        self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.header = header
         self.run()
 
@@ -36,6 +51,9 @@ class CrawlerEngine():
         """        
         links = []
         self.driver.get(self.page['url'])
+        # f = open('page_content.txt', 'w')
+        # f.write(self.driver.page_source)
+        # f.close()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
         # logger.info(type(attribute))
@@ -54,10 +72,10 @@ class CrawlerEngine():
 {0}
             """
             temp_code = temp_code.format(code)
-            # logger.info("Executing code")
-            # logger.info(temp_code)
+            logger.info("Executing code")
+            logger.info(temp_code)
             exec(temp_code)
-            # logger.info("executed code")
+            logger.info("executed code")
         else:
             for element in elements:
                 links.append(element['href'])
@@ -150,6 +168,7 @@ class CrawlerEngine():
             else:
                 # logger.info("Fetching news started for %s", link)
                 self.crawl_one_page(link)
+        # TODO: page muse be valued in constructor
         page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         page_structure.last_crawl = datetime.datetime.now()
         page_structure.save()
@@ -158,11 +177,9 @@ class CrawlerEngine():
         self.report.status = 'complete'
         self.report.save()
         self.driver.quit()
-        
 
     def run(self):
         logger.info("------> Fetching links from %s started", self.page['url'])
-        self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.fetch_links()
         logger.info("------> We found %s number of links: ", self.fetched_links_count)
         self.check_links()
