@@ -12,9 +12,6 @@ from agency.models import Agency, AgencyPageStructure, CrawlReport
 logger = logging.getLogger('django')
 options = Options()
 options.add_argument('--headless')
-# options.add_argument('User-Agent: Mozilla/5.0 (X11; Linux x86_64)')
-# options.add_argument('Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
-# options.add_argument('Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3')
 options.add_argument('--disable-gpu')
 options.add_argument('--disable-dev-shm-usage')
 

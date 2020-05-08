@@ -6,6 +6,7 @@ class Agency(models.Model):
     name = models.CharField(max_length=20, null=False, unique=True)
     country = models.CharField(max_length=20, default='NA')
     website = models.CharField(max_length=100, null=False)
+    alexa_global_rank = models.IntegerField(default=0, null=True)
     crawl_headers = JSONField(null=True, blank=True, default=dict)
     status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
