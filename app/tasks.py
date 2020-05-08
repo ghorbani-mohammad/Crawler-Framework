@@ -24,26 +24,35 @@ Exporter_API_headers = {
                             'cache-control': "no-cache"
                         }
 
+def check_must_crwal(page):
+    now = datetime.datetime.now()
+    x = CrawlReport.objects.filter(page=page.id, status='pending')
+    # logger.info(x.count())
+    if x.count() == 0:
+        crawl(page)
+    else:
+        last_report = x.last()
+        if int((now - last_report.created_at).total_seconds()/(3600)) >= page.crawl_interval:
+            last_report.status = 'failed'
+            last_report.save()
+            crawl(page)
+
+
 @app.task(name='check_agencies')
 def check():
-    logger.info("---> Check_agencies is started")
+    logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
     pages = AgencyPageStructure.objects.filter(agency__in=agencies)
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:
-            crawl(page)
+            # logger.info(page.url)
+            check_must_crwal(page)
         else:
-            # FIXME: what if the page crawling is started?
-            if ((now.hour - page.last_crawl.hour) >= page.crawl_interval) or True:
-                x = CrawlReport.objects.filter(page=page.id, status='pending')
-                if x.count() == 0:
-                    crawl(page)
-                else:
-                    last_report = x.last()
-                    if(now.hour - last_report.created_at.hour) >= page.crawl_interval:
-                        last_report.status = 'failed'
-                        crawl(page)
+            diff_hour = int((now - page.last_crawl).total_seconds()/(3600))
+            if diff_hour >= page.crawl_interval:
+                check_must_crwal(page)
+
 
 
 def crawl(page):
