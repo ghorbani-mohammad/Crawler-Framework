@@ -1,5 +1,6 @@
 import redis
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -16,13 +17,148 @@ class PostPagination(PageNumberPagination):
 
 
 class AgencyView(viewsets.ModelViewSet):
-    pagination_class = PostPagination
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            response_data = {
+                "status": "200",
+                "message": msg['fa']['agency']['success_agency_created'],
+                "data": serializer.data
+            }
+        else:
+            response_data = {
+                "status": "400",
+                "message": msg['fa']['agency']['failed_agency_created'],
+                "data": serializer.errors
+            }
+        return Response(response_data)
+
+    def update(self, request, version, pk=None):
+        try:
+            instance = self.queryset.get(pk=pk)
+        except:
+            return Response({'status':'400', 'message': msg['fa']['agency']['agency_not_found']})
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            response_data = {
+                "status": "200",
+                "message": msg['fa']['agency']['success_agency_updated'],
+                "data": serializer.data
+            }
+        else:
+            response_data = {
+                "status": "400",
+                "message": msg['fa']['agency']['failed_agency_updated'],
+                "data": serializer.errors
+            }
+        return Response(response_data)
+    
+    def retrieve(self, request, version, pk=None):
+        try:
+            agency = Agency.objects.get(pk=pk)
+        except Agency.DoesNotExist:
+            return Response({'status':'400', 'message':msg['fa']['agency']['agency_not_found']})
+        serializer = AgencySerializer(agency)
+        x = {}
+        x['status'] = '200'
+        x['message'] = msg['fa']['agency']['agency_found']
+        x['data'] = serializer.data
+        return Response(x)
+    
+    def destroy(self, request, version, pk=None):
+        try:
+            agency = Agency.objects.get(pk=pk)
+        except Agency.DoesNotExist:
+            return Response({'status':'400', 'message':msg['fa']['agency']['agency_not_found']})
+        agency.delete()
+        response_data = {
+            "status": "200",
+            "message": msg['fa']['agency']['success_agency_deleted'],
+            "data": ""
+        }
+        return Response(response_data)
+
+    # pagination_class = PostPagination
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
 
 
 class PageView(viewsets.ModelViewSet):
-    pagination_class = PostPagination
+    def create(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+        except:
+            response_data = {
+                "status": "400",
+                "message": msg['fa']['page']['failed_page_created'],
+                "data": msg['fa']['app']['json_validation_error']
+            }
+            return Response(response_data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            response_data = {
+                "status": "200",
+                "message": msg['fa']['page']['success_page_created'],
+                "data": serializer.data
+            }
+        else:
+            response_data = {
+                "status": "400",
+                "message": msg['fa']['page']['failed_page_created'],
+                "data": serializer.errors
+            }
+        return Response(response_data)
+    
+    def retrieve(self, request, version, pk=None):
+        try:
+            page = AgencyPageStructure.objects.get(pk=pk)
+        except AgencyPageStructure.DoesNotExist:
+            return Response({'status':'400', 'message':msg['fa']['page']['page_not_found']})
+        serializer = AgencyPageStructureSerializer(page)
+        x = {}
+        x['status'] = '200'
+        x['message'] = msg['fa']['page']['page_found']
+        x['data'] = serializer.data
+        return Response(x)
+
+    def update(self, request, version, pk=None):
+        try:
+            instance = self.queryset.get(pk=pk)
+        except:
+            return Response({'status':'400', 'message': msg['fa']['page']['page_not_found']})
+
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            response_data = {
+                "status": "200",
+                "message": msg['fa']['page']['success_page_updated'],
+                "data": serializer.data
+            }
+        else:
+            response_data = {
+                "status": "400",
+                "message": msg['fa']['page']['failed_page_updated'],
+                "data": serializer.errors
+            }
+        return Response(response_data)
+
+    def destroy(self, request, version, pk=None):
+        try:
+            page = AgencyPageStructure.objects.get(pk=pk)
+        except AgencyPageStructure.DoesNotExist:
+            return Response({'status':'400', 'message':msg['fa']['page']['page_not_found']})
+        page.delete()
+        response_data = {
+            "status": "200",
+            "message": msg['fa']['page']['success_page_deleted'],
+            "data": ""
+        }
+        return Response(response_data)
+    
+    # pagination_class = PostPagination
     queryset = AgencyPageStructure.objects.all()
     serializer_class = AgencyPageStructureSerializer
 
@@ -30,22 +166,43 @@ class PageView(viewsets.ModelViewSet):
 def agency_pages(request, version, agency_id):
     pages = AgencyPageStructure.objects.filter(agency_id=agency_id)
     serializer = AgencyPageStructureSerializer(pages, many=True)
-    return Response(serializer.data)
+    x = {}
+    x['status'] = '200'
+    x['message'] = msg['fa']['agency']['retrieved_pages']
+    x['data'] = serializer.data
+    return Response(x)
 
 @api_view(['GET'])
 def crawl(request, version):
     AgencyPageStructure.objects.all().update(last_crawl=None)
-    return Response({'status':'ok', 'msg': msg['fa']['crawl']['success_crawl_all']})
+    return Response({'status':'200', 'message': msg['fa']['crawl']['success_crawl_all']})
 
 @api_view(['GET'])
 def crawl_page(request, version, page_id):
     AgencyPageStructure.objects.filter(id=page_id).update(last_crawl=None)
-    return Response({'status':'ok', 'msg': msg['fa']['crawl']['success_crawl_page']})
+    return Response({'status':'200', 'message': msg['fa']['crawl']['success_crawl_page']})
+
+@api_view(['GET'])
+def crawl_agency_activeAll(request, version):
+    Agency.objects.update(status=True)
+    return Response({'status':'200', 'message':msg['fa']['crawl']['success_crawl_agency_activeAll']})
+
+@api_view(['GET'])
+def crawl_agency_disableAll(request, version):
+    Agency.objects.update(status=False)
+    return Response({'status':'200', 'message':msg['fa']['crawl']['success_crawl_agency_disableAll']})
+
+def crawl_agency_none_lats_crawl(agency_id):
+    Agency.objects.filter(id=agency_id).update(status=True)
+    AgencyPageStructure.objects.filter(agency=agency_id).update(last_crawl=None, status=True)
+    x = AgencyPageStructure.objects.filter(agency=agency_id).values('id')
+    x = CrawlReport.objects.filter(page__in=x, status='pending').update(status='na')
+    
 
 @api_view(['GET'])
 def crawl_agency(request, version, agency_id):
-    AgencyPageStructure.objects.filter(agency=agency_id).update(last_crawl=None)
-    return Response({'status':'ok', 'msg':msg['fa']['crawl']['success_crawl_agency']})
+    crawl_agency_none_lats_crawl(agency_id)
+    return Response({'status':'200', 'message':msg['fa']['crawl']['success_crawl_agency']})
 
 @api_view(['GET'])
 def crawl_memory_reset(request,version):
@@ -53,16 +210,70 @@ def crawl_memory_reset(request,version):
     redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
     redis_duplicate_checker.flushall()
     redis_news.flushall()
-    return JsonResponse({'status': 'ok', 'msg': msg['fa']['crawl']['success_crawl_memory_reset']}, status=200)
+    return JsonResponse({'status': '200', 'message': msg['fa']['crawl']['success_crawl_memory_reset']}, status=200)
+
+@api_view(['GET'])
+def crawl_news_memory_list(request, version):
+    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
+    return Response({'news_keys':redis_news.keys("*")})
+
+@api_view(['GET'])
+def crawl_links_memory_list(request, version):
+    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    return Response({'link_keys':redis_duplicate_checker.keys("*")})
+
+def reset_agency_memory(agency_id):
+    agency = Agency.objects.get(id=agency_id)
+    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
+    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    counter_links = 0 
+    for key in redis_duplicate_checker.scan_iter("*"+str(agency.website)+"*"):
+        redis_duplicate_checker.delete(key)
+        counter_links += 1
+    counter_news = 0
+    for key in redis_news.scan_iter("*"+str(agency.website)+"*"):
+        redis_news.delete(key)
+        counter_news += 1
+    return counter_links, counter_news
+
+@api_view(['GET'])
+def crawl_agency_reset_memory(request, version, agency_id):
+    counter_links, counter_news = reset_agency_memory(agency_id)
+    return Response({'number_of_links_deleted':counter_links, 'number_of_news_deleted': counter_news})
+
+
+@api_view(['GET'])
+def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
+    crawl_agency_none_lats_crawl(agency_id)
+    counter_links, counter_news = reset_agency_memory(agency_id)
+    return Response({'number_of_links_deleted':counter_links, 'number_of_news_deleted': counter_news})
+
 
 
 class ReportView(ReadOnlyModelViewSet):
-    pagination_class = PostPagination
-    queryset = CrawlReport.objects.all()
-    serializers = {
-        'list': ReportListSerializer,
-        'retrieve': ReportListSerializer
-    }
-    def get_serializer_class(self):
-        return self.serializers.get(self.action)
+
+    def list(self, request, version):
+        queryset = CrawlReport.objects.all()
+        # page = self.paginate_queryset(queryset)
+        # serializer = ReportListSerializer(page, many=True)
+        # x = {}
+        # x['status'] = '200'
+        # x['message'] = msg['fa']['report']['report_found']
+        # x['data'] = serializer.data
+        # return self.get_paginated_response(serializer.data)
+        serializer = ReportListSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, version, pk=None):
+        queryset = CrawlReport.objects.all()
+        try:
+            report = CrawlReport.objects.get(pk=pk)
+        except CrawlReport.DoesNotExist:
+            return Response({'status':'418', 'message':msg['fa']['report']['report_not_found']})
+        serializer = ReportListSerializer(report)
+        x = {}
+        x['status'] = '200'
+        x['message'] = msg['fa']['report']['report_found']
+        x['data'] = serializer.data
+        return Response(x)
 
