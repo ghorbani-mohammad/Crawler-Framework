@@ -125,5 +125,6 @@ def fetch_alexa_rank(agency_id, agency_url):
 
     driver.get('https://www.alexa.com/siteinfo/{}'.format(agency_url))
     doc = BeautifulSoup(driver.page_source, 'html.parser')
-    global_rank = doc.find('div', {'class': 'rankmini-rank'}).text.replace('#', '')
+    global_rank = doc.find('div', {'class': 'rankmini-rank'}).text. \
+                                replace('#', '').replace('\t','').replace('\n', '').replace(',','')
     Agency.objects.filter(pk=agency_id).update(alexa_global_rank=global_rank)

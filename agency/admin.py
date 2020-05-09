@@ -21,7 +21,7 @@ class CrawlAdmin(admin.ModelAdmin):
 
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'country', 'website', 'status')
+    list_display = ('id', 'name', 'country', 'website', 'status', 'alexa_global_rank')
 
 
 @admin.register(AgencyPageStructure)
