@@ -4,16 +4,16 @@ services:
   crawler:
     image: crawler
     container_name: crawler_django
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8200 app.wsgi:application"
+    command: ["gunicorn", "--bind", "0.0.0.0:8200", "app.wsgi:application"]
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    # ports:
-    #   - 8200:8000
-    restart: always
+    restart: unless-stopped
     network_mode: host
+    environment:
+      DEBUG: 'True'
   
   redis:
     image: redis
@@ -22,24 +22,30 @@ services:
       - ./redis:/data
     restart: always
     network_mode: host
+    # logging:
+    #   driver: none
   
   celery_worker:
     image: crawler
     container_name: crawler_celery_worker
     volumes:
       - .:/app
-    command: ["celery", "-A", "app", "worker", "-l", "info"]
+    command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
     restart: always
     network_mode: host
+    logging:
+      driver: none
   
   celery_scheduler:
     image: crawler
     container_name: crawler_celery_scheduler
     volumes:
       - .:/app
-    command: ["celery", "-A", "app", "beat", "-l", "info"]
+    command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
     restart: always
     network_mode: host
+    # logging:
+    #   driver: none
   
   chrome_browser:
     image: selenium/standalone-chrome
