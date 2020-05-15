@@ -10,11 +10,6 @@ from selenium.webdriver.chrome.options import Options
 from agency.models import Agency, AgencyPageStructure, CrawlReport
 
 logger = logging.getLogger('django')
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')
-options.add_argument('--disable-dev-shm-usage')
-
 
 class CrawlerEngine():
     """
@@ -22,6 +17,12 @@ class CrawlerEngine():
     """
     def __init__(self, page, header=None):
         # TODO: ip and port of webdriver must be dynamic
+        
+        options = Options()
+        options.add_argument('--disable-gpu')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument("--enable-automation"); 
+        options.add_argument("--no-sandbox"); 
         self.driver = webdriver.Remote("http://localhost:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
