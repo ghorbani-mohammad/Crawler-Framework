@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'agency.apps.AgencyConfig',
     'clear_cache',
+    'prettyjson',
 ]
 
 MIDDLEWARE = [
