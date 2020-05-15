@@ -86,7 +86,7 @@ class AgencyView(viewsets.ModelViewSet):
         return Response(response_data)
 
     # pagination_class = PostPagination
-    queryset = Agency.objects.all()
+    queryset = Agency.objects.all().order_by('id')
     serializer_class = AgencySerializer
 
 
@@ -164,7 +164,7 @@ class PageView(viewsets.ModelViewSet):
         return Response(response_data)
     
     # pagination_class = PostPagination
-    queryset = AgencyPageStructure.objects.all()
+    queryset = AgencyPageStructure.objects.all().order_by('id')
     serializer_class = AgencyPageStructureSerializer
 
 @api_view(['GET'])
