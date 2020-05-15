@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import JSONField
 class Agency(models.Model):
     name = models.CharField(max_length=20, null=False, unique=True)
     country = models.CharField(max_length=20, default='NA')
-    website = models.CharField(max_length=100, null=False)
+    website = models.CharField(max_length=100, null=False, unique=True)
     alexa_global_rank = models.IntegerField(default=0, null=True)
     crawl_headers = JSONField(null=True, blank=True, default=dict)
     status = models.BooleanField(default=1)
@@ -22,7 +22,7 @@ class Agency(models.Model):
 
 class AgencyPageStructure(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
-    url = models.CharField(max_length=300, null=False)
+    url = models.CharField(max_length=300, null=False, unique=True)
     crawl_interval = models.IntegerField(default=12)
     last_crawl = models.DateTimeField(null=True, editable=False)
     news_links_structure = JSONField()
