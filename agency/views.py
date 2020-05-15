@@ -201,7 +201,7 @@ def crawl_agency_none_lats_crawl(agency_id):
     Agency.objects.filter(id=agency_id).update(status=True)
     AgencyPageStructure.objects.filter(agency=agency_id).update(last_crawl=None, status=True)
     x = AgencyPageStructure.objects.filter(agency=agency_id).values('id')
-    x = CrawlReport.objects.filter(page__in=x, status='pending').update(status='na')
+    x = CrawlReport.objects.filter(page__in=x, status='pending').update(status='failed')
     
 
 @api_view(['GET'])

@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import requests
 from bs4 import BeautifulSoup
-import logging, datetime, redis, requests
+import logging, datetime, redis, requests, json
 
 
 from seleniumwire import webdriver
@@ -36,7 +36,6 @@ Exporter_API_headers = {
 def check_must_crwal(page):
     now = datetime.datetime.now()
     x = CrawlReport.objects.filter(page=page.id, status='pending')
-    # logger.info(x.count())
     if x.count() == 0:
         crawl(page)
     else:
@@ -55,7 +54,6 @@ def check():
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:
-            # logger.info(page.url)
             check_must_crwal(page)
         else:
             diff_hour = int((now - page.last_crawl).total_seconds()/(3600))
@@ -82,7 +80,14 @@ def redis_exporter():
     try:
         for key in redis_news.keys('*'):
             data = (redis_news.get(key).decode('utf-8'))
-            response = requests.request("GET", Exporter_API_URI, data=data, headers=Exporter_API_headers)
+            try:
+                data = json.loads(data)
+            except:
+                continue
+            if not 'date' in data:
+                data['date'] = int(datetime.datetime.now().timestamp())
+            data['agency_id'] = int(data['agency_id'])
+            response = requests.request("GET", Exporter_API_URI, data=json.dumps(data), headers=Exporter_API_headers)
             if response.status_code == 200 or response.status_code == 406:
                 logging.error(response.status_code)
                 redis_news.delete(key)
