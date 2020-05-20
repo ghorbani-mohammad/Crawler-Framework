@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Our apps
     'rest_framework',
     'agency.apps.AgencyConfig',
+    'analyzer.apps.AnalyzerConfig',
     'clear_cache',
     'prettyjson',
 ]
