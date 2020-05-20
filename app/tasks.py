@@ -18,8 +18,8 @@ from agency.crawler_engine import CrawlerEngine
 logger = logging.getLogger('django')
 
 # TODO: configs must be dynamic
-redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
-Exporter_API_URI = "http://localhost:8888/crawler/news"
+redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+Exporter_API_URI = "http://138.201.77.42:8888/crawler/news"
 Exporter_API_headers = {
                             'Content-Type': "application/json",
                             'User-Agent': "PostmanRuntime/7.17.1",
@@ -77,34 +77,41 @@ def page_crawl(page_structure):
 @app.task(name='redis_exporter')
 def redis_exporter():
     logger.info("---> Redis exporter is started")
-    try:
-        for key in redis_news.keys('*'):
-            data = (redis_news.get(key).decode('utf-8'))
-            try:
-                data = json.loads(data)
-            except:
-                continue
-            if not 'date' in data:
-                data['date'] = int(datetime.datetime.now().timestamp())
-            data['agency_id'] = int(data['agency_id'])
+    # try:
+    for key in redis_news.keys('*'):
+        data = (redis_news.get(key).decode('utf-8'))
+        try:
+            data = json.loads(data)
+        except:
+            print(data)
+            continue
+        if not 'date' in data:
+            data['date'] = int(datetime.datetime.now().timestamp())
+        if not 'agency_id' in data:
+            redis_news.delete(key)
+            continue
+        data['agency_id'] = int(data['agency_id'])
+        try:
             response = requests.request("GET", Exporter_API_URI, data=json.dumps(data), headers=Exporter_API_headers)
-            if response.status_code == 200 or response.status_code == 406:
-                logging.error(response.status_code)
-                redis_news.delete(key)
-            elif response.status_code == 400:
-                logging.error(response.status_code)
-                redis_news.delete(key)
-                logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
-                logging.error('Redis-key: %s', str(key))
-            elif response.status_code == 500:
-                logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
-                logging.error('Redis-key: %s', str(key))
-                return
-            else:
-                logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
-                logging.error('Redis-key: %s', str(key))
-    except Exception:
-        logging.error('Exporter error code: %s',str(Exception))
+        except Exception:
+            print('get error')
+        if response.status_code == 200 or response.status_code == 406:
+            logging.error(response.status_code)
+            redis_news.delete(key)
+        elif response.status_code == 400:
+            logging.error(response.status_code)
+            redis_news.delete(key)
+            logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
+            logging.error('Redis-key: %s', str(key))
+        elif response.status_code == 500:
+            logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
+            logging.error('Redis-key: %s', str(key))
+            return
+        else:
+            logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
+            logging.error('Redis-key: %s', str(key))
+    # except Exception:
+    #     logging.error('Exporter error code: %s',str(Exception))
 
 
 @app.task(name='fetch_alexa_rank')
@@ -114,7 +121,7 @@ def fetch_alexa_rank(agency_id, agency_url):
     options.add_argument('--disable-gpu')
     options.add_argument('--disable-dev-shm-usage')
 
-    driver = webdriver.Remote("http://localhost:4444/wd/hub",
+    driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
     driver.header_overrides = {

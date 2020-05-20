@@ -23,7 +23,7 @@ class CrawlerEngine():
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--enable-automation"); 
         options.add_argument("--no-sandbox"); 
-        self.driver = webdriver.Remote("http://localhost:4444/wd/hub",
+        self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
         self.driver.header_overrides = {
@@ -37,8 +37,8 @@ class CrawlerEngine():
             'Connection': 'keep-alive'
         }
         # TODO: ip and port of redis must be dynamic
-        self.redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
-        self.redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+        self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+        self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
         self.page = page
         self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.header = header
