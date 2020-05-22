@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     # Our apps
     'rest_framework',
     'agency.apps.AgencyConfig',
-    'analyzer.apps.AnalyzerConfig',
     'clear_cache',
     'prettyjson',
 ]
@@ -79,7 +78,7 @@ DATABASES = {
         'PASSWORD': 'army',
         'HOST': '138.201.77.42',
         'PORT': '5433',
-    }
+    },
 }
 
 
