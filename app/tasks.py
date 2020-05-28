@@ -8,7 +8,7 @@ from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
-from .celery import app
+from .celery import crawler
 from celery import current_app
 from agency.models import Agency, AgencyPageStructure, CrawlReport
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
@@ -46,7 +46,7 @@ def check_must_crwal(page):
             crawl(page)
 
 
-@app.task(name='check_agencies')
+@crawler.task(name='check_agencies')
 def check():
     logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
@@ -68,13 +68,13 @@ def crawl(page):
     page_crawl.delay(serializer.data)
 
 
-@app.task(name='page_crawl')
+@crawler.task(name='page_crawl')
 def page_crawl(page_structure):
     logger.info("---> Page crawling is started")
     CrawlerEngine(page_structure)
 
 
-@app.task(name='redis_exporter')
+@crawler.task(name='redis_exporter')
 def redis_exporter():
     logger.info("---> Redis exporter is started")
     # try:
@@ -114,7 +114,7 @@ def redis_exporter():
     #     logging.error('Exporter error code: %s',str(Exception))
 
 
-@app.task(name='fetch_alexa_rank')
+@crawler.task(name='fetch_alexa_rank')
 def fetch_alexa_rank(agency_id, agency_url):
     options = Options()
     options.add_argument('--headless')
