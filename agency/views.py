@@ -211,26 +211,26 @@ def crawl_agency(request, version, agency_id):
 
 @api_view(['GET'])
 def crawl_memory_reset(request,version):
-    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
-    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+    redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
     redis_duplicate_checker.flushall()
     redis_news.flushall()
     return JsonResponse({'status': '200', 'message': msg['fa']['crawl']['success_crawl_memory_reset']}, status=200)
 
 @api_view(['GET'])
 def crawl_news_memory_list(request, version):
-    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
+    redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
     return Response({'news_keys':redis_news.keys("*")})
 
 @api_view(['GET'])
 def crawl_links_memory_list(request, version):
-    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
     return Response({'link_keys':redis_duplicate_checker.keys("*")})
 
 def reset_agency_memory(agency_id):
     agency = Agency.objects.get(id=agency_id)
-    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
-    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+    redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
     counter_links = 0 
     for key in redis_duplicate_checker.scan_iter("*"+str(agency.website)+"*"):
         redis_duplicate_checker.delete(key)
@@ -256,18 +256,16 @@ def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
 
 
 class ReportView(ReadOnlyModelViewSet):
-
+    pagination_class = PostPagination
     def list(self, request, version):
         queryset = CrawlReport.objects.all()
-        # page = self.paginate_queryset(queryset)
-        # serializer = ReportListSerializer(page, many=True)
-        # x = {}
-        # x['status'] = '200'
-        # x['message'] = msg['fa']['report']['report_found']
-        # x['data'] = serializer.data
-        # return self.get_paginated_response(serializer.data)
-        serializer = ReportListSerializer(queryset, many=True)
-        return Response(serializer.data)
+        page = self.paginate_queryset(queryset)
+        serializer = ReportListSerializer(page, many=True)
+        x = {}
+        x['status'] = '200'
+        x['message'] = msg['fa']['report']['report_found']
+        x['data'] = serializer.data
+        return self.get_paginated_response(serializer.data)
 
     def retrieve(self, request, version, pk=None):
         queryset = CrawlReport.objects.all()
