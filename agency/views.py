@@ -258,7 +258,7 @@ def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
 class ReportView(ReadOnlyModelViewSet):
     pagination_class = PostPagination
     def list(self, request, version):
-        queryset = CrawlReport.objects.all()
+        queryset = CrawlReport.objects.all().order_by('-id')
         page = self.paginate_queryset(queryset)
         serializer = ReportListSerializer(page, many=True)
         x = {}
