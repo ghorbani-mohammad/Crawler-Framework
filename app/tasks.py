@@ -49,8 +49,8 @@ def check_must_crwal(page):
 @crawler.task(name='check_agencies')
 def check():
     logger.info("---***> Check_agencies is started <***----")
-    agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
-    pages = AgencyPageStructure.objects.filter(agency__in=agencies)
+    agencies = Agency.objects.filter(status= True, deleted_at=None).values_list('id', flat= True)
+    pages = AgencyPageStructure.objects.filter(agency__in=agencies, deleted_at=None)
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:
