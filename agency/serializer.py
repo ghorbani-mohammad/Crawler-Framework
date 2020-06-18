@@ -16,6 +16,7 @@ class AgencySerializer(serializers.ModelSerializer):
                     'status',
                     'created_at',
                     'updated_at',
+                    'deleted_at',
         ]
 
 
@@ -47,6 +48,7 @@ class AgencyPageStructureSerializer(serializers.ModelSerializer):
                     'news_meta_structure',
                     'created_at',
                     'updated_at',
+                    'deleted_at',
         ]
 
 

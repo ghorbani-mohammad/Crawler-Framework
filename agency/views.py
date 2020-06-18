@@ -77,7 +77,8 @@ class AgencyView(viewsets.ModelViewSet):
             agency = Agency.objects.get(pk=pk)
         except Agency.DoesNotExist:
             return Response({'status':'400', 'message':msg['fa']['agency']['agency_not_found']})
-        agency.update(deleted_at=datetime.datetime.now())
+        agency.deleted_at= datetime.datetime.now()
+        agency.save()
         response_data = {
             "status": "200",
             "message": msg['fa']['agency']['success_agency_deleted'],
@@ -85,7 +86,7 @@ class AgencyView(viewsets.ModelViewSet):
         }
         return Response(response_data)
 
-    # pagination_class = PostPagination
+    # pagination_class = PostPa gination
     queryset = Agency.objects.filter(deleted_at=None).order_by('id')
     serializer_class = AgencySerializer
 
@@ -155,7 +156,8 @@ class PageView(viewsets.ModelViewSet):
             page = AgencyPageStructure.objects.get(pk=pk)
         except AgencyPageStructure.DoesNotExist:
             return Response({'status':'400', 'message':msg['fa']['page']['page_not_found']})
-        page.update(deleted_at=datetime.datetime.now())
+        page.deleted_at=datetime.datetime.now()
+        page.save()
         response_data = {
             "status": "200",
             "message": msg['fa']['page']['success_page_deleted'],
