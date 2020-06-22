@@ -55,16 +55,17 @@ class CrawlerEngine():
         # f.close()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
-        # logger.info(type(attribute))
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        # logger.info(attribute)
+        self.custom_logging("structure for fetching links are: \n {}".format(attribute))
         tag = attribute['tag']
+        self.custom_logging("specified tag for fetching links is: \n {}".format(tag))
         del attribute['tag']
         code = ''
         if 'code' in attribute.keys():
             code = attribute['code']
             del attribute['code']
+        self.custom_logging("specified attributes for fetching tag is: \n {}".format(attribute))
         elements = doc.findAll(tag, attribute)
         if code != '':
             temp_code = """
@@ -78,8 +79,8 @@ class CrawlerEngine():
         else:
             for element in elements:
                 links.append(element['href'])
-        # logger.info("Fetched links are:")
-        # logger.info(links)
+        # self.custom_logging("Fetched links are:")
+        # self.custom_logging(links)
         self.fetched_links = links
         self.fetched_links_count = len(links)
     
@@ -93,16 +94,20 @@ class CrawlerEngine():
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
+        self.custom_logging("fetched news link is: \n {}".format(link))
         self.driver.get(link)
         # TODO: sleep to page load must be dynamic
         time.sleep(4)
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         for key in meta.keys():
+            self.custom_logging("specified key is: \n {}".format(key))
             attribute = meta[key].copy()
             tag = attribute['tag']
+            self.custom_logging("\tspecified tag is: \n {}".format(tag))
             del attribute['tag']
             if tag == 'value':
                 article[key] = attribute['value']
+                self.custom_logging("\tspecified tag get's value directly and it's value is: \n {}".format(attribute['value']))
                 continue
             if tag == 'code':
                 code = attribute['code']
@@ -121,6 +126,7 @@ class CrawlerEngine():
             if 'code' in attribute.keys():
                 code = attribute['code']
                 del attribute['code']
+            self.custom_logging("\tspecified attributes for fetching tag is: \n {}".format(attribute))
             element = doc.find(tag, attribute)
             if element is None:
                 self.custom_logging("element is null")
