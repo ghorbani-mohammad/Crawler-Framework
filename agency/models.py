@@ -43,6 +43,7 @@ class CrawlReport(models.Model):
     new_links = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    log = models.TextField(blank=True)
 
     def __str(self):
         return self.page.url

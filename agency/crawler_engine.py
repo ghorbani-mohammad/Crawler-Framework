@@ -18,11 +18,12 @@ class CrawlerEngine():
     def __init__(self, page, header=None):
         # TODO: ip and port of webdriver must be dynamic
         
+        self.log_messages = ''
         options = Options()
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
-        options.add_argument("--enable-automation"); 
-        options.add_argument("--no-sandbox"); 
+        options.add_argument("--enable-automation")
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
@@ -70,10 +71,10 @@ class CrawlerEngine():
 {0}
             """
             temp_code = temp_code.format(code)
-            logger.info("Executing code")
-            logger.info(temp_code)
+            self.custom_logging("Executing code")
+            self.custom_logging(temp_code)
             exec(temp_code)
-            logger.info("executed code")
+            self.custom_logging("executed code")
         else:
             for element in elements:
                 links.append(element['href'])
@@ -112,9 +113,9 @@ class CrawlerEngine():
                 try:
                     exec(temp_code)
                 except Exception as e:
-                    logger.info("Getting attr %s got error", key)
-                    logger.info("The code was:\n %s ", temp_code)
-                    logger.info("Error was:\n %s", str(e))
+                    self.custom_logging("Getting attr {} got error".format(key))
+                    self.custom_logging("The code was:\n {} ".format(temp_code))
+                    self.custom_logging("Error was:\n {}".format(str(e)))
                 continue
             code = ''
             if 'code' in attribute.keys():
@@ -122,8 +123,8 @@ class CrawlerEngine():
                 del attribute['code']
             element = doc.find(tag, attribute)
             if element is None:
-                logger.info("element is null")
-                logger.info(attribute)
+                self.custom_logging("element is null")
+                self.custom_logging(attribute)
                 break
             if code != '':
                 temp_code = """
@@ -133,9 +134,9 @@ class CrawlerEngine():
                 try:
                     exec(temp_code)
                 except Exception as e:
-                    logger.info("Getting attr %s got error", key)
-                    logger.info("The code was:\n %s ", temp_code)
-                    logger.info("Error was:\n %s", str(e))
+                    self.custom_logging("Getting attr {} got error".format(key))
+                    self.custom_logging("The code was:\n {} ".format(temp_code))
+                    self.custom_logging("Error was:\n {}".format(str(e)))
             else:
                 article[key] = element.text
         # article['source'] = str(self.page['agency'])
@@ -173,11 +174,19 @@ class CrawlerEngine():
         self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
         self.report.status = 'complete'
+        self.report.log = self.log_messages
         self.report.save()
         self.driver.quit()
 
+    def custom_logging(self, message):
+        logger.info(message)
+        self.log_messages += '{} \n'.format(message)
+
+
     def run(self):
-        logger.info("------> Fetching links from %s started", self.page['url'])
+        self.custom_logging("------> Fetching links from {} started".format(self.page['url']))
         self.fetch_links()
-        logger.info("------> We found %s number of links: ", self.fetched_links_count)
+        self.custom_logging("------> We found {} number of links: ".format(self.fetched_links_count))
         self.check_links()
+
+    

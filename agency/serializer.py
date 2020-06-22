@@ -73,4 +73,5 @@ class ReportListSerializer(serializers.ModelSerializer):
             'status',
             'created_at',
             'updated_at',
+            'log'
         ]
