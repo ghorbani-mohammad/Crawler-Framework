@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 
 from .celery import crawler
 from celery import current_app
-from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.models import Agency, AgencyPageStructure, CrawlReport, Option
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
@@ -35,12 +35,16 @@ Exporter_API_headers = {
 
 def check_must_crwal(page):
     now = datetime.datetime.now()
+    try:
+        status = Option.objects.filter(key='crawl_debug').firts().value
+    except:
+        status = 'False'
     x = CrawlReport.objects.filter(page=page.id, status='pending')
     if x.count() == 0:
         crawl(page)
     else:
         last_report = x.last()
-        if int((now - last_report.created_at).total_seconds()/(3600)) >= page.crawl_interval:
+        if int((now - last_report.created_at).total_seconds()/(3600)) >= page.crawl_interval or status == 'True':
             last_report.status = 'failed'
             last_report.save()
             crawl(page)

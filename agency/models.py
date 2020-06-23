@@ -47,3 +47,10 @@ class CrawlReport(models.Model):
 
     def __str(self):
         return self.page.url
+
+
+class Option(models.Model):
+    key = models.CharField(max_length=70)
+    value = models.CharField(max_length=70)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
