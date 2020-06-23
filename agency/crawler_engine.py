@@ -3,10 +3,11 @@
 """
 import logging, redis, json, time, datetime
 from bs4 import BeautifulSoup
-# from selenium import webdriver
+
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+
 from agency.models import Agency, AgencyPageStructure, CrawlReport
 
 logger = logging.getLogger('django')
@@ -41,6 +42,7 @@ class CrawlerEngine():
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
         self.page = page
+        self.page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.header = header
         self.run()
@@ -156,6 +158,9 @@ class CrawlerEngine():
         Arguments:
             article {[aticle]} -- [a json of article attribute]
         """        
+        article['agency_id'] = self.page_structure.agency.id
+        article['source'] = self.page_structure.agency.name
+
         # save to redis for 5 days
         # TODO: expiration must be dynamic
         self.redis_news.set(article['link'], json.dumps(article))
@@ -173,10 +178,9 @@ class CrawlerEngine():
             else:
                 # logger.info("Fetching news started for %s", link)
                 self.crawl_one_page(link)
-        # TODO: page muse be valued in constructor
-        page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
-        page_structure.last_crawl = datetime.datetime.now()
-        page_structure.save()
+        
+        self.page_structure.last_crawl = datetime.datetime.now()
+        self.page_structure.save()
         self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
         self.report.status = 'complete'
