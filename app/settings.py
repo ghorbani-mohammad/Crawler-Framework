@@ -1,4 +1,10 @@
 import os
+import environ
+
+env = environ.Env()
+
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,9 +17,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n6ld+$-+#x(j7!vys)uvbscvsmm51nwn+(z#3zeqjx+a-!vt_@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['94.130.238.184']
+ALLOWED_HOSTS = [env('server_ip')]
 
 
 # Application definition
@@ -71,13 +77,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'OPTIONS': {
-            'options': '-c search_path=army'
+            'options': '-c search_path={}'.format(env('postgres_schema'))
         },
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'army',
-        'HOST': '138.201.77.42',
-        'PORT': '5433',
+        'HOST': env('db_url'),
+        'PORT': env('db_port'),
     },
 }
 
@@ -112,7 +118,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
