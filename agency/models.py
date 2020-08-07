@@ -22,9 +22,9 @@ class Agency(models.Model):
 
 class AgencyPageStructure(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
-    url = models.CharField(max_length=300, null=False, unique=True)
+    url = models.CharField(max_length=1000, null=False, unique=True)
     crawl_interval = models.IntegerField(default=12)
-    last_crawl = models.DateTimeField(null=True, editable=False)
+    last_crawl = models.DateTimeField(null=True)
     news_links_structure = JSONField()
     news_meta_structure = JSONField()
     status = models.BooleanField(default=1)
