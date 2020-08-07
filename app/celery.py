@@ -6,20 +6,23 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 
 # TODO: redis port and ip and db must be dynamic
-app = Celery('app',
+crawler = Celery('crawler',
              broker='redis://crawler_redis:6379/10',
              backend='redis://crawler_redis:6379/10',
              include=['app.tasks'])
 
 # Optional configuration, see the application user guide.
-app.conf.update(
+crawler.conf.update(
     result_expires=7200,
 )
 
-app.conf.beat_schedule = {
+# if you want to purge works queue
+crawler.control.purge()
+
+crawler.conf.beat_schedule = {
     'check-agencies-60-seconds': {
         'task': 'check_agencies',
-        'schedule': 1 * 60,
+        'schedule': 0.5 * 60,
     },
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
@@ -28,4 +31,4 @@ app.conf.beat_schedule = {
 }
 
 if __name__ == '__main__':
-    app.start()
+    crawler.start()

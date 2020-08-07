@@ -5,5 +5,5 @@ class Command(BaseCommand):
     help = 'Crate a superuser user=army and pass=army'
     def handle(self, *args, **options):
         User = get_user_model()
-        User.objects.create_superuser('army', password='army')
+        User.objects.create_superuser('admin', password='test1234')
 

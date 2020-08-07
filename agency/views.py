@@ -211,26 +211,26 @@ def crawl_agency(request, version, agency_id):
 
 @api_view(['GET'])
 def crawl_memory_reset(request,version):
-    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
-    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+    redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
     redis_duplicate_checker.flushall()
     redis_news.flushall()
     return JsonResponse({'status': '200', 'message': msg['fa']['crawl']['success_crawl_memory_reset']}, status=200)
 
 @api_view(['GET'])
 def crawl_news_memory_list(request, version):
-    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
+    redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
     return Response({'news_keys':redis_news.keys("*")})
 
 @api_view(['GET'])
 def crawl_links_memory_list(request, version):
-    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
     return Response({'link_keys':redis_duplicate_checker.keys("*")})
 
 def reset_agency_memory(agency_id):
     agency = Agency.objects.get(id=agency_id)
-    redis_news = redis.StrictRedis(host='localhost', port=6379, db=0)
-    redis_duplicate_checker = redis.StrictRedis(host='localhost', port=6379, db=1)
+    redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+    redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
     counter_links = 0 
     for key in redis_duplicate_checker.scan_iter("*"+str(agency.website)+"*"):
         redis_duplicate_checker.delete(key)

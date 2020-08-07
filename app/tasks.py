@@ -4,11 +4,13 @@ from bs4 import BeautifulSoup
 import logging, datetime, redis, requests, json
 
 
+import telegram
+
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
-from .celery import app
+from .celery import crawler
 from celery import current_app
 from agency.models import Agency, AgencyPageStructure, CrawlReport
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
@@ -19,6 +21,7 @@ logger = logging.getLogger('django')
 
 # TODO: configs must be dynamic
 redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
+redis_links = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
 Exporter_API_URI = "http://138.201.77.42:8888/crawler/news"
 Exporter_API_headers = {
                             'Content-Type': "application/json",
@@ -46,7 +49,7 @@ def check_must_crwal(page):
             crawl(page)
 
 
-@app.task(name='check_agencies')
+@crawler.task(name='check_agencies')
 def check():
     logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
@@ -68,53 +71,58 @@ def crawl(page):
     page_crawl.delay(serializer.data)
 
 
-@app.task(name='page_crawl')
+@crawler.task(name='page_crawl')
 def page_crawl(page_structure):
     logger.info("---> Page crawling is started")
     CrawlerEngine(page_structure)
 
 
-@app.task(name='redis_exporter')
+@crawler.task(name='redis_exporter')
 def redis_exporter():
     logger.info("---> Redis exporter is started")
-    # try:
-    for key in redis_news.keys('*'):
+    API_KEY = '696816460:AAFxk7RfqaPONS5VIz078pkcDxXkjzd7yrI'
+    bot = telegram.Bot(token=API_KEY)
+    for key in redis_news.scan_iter("*cnn*"):
+        message = "https://t.me/iv?url={}&rhash=da8b1480d98b0a".format(key.decode('utf-8'))
+        try:
+            bot.send_message(chat_id='@cnn_international_news', text=message)
+            redis_news.delete(key)
+        except:
+            continue
+
+
+    for key in redis_news.scan_iter("*jobinja*"):
         data = (redis_news.get(key).decode('utf-8'))
         try:
             data = json.loads(data)
-        except:
-            print(data)
-            continue
-        if not 'date' in data:
-            data['date'] = int(datetime.datetime.now().timestamp())
-        if not 'agency_id' in data:
+            if 'sale' in data:
+                message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}\n\n#Salary: {}".format(data['link2'], data['link2'], data['sale'])
+            else:
+                message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}".format(data['link2'], data['link2'])
+            bot.send_message(chat_id='@jobinja_works', text=message)
+        except Exception as e:
+            print('ERRRORRRR jobinja')
+            print(str(e))
+        finally:
             redis_news.delete(key)
-            continue
-        data['agency_id'] = int(data['agency_id'])
+    
+    for key in redis_news.scan_iter("*quera*"):
+        data = (redis_news.get(key).decode('utf-8'))
         try:
-            response = requests.request("GET", Exporter_API_URI, data=json.dumps(data), headers=Exporter_API_headers)
-        except Exception:
-            print('get error')
-        if response.status_code == 200 or response.status_code == 406:
-            logging.error(response.status_code)
+            data = json.loads(data)
+            if 'salary' in data:
+                message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}\n\n#Salary: {}".format(data['link'], data['link'], data['salary'])
+            else:
+                message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}".format(data['link'], data['link'])
+            bot.send_message(chat_id='@jobinja_works', text=message)
+        except Exception as e:
+            print('ERRRORRRR quera')
+            print(str(e))
+        finally:
             redis_news.delete(key)
-        elif response.status_code == 400:
-            logging.error(response.status_code)
-            redis_news.delete(key)
-            logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
-            logging.error('Redis-key: %s', str(key))
-        elif response.status_code == 500:
-            logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
-            logging.error('Redis-key: %s', str(key))
-            return
-        else:
-            logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
-            logging.error('Redis-key: %s', str(key))
-    # except Exception:
-    #     logging.error('Exporter error code: %s',str(Exception))
 
 
-@app.task(name='fetch_alexa_rank')
+@crawler.task(name='fetch_alexa_rank')
 def fetch_alexa_rank(agency_id, agency_url):
     options = Options()
     options.add_argument('--headless')

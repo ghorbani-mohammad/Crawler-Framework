@@ -40,7 +40,7 @@ class CrawlerEngine():
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
         self.page = page
-        self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
+        # self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.header = header
         self.run()
 
@@ -64,6 +64,10 @@ class CrawlerEngine():
         if 'code' in attribute.keys():
             code = attribute['code']
             del attribute['code']
+        print('specified tag for links')
+        print(tag)
+        print('specified attributes for links')
+        print(attribute)
         elements = doc.findAll(tag, attribute)
         if code != '':
             temp_code = """
@@ -83,7 +87,7 @@ class CrawlerEngine():
         self.fetched_links_count = len(links)
     
     # TODO: Maek crawl_news_page as task function
-    def crawl_one_page(self, link):
+    def crawl_one_page(self, link, meta=False):
         """Gets one page and crawl it
         
         Arguments:
@@ -92,52 +96,53 @@ class CrawlerEngine():
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
-        self.driver.get(link)
-        # TODO: sleep to page load must be dynamic
-        time.sleep(4)
-        doc = BeautifulSoup(self.driver.page_source, 'html.parser')
-        for key in meta.keys():
-            attribute = meta[key].copy()
-            tag = attribute['tag']
-            del attribute['tag']
-            if tag == 'value':
-                article[key] = attribute['value']
-                continue
-            if tag == 'code':
-                code = attribute['code']
-                temp_code = """
+        if meta:
+            self.driver.get(link)
+            # TODO: sleep to page load must be dynamic
+            time.sleep(4)
+            doc = BeautifulSoup(self.driver.page_source, 'html.parser')
+            for key in meta.keys():
+                attribute = meta[key].copy()
+                tag = attribute['tag']
+                del attribute['tag']
+                if tag == 'value':
+                    article[key] = attribute['value']
+                    continue
+                if tag == 'code':
+                    code = attribute['code']
+                    temp_code = """
 {0}
-                """
-                temp_code = temp_code.format(code)
-                try:
-                    exec(temp_code)
-                except Exception as e:
-                    logger.info("Getting attr %s got error", key)
-                    logger.info("The code was:\n %s ", temp_code)
-                    logger.info("Error was:\n %s", str(e))
-                continue
-            code = ''
-            if 'code' in attribute.keys():
-                code = attribute['code']
-                del attribute['code']
-            element = doc.find(tag, attribute)
-            if element is None:
-                logger.info("element is null")
-                logger.info(attribute)
-                break
-            if code != '':
-                temp_code = """
+                    """
+                    temp_code = temp_code.format(code)
+                    try:
+                        exec(temp_code)
+                    except Exception as e:
+                        logger.info("Getting attr %s got error", key)
+                        logger.info("The code was:\n %s ", temp_code)
+                        logger.info("Error was:\n %s", str(e))
+                    continue
+                code = ''
+                if 'code' in attribute.keys():
+                    code = attribute['code']
+                    del attribute['code']
+                element = doc.find(tag, attribute)
+                if element is None:
+                    logger.info("element is null")
+                    logger.info(attribute)
+                    break
+                if code != '':
+                    temp_code = """
 {0}
-                """
-                temp_code = temp_code.format(code)
-                try:
-                    exec(temp_code)
-                except Exception as e:
-                    logger.info("Getting attr %s got error", key)
-                    logger.info("The code was:\n %s ", temp_code)
-                    logger.info("Error was:\n %s", str(e))
-            else:
-                article[key] = element.text
+                    """
+                    temp_code = temp_code.format(code)
+                    try:
+                        exec(temp_code)
+                    except Exception as e:
+                        logger.info("Getting attr %s got error", key)
+                        logger.info("The code was:\n %s ", temp_code)
+                        logger.info("Error was:\n %s", str(e))
+                else:
+                    article[key] = element.text
         # article['source'] = str(self.page['agency'])
         logger.info(article)
         self.save_to_redis(article)
@@ -170,10 +175,10 @@ class CrawlerEngine():
         page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         page_structure.last_crawl = datetime.datetime.now()
         page_structure.save()
-        self.report.fetched_links = self.fetched_links_count
-        self.report.new_links = counter
-        self.report.status = 'complete'
-        self.report.save()
+        # self.report.fetched_links = self.fetched_links_count
+        # self.report.new_links = counter
+        # self.report.status = 'complete'
+        # self.report.save()
         self.driver.quit()
 
     def run(self):
