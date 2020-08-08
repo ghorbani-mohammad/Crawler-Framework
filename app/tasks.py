@@ -80,7 +80,7 @@ def page_crawl(page_structure):
 @crawler.task(name='redis_exporter')
 def redis_exporter():
     logger.info("---> Redis exporter is started")
-    API_KEY = '696816460:AAFxk7RfqaPONS5VIz078pkcDxXkjzd7yrI'
+    API_KEY = '1395437640:AAFZ1mkohxundOSBwBek1B8SPnApO4nIIMo'
     bot = telegram.Bot(token=API_KEY)
     for key in redis_news.scan_iter("*cnn*"):
         message = "https://t.me/iv?url={}&rhash=da8b1480d98b0a".format(key.decode('utf-8'))
@@ -99,7 +99,7 @@ def redis_exporter():
                 message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}\n\n#Salary: {}".format(data['link2'], data['link2'], data['sale'])
             else:
                 message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}".format(data['link2'], data['link2'])
-            bot.send_message(chat_id='@jobinja_works', text=message)
+            bot.send_message(chat_id='@iran_careers', text=message)
         except Exception as e:
             print('ERRRORRRR jobinja')
             print(str(e))
@@ -114,7 +114,7 @@ def redis_exporter():
                 message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}\n\n#Salary: {}".format(data['link'], data['link'], data['salary'])
             else:
                 message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}".format(data['link'], data['link'])
-            bot.send_message(chat_id='@jobinja_works', text=message)
+            bot.send_message(chat_id='@iran_careers', text=message)
         except Exception as e:
             print('ERRRORRRR quera')
             print(str(e))

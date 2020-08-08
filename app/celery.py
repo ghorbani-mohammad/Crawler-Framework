@@ -22,11 +22,11 @@ crawler.control.purge()
 crawler.conf.beat_schedule = {
     'check-agencies-60-seconds': {
         'task': 'check_agencies',
-        'schedule': 0.5 * 60,
+        'schedule': 6 * 3600,
     },
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
-        'schedule': 1 * 60,
+        'schedule': 3 * 3600,
     },
 }
 
