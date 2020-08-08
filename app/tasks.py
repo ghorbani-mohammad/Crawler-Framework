@@ -121,6 +121,18 @@ def redis_exporter():
         finally:
             redis_news.delete(key)
 
+    for key in redis_news.scan_iter("*upwork*"):
+        data = (redis_news.get(key).decode('utf-8'))
+        try:
+            data = json.loads(data)
+            message = "https://t.me/iv?url={}&rhash=27e79aa0d36cae\n\nLink: {}".format(data['link'], data['link'])
+            bot.send_message(chat_id='@upwork_careers', text=message)
+        except Exception as e:
+            print('ERRRORRRR upwork')
+            print(str(e))
+        finally:
+            redis_news.delete(key)
+
 
 @crawler.task(name='fetch_alexa_rank')
 def fetch_alexa_rank(agency_id, agency_url):
