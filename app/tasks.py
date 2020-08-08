@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import logging, datetime, redis, requests, json
 
 
-import telegram
+import telegram, time
 
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -100,6 +100,7 @@ def redis_exporter():
             else:
                 message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}".format(data['link2'], data['link2'])
             bot.send_message(chat_id='@iran_careers', text=message)
+            time.sleep(0.5)
         except Exception as e:
             print('ERRRORRRR jobinja')
             print(str(e))
@@ -115,6 +116,7 @@ def redis_exporter():
             else:
                 message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}".format(data['link'], data['link'])
             bot.send_message(chat_id='@iran_careers', text=message)
+            time.sleep(0.5)
         except Exception as e:
             print('ERRRORRRR quera')
             print(str(e))
@@ -125,8 +127,10 @@ def redis_exporter():
         data = (redis_news.get(key).decode('utf-8'))
         try:
             data = json.loads(data)
-            message = "https://t.me/iv?url={}&rhash=27e79aa0d36cae\n\nLink: {}".format(data['link'], data['link'])
+            message = "https://t.me/iv?url={}&rhash=27e79aa0d36cae".format(data['link'])
+            # message = "https://t.me/iv?url={}&rhash=27e79aa0d36cae\n\nLink: {}".format(data['link'], data['link'])
             bot.send_message(chat_id='@upwork_careers', text=message)
+            time.sleep(0.5)
         except Exception as e:
             print('ERRRORRRR upwork')
             print(str(e))
