@@ -1,6 +1,3 @@
-"""
-    Required modules for requests and bs4
-"""
 import logging, redis, json, time, datetime
 from bs4 import BeautifulSoup
 # from selenium import webdriver
@@ -12,17 +9,15 @@ from agency.models import Agency, AgencyPageStructure, CrawlReport
 logger = logging.getLogger('django')
 
 class CrawlerEngine():
-    """
-    This class extract news links from a page and then go to them and extract their informations
-    """
     def __init__(self, page, header=None):
         # TODO: ip and port of webdriver must be dynamic
         
         options = Options()
-        options.add_argument('--disable-gpu')
+        # options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
-        options.add_argument("--enable-automation"); 
-        options.add_argument("--no-sandbox"); 
+        options.add_argument("--enable-javascript")
+        # options.add_argument("--enable-automation"); 
+        # options.add_argument("--no-sandbox"); 
         self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
@@ -44,20 +39,19 @@ class CrawlerEngine():
         self.header = header
         self.run()
 
-    def fetch_links(self):
-        """ Extract links in a page. Links that have specified structure will be extracted.
-        """        
+    def fetch_links(self):  
         links = []
         self.driver.get(self.page['url'])
-        # f = open('page_content.txt', 'w')
+        # f = open('page_content_{}.html'.format(str(datetime.datetime.now())), 'w')
         # f.write(self.driver.page_source)
         # f.close()
+        # self.driver.get_screenshot_as_file('page_{}.png'.format(str(datetime.datetime.now()))) 
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
-        # logger.info(type(attribute))
+        logger.info(type(attribute))
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        # logger.info(attribute)
+        logger.info(attribute)
         tag = attribute['tag']
         del attribute['tag']
         code = ''
@@ -81,18 +75,13 @@ class CrawlerEngine():
         else:
             for element in elements:
                 links.append(element['href'])
-        # logger.info("Fetched links are:")
-        # logger.info(links)
+        logger.info("Fetched links are:")
+        logger.info(links)
         self.fetched_links = links
         self.fetched_links_count = len(links)
     
-    # TODO: Maek crawl_news_page as task function
-    def crawl_one_page(self, link, meta=False):
-        """Gets one page and crawl it
-        
-        Arguments:
-            link {[string]} -- [link of page]
-        """        
+    # TODO: Make crawl_news_page as task function
+    def crawl_one_page(self, link, meta=False):      
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
@@ -148,12 +137,7 @@ class CrawlerEngine():
         self.save_to_redis(article)
 
 
-    def save_to_redis(self, article):
-        """ Save fetched article(news) into redis
-        
-        Arguments:
-            article {[aticle]} -- [a json of article attribute]
-        """        
+    def save_to_redis(self, article): 
         # save to redis for 5 days
         # TODO: expiration must be dynamic
         self.redis_news.set(article['link'], json.dumps(article))
