@@ -2,7 +2,11 @@ import datetime as dt
 from prettyjson import PrettyJSONWidget
 from django.contrib import admin
 from django import forms
+from django.contrib import messages
+from django.utils.translation import ngettext
+
 from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.serializer import AgencyPageStructureSerializer
 
 
 @admin.register(CrawlReport)
@@ -37,10 +41,26 @@ class AgencyPageStructureForm(forms.ModelForm):
         }
 
 
+def crawl_action(AgencyPageStructureAdmin, request, queryset):
+    from app.tasks import page_crawl
+    for page in queryset:
+        page_crawl.delay(AgencyPageStructureSerializer(page).data)
+    crawl_action.short_description = "Crawl page"
+    AgencyPageStructureAdmin.message_user(request, ngettext(
+        '%d page is in queue to crawl.',
+        '%d pages are in queue to crawl.',
+        len(queryset),
+    ) % len(queryset), messages.SUCCESS)
+
+
 @admin.register(AgencyPageStructure)
 class AgencyPageStructureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'url', 'crawl_interval', 'last_crawl', 'status')
+    list_display = ('id', 'agency', 'get_short', 'crawl_interval', 'last_crawl', 'status')
+    def get_short(self, obj):
+        return obj.url if len(obj.url) < 50 else (obj.url[:50] + ' ...')
+    get_short.short_description = 'url'
     readonly_fields = ("last_crawl",)
+    actions = [crawl_action,]
 
     form = AgencyPageStructureForm
 
