@@ -77,61 +77,40 @@ def page_crawl(page_structure):
     CrawlerEngine(page_structure)
 
 
+@crawler.task(name='page_crawl_repetitive')
+def page_crawl_repetitive(page_structure):
+    logger.info("---> Page crawling is started")
+    CrawlerEngine(page_structure, repetitive= True)
+
+
 @crawler.task(name='redis_exporter')
 def redis_exporter():
     logger.info("---> Redis exporter is started")
     API_KEY = '1395437640:AAFZ1mkohxundOSBwBek1B8SPnApO4nIIMo'
     bot = telegram.Bot(token=API_KEY)
-    for key in redis_news.scan_iter("*cnn*"):
-        message = "https://t.me/iv?url={}&rhash=da8b1480d98b0a".format(key.decode('utf-8'))
-        try:
-            bot.send_message(chat_id='@cnn_international_news', text=message)
-            redis_news.delete(key)
-        except:
-            continue
+    pages = Page.objects.filter(status=True)
 
-
-    for key in redis_news.scan_iter("*jobinja*"):
+    for key in redis_news.scan_iter("*"):
         data = (redis_news.get(key).decode('utf-8'))
         try:
             data = json.loads(data)
-            if 'sale' in data:
-                message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}\n\n#Salary: {}".format(data['link2'], data['link2'], data['sale'])
-            else:
-                message = "https://t.me/iv?url={}&rhash=aa65f32c39cefc\n\nLink: {}".format(data['link2'], data['link2'])
-            bot.send_message(chat_id='@iran_careers', text=message)
-            time.sleep(0.5)
+            page = pages.filter(pk=data['page_id']).first()
+            data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
+            message = data['link']
+            temp_code = """
+{0}
+            """
+            temp_code = temp_code.format(page.message_code)
+            try:
+                temp_code = temp_code + '\n' + 'bot.send_message(chat_id=page.telegram_channel, text=message)'
+                exec(temp_code)
+                time.sleep(0.5)
+            except Exception as e:
+                logger.info("Getting attr %s got error", key)
+                logger.info("The code was:\n %s ", temp_code)
+                logger.info("Error was:\n %s", str(e))
         except Exception as e:
-            print('ERRRORRRR jobinja')
-            print(str(e))
-        finally:
-            redis_news.delete(key)
-    
-    for key in redis_news.scan_iter("*quera*"):
-        data = (redis_news.get(key).decode('utf-8'))
-        try:
-            data = json.loads(data)
-            if 'salary' in data:
-                message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}\n\n#Salary: {}".format(data['link'], data['link'], data['salary'])
-            else:
-                message = "https://t.me/iv?url={}&rhash=cefe3057218d2d\n\nLink: {}".format(data['link'], data['link'])
-            bot.send_message(chat_id='@iran_careers', text=message)
-            time.sleep(0.5)
-        except Exception as e:
-            print('ERRRORRRR quera')
-            print(str(e))
-        finally:
-            redis_news.delete(key)
-    
-    for key in redis_news.scan_iter("*indeed*"):
-        data = (redis_news.get(key).decode('utf-8'))
-        try:
-            data = json.loads(data)
-            message = "https://t.me/iv?url={}&rhash=417590bae9faae".format(data['link'])
-            bot.send_message(chat_id='@upwork_careers', text=message)
-            time.sleep(0.5)
-        except Exception as e:
-            print('ERRRORRRR Indeed')
+            print('ERRRORRRR  {}'.format(key))
             print(str(e))
         finally:
             redis_news.delete(key)

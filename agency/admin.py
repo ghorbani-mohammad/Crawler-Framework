@@ -64,14 +64,27 @@ def crawl_action(AgencyPageStructureAdmin, request, queryset):
     ) % len(queryset), messages.SUCCESS)
 
 
+def crawl_action_with_repetitive(AgencyPageStructureAdmin, request, queryset):
+    from app.tasks import page_crawl_repetitive
+    for page in queryset:
+        page_crawl_repetitive.delay(AgencyPageStructureSerializer(page).data)
+    crawl_action_with_repetitive.short_description = "Crawl page with repetitive"
+    AgencyPageStructureAdmin.message_user(request, ngettext(
+        '%d page is in queue to crawl.',
+        '%d pages are in queue to crawl.',
+        len(queryset),
+    ) % len(queryset), messages.SUCCESS)
+
+
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'get_short', 'crawl_interval', 'last_crawl', 'status', 'fetch_content')
-    def get_short(self, obj):
-        return obj.url if len(obj.url) < 50 else (obj.url[:50] + ' ...')
-    get_short.short_description = 'url'
+    list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content')
+
+    def page_url(self, obj):
+        return format_html("<a href='{url}'>Link</a>", url=obj.url)
+
     readonly_fields = ("last_crawl",)
-    actions = [crawl_action,]
+    actions = [crawl_action, crawl_action_with_repetitive]
 
     form = AgencyPageStructureForm
 

@@ -9,7 +9,7 @@ from agency.models import Agency, Page, CrawlReport
 logger = logging.getLogger('django')
 
 class CrawlerEngine():
-    def __init__(self, page, header=None):
+    def __init__(self, page, repetitive= False, header=None):
         # TODO: ip and port of webdriver must be dynamic
         
         options = Options()
@@ -37,6 +37,7 @@ class CrawlerEngine():
         self.page = Page.objects.get(id=page['id'])
         self.report = CrawlReport.objects.create(page_id=self.page.id, status='pending')
         self.header = header
+        self.repetitive = repetitive
         self.run()
 
     def fetch_links(self):  
@@ -85,10 +86,11 @@ class CrawlerEngine():
         meta = self.page.structure.news_meta_structure
         article = {}
         article['link'] = link
+        article['page_id'] = self.page.id
         if fetch_contet:
             self.driver.get(link)
             # TODO: sleep to page load must be dynamic
-            time.sleep(4)
+            time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, 'html.parser')
             for key in meta.keys():
                 attribute = meta[key].copy()
@@ -149,7 +151,7 @@ class CrawlerEngine():
         page = Page.objects.get(id=self.page.id)
         counter = self.fetched_links_count
         for link in self.fetched_links:
-            if self.redis_duplicate_checker.exists(link):
+            if not self.repetitive and self.redis_duplicate_checker.exists(link):
                 # logger.info("duplicate")
                 counter -= 1
                 continue

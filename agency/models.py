@@ -33,11 +33,15 @@ class PageStructure(models.Model):
 class Page(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
     url = models.CharField(max_length=1000, null=False, unique=True)
-    crawl_interval = models.IntegerField(default=12)
+    crawl_interval = models.IntegerField(default=2)
+    load_sleep = models.IntegerField(default=4)
     last_crawl = models.DateTimeField(null=True)
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
     structure = models.ForeignKey(PageStructure, on_delete=models.SET_NULL, null=True, blank=True)
+    telegram_channel = models.CharField(max_length=100, null=True, blank=True)
+    iv_code = models.CharField(max_length=100, null=True, blank=True)
+    message_code = models.TextField(default=None, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
