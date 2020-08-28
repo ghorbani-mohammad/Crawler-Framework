@@ -122,6 +122,19 @@ def redis_exporter():
             print(str(e))
         finally:
             redis_news.delete(key)
+    
+    for key in redis_news.scan_iter("*indeed*"):
+        data = (redis_news.get(key).decode('utf-8'))
+        try:
+            data = json.loads(data)
+            message = "https://t.me/iv?url={}&rhash=417590bae9faae".format(data['link'])
+            bot.send_message(chat_id='@upwork_careers', text=message)
+            time.sleep(0.5)
+        except Exception as e:
+            print('ERRRORRRR Indeed')
+            print(str(e))
+        finally:
+            redis_news.delete(key)
 
     for key in redis_news.scan_iter("*upwork*"):
         data = (redis_news.get(key).decode('utf-8'))
