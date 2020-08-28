@@ -34,20 +34,20 @@ class CrawlerEngine():
         # TODO: ip and port of redis must be dynamic
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
-        self.page = page
-        # self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
+        self.page = Page.objects.get(id=page['id'])
+        self.report = CrawlReport.objects.create(page_id=self.page.id, status='pending')
         self.header = header
         self.run()
 
     def fetch_links(self):  
         links = []
-        self.driver.get(self.page['url'])
+        self.driver.get(self.page.url)
         # f = open('page_content_{}.html'.format(str(datetime.datetime.now())), 'w')
         # f.write(self.driver.page_source)
         # f.close()
         # self.driver.get_screenshot_as_file('page_{}.png'.format(str(datetime.datetime.now()))) 
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
-        attribute = self.page['news_links_structure']
+        attribute = self.page.structure.news_links_structure
         logger.info(type(attribute))
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
@@ -82,7 +82,7 @@ class CrawlerEngine():
     
     # TODO: Make crawl_news_page as task function
     def crawl_one_page(self, link, fetch_contet):      
-        meta = self.page['news_meta_structure']
+        meta = self.page.structure.news_meta_structure
         article = {}
         article['link'] = link
         if fetch_contet:
@@ -146,7 +146,7 @@ class CrawlerEngine():
     def check_links(self):
         """ Cheking links in a page. If a link is not crawled before we will crawl it now
         """        
-        page_structure = Page.objects.get(id=self.page['id'])
+        page = Page.objects.get(id=self.page.id)
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link):
@@ -155,18 +155,18 @@ class CrawlerEngine():
                 continue
             else:
                 # logger.info("Fetching news started for %s", link)
-                self.crawl_one_page(link, page_structure.fetch_content)
+                self.crawl_one_page(link, page.fetch_content)
         # TODO: page muse be valued in constructor
-        page_structure.last_crawl = datetime.datetime.now()
-        page_structure.save()
-        # self.report.fetched_links = self.fetched_links_count
-        # self.report.new_links = counter
-        # self.report.status = 'complete'
-        # self.report.save()
+        page.last_crawl = datetime.datetime.now()
+        page.save()
+        self.report.fetched_links = self.fetched_links_count
+        self.report.new_links = counter
+        self.report.status = 'complete'
+        self.report.save()
         self.driver.quit()
 
     def run(self):
-        logger.info("------> Fetching links from %s started", self.page['url'])
+        logger.info("------> Fetching links from %s started", self.page.url)
         self.fetch_links()
         logger.info("------> We found %s number of links: ", self.fetched_links_count)
         self.check_links()

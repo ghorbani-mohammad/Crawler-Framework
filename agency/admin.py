@@ -34,16 +34,19 @@ class AgencyAdmin(admin.ModelAdmin):
 class PageStructureAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
+    class Meta:
+        widgets = {
+            'news_links_structure': PrettyJSONWidget(),
+            'news_meta_structure': PrettyJSONWidget(),
+        }
+
 
 class AgencyPageStructureForm(forms.ModelForm):
 
     class Meta:
         model = Page
         fields = '__all__'
-        widgets = {
-            'news_links_structure': PrettyJSONWidget(),
-            'news_meta_structure': PrettyJSONWidget(),
-        }
+        
 
 
 def crawl_action(AgencyPageStructureAdmin, request, queryset):

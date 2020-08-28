@@ -35,11 +35,9 @@ class Page(models.Model):
     url = models.CharField(max_length=1000, null=False, unique=True)
     crawl_interval = models.IntegerField(default=12)
     last_crawl = models.DateTimeField(null=True)
-    news_links_structure = JSONField()
-    news_meta_structure = JSONField()
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
-    page_structure = models.ForeignKey(PageStructure, on_delete=models.SET_NULL, null=True, blank=True)
+    structure = models.ForeignKey(PageStructure, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

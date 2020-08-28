@@ -43,8 +43,7 @@ class AgencyPageStructureSerializer(serializers.ModelSerializer):
                     'crawl_interval',
                     'last_crawl',
                     'status',
-                    'news_links_structure',
-                    'news_meta_structure',
+                    'structure',
                     'created_at',
                     'updated_at',
         ]
