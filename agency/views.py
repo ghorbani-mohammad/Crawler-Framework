@@ -9,7 +9,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer, \
     ReportListSerializer
-from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.models import Agency, Page, CrawlReport
 from app.messages import *
 from app import tasks
 
@@ -118,8 +118,8 @@ class PageView(viewsets.ModelViewSet):
     
     def retrieve(self, request, version, pk=None):
         try:
-            page = AgencyPageStructure.objects.get(pk=pk)
-        except AgencyPageStructure.DoesNotExist:
+            page = Page.objects.get(pk=pk)
+        except Page.DoesNotExist:
             return Response({'status':'400', 'message':msg['fa']['page']['page_not_found']})
         serializer = AgencyPageStructureSerializer(page)
         x = {}
@@ -152,8 +152,8 @@ class PageView(viewsets.ModelViewSet):
 
     def destroy(self, request, version, pk=None):
         try:
-            page = AgencyPageStructure.objects.get(pk=pk)
-        except AgencyPageStructure.DoesNotExist:
+            page = Page.objects.get(pk=pk)
+        except Page.DoesNotExist:
             return Response({'status':'400', 'message':msg['fa']['page']['page_not_found']})
         page.delete()
         response_data = {
@@ -164,12 +164,12 @@ class PageView(viewsets.ModelViewSet):
         return Response(response_data)
     
     # pagination_class = PostPagination
-    queryset = AgencyPageStructure.objects.all().order_by('id')
+    queryset = Page.objects.all().order_by('id')
     serializer_class = AgencyPageStructureSerializer
 
 @api_view(['GET'])
 def agency_pages(request, version, agency_id):
-    pages = AgencyPageStructure.objects.filter(agency_id=agency_id)
+    pages = Page.objects.filter(agency_id=agency_id)
     serializer = AgencyPageStructureSerializer(pages, many=True)
     x = {}
     x['status'] = '200'
@@ -179,12 +179,12 @@ def agency_pages(request, version, agency_id):
 
 @api_view(['GET'])
 def crawl(request, version):
-    AgencyPageStructure.objects.all().update(last_crawl=None)
+    Page.objects.all().update(last_crawl=None)
     return Response({'status':'200', 'message': msg['fa']['crawl']['success_crawl_all']})
 
 @api_view(['GET'])
 def crawl_page(request, version, page_id):
-    AgencyPageStructure.objects.filter(id=page_id).update(last_crawl=None)
+    Page.objects.filter(id=page_id).update(last_crawl=None)
     return Response({'status':'200', 'message': msg['fa']['crawl']['success_crawl_page']})
 
 @api_view(['GET'])
@@ -199,8 +199,8 @@ def crawl_agency_disableAll(request, version):
 
 def crawl_agency_none_lats_crawl(agency_id):
     Agency.objects.filter(id=agency_id).update(status=True)
-    AgencyPageStructure.objects.filter(agency=agency_id).update(last_crawl=None, status=True)
-    x = AgencyPageStructure.objects.filter(agency=agency_id).values('id')
+    Page.objects.filter(agency=agency_id).update(last_crawl=None, status=True)
+    x = Page.objects.filter(agency=agency_id).values('id')
     x = CrawlReport.objects.filter(page__in=x, status='pending').update(status='failed')
     
 

@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.options import Options
 
 from .celery import crawler
 from celery import current_app
-from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.models import Agency, Page, CrawlReport
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
@@ -53,7 +53,7 @@ def check_must_crwal(page):
 def check():
     logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
-    pages = AgencyPageStructure.objects.filter(agency__in=agencies)
+    pages = Page.objects.filter(agency__in=agencies)
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:

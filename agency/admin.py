@@ -5,7 +5,7 @@ from django import forms
 from django.contrib import messages
 from django.utils.translation import ngettext
 
-from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.models import Agency, Page, CrawlReport, PageStructure
 from agency.serializer import AgencyPageStructureSerializer
 
 
@@ -30,10 +30,15 @@ class AgencyAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'country', 'website', 'status', 'alexa_global_rank')
 
 
+@admin.register(PageStructure)
+class PageStructureAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
 class AgencyPageStructureForm(forms.ModelForm):
 
     class Meta:
-        model = AgencyPageStructure
+        model = Page
         fields = '__all__'
         widgets = {
             'news_links_structure': PrettyJSONWidget(),
@@ -53,8 +58,8 @@ def crawl_action(AgencyPageStructureAdmin, request, queryset):
     ) % len(queryset), messages.SUCCESS)
 
 
-@admin.register(AgencyPageStructure)
-class AgencyPageStructureAdmin(admin.ModelAdmin):
+@admin.register(Page)
+class PageAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'get_short', 'crawl_interval', 'last_crawl', 'status', 'fetch_content')
     def get_short(self, obj):
         return obj.url if len(obj.url) < 50 else (obj.url[:50] + ' ...')

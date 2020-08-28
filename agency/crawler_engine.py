@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
-from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.models import Agency, Page, CrawlReport
 
 logger = logging.getLogger('django')
 
@@ -146,7 +146,7 @@ class CrawlerEngine():
     def check_links(self):
         """ Cheking links in a page. If a link is not crawled before we will crawl it now
         """        
-        page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
+        page_structure = Page.objects.get(id=self.page['id'])
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link):

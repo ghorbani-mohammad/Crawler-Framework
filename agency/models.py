@@ -19,8 +19,18 @@ class Agency(models.Model):
         return self.name
 
 
+class PageStructure(models.Model):
+    name = models.CharField(max_length=20, null=True)
+    news_links_structure = JSONField()
+    news_meta_structure = JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-class AgencyPageStructure(models.Model):
+    def __str__(self):
+        return self.name if self.name is not None else 'None'
+
+
+class Page(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
     url = models.CharField(max_length=1000, null=False, unique=True)
     crawl_interval = models.IntegerField(default=12)
@@ -29,6 +39,7 @@ class AgencyPageStructure(models.Model):
     news_meta_structure = JSONField()
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
+    page_structure = models.ForeignKey(PageStructure, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,7 +48,7 @@ class AgencyPageStructure(models.Model):
 
 
 class CrawlReport(models.Model):
-    page = models.ForeignKey(AgencyPageStructure, on_delete=models.CASCADE, related_name='report')
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='report')
     status = models.CharField(max_length=300, null=True)
     fetched_links = models.IntegerField(default=0)
     new_links = models.IntegerField(default=0)

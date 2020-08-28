@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from agency.models import Agency, CrawlReport, AgencyPageStructure
+from agency.models import Agency, CrawlReport, Page
 from rest_framework.fields import CharField
 
 
@@ -35,7 +35,7 @@ class CrawlReportSerializer(serializers.ModelSerializer):
 
 class AgencyPageStructureSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AgencyPageStructure
+        model = Page
         fields = [
                     'id',
                     'agency',
