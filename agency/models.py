@@ -28,6 +28,7 @@ class AgencyPageStructure(models.Model):
     news_links_structure = JSONField()
     news_meta_structure = JSONField()
     status = models.BooleanField(default=1)
+    fetch_content = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

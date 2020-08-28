@@ -81,11 +81,11 @@ class CrawlerEngine():
         self.fetched_links_count = len(links)
     
     # TODO: Make crawl_news_page as task function
-    def crawl_one_page(self, link, meta=False):      
+    def crawl_one_page(self, link, fetch_contet):      
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
-        if meta:
+        if fetch_contet:
             self.driver.get(link)
             # TODO: sleep to page load must be dynamic
             time.sleep(4)
@@ -146,6 +146,7 @@ class CrawlerEngine():
     def check_links(self):
         """ Cheking links in a page. If a link is not crawled before we will crawl it now
         """        
+        page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link):
@@ -154,9 +155,8 @@ class CrawlerEngine():
                 continue
             else:
                 # logger.info("Fetching news started for %s", link)
-                self.crawl_one_page(link)
+                self.crawl_one_page(link, page_structure.fetch_content)
         # TODO: page muse be valued in constructor
-        page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         page_structure.last_crawl = datetime.datetime.now()
         page_structure.save()
         # self.report.fetched_links = self.fetched_links_count

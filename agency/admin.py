@@ -55,7 +55,7 @@ def crawl_action(AgencyPageStructureAdmin, request, queryset):
 
 @admin.register(AgencyPageStructure)
 class AgencyPageStructureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'get_short', 'crawl_interval', 'last_crawl', 'status')
+    list_display = ('id', 'agency', 'get_short', 'crawl_interval', 'last_crawl', 'status', 'fetch_content')
     def get_short(self, obj):
         return obj.url if len(obj.url) < 50 else (obj.url[:50] + ' ...')
     get_short.short_description = 'url'
