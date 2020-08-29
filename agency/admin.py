@@ -36,27 +36,29 @@ class CrawlAdmin(admin.ModelAdmin):
 
     image_tag.short_description = 'Image'
 
+
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'country', 'website', 'status', 'alexa_global_rank')
-
-
-@admin.register(PageStructure)
-class PageStructureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-
-    class Meta:
-        widgets = {
-            'news_links_structure': PrettyJSONWidget(),
-            'news_meta_structure': PrettyJSONWidget(),
-        }
 
 
 class AgencyPageStructureForm(forms.ModelForm):
     class Meta:
         model = Page
         fields = '__all__'
-        
+
+        widgets = {
+            'news_links_structure': PrettyJSONWidget(),
+            'news_meta_structure': PrettyJSONWidget(),
+        }
+
+
+@admin.register(PageStructure)
+class PageStructureAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+    form = AgencyPageStructureForm
+
 
 def crawl_action(AgencyPageStructureAdmin, request, queryset):
     from app.tasks import page_crawl
@@ -70,11 +72,11 @@ def crawl_action(AgencyPageStructureAdmin, request, queryset):
     ) % len(queryset), messages.SUCCESS)
 
 
-def crawl_action_with_repetitive(AgencyPageStructureAdmin, request, queryset):
+def crawl_action_ignore_repetitive(AgencyPageStructureAdmin, request, queryset):
     from app.tasks import page_crawl_repetitive
     for page in queryset:
         page_crawl_repetitive.delay(AgencyPageStructureSerializer(page).data)
-    crawl_action_with_repetitive.short_description = "Crawl page with repetitive"
+    crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
     AgencyPageStructureAdmin.message_user(request, ngettext(
         '%d page is in queue to crawl.',
         '%d pages are in queue to crawl.',
@@ -90,7 +92,7 @@ class PageAdmin(admin.ModelAdmin):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
 
     readonly_fields = ("last_crawl",)
-    actions = [crawl_action, crawl_action_with_repetitive]
+    actions = [crawl_action, crawl_action_ignore_repetitive]
 
     form = AgencyPageStructureForm
 
