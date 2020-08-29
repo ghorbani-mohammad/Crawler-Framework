@@ -42,6 +42,7 @@ class Page(models.Model):
     telegram_channel = models.CharField(max_length=100, null=True, blank=True)
     iv_code = models.CharField(max_length=100, null=True, blank=True)
     message_code = models.TextField(default=None, null=True, blank=True)
+    take_picture = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -54,8 +55,9 @@ class CrawlReport(models.Model):
     status = models.CharField(max_length=300, null=True)
     fetched_links = models.IntegerField(default=0)
     new_links = models.IntegerField(default=0)
+    picture = models.ImageField(upload_to='.static/crawler/static', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str(self):
+    def __str__(self):
         return self.page.url

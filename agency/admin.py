@@ -12,7 +12,7 @@ from agency.serializer import AgencyPageStructureSerializer
 
 @admin.register(CrawlReport)
 class CrawlAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'url', 'fetched_links', 'new_links', 'started_at', 'duration', 'status')
+    list_display = ('id', 'agency', 'url', 'fetched_links', 'new_links', 'started_at', 'duration', 'status', 'image_tag')
     list_per_page = 30
     search_fields = ['page__url']
 
@@ -29,6 +29,12 @@ class CrawlAdmin(admin.ModelAdmin):
         x = round((obj.updated_at - obj.created_at).total_seconds())
         return "{} sec".format(x)
 
+    def image_tag(self, obj):
+        if obj.picture:
+            return format_html("<a href='{}'>Link</a>".format('https://www.mo-ghorbani.ir/static/'+obj.picture.path.split('/')[-1]))
+        return ""
+
+    image_tag.short_description = 'Image'
 
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
@@ -78,7 +84,7 @@ def crawl_action_with_repetitive(AgencyPageStructureAdmin, request, queryset):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content')
+    list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)

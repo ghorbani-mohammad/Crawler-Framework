@@ -95,7 +95,8 @@ def redis_exporter():
         try:
             data = json.loads(data)
             page = pages.filter(pk=data['page_id']).first()
-            data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
+            if page.iv_code is not None:
+                data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
             message = data['link']
             temp_code = """
 {0}

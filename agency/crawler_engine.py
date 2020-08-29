@@ -40,13 +40,16 @@ class CrawlerEngine():
         self.repetitive = repetitive
         self.run()
 
-    def fetch_links(self):  
+    def fetch_links(self):
         links = []
         self.driver.get(self.page.url)
         # f = open('page_content_{}.html'.format(str(datetime.datetime.now())), 'w')
         # f.write(self.driver.page_source)
         # f.close()
-        # self.driver.get_screenshot_as_file('page_{}.png'.format(str(datetime.datetime.now()))) 
+        if self.page.take_picture:
+            self.driver.get_screenshot_as_file('static/crawler/static/{}.png'.format(self.report.id))
+            self.report.picture = 'static/crawler/static/{}.png'.format(self.report.id)
+            self.report.save()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page.structure.news_links_structure
         logger.info(type(attribute))

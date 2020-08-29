@@ -13,3 +13,4 @@ django-prettyjson==0.4.1
 django-jsonfield==1.4.0
 python-telegram-bot==12.7
 django-environ==0.4.5
+Pillow==7.2.0

@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,4 +16,3 @@ admin.site.site_header = "Crawler"
 admin.site.site_title = "Crawler"
 
 
-urlpatterns += staticfiles_urlpatterns()
