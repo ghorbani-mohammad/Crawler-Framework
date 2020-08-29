@@ -60,7 +60,6 @@ class PageStructureForm(forms.ModelForm):
 @admin.register(PageStructure)
 class PageStructureAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
-
     form = PageStructureForm
 
 
@@ -88,6 +87,17 @@ def crawl_action_ignore_repetitive(AgencyPageStructureAdmin, request, queryset):
     ) % len(queryset), messages.SUCCESS)
 
 
+class PageAdminForm(forms.ModelForm):
+    class Meta:
+        model = Page
+        fields = '__all__'
+
+        widgets = {
+            "message_code": MonacoEditorWidget(
+                attrs={"data-wordwrap": "on", "data-language": "python"}
+            )
+        }
+
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
@@ -100,3 +110,5 @@ class PageAdmin(admin.ModelAdmin):
 
     def agency(self, obj):
         return obj.page.agency.name
+
+    form = PageAdminForm

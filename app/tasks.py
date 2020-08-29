@@ -105,7 +105,7 @@ def redis_exporter():
             try:
                 temp_code = temp_code + '\n' + 'bot.send_message(chat_id=page.telegram_channel, text=message)'
                 exec(temp_code)
-                time.sleep(1)
+                time.sleep(3)
             except Exception as e:
                 logger.info("Getting attr %s got error", key)
                 logger.info("The code was:\n %s ", temp_code)
