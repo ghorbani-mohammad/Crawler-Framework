@@ -58,23 +58,17 @@ class CrawlerEngine():
         logger.info(attribute)
         tag = attribute['tag']
         del attribute['tag']
-        code = ''
         if 'code' in attribute.keys():
-            code = attribute['code']
             del attribute['code']
         print('specified tag for links')
         print(tag)
         print('specified attributes for links')
         print(attribute)
         elements = doc.findAll(tag, attribute)
-        if code != '':
-            temp_code = """
-{0}
-            """
-            temp_code = temp_code.format(code)
+        if self.page.structure.news_links_code != '':
             logger.info("Executing code")
-            logger.info(temp_code)
-            exec(temp_code)
+            logger.info(self.page.structure.news_links_code)
+            exec(self.page.structure.news_links_code)
             logger.info("executed code")
         else:
             for element in elements:

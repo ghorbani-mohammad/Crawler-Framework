@@ -21,6 +21,9 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [env('server_ip')]
 
+# sets paths to static files for widgets
+from djangoeditorwidgets.config import *
+
 
 # Application definition
 
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'agency.apps.AgencyConfig',
     'clear_cache',
     'prettyjson',
+    'djangoeditorwidgets',
 ]
 
 MIDDLEWARE = [

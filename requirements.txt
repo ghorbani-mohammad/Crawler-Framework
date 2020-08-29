@@ -14,3 +14,4 @@ django-jsonfield==1.4.0
 python-telegram-bot==12.7
 django-environ==0.4.5
 Pillow==7.2.0
+django-editor-widgets==3.0

@@ -22,6 +22,7 @@ class Agency(models.Model):
 class PageStructure(models.Model):
     name = models.CharField(max_length=20, null=True)
     news_links_structure = JSONField()
+    news_links_code = models.TextField(null=True)
     news_meta_structure = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,5 +1,6 @@
 import datetime as dt
 from prettyjson import PrettyJSONWidget
+from djangoeditorwidgets.widgets import MonacoEditorWidget
 from django.contrib import admin
 from django import forms
 from django.utils.html import format_html
@@ -42,7 +43,7 @@ class AgencyAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'country', 'website', 'status', 'alexa_global_rank')
 
 
-class AgencyPageStructureForm(forms.ModelForm):
+class PageStructureForm(forms.ModelForm):
     class Meta:
         model = Page
         fields = '__all__'
@@ -50,6 +51,9 @@ class AgencyPageStructureForm(forms.ModelForm):
         widgets = {
             'news_links_structure': PrettyJSONWidget(),
             'news_meta_structure': PrettyJSONWidget(),
+            "news_links_code": MonacoEditorWidget(
+                attrs={"data-wordwrap": "on", "data-language": "python"}
+            )
         }
 
 
@@ -57,7 +61,7 @@ class AgencyPageStructureForm(forms.ModelForm):
 class PageStructureAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
-    form = AgencyPageStructureForm
+    form = PageStructureForm
 
 
 def crawl_action(AgencyPageStructureAdmin, request, queryset):
@@ -93,8 +97,6 @@ class PageAdmin(admin.ModelAdmin):
 
     readonly_fields = ("last_crawl",)
     actions = [crawl_action, crawl_action_ignore_repetitive]
-
-    form = AgencyPageStructureForm
 
     def agency(self, obj):
         return obj.page.agency.name
