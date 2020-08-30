@@ -19,7 +19,7 @@ class Agency(models.Model):
         return self.name
 
 
-class PageStructure(models.Model):
+class Structure(models.Model):
     name = models.CharField(max_length=20, null=True)
     news_links_structure = JSONField()
     news_links_code = models.TextField(null=True)
@@ -39,10 +39,10 @@ class Page(models.Model):
     last_crawl = models.DateTimeField(null=True)
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
-    structure = models.ForeignKey(PageStructure, on_delete=models.SET_NULL, null=True, blank=True)
+    structure = models.ForeignKey(Structure, on_delete=models.SET_NULL, null=True, blank=True)
     telegram_channel = models.CharField(max_length=100, null=True, blank=True)
     iv_code = models.CharField(max_length=100, null=True, blank=True)
-    message_code = models.TextField(default=None, null=True, blank=True)
+    message_code = models.TextField(default=None, null=True, blank=True, help_text='message=data["link"] or data["iv_link"]')
     take_picture = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -51,7 +51,7 @@ class Page(models.Model):
         return self.url
 
 
-class CrawlReport(models.Model):
+class Report(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='report')
     status = models.CharField(max_length=300, null=True)
     fetched_links = models.IntegerField(default=0)

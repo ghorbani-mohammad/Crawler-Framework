@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
-from agency.models import Agency, Page, CrawlReport
+from agency.models import Page, Report
 
 logger = logging.getLogger('django')
 
@@ -35,7 +35,7 @@ class CrawlerEngine():
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
         self.page = Page.objects.get(id=page['id'])
-        self.report = CrawlReport.objects.create(page_id=self.page.id, status='pending')
+        self.report = Report.objects.create(page_id=self.page.id, status='pending')
         self.header = header
         self.repetitive = repetitive
         self.run()

@@ -9,7 +9,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer, \
     ReportListSerializer
-from agency.models import Agency, Page, CrawlReport
+from agency.models import Agency, Page, Report
 from app.messages import *
 from app import tasks
 
@@ -201,7 +201,7 @@ def crawl_agency_none_lats_crawl(agency_id):
     Agency.objects.filter(id=agency_id).update(status=True)
     Page.objects.filter(agency=agency_id).update(last_crawl=None, status=True)
     x = Page.objects.filter(agency=agency_id).values('id')
-    x = CrawlReport.objects.filter(page__in=x, status='pending').update(status='failed')
+    x = Report.objects.filter(page__in=x, status='pending').update(status='failed')
     
 
 @api_view(['GET'])
@@ -258,7 +258,7 @@ def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
 class ReportView(ReadOnlyModelViewSet):
 
     def list(self, request, version):
-        queryset = CrawlReport.objects.all()
+        queryset = Report.objects.all()
         # page = self.paginate_queryset(queryset)
         # serializer = ReportListSerializer(page, many=True)
         # x = {}
@@ -270,10 +270,10 @@ class ReportView(ReadOnlyModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, version, pk=None):
-        queryset = CrawlReport.objects.all()
+        queryset = Report.objects.all()
         try:
-            report = CrawlReport.objects.get(pk=pk)
-        except CrawlReport.DoesNotExist:
+            report = Report.objects.get(pk=pk)
+        except Report.DoesNotExist:
             return Response({'status':'418', 'message':msg['fa']['report']['report_not_found']})
         serializer = ReportListSerializer(report)
         x = {}

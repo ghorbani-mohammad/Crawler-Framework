@@ -7,11 +7,11 @@ from django.utils.html import format_html
 from django.contrib import messages
 from django.utils.translation import ngettext
 
-from agency.models import Agency, Page, CrawlReport, PageStructure
+from agency.models import Agency, Page, Report, Structure
 from agency.serializer import AgencyPageStructureSerializer
 
 
-@admin.register(CrawlReport)
+@admin.register(Report)
 class CrawlAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'url', 'fetched_links', 'new_links', 'started_at', 'duration', 'status', 'image_tag')
     list_per_page = 30
@@ -57,7 +57,7 @@ class PageStructureForm(forms.ModelForm):
         }
 
 
-@admin.register(PageStructure)
+@admin.register(Structure)
 class PageStructureAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     form = PageStructureForm
