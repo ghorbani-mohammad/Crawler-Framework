@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'clear_cache',
     'prettyjson',
     'djangoeditorwidgets',
+    'django_json_widget',
 ]
 
 MIDDLEWARE = [

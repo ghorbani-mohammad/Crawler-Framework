@@ -1,6 +1,7 @@
-import datetime as dt
 from prettyjson import PrettyJSONWidget
+from django.contrib.postgres import fields
 from djangoeditorwidgets.widgets import MonacoEditorWidget
+from django_json_widget.widgets import JSONEditorWidget
 from django.contrib import admin
 from django import forms
 from django.utils.html import format_html
@@ -49,8 +50,6 @@ class PageStructureForm(forms.ModelForm):
         fields = '__all__'
 
         widgets = {
-            'news_links_structure': PrettyJSONWidget(),
-            'news_meta_structure': PrettyJSONWidget(),
             "news_links_code": MonacoEditorWidget(
                 attrs={"data-wordwrap": "on", "data-language": "python"}
             )
@@ -60,6 +59,9 @@ class PageStructureForm(forms.ModelForm):
 @admin.register(Structure)
 class PageStructureAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+    formfield_overrides = {
+        fields.JSONField: {'widget': JSONEditorWidget(height="320px", width="40%")},
+    }
     form = PageStructureForm
 
 
