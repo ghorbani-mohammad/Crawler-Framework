@@ -13,7 +13,6 @@ class Agency(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['id']
         verbose_name_plural = 'agencies'
 
     def __str__(self):
@@ -24,7 +23,7 @@ class Structure(models.Model):
     name = models.CharField(max_length=20, null=True)
     news_links_structure = JSONField()
     news_links_code = models.TextField(null=True, blank=True)
-    news_meta_structure = JSONField()
+    news_meta_structure = JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -35,7 +34,7 @@ class Structure(models.Model):
 class Page(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
     url = models.CharField(max_length=1000, null=False, unique=True)
-    crawl_interval = models.IntegerField(default=2)
+    crawl_interval = models.PositiveIntegerField(default=2)
     load_sleep = models.IntegerField(default=4)
     last_crawl = models.DateTimeField(null=True)
     status = models.BooleanField(default=1)
