@@ -59,7 +59,7 @@ def check():
         if page.last_crawl is None:
             check_must_crwal(page)
         else:
-            diff_hour = int((now - page.last_crawl).total_seconds()/(3600))
+            diff_hour = int((now - page.last_crawl).total_seconds()/(60))
             if diff_hour >= page.crawl_interval:
                 check_must_crwal(page)
 

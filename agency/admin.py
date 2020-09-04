@@ -103,6 +103,7 @@ class PageAdminForm(forms.ModelForm):
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
+    list_editable = ('crawl_interval',)
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
