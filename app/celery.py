@@ -7,9 +7,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 
 # TODO: redis port and ip and db must be dynamic
 crawler = Celery('crawler',
-             broker='redis://crawler_redis:6379/10',
-             backend='redis://crawler_redis:6379/10',
-             include=['app.tasks'])
+            broker='redis://crawler_redis:6379/10',
+            backend='redis://crawler_redis:6379/10',
+            include=['app.tasks', 'agency.tasks']
+        )
 
 # Optional configuration, see the application user guide.
 crawler.conf.update(
@@ -22,11 +23,11 @@ crawler.control.purge()
 crawler.conf.beat_schedule = {
     'check-agencies-60-seconds': {
         'task': 'check_agencies',
-        'schedule': 1 * 60,
+        'schedule': 10 * 60,
     },
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
-        'schedule': 1 * 60,
+        'schedule': 10 * 60,
     },
 }
 
