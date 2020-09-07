@@ -1,4 +1,4 @@
-import logging, redis, json, time, datetime
+import logging, redis, json, time, datetime, time
 from bs4 import BeautifulSoup
 # from selenium import webdriver
 from seleniumwire import webdriver
@@ -43,6 +43,7 @@ class CrawlerEngine():
     def fetch_links(self):
         links = []
         self.driver.get(self.page.url)
+        time.sleep(self.page.links_sleep)
         # f = open('page_content_{}.html'.format(str(datetime.datetime.now())), 'w')
         # f.write(self.driver.page_source)
         # f.close()

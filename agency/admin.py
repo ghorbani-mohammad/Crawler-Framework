@@ -104,6 +104,15 @@ class PageAdminForm(forms.ModelForm):
 class PageAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
     list_editable = ('crawl_interval',)
+    fields = (
+        'agency', 'url', 'structure',
+        ('crawl_interval', 'load_sleep', 'links_sleep'),
+        ('status', 'fetch_content', 'take_picture'),
+        ('telegram_channel', 'iv_code'),
+        'message_code',
+        'last_crawl', 
+    )
+
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)

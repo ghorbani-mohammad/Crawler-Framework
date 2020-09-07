@@ -34,8 +34,9 @@ class Structure(models.Model):
 class Page(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
     url = models.CharField(max_length=1000, null=False, unique=True)
-    crawl_interval = models.PositiveIntegerField(default=2)
-    load_sleep = models.IntegerField(default=4)
+    crawl_interval = models.PositiveIntegerField(default=60, help_text='minute')
+    load_sleep = models.PositiveIntegerField(default=4, blank=True, help_text='each link sleep')
+    links_sleep = models.PositiveIntegerField(default=1, blank=True, help_text='all links sleep')
     last_crawl = models.DateTimeField(null=True)
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
