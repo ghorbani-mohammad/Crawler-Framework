@@ -17,12 +17,12 @@ crawler.conf.update(
 )
 
 # if you want to purge works queue
-crawler.control.purge()
+# crawler.control.purge()
 
 crawler.conf.beat_schedule = {
     'check-agencies-60-seconds': {
         'task': 'check_agencies',
-        'schedule': 30 * 60,
+        'schedule': 1 * 60,
     },
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
