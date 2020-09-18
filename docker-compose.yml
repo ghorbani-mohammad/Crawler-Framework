@@ -4,16 +4,15 @@ services:
   crawler:
     image: crawler
     container_name: crawler_django
-    command: ["gunicorn", "--bind", "0.0.0.0:8200", "app.wsgi:application"]
+    command: ["python", "/app/manage.py", "runserver", "0.0.0.0:8200"]
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/app
+    ports: 
+      - 8200:8200
     restart: unless-stopped
-    network_mode: host
-    environment:
-      DEBUG: 'True'
   
   redis:
     image: redis
@@ -21,9 +20,8 @@ services:
     volumes: 
       - ./redis:/data
     restart: always
-    network_mode: host
-    # logging:
-    #   driver: none
+    logging:
+      driver: none
   
   celery_worker:
     image: crawler
@@ -32,9 +30,6 @@ services:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
     restart: always
-    network_mode: host
-    logging:
-      driver: none
   
   celery_scheduler:
     image: crawler
@@ -43,9 +38,6 @@ services:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
     restart: always
-    network_mode: host
-    # logging:
-    #   driver: none
   
   chrome_browser:
     image: selenium/standalone-chrome
@@ -53,6 +45,3 @@ services:
     logging:
       driver: none
     restart: always
-    network_mode: host
-  
-      
