@@ -7,8 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer, \
-    ReportListSerializer
+from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, ReportListSerializer
 from agency.models import Agency, AgencyPageStructure, CrawlReport
 from app.messages import *
 from app import tasks
@@ -86,7 +85,6 @@ class AgencyView(viewsets.ModelViewSet):
         }
         return Response(response_data)
 
-    # pagination_class = PostPa gination
     queryset = Agency.objects.filter(deleted_at=None).order_by('id')
     serializer_class = AgencySerializer
 
@@ -165,7 +163,6 @@ class PageView(viewsets.ModelViewSet):
         }
         return Response(response_data)
     
-    # pagination_class = PostPagination
     queryset = AgencyPageStructure.objects.filter(deleted_at=None).order_by('id')
     serializer_class = AgencyPageStructureSerializer
 
