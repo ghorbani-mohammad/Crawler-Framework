@@ -9,7 +9,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
 from .celery import crawler
-from celery import current_app
+from django.conf import settings
 from agency.models import Agency, AgencyPageStructure, CrawlReport, Option
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
@@ -19,7 +19,7 @@ logger = logging.getLogger('django')
 
 # TODO: configs must be dynamic
 redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
-Exporter_API_URI = "http://138.201.77.42:8888/crawler/news"
+Exporter_API_URI = "http://{}:8888/crawler/news".format(settings.SERVER_IP)
 Exporter_API_headers = {
                             'Content-Type': "application/json",
                             'User-Agent': "PostmanRuntime/7.17.1",
