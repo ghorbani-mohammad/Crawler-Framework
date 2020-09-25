@@ -22,7 +22,9 @@ class Agency(models.Model):
 class Structure(models.Model):
     name = models.CharField(max_length=20, null=True)
     news_links_structure = JSONField()
-    news_links_code = models.TextField(null=True, blank=True)
+    news_links_code = models.TextField(null=True, blank=True,
+        help_text='like: for el in elements: try: links.append(el["href"]) except: continue'
+    )
     news_meta_structure = JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -41,7 +43,7 @@ class Page(models.Model):
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
     structure = models.ForeignKey(Structure, on_delete=models.SET_NULL, null=True, blank=True)
-    telegram_channel = models.CharField(max_length=100, null=True, blank=True)
+    telegram_channel = models.CharField(max_length=100, null=True, blank=True, help_text='like: @jobinja')
     iv_code = models.CharField(max_length=100, null=True, blank=True)
     message_code = models.TextField(default=None, null=True, blank=True, help_text='message=data["link"] or data["iv_link"]')
     take_picture = models.BooleanField(default=False)
