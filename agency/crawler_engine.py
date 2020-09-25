@@ -1,9 +1,9 @@
 import logging, redis, json, time, datetime, time
 from bs4 import BeautifulSoup
-# from selenium import webdriver
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+
 from agency.models import Page, Report
 
 logger = logging.getLogger('django')

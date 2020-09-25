@@ -10,12 +10,14 @@ from django.utils.translation import ngettext
 
 from agency.models import Agency, Page, Report, Structure
 from agency.serializer import AgencyPageStructureSerializer
+from reusable import jalali
 
 
 @admin.register(Report)
 class CrawlAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'url', 'fetched_links', 'new_links', 'started_at', 'duration', 'status', 'image_tag')
     list_per_page = 30
+    list_filter = ['page__agency']
     search_fields = ['page__url']
 
     def url(self, obj):
