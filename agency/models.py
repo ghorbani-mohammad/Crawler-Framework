@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 
 
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
 class Agency(models.Model):
     name = models.CharField(max_length=20, null=False, unique=True)
     country = models.CharField(max_length=20, default='NA')
@@ -33,6 +40,10 @@ class Structure(models.Model):
         return self.name if self.name is not None else 'None'
 
 
+class Cookie(BaseModel):
+    key_values = JSONField()
+
+
 class Page(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
     url = models.CharField(max_length=1000, null=False, unique=True)
@@ -47,6 +58,8 @@ class Page(models.Model):
     iv_code = models.CharField(max_length=100, null=True, blank=True)
     message_code = models.TextField(default=None, null=True, blank=True, help_text='message=data["link"] or data["iv_link"]')
     take_picture = models.BooleanField(default=False)
+    cookie = models.ForeignKey(Cookie, related_name='pages', on_delete=models.CASCADE, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
