@@ -97,8 +97,8 @@ def redis_exporter():
         data['agency_id'] = int(data['agency_id'])
         try:
             response = requests.request("GET", Exporter_API_URI, data=json.dumps(data), headers=Exporter_API_headers)
-        except Exception:
-            print('get error')
+        except Exception as e:
+            print('get error {}'.format(str(e)))
         if response.status_code == 200 or response.status_code == 406:
             logging.error(response.status_code)
             redis_news.delete(key)
@@ -114,8 +114,6 @@ def redis_exporter():
         else:
             logging.error('Exporter error. code: %s || message: %s', str(response.status_code), str(response.text))
             logging.error('Redis-key: %s', str(key))
-    # except Exception:
-    #     logging.error('Exporter error code: %s',str(Exception))
 
 
 @crawler.task(name='fetch_alexa_rank')
