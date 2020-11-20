@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
+from celery.schedules import crontab
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
@@ -27,6 +28,10 @@ crawler.conf.beat_schedule = {
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
         'schedule': 1 * 60,
+    },
+    'remove_obsolete_reports': {
+        'task': 'remove_obsolete_reports',
+        'schedule': crontab(minute=0, hour=0),
     },
 }
 

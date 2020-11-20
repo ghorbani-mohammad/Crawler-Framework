@@ -1,7 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 import requests
-from bs4 import BeautifulSoup
 import logging, datetime, redis, requests, json
+from bs4 import BeautifulSoup
+from dateutil import relativedelta
 
 
 from seleniumwire import webdriver
@@ -142,3 +143,10 @@ def fetch_alexa_rank(agency_id, agency_url):
     global_rank = doc.find('div', {'class': 'rankmini-rank'}).text. \
                                 replace('#', '').replace('\t','').replace('\n', '').replace(',','')
     Agency.objects.filter(pk=agency_id).update(alexa_global_rank=global_rank)
+
+
+@crawler.task(name='remove_obsolete_reports')
+def remove_obsolete_reports():
+    now = datetime.datetime.now()
+    past_month = now - relativedelta.relativedelta(months=1)
+    CrawlReport.objects.filter(created_at__lte=past_month).delete()
