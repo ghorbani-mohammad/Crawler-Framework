@@ -3,7 +3,7 @@ version: '3.4'
 services:
   crawler:
     image: crawler
-    container_name: crawler_django
+    container_name: crawler_api
     command: ["python", "/app/manage.py", "runserver", "0.0.0.0:8200"]
     build:
       context: .
@@ -25,7 +25,7 @@ services:
   
   celery_worker:
     image: crawler
-    container_name: crawler_celery_worker
+    container_name: crawler_celery
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
@@ -33,7 +33,7 @@ services:
   
   celery_scheduler:
     image: crawler
-    container_name: crawler_celery_scheduler
+    container_name: crawler_beat
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
