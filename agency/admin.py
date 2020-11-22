@@ -1,14 +1,16 @@
-import datetime as dt
 from prettyjson import PrettyJSONWidget
 from django.contrib import admin
 from django import forms
+from rangefilter.filter import DateTimeRangeFilter
+
 from agency.models import Agency, AgencyPageStructure, CrawlReport
 
 
 @admin.register(CrawlReport)
-class CrawlAdmin(admin.ModelAdmin):
+class CrawlReportAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'page', 'fetched_links', 'new_links', 'started_at', 'duration', 'status')
-    list_per_page = 10
+    list_filter = (('created_at', DateTimeRangeFilter), 'page__agency')
+    list_per_page = 50
 
     def agency(self, obj):
         return obj.page.agency.name
