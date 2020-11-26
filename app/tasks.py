@@ -107,12 +107,9 @@ def redis_exporter():
                 exec(temp_code)
                 time.sleep(3)
             except Exception as e:
-                logger.info("Getting attr %s got error", key)
-                logger.info("The code was:\n %s ", temp_code)
-                logger.info("Error was:\n %s", str(e))
+                logger.info('\n\nRedis exporter error, link was {} *** and code was: {} *** and error was: {}\n\n'.format(key.decode('utf-8'), temp_code, str(e)))
         except Exception as e:
-            print('ERRRORRRR  {}'.format(key))
-            print(str(e))
+            logger.info('\n\nERRRORRRR key was: {} *** and error was: {} \n\n'.format(key, str(e)))
         finally:
             redis_news.delete(key)
 
