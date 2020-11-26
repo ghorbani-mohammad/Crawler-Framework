@@ -1,4 +1,5 @@
 import logging, redis, json, time, datetime, time
+from logging import log
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -61,10 +62,7 @@ class CrawlerEngine():
         del attribute['tag']
         if 'code' in attribute.keys():
             del attribute['code']
-        print('specified tag for links')
-        print(tag)
-        print('specified attributes for links')
-        print(attribute)
+        logger.info('specified tag for links was: {} *** and specified attributes for links were: {}'.format(tag, attribute))
         elements = doc.findAll(tag, attribute)
         if self.page.structure.news_links_code != '':
             logger.info("Executing code")
@@ -107,9 +105,7 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.info("Getting attr %s got error", key)
-                            logger.info("The code was:\n %s ", temp_code)
-                            logger.info("Error was:\n %s", str(e))
+                            logger.info("tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)))
                         continue
                     code = ''
                     if 'code' in attribute.keys():
@@ -117,8 +113,7 @@ class CrawlerEngine():
                         del attribute['code']
                     element = doc.find(tag, attribute)
                     if element is None:
-                        logger.info("element is null")
-                        logger.info(attribute)
+                        logger.info("element is null, tag was: {} *** and attribute was {}".format(tag, attribute))
                         break
                     if code != '':
                         temp_code = """
@@ -128,9 +123,7 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.info("Getting attr %s got error", key)
-                            logger.info("The code was:\n %s ", temp_code)
-                            logger.info("Error was:\n %s", str(e))
+                            logger.info("tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)))
                     else:
                         article[key] = element.text
         # article['source'] = str(self.page['agency'])
