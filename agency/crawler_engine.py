@@ -90,48 +90,49 @@ class CrawlerEngine():
             # TODO: sleep to page load must be dynamic
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, 'html.parser')
-            for key in meta.keys():
-                attribute = meta[key].copy()
-                tag = attribute['tag']
-                del attribute['tag']
-                if tag == 'value':
-                    article[key] = attribute['value']
-                    continue
-                if tag == 'code':
-                    code = attribute['code']
-                    temp_code = """
-{0}
-                    """
-                    temp_code = temp_code.format(code)
-                    try:
-                        exec(temp_code)
-                    except Exception as e:
-                        logger.info("Getting attr %s got error", key)
-                        logger.info("The code was:\n %s ", temp_code)
-                        logger.info("Error was:\n %s", str(e))
-                    continue
-                code = ''
-                if 'code' in attribute.keys():
-                    code = attribute['code']
-                    del attribute['code']
-                element = doc.find(tag, attribute)
-                if element is None:
-                    logger.info("element is null")
-                    logger.info(attribute)
-                    break
-                if code != '':
-                    temp_code = """
-{0}
-                    """
-                    temp_code = temp_code.format(code)
-                    try:
-                        exec(temp_code)
-                    except Exception as e:
-                        logger.info("Getting attr %s got error", key)
-                        logger.info("The code was:\n %s ", temp_code)
-                        logger.info("Error was:\n %s", str(e))
-                else:
-                    article[key] = element.text
+            if meta is not None:
+                for key in meta.keys():
+                    attribute = meta[key].copy()
+                    tag = attribute['tag']
+                    del attribute['tag']
+                    if tag == 'value':
+                        article[key] = attribute['value']
+                        continue
+                    if tag == 'code':
+                        code = attribute['code']
+                        temp_code = """
+    {0}
+                        """
+                        temp_code = temp_code.format(code)
+                        try:
+                            exec(temp_code)
+                        except Exception as e:
+                            logger.info("Getting attr %s got error", key)
+                            logger.info("The code was:\n %s ", temp_code)
+                            logger.info("Error was:\n %s", str(e))
+                        continue
+                    code = ''
+                    if 'code' in attribute.keys():
+                        code = attribute['code']
+                        del attribute['code']
+                    element = doc.find(tag, attribute)
+                    if element is None:
+                        logger.info("element is null")
+                        logger.info(attribute)
+                        break
+                    if code != '':
+                        temp_code = """
+    {0}
+                        """
+                        temp_code = temp_code.format(code)
+                        try:
+                            exec(temp_code)
+                        except Exception as e:
+                            logger.info("Getting attr %s got error", key)
+                            logger.info("The code was:\n %s ", temp_code)
+                            logger.info("Error was:\n %s", str(e))
+                    else:
+                        article[key] = element.text
         # article['source'] = str(self.page['agency'])
         logger.info(article)
         self.save_to_redis(article)
