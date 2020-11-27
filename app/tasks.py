@@ -53,7 +53,7 @@ def check_must_crwal(page):
 def check():
     logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
-    pages = Page.objects.filter(agency__in=agencies)
+    pages = Page.objects.filter(agency__in=agencies).filter(lock=False)
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:

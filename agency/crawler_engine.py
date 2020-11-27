@@ -35,6 +35,8 @@ class CrawlerEngine():
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
         self.page = Page.objects.get(id=page['id'])
+        self.page.lock = True
+        self.page.save()
         self.report = Report.objects.create(page_id=self.page.id, status='pending')
         self.header = header
         self.repetitive = repetitive
@@ -155,8 +157,6 @@ class CrawlerEngine():
         self.redis_duplicate_checker.set(article['link'], "", ex=432000)
     
     def check_links(self):
-        """ Cheking links in a page. If a link is not crawled before we will crawl it now
-        """        
         page = Page.objects.get(id=self.page.id)
         counter = self.fetched_links_count
         for link in self.fetched_links:
@@ -169,6 +169,7 @@ class CrawlerEngine():
                 self.crawl_one_page(link, page.fetch_content)
         # TODO: page muse be valued in constructor
         page.last_crawl = datetime.datetime.now()
+        page.lock = False
         page.save()
         self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
