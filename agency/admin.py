@@ -130,7 +130,7 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'base', 'source', 'short_description', 'created_at', 'phase')
+    list_display = ('id', 'agency', 'base', 'source', 'error', 'short_description', 'created_at', 'phase')
     list_filter = ['page__agency', 'phase']
     
     def source(self, obj):
@@ -144,7 +144,9 @@ class LogAdmin(admin.ModelAdmin):
         return ''
     
     def agency(self, obj):
-        return obj.page.agency.name
+        if obj.page is not None:
+            return obj.page.agency.name
+        return ''
     
     def short_description(self, obj):
         from django.template.defaultfilters import truncatechars  # or truncatewords
