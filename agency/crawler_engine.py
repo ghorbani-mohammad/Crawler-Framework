@@ -77,6 +77,8 @@ class CrawlerEngine():
         logger.info(links)
         self.fetched_links = links
         self.fetched_links_count = len(links)
+        self.report.fetched_links = self.fetched_links_count
+        self.report.save()
     
     # TODO: Make crawl_news_page as task function
     def crawl_one_page(self, link, fetch_contet):      
@@ -169,7 +171,6 @@ class CrawlerEngine():
         self.page.last_crawl = datetime.datetime.now()
         self.page.lock = False
         self.page.save()
-        self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
         self.report.status = 'complete'
         self.report.save()

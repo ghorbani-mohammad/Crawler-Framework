@@ -16,4 +16,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 application = get_wsgi_application()
 
 from agency.models import Page
-Page.objects.update(lock=False)
+print('********* {} updated to lock=False *****'.format(Page.objects.update(lock=False)))
