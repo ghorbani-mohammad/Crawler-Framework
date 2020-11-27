@@ -104,13 +104,13 @@ class PageAdminForm(forms.ModelForm):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
+    list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'lock', 'fetch_content', 'take_picture')
     list_editable = ('crawl_interval', 'status')
     list_filter = ['status', 'agency']
     fields = (
         'agency', 'url', 'structure',
         ('crawl_interval', 'load_sleep', 'links_sleep'),
-        ('status', 'fetch_content', 'take_picture'),
+        ('status', 'fetch_content', 'take_picture', 'lock'),
         ('telegram_channel', 'iv_code'),
         'message_code',
         'last_crawl', 
