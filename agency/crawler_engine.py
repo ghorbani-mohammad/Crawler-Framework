@@ -1,5 +1,4 @@
 import logging, redis, json, time, datetime, time
-from logging import log
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -107,11 +106,11 @@ class CrawlerEngine():
                         except Exception as e:
                             Log.objects.create(
                                 page=self.page,
-                                description="tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)),
+                                description="tag code, executing code maked error, the code was {}".format(temp_code),
                                 url=link,
-                                phase=Log.CRAWLING
+                                phase=Log.CRAWLING,
+                                error=e
                             )
-                            logger.info("tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)))
                         continue
                     code = ''
                     if 'code' in attribute.keys():
@@ -121,11 +120,11 @@ class CrawlerEngine():
                     if element is None:
                         Log.objects.create(
                             page=self.page,
-                            description="element is null, tag was: {} *** and attribute was {}".format(tag, attribute),
+                            description="tag was: {} *** and attribute was {}".format(tag, attribute),
                             url=link,
-                            phase=Log.CRAWLING
+                            phase=Log.CRAWLING,
+                            error='element is null'
                         )
-                        logger.info("element is null, tag was: {} *** and attribute was {}".format(tag, attribute))
                         break
                     if code != '':
                         temp_code = """
@@ -137,11 +136,11 @@ class CrawlerEngine():
                         except Exception as e:
                             Log.objects.create(
                                 page=self.page,
-                                description="tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)),
+                                description="tag code, executing code maked error, the code was {}".format(temp_code),
                                 url=link,
-                                phase=Log.CRAWLING
+                                phase=Log.CRAWLING,
+                                error=e
                             )
-                            logger.info("tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)))
                     else:
                         article[key] = element.text
         # article['source'] = str(self.page['agency'])

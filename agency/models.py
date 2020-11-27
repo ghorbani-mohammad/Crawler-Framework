@@ -84,6 +84,7 @@ class Log(BaseModel):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='logs', null=True)
     url = models.CharField(max_length=2000, null=True)
     description = models.TextField(default='')
+    error = models.TextField(null=True)
 
     CRAWLING = 'cra'
     SENDING = 'sen'
