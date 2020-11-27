@@ -88,7 +88,7 @@ def redis_exporter():
     logger.info("---> Redis exporter is started")
     API_KEY = '1395437640:AAFZ1mkohxundOSBwBek1B8SPnApO4nIIMo'
     bot = telegram.Bot(token=API_KEY)
-    pages = Page.objects.filter(status=True)
+    pages = Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
         data = (redis_news.get(key).decode('utf-8'))
