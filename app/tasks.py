@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals
-import requests
 from bs4 import BeautifulSoup
-import logging, datetime, redis, requests, json
+import logging, datetime, redis, json
 
 
 import telegram, time
@@ -11,9 +10,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
 from .celery import crawler
-from celery import current_app
 from agency.models import Agency, Page, Report, Log
-from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
+from agency.serializer import AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
 
@@ -36,6 +34,7 @@ Exporter_API_headers = {
                             'cache-control': "no-cache"
                         }
 
+
 def check_must_crwal(page):
     now = datetime.datetime.now()
     x = Report.objects.filter(page=page.id, status='pending')
@@ -53,7 +52,7 @@ def check_must_crwal(page):
 def check():
     logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
-    pages = Page.objects.filter(agency__in=agencies).filter(lock=False)
+    pages = Page.objects.filter(agency__in=agencies).filter(lock=False).filter(status=True)
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:
@@ -62,7 +61,6 @@ def check():
             diff_hour = int((now - page.last_crawl).total_seconds()/(60))
             if diff_hour >= page.crawl_interval:
                 check_must_crwal(page)
-
 
 
 def crawl(page):
