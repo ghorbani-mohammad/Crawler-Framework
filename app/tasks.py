@@ -101,6 +101,7 @@ def redis_exporter():
                     page=page, url=data['link'], phase=Log.SENDING, error='page is None',
                     description='data is: {}'.format(data)
                 )
+                redis_news.delete(key)
                 continue
             data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
             temp_code = """
