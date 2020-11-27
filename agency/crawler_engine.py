@@ -128,7 +128,7 @@ class CrawlerEngine():
                         break
                     if code != '':
                         temp_code = """
-    {0}
+{0}
                         """
                         temp_code = temp_code.format(code)
                         try:
