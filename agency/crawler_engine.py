@@ -5,7 +5,7 @@ from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
-from agency.models import Page, Report
+from agency.models import Page, Report, Log
 
 logger = logging.getLogger('django')
 
@@ -105,6 +105,12 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
+                            Log.objects.create(
+                                page=self.page,
+                                description="tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)),
+                                url=link,
+                                phase=Log.CRAWLING
+                            )
                             logger.info("tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)))
                         continue
                     code = ''
@@ -113,6 +119,12 @@ class CrawlerEngine():
                         del attribute['code']
                     element = doc.find(tag, attribute)
                     if element is None:
+                        Log.objects.create(
+                            page=self.page,
+                            description="element is null, tag was: {} *** and attribute was {}".format(tag, attribute),
+                            url=link,
+                            phase=Log.CRAWLING
+                        )
                         logger.info("element is null, tag was: {} *** and attribute was {}".format(tag, attribute))
                         break
                     if code != '':
@@ -123,6 +135,12 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
+                            Log.objects.create(
+                                page=self.page,
+                                description="tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)),
+                                url=link,
+                                phase=Log.CRAWLING
+                            )
                             logger.info("tag code, executing code maked error, the code was {} *** and error was {}".format(temp_code, str(e)))
                     else:
                         article[key] = element.text
