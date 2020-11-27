@@ -118,10 +118,10 @@ def redis_exporter():
             Log.objects.create(
                     page=page,
                     url=data['link'],
-                    description='ERRRORRRR key was: {} *** and error was: {}'.format(key, str(e)),
+                    description='ERRRORRRR key was: {} *** and error was: {}'.format(key.decode('utf-8'), str(e)),
                     phase=Log.SENDING
                 )
-            logger.info('\n\nERRRORRRR key was: {} *** and error was: {} \n\n'.format(key, str(e)))
+            logger.info('\n\nERRRORRRR key was: {} *** and error was: {} \n\n'.format(key.decode('utf-8'), str(e)))
         finally:
             redis_news.delete(key)
 
