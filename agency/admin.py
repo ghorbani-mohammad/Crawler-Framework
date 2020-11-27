@@ -130,7 +130,7 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'page_url', 'source', 'description', 'created_at', 'phase')
+    list_display = ('id', 'page_url', 'source', 'short_description', 'created_at', 'phase')
     list_filter = ['page__agency', 'phase']
     
     def source(self, obj):
@@ -144,6 +144,10 @@ class LogAdmin(admin.ModelAdmin):
             return format_html("<a href='{url}'>Link</a>", url=obj.url)
         else:
             return ''
+    
+    def short_description(self, obj):
+        from django.template.defaultfilters import truncatechars  # or truncatewords
+        return truncatechars(obj.description, 100)
     
     def has_change_permission(self, request, obj=None):
         return False
