@@ -110,18 +110,16 @@ def redis_exporter():
                 Log.objects.create(
                     page=page,
                     url=data['link'],
-                    description='Redis exporter error, link was {} *** and code was: {} *** and error was: {}'.format(key.decode('utf-8'), temp_code, str(e)),
+                    description='Redis exporter error, code was: {} *** and error was: {}'.format(temp_code, e),
                     phase=Log.SENDING
                 )
-                logger.info('\n\nRedis exporter error, link was {} *** and code was: {} *** and error was: {}\n\n'.format(key.decode('utf-8'), temp_code, str(e)))
         except Exception as e:
             Log.objects.create(
-                    page=page,
-                    url=data['link'],
-                    description='ERRRORRRR key was: {} *** and error was: {}'.format(key.decode('utf-8'), str(e)),
-                    phase=Log.SENDING
-                )
-            logger.info('\n\nERRRORRRR key was: {} *** and error was: {} \n\n'.format(key.decode('utf-8'), str(e)))
+                page=page,
+                url=data['link'],
+                description='ERRRORRRR key was: {} *** and error was: {}'.format(key.decode('utf-8'), e),
+                phase=Log.SENDING
+            )
         finally:
             redis_news.delete(key)
 
