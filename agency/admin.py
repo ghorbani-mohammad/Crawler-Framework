@@ -131,13 +131,16 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ('agency', 'base', 'source', 'error', 'short_description', 'created_at', 'phase')
+    list_display = ('agency', 'base', 'source', 'error', 'short_description', 'created', 'phase')
     list_filter = ['page__agency', 'phase']
     
     def source(self, obj):
         if obj.page is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
         return ''
+
+    def created(self, obj):
+        return obj.created_at.strftime("%h. %d %H:%M %p")
     
     def base(self, obj):
         if obj.url is not None:
