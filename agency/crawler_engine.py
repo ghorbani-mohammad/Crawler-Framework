@@ -100,7 +100,7 @@ class CrawlerEngine():
                     if tag == 'code':
                         code = attribute['code']
                         temp_code = """
-    {0}
+{0}
                         """
                         temp_code = temp_code.format(code)
                         try:
@@ -157,7 +157,6 @@ class CrawlerEngine():
         self.redis_duplicate_checker.set(article['link'], "", ex=432000)
     
     def check_links(self):
-        page = Page.objects.get(id=self.page.id)
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if not self.repetitive and self.redis_duplicate_checker.exists(link):
@@ -166,11 +165,11 @@ class CrawlerEngine():
                 continue
             else:
                 # logger.info("Fetching news started for %s", link)
-                self.crawl_one_page(link, page.fetch_content)
+                self.crawl_one_page(link, self.page.fetch_content)
         # TODO: page muse be valued in constructor
-        page.last_crawl = datetime.datetime.now()
-        page.lock = False
-        page.save()
+        self.page.last_crawl = datetime.datetime.now()
+        self.page.lock = False
+        self.page.save()
         self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
         self.report.status = 'complete'
