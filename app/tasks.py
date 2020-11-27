@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.options import Options
 
 from .celery import crawler
 from celery import current_app
-from agency.models import Agency, Page, Report
+from agency.models import Agency, Page, Report, Log
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
@@ -92,6 +92,7 @@ def redis_exporter():
 
     for key in redis_news.scan_iter("*"):
         data = (redis_news.get(key).decode('utf-8'))
+        page = None
         try:
             data = json.loads(data)
             page = pages.filter(pk=data['page_id']).first()
@@ -107,8 +108,18 @@ def redis_exporter():
                 exec(temp_code)
                 time.sleep(3)
             except Exception as e:
+                Log.objects.create(
+                    page=page, 
+                    description='Redis exporter error, link was {} *** and code was: {} *** and error was: {}'.format(key.decode('utf-8'), temp_code, str(e)),
+                    phase=Log.SENDING
+                )
                 logger.info('\n\nRedis exporter error, link was {} *** and code was: {} *** and error was: {}\n\n'.format(key.decode('utf-8'), temp_code, str(e)))
         except Exception as e:
+            Log.objects.create(
+                    page=page, 
+                    description='ERRRORRRR key was: {} *** and error was: {}'.format(key, str(e)),
+                    phase=Log.SENDING
+                )
             logger.info('\n\nERRRORRRR key was: {} *** and error was: {} \n\n'.format(key, str(e)))
         finally:
             redis_news.delete(key)

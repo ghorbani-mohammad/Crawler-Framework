@@ -81,8 +81,17 @@ class Report(models.Model):
 
 
 class Log(BaseModel):
-    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='logs')
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='logs', null=True)
     description = models.TextField(default='')
+
+    CRAWLING = 'cra'
+    SENDING = 'sen'
+
+    PHASE_CHOICES = (
+        (CRAWLING, 'کرال'),
+        (SENDING, 'متچ'),
+    )
+    phase = models.CharField(choices=PHASE_CHOICES, null=True, blank=True, max_length=3)
 
     def __str__(self):
         return '{} {}'.format(self.id, self.page)

@@ -8,7 +8,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 from django.utils.translation import ngettext
 
-from agency.models import Agency, Page, Report, Structure
+from agency.models import Agency, Page, Report, Structure, Log
 from agency.serializer import AgencyPageStructureSerializer
 from reusable import jalali
 
@@ -126,3 +126,8 @@ class PageAdmin(admin.ModelAdmin):
         return obj.page.agency.name
 
     form = PageAdminForm
+
+
+@admin.register(Log)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'page', 'description')
