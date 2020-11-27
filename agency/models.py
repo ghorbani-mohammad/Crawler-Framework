@@ -59,6 +59,7 @@ class Page(models.Model):
     message_code = models.TextField(default=None, null=True, blank=True, help_text='message=data["link"] or data["iv_link"]')
     take_picture = models.BooleanField(default=False)
     cookie = models.ForeignKey(Cookie, related_name='pages', on_delete=models.CASCADE, null=True)
+    lock = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
