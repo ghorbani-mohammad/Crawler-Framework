@@ -78,3 +78,11 @@ class Report(models.Model):
 
     def __str__(self):
         return self.page.url
+
+
+class Log(BaseModel):
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='logs')
+    description = models.TextField(default='')
+
+    def __str__(self):
+        return '{} {}'.format(self.id, self.page)
