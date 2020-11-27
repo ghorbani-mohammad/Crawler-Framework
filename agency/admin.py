@@ -104,8 +104,9 @@ class PageAdminForm(forms.ModelForm):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
+    list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'fetch_content', 'take_picture')
     list_editable = ('crawl_interval',)
+    list_filter = ['agency']
     fields = (
         'agency', 'url', 'structure',
         ('crawl_interval', 'load_sleep', 'links_sleep'),
@@ -130,7 +131,7 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'base', 'source', 'error', 'short_description', 'created_at', 'phase')
+    list_display = ('agency', 'base', 'source', 'error', 'short_description', 'created_at', 'phase')
     list_filter = ['page__agency', 'phase']
     
     def source(self, obj):
