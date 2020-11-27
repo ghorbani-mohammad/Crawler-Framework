@@ -137,3 +137,6 @@ class LogAdmin(admin.ModelAdmin):
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
         else:
             return ''
+    
+    def has_change_permission(self, request, obj=None):
+        return False

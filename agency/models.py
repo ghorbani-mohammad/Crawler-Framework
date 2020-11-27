@@ -89,7 +89,7 @@ class Log(BaseModel):
 
     PHASE_CHOICES = (
         (CRAWLING, 'کرال'),
-        (SENDING, 'متچ'),
+        (SENDING, 'ارسال به تلگرام'),
     )
     phase = models.CharField(choices=PHASE_CHOICES, null=True, blank=True, max_length=3)
 

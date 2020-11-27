@@ -13,6 +13,13 @@ logger = get_task_logger(__name__)
     run_every=(crontab(minute=0, hour=0)), name="remove_old_reports", ignore_result=True
 )
 def remove_old_reports():
-    age_models.Report.objects.filter()
-    past = timezone.datetime.today() - timezone.timedelta(days=5)
+    past = timezone.datetime.today() - timezone.timedelta(days=10)
+    print('Deleted reports: {}'.format(age_models.Report.objects.filter(created_at__lte=past).delete()[0]))
+
+
+@periodic_task(
+    run_every=(crontab(minute=0, hour=0)), name="remove_old_logs", ignore_result=True
+)
+def remove_old_logs():
+    past = timezone.datetime.today() - timezone.timedelta(days=10)
     print('Deleted reports: {}'.format(age_models.Report.objects.filter(created_at__lte=past).delete()[0]))
