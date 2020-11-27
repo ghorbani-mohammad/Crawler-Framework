@@ -106,7 +106,7 @@ class PageAdminForm(forms.ModelForm):
 class PageAdmin(admin.ModelAdmin):
     list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'lock', 'fetch_content', 'take_picture')
     list_editable = ('crawl_interval', 'status')
-    list_filter = ['status', 'agency']
+    list_filter = ['status', 'lock', 'agency']
     fields = (
         'agency', 'url', 'structure',
         ('crawl_interval', 'load_sleep', 'links_sleep'),
