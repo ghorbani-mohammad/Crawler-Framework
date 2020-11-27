@@ -46,7 +46,7 @@ class Cookie(BaseModel):
 
 class Page(models.Model):
     agency = models.ForeignKey(Agency, related_name='pages', on_delete=models.CASCADE)
-    url = models.CharField(max_length=1000, null=False, unique=True)
+    url = models.CharField(max_length=2000, null=False, unique=True)
     crawl_interval = models.PositiveIntegerField(default=60, help_text='minute')
     load_sleep = models.PositiveIntegerField(default=4, blank=True, help_text='each link sleep')
     links_sleep = models.PositiveIntegerField(default=1, blank=True, help_text='all links sleep')
@@ -82,6 +82,7 @@ class Report(models.Model):
 
 class Log(BaseModel):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='logs', null=True)
+    url = models.CharField(max_length=2000, null=True)
     description = models.TextField(default='')
 
     CRAWLING = 'cra'
