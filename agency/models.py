@@ -22,6 +22,10 @@ class Agency(models.Model):
     class Meta:
         verbose_name_plural = 'agencies'
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.pages.all().update(status=self.status)
+
     def __str__(self):
         return self.name
 
