@@ -42,15 +42,13 @@ def check_must_crwal(page):
         crawl(page)
     else:
         last_report = x.last()
-        if int((now - last_report.created_at).total_seconds()/(3600)) >= page.crawl_interval:
-            last_report.status = 'failed'
-            last_report.save()
+        if int((now - last_report.created_at).total_seconds()/(60)) >= page.crawl_interval:
+            x.update(status='failed')
             crawl(page)
 
 
 @crawler.task(name='check_agencies')
 def check():
-    logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
     pages = Page.objects.filter(agency__in=agencies).filter(lock=False).filter(status=True)
     now = datetime.datetime.now()
@@ -83,7 +81,6 @@ def page_crawl_repetitive(page_structure):
 
 @crawler.task(name='redis_exporter')
 def redis_exporter():
-    logger.info("---> Redis exporter is started")
     API_KEY = '1395437640:AAFZ1mkohxundOSBwBek1B8SPnApO4nIIMo'
     bot = telegram.Bot(token=API_KEY)
     pages = Page.objects.all()
