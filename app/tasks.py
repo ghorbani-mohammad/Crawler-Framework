@@ -96,8 +96,13 @@ def redis_exporter():
         try:
             data = json.loads(data)
             page = pages.filter(pk=data['page_id']).first()
-            if page.iv_code is not None:
-                data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
+            if page is None:
+                Log.objects.create(
+                    page=page, url=data['link'], phase=Log.SENDING, error='page is None',
+                    description='data is: {}'.format(data)
+                )
+                continue
+            data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
             temp_code = """
 {0}
             """
@@ -108,19 +113,13 @@ def redis_exporter():
                 time.sleep(3)
             except Exception as e:
                 Log.objects.create(
-                    page=page,
-                    url=data['link'],
-                    description='Redis exporter error, code was: {}'.format(temp_code),
-                    phase=Log.SENDING,
-                    error=e
+                    page=page, url=data['link'], phase=Log.SENDING, error=str(e),
+                    description='code was: {}'.format(temp_code)
                 )
         except Exception as e:
             Log.objects.create(
-                page=page,
-                url=data['link'],
-                description='ERRRORRRR key was: {}'.format(key.decode('utf-8')),
-                phase=Log.SENDING,
-                error=e
+                page=page, url=data['link'], phase=Log.SENDING, error=str(e),
+                description='key was: {}'.format(key.decode('utf-8'))
             )
         finally:
             redis_news.delete(key)
