@@ -98,7 +98,6 @@ def redis_exporter():
             page = pages.filter(pk=data['page_id']).first()
             if page.iv_code is not None:
                 data['iv_link'] = "https://t.me/iv?url={}&rhash={}".format(data['link'], page.iv_code)
-            message = data['link']
             temp_code = """
 {0}
             """
@@ -109,32 +108,20 @@ def redis_exporter():
                 time.sleep(3)
             except Exception as e:
                 Log.objects.create(
-                    page=page, 
+                    page=page,
+                    url=data['link'],
                     description='Redis exporter error, link was {} *** and code was: {} *** and error was: {}'.format(key.decode('utf-8'), temp_code, str(e)),
                     phase=Log.SENDING
                 )
                 logger.info('\n\nRedis exporter error, link was {} *** and code was: {} *** and error was: {}\n\n'.format(key.decode('utf-8'), temp_code, str(e)))
         except Exception as e:
             Log.objects.create(
-                    page=page, 
+                    page=page,
+                    url=data['link'],
                     description='ERRRORRRR key was: {} *** and error was: {}'.format(key, str(e)),
                     phase=Log.SENDING
                 )
             logger.info('\n\nERRRORRRR key was: {} *** and error was: {} \n\n'.format(key, str(e)))
-        finally:
-            redis_news.delete(key)
-
-    for key in redis_news.scan_iter("*upwork*"):
-        data = (redis_news.get(key).decode('utf-8'))
-        try:
-            data = json.loads(data)
-            message = "https://t.me/iv?url={}&rhash=27e79aa0d36cae".format(data['link'])
-            # message = "https://t.me/iv?url={}&rhash=27e79aa0d36cae\n\nLink: {}".format(data['link'], data['link'])
-            bot.send_message(chat_id='@upwork_careers', text=message)
-            time.sleep(0.5)
-        except Exception as e:
-            print('ERRRORRRR upwork')
-            print(str(e))
         finally:
             redis_news.delete(key)
 
