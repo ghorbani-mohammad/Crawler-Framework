@@ -166,7 +166,6 @@ class CrawlerEngine():
             else:
                 # logger.info("Fetching news started for %s", link)
                 self.crawl_one_page(link, self.page.fetch_content)
-        # TODO: page muse be valued in constructor
         self.page.last_crawl = datetime.datetime.now()
         self.page.lock = False
         self.page.save()
