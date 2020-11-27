@@ -130,7 +130,7 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency_name', 'page_url', 'source', 'short_description', 'created_at', 'phase')
+    list_display = ('id', 'agency', 'base', 'source', 'short_description', 'created_at', 'phase')
     list_filter = ['page__agency', 'phase']
     
     def source(self, obj):
@@ -138,12 +138,12 @@ class LogAdmin(admin.ModelAdmin):
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
         return ''
     
-    def page_url(self, obj):
+    def base(self, obj):
         if obj.url is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.url)
         return ''
     
-    def agency_name(self, obj):
+    def agency(self, obj):
         return obj.page.agency.name
     
     def short_description(self, obj):
