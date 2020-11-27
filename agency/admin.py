@@ -17,7 +17,7 @@ from reusable import jalali
 class CrawlAdmin(admin.ModelAdmin):
     list_display = ('id', 'agency', 'url', 'fetched_links', 'new_links', 'started_at', 'duration', 'status', 'image_tag')
     list_per_page = 30
-    list_filter = ['page__agency']
+    list_filter = [ 'status', 'page__agency',]
     search_fields = ['page__url']
 
     def url(self, obj):
