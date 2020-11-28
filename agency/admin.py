@@ -104,7 +104,7 @@ class PageAdminForm(forms.ModelForm):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl', 'status', 'lock', 'fetch_content', 'take_picture')
+    list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl2', 'status', 'lock', 'fetch_content', 'take_picture')
     list_editable = ('crawl_interval', 'status')
     list_filter = ['status', 'lock', 'agency']
     fields = (
@@ -116,6 +116,8 @@ class PageAdmin(admin.ModelAdmin):
         'last_crawl', 
     )
 
+    def last_crawl2(self, obj):
+        return obj.last_crawl.strftime("%h. %d %H:%M %p")
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
