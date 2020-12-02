@@ -117,7 +117,8 @@ class PageAdmin(admin.ModelAdmin):
     )
 
     def last_crawl2(self, obj):
-        return obj.last_crawl.strftime("%h. %d %H:%M %p")
+        if obj.last_crawl is not None:
+            return obj.last_crawl.strftime("%h. %d %H:%M %p")
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
