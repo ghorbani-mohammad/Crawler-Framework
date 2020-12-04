@@ -55,21 +55,21 @@ class CrawlerEngine():
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page.structure.news_links_structure
-        logger.info(type(attribute))
+        # logger.info(type(attribute))
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        logger.info(attribute)
+        # logger.info(attribute)
         tag = attribute['tag']
         del attribute['tag']
         if 'code' in attribute.keys():
             del attribute['code']
-        logger.info('specified tag for links was: {} *** and specified attributes for links were: {}'.format(tag, attribute))
+        # logger.info('specified tag for links was: {} *** and specified attributes for links were: {}'.format(tag, attribute))
         elements = doc.findAll(tag, attribute)
         if self.page.structure.news_links_code != '':
-            logger.info("Executing code")
-            logger.info(self.page.structure.news_links_code)
+            # logger.info("Executing code")
+            # logger.info(self.page.structure.news_links_code)
             exec(self.page.structure.news_links_code)
-            logger.info("executed code")
+            # logger.info("executed code")
         else:
             for element in elements:
                 links.append(element['href'])
