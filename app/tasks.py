@@ -8,6 +8,7 @@ from dateutil import relativedelta
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+from celery.task.schedules import crontab
 
 from .celery import crawler
 from django.conf import settings
@@ -55,7 +56,7 @@ def check_must_crwal(page):
 def check():
     logger.info("---***> Check_agencies is started <***----")
     agencies = Agency.objects.filter(status= True, deleted_at=None).values_list('id', flat= True)
-    pages = AgencyPageStructure.objects.filter(agency__in=agencies, deleted_at=None)
+    pages = AgencyPageStructure.objects.filter(agency__in=agencies, deleted_at=None, lock=False)
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:
@@ -150,3 +151,8 @@ def remove_obsolete_reports():
     now = datetime.datetime.now()
     past_month = now - relativedelta.relativedelta(months=1)
     CrawlReport.objects.filter(created_at__lte=past_month).delete()
+
+
+@crawler.task(run_every=(crontab(minute=0, hour=0)), name="reset_locks", ignore_result=True)
+def reset_locks():
+    AgencyPageStructure.objects.update(lock=False)
