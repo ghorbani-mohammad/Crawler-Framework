@@ -1,6 +1,7 @@
 from prettyjson import PrettyJSONWidget
 from django.contrib import admin
 from django import forms
+from django.utils.html import format_html
 from rangefilter.filter import DateTimeRangeFilter
 
 from agency.models import Agency, AgencyPageStructure, CrawlReport
@@ -41,9 +42,13 @@ class AgencyPageStructureForm(forms.ModelForm):
 
 @admin.register(AgencyPageStructure)
 class AgencyPageStructureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'url', 'crawl_interval', 'last_crawl', 'status')
+    list_display = ('id', 'agency', 'url2', 'crawl_interval', 'last_crawl', 'status')
+    list_filter = ('agency',)
 
     form = AgencyPageStructureForm
 
     def agency(self, obj):
         return obj.page.agency.name
+
+    def url2(self, obj):
+        return format_html("<a href='{url}' target='_blank'>{url}<a>", url=obj.url)

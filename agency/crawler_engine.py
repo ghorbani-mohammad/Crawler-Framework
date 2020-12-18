@@ -1,7 +1,7 @@
 """
     Required modules for requests and bs4
 """
-import logging, redis, json, time, datetime
+import logging, redis, json, time, datetime, re
 from bs4 import BeautifulSoup
 
 from seleniumwire import webdriver
