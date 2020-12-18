@@ -1,7 +1,7 @@
 """
     Required modules for requests and bs4
 """
-import logging, redis, json, time, datetime, re
+import logging, redis, json, time, datetime, re, validators
 from bs4 import BeautifulSoup
 
 from seleniumwire import webdriver
@@ -152,7 +152,7 @@ class CrawlerEngine():
     def check_links(self):
         counter = self.fetched_links_count
         for link in self.fetched_links:
-            if self.redis_duplicate_checker.exists(link):
+            if self.redis_duplicate_checker.exists(link) or not validators.url(link):
                 # logger.info("duplicate")
                 counter -= 1
                 continue
