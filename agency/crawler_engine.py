@@ -52,23 +52,20 @@ class CrawlerEngine():
         attribute = self.page['news_links_structure']
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        self.custom_logging("structure for fetching links are: \n {}".format(attribute))
+        self.custom_logging("\n\nstructure for fetching links are: \n{}\n\n".format(attribute))
         tag = attribute['tag']
-        self.custom_logging("specified tag for fetching links is: \n {}".format(tag))
         del attribute['tag']
         code = ''
         if 'code' in attribute.keys():
             code = attribute['code']
             del attribute['code']
-        self.custom_logging("specified attributes for fetching tag is: \n {}".format(attribute))
         elements = doc.findAll(tag, attribute)
         if code != '':
             temp_code = """
 {0}
             """
             temp_code = temp_code.format(code)
-            self.custom_logging("Executing code")
-            self.custom_logging(temp_code)
+            self.custom_logging("Executing code: \n{}".format(temp_code))
             exec(temp_code)
             self.custom_logging("executed code")
         else:
@@ -84,16 +81,15 @@ class CrawlerEngine():
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
-        self.custom_logging("fetched news link is: \n {}".format(link))
+        self.custom_logging("getting content of news: {}".format(link))
         self.driver.get(link)
         # TODO: sleep to page load must be dynamic
         time.sleep(4)
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         for key in meta.keys():
-            self.custom_logging("specified key is: \n {}".format(key))
             attribute = meta[key].copy()
             tag = attribute['tag']
-            self.custom_logging("\tspecified tag is: \n {}".format(tag))
+            
             del attribute['tag']
             if tag == 'value':
                 article[key] = attribute['value']
@@ -116,11 +112,10 @@ class CrawlerEngine():
             if 'code' in attribute.keys():
                 code = attribute['code']
                 del attribute['code']
-            self.custom_logging("\tspecified attributes for fetching tag is: \n {}".format(attribute))
+            self.custom_logging("key: {} tag: {} attr: {}".format(key, tag, attribute))
             element = doc.find(tag, attribute)
             if element is None:
-                self.custom_logging("element is null")
-                self.custom_logging(attribute)
+                self.custom_logging("element is null, attribute: {}".format(attribute))
                 break
             if code != '':
                 temp_code = """
@@ -146,8 +141,9 @@ class CrawlerEngine():
 
         # save to redis for 5 days
         # TODO: expiration must be dynamic
-        self.redis_news.set(article['link'], json.dumps(article))
         self.redis_duplicate_checker.set(article['link'], "", ex=432000)
+        if 'title' in article.keys() and 'body' in article.keys():
+            self.redis_news.set(article['link'], json.dumps(article))
     
     def check_links(self):
         counter = self.fetched_links_count
