@@ -42,6 +42,7 @@ class CrawlerEngine():
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
         self.page = page
+        AgencyPageStructure.objects.filter(id=self.page['id']).update(lock=True)
         self.page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.header = header
@@ -181,6 +182,7 @@ class CrawlerEngine():
         
         self.page_structure.last_crawl = datetime.datetime.now()
         self.page_structure.save()
+        AgencyPageStructure.objects.filter(id=self.page['id']).update(lock=False)
         self.report.fetched_links = self.fetched_links_count
         self.report.new_links = counter
         self.report.status = 'complete'
