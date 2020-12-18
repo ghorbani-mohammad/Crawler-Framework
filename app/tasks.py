@@ -77,7 +77,8 @@ def crawl(page):
 @crawler.task(name='page_crawl')
 def page_crawl(page_structure):
     logger.info("---> Page crawling is started")
-    CrawlerEngine(page_structure)
+    crawler = CrawlerEngine(page_structure)
+    crawler.run()
 
 
 @crawler.task(name='redis_exporter')

@@ -43,7 +43,6 @@ class CrawlerEngine():
         self.page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
         self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
         self.header = header
-        self.run()
 
     def fetch_links(self):
         links = []
@@ -73,6 +72,7 @@ class CrawlerEngine():
                 links.append(element['href'])
         # self.custom_logging("Fetched links are:")
         # self.custom_logging(links)
+        links = list(set([link for link in links if validators.url(link)]))
         self.fetched_links = links
         self.fetched_links_count = len(links)
     
@@ -130,7 +130,6 @@ class CrawlerEngine():
                     self.custom_logging("Error was:\n {}".format(str(e)))
             else:
                 article[key] = element.text
-        # article['source'] = str(self.page['agency'])
         logger.info(article)
         self.save_to_redis(article)
 
@@ -175,5 +174,106 @@ class CrawlerEngine():
         self.fetch_links()
         self.custom_logging("------> We found {} number of links: ".format(self.fetched_links_count))
         self.check_links()
+
+
+class CrawlerEngineV2():
+    def __init__(self, header=None):
+        options = Options()
+        options.add_argument('--disable-gpu')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument("--enable-automation")
+        options.add_argument("--no-sandbox")
+        self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
+                                        desired_capabilities=DesiredCapabilities.CHROME,
+                                        options=options)
+        self.driver.header_overrides = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
+            'AppleWebKit/537.11 (KHTML, like Gecko) '
+            'Chrome/23.0.1271.64 Safari/537.11',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+            'Accept-Encoding': 'none',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Connection': 'keep-alive'
+        }
+
+    def get_links(self, structure, url):
+        links = []
+        self.driver.get(url)
+        doc = BeautifulSoup(self.driver.page_source, 'html.parser')
+        attribute = json.dumps(structure)
+        attribute = json.loads(attribute)
+        tag = attribute['tag']
+        del attribute['tag']
+        code = ''
+        if 'code' in attribute.keys():
+            code = attribute['code']
+            del attribute['code']
+        elements = doc.findAll(tag, attribute)
+        if code != '':
+            temp_code = """
+{0}
+            """
+            temp_code = temp_code.format(code)
+            exec(temp_code)
+        else:
+            for element in elements:
+                links.append(element['href'])
+        links = set([link for link in links if validators.url(link)])
+        return links
+
+    def get_content(self, structure, url):
+        article = {}
+        article['link'] = url
+        self.driver.get(url)
+        # TODO: sleep to page load must be dynamic
+        doc = BeautifulSoup(self.driver.page_source, 'html.parser')
+        for key in structure.keys():
+            attribute = structure[key].copy()
+            tag = attribute['tag']
+            
+            del attribute['tag']
+            if tag == 'value':
+                article[key] = attribute['value']
+                print("\tspecified tag get's value directly and it's value is: \n {}".format(attribute['value']))
+                continue
+            if tag == 'code':
+                code = attribute['code']
+                temp_code = """
+{0}
+                """
+                temp_code = temp_code.format(code)
+                try:
+                    exec(temp_code)
+                except Exception as e:
+                    print("Getting attr {} got error".format(key))
+                    print("The code was:\n {} ".format(temp_code))
+                    print("Error was:\n {}".format(str(e)))
+                continue
+            code = ''
+            if 'code' in attribute.keys():
+                code = attribute['code']
+                del attribute['code']
+            print("key: {} tag: {} attr: {}".format(key, tag, attribute))
+            element = doc.find(tag, attribute)
+            if element is None:
+                print("element is null, attribute: {}".format(attribute))
+                break
+            if code != '':
+                temp_code = """
+{0}
+                """
+                temp_code = temp_code.format(code)
+                try:
+                    exec(temp_code)
+                except Exception as e:
+                    print("Getting attr {} got error".format(key))
+                    print("The code was:\n {} ".format(temp_code))
+                    print("Error was:\n {}".format(str(e)))
+            else:
+                article[key] = element.text
+        # logger.info(article)
+        return article
+
 
     
