@@ -42,7 +42,7 @@ class AgencyPageStructureForm(forms.ModelForm):
 
 @admin.register(AgencyPageStructure)
 class AgencyPageStructureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'url2', 'crawl_interval', 'last_crawl', 'status')
+    list_display = ('id', 'agency', 'url2', 'crawl_interval', 'last_crawl', 'status', 'lock')
     list_filter = ('agency',)
 
     form = AgencyPageStructureForm

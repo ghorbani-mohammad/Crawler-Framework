@@ -13,9 +13,6 @@ from agency.models import Agency, AgencyPageStructure, CrawlReport
 logger = logging.getLogger('django')
 
 class CrawlerEngine():
-    """
-    This class extract news links from a page and then go to them and extract their informations
-    """
     def __init__(self, page, header=None):
         # TODO: ip and port of webdriver must be dynamic
         
@@ -49,13 +46,8 @@ class CrawlerEngine():
         self.run()
 
     def fetch_links(self):
-        """ Extract links in a page. Links that have specified structure will be extracted.
-        """        
         links = []
         self.driver.get(self.page['url'])
-        # f = open('page_content.txt', 'w')
-        # f.write(self.driver.page_source)
-        # f.close()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
         attribute = json.dumps(attribute)
@@ -89,11 +81,6 @@ class CrawlerEngine():
     
     # TODO: Maek crawl_news_page as task function
     def crawl_one_page(self, link):
-        """Gets one page and crawl it
-        
-        Arguments:
-            link {[string]} -- [link of page]
-        """        
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
@@ -154,11 +141,6 @@ class CrawlerEngine():
 
 
     def save_to_redis(self, article):
-        """ Save fetched article(news) into redis
-        
-        Arguments:
-            article {[aticle]} -- [a json of article attribute]
-        """        
         article['agency_id'] = self.page_structure.agency.id
         article['source'] = self.page_structure.agency.name
 
@@ -168,8 +150,6 @@ class CrawlerEngine():
         self.redis_duplicate_checker.set(article['link'], "", ex=432000)
     
     def check_links(self):
-        """ Cheking links in a page. If a link is not crawled before we will crawl it now
-        """        
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link):
@@ -193,7 +173,6 @@ class CrawlerEngine():
     def custom_logging(self, message):
         logger.info(message)
         self.log_messages += '{} \n'.format(message)
-
 
     def run(self):
         self.custom_logging("------> Fetching links from {} started".format(self.page['url']))
