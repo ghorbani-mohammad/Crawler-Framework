@@ -156,7 +156,7 @@ class CrawlerEngine():
         # save to redis for 5 days
         # TODO: expiration must be dynamic
         self.redis_news.set(article['link'], json.dumps(article))
-        self.redis_duplicate_checker.set(article['link'], "", ex=432000)
+        self.redis_duplicate_checker.set(article['link'], "", ex=86400*20)
     
     def check_links(self):
         counter = self.fetched_links_count
