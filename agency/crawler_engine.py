@@ -70,8 +70,6 @@ class CrawlerEngine():
         else:
             for element in elements:
                 links.append(element['href'])
-        # self.custom_logging("Fetched links are:")
-        # self.custom_logging(links)
         links = list(set([link for link in links if validators.url(link)]))
         self.fetched_links = links
         self.fetched_links_count = len(links)
@@ -138,9 +136,8 @@ class CrawlerEngine():
         article['agency_id'] = self.page_structure.agency.id
         article['source'] = self.page_structure.agency.name
 
-        # save to redis for 5 days
         # TODO: expiration must be dynamic
-        self.redis_duplicate_checker.set(article['link'], "", ex=432000)
+        self.redis_duplicate_checker.set(article['link'], "", ex=86400 * 30)
         if 'title' in article.keys() and 'body' in article.keys():
             self.redis_news.set(article['link'], json.dumps(article))
     
@@ -148,11 +145,9 @@ class CrawlerEngine():
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link) or not validators.url(link):
-                # logger.info("duplicate")
                 counter -= 1
                 continue
             else:
-                # logger.info("Fetching news started for %s", link)
                 self.crawl_one_page(link)
         
         self.page_structure.last_crawl = datetime.datetime.now()
@@ -272,7 +267,6 @@ class CrawlerEngineV2():
                     print("Error was:\n {}".format(str(e)))
             else:
                 article[key] = element.text
-        # logger.info(article)
         return article
 
 
