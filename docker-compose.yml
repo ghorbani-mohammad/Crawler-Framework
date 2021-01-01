@@ -1,9 +1,9 @@
 version: '3.4'
 
 services:
-  crawler:
+  crawler_django:
     image: crawler
-    container_name: crawler_api
+    container_name: crawler_django
     command: ["python", "/app/manage.py", "runserver", "0.0.0.0:8200"]
     build:
       context: .
@@ -23,15 +23,15 @@ services:
     logging:
       driver: none
   
-  celery_worker:
+  crawler_worker:
     image: crawler
-    container_name: crawler_celery
+    container_name: crawler_worker
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
     restart: always
   
-  celery_scheduler:
+  crawler_beat:
     image: crawler
     container_name: crawler_beat
     volumes:
