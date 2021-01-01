@@ -39,9 +39,9 @@ services:
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
     restart: always
   
-  chrome_browser:
+  crawler_chrome:
     image: selenium/standalone-chrome
-    container_name: crawler_chrome_browser
+    container_name: crawler_chrome
     logging:
       driver: none
     restart: always

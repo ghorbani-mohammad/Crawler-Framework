@@ -23,11 +23,11 @@ crawler.conf.update(
 crawler.conf.beat_schedule = {
     'check-agencies-60-seconds': {
         'task': 'check_agencies',
-        'schedule': 1 * 60,
+        'schedule': 1 * 30,
     },
     'redis-exporter-300-seconds': {
         'task': 'redis_exporter',
-        'schedule': 1 * 60,
+        'schedule': 1 * 30,
     },
     'remove_obsolete_reports': {
         'task': 'remove_obsolete_reports',

@@ -28,7 +28,7 @@ Exporter_API_headers = {
                             'Accept': "*/*",
                             'Cache-Control': "no-cache",
                             'Postman-Token': "4b465a23-1b28-4b86-981d-67ccf94dda70,4beba7c1-fd77-4b44-bb14-2ea60fbfa590",
-                            'Host': "94.130.238.184:8888",
+                            'Host': "{}:8888".format(settings.SERVER_IP),
                             'Accept-Encoding': "gzip, deflate",
                             'Content-Length': "2796",
                             'Connection': "keep-alive",

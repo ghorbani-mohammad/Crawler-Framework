@@ -22,7 +22,7 @@ class CrawlerEngine():
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--enable-automation")
         options.add_argument("--no-sandbox")
-        self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
+        self.driver = webdriver.Remote("http://crawler_chrome:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
         self.driver.header_overrides = {
@@ -143,6 +143,7 @@ class CrawlerEngine():
     
     def check_links(self):
         counter = self.fetched_links_count
+        print(len(self.fetched_links))
         for link in self.fetched_links:
             if self.redis_duplicate_checker.exists(link) or not validators.url(link):
                 counter -= 1
