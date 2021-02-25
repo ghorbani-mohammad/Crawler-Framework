@@ -1,13 +1,7 @@
 from __future__ import absolute_import, unicode_literals
-from bs4 import BeautifulSoup
+
 import logging, datetime, redis, json
-
-
 import telegram, time
-
-from seleniumwire import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
 
 from .celery import crawler
 from agency.models import Agency, Page, Report, Log
@@ -15,27 +9,11 @@ from agency.serializer import AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
 
-logger = logging.getLogger('django')
-
 # TODO: configs must be dynamic
 redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
-redis_links = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
-Exporter_API_URI = "http://138.201.77.42:8888/crawler/news"
-Exporter_API_headers = {
-                            'Content-Type': "application/json",
-                            'User-Agent': "PostmanRuntime/7.17.1",
-                            'Accept': "*/*",
-                            'Cache-Control': "no-cache",
-                            'Postman-Token': "4b465a23-1b28-4b86-981d-67ccf94dda70,4beba7c1-fd77-4b44-bb14-2ea60fbfa590",
-                            'Host': "94.130.238.184:8888",
-                            'Accept-Encoding': "gzip, deflate",
-                            'Content-Length': "2796",
-                            'Connection': "keep-alive",
-                            'cache-control': "no-cache"
-                        }
 
 
-def check_must_crwal(page):
+def check_must_crawl(page):
     now = datetime.datetime.now()
     x = Report.objects.filter(page=page.id, status='pending')
     if x.count() == 0:
@@ -54,28 +32,28 @@ def check():
     now = datetime.datetime.now()
     for page in pages:
         if page.last_crawl is None:
-            check_must_crwal(page)
+            check_must_crawl(page)
         else:
             diff_hour = int((now - page.last_crawl).total_seconds()/(60))
             if diff_hour >= page.crawl_interval:
-                check_must_crwal(page)
+                check_must_crawl(page)
 
 
 def crawl(page):
-    logger.info("---> Page %s must be crawled", page.url)
+    logging.info("---> Page %s must be crawled", page.url)
     serializer = AgencyPageStructureSerializer(page)
     page_crawl.delay(serializer.data)
 
 
 @crawler.task(name='page_crawl')
 def page_crawl(page_structure):
-    logger.info("---> Page crawling is started")
+    logging.info("---> Page crawling is started")
     CrawlerEngine(page_structure)
 
 
 @crawler.task(name='page_crawl_repetitive')
 def page_crawl_repetitive(page_structure):
-    logger.info("---> Page crawling is started")
+    logging.info("---> Page crawling is started")
     CrawlerEngine(page_structure, repetitive= True)
 
 
@@ -90,7 +68,7 @@ def redis_exporter():
         page = None
         try:
             data = json.loads(data)
-            page = pages.filter(pk=data['page_id']).first()
+            page = pages.filter(pk=data['page_id'], status=True).first()
             if page is None:
                 Log.objects.create(
                     page=page, url=data['link'], phase=Log.SENDING, error='page is None',
@@ -119,31 +97,3 @@ def redis_exporter():
             )
         finally:
             redis_news.delete(key)
-
-
-@crawler.task(name='fetch_alexa_rank')
-def fetch_alexa_rank(agency_id, agency_url):
-    options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--disable-gpu')
-    options.add_argument('--disable-dev-shm-usage')
-
-    driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
-                                        desired_capabilities=DesiredCapabilities.CHROME,
-                                        options=options)
-    driver.header_overrides = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
-        'AppleWebKit/537.11 (KHTML, like Gecko) '
-        'Chrome/23.0.1271.64 Safari/537.11',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-        'Accept-Encoding': 'none',
-        'Accept-Language': 'en-US,en;q=0.8',
-        'Connection': 'keep-alive'
-    }
-
-    driver.get('https://www.alexa.com/siteinfo/{}'.format(agency_url))
-    doc = BeautifulSoup(driver.page_source, 'html.parser')
-    global_rank = doc.find('div', {'class': 'rankmini-rank'}).text. \
-                                replace('#', '').replace('\t','').replace('\n', '').replace(',','')
-    Agency.objects.filter(pk=agency_id).update(alexa_global_rank=global_rank)
