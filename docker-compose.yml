@@ -26,7 +26,7 @@ services:
     image: redis
     container_name: crawler_redis
     volumes: 
-      - ./redis:/data
+      - /root/dbs/crawler/redis:/data
     restart: always
     logging:
       driver: none
