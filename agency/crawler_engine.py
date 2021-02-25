@@ -18,7 +18,7 @@ class CrawlerEngine():
         options.add_argument("--enable-javascript")
         # options.add_argument("--enable-automation"); 
         # options.add_argument("--no-sandbox"); 
-        self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
+        self.driver = webdriver.Remote("http://crawler_chrome:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
         self.driver.header_overrides = {
