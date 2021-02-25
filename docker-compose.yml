@@ -33,7 +33,7 @@ services:
   
   celery_worker:
     image: crawler
-    container_name: crawler_celery_worker
+    container_name: crawler_worker
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
@@ -41,7 +41,7 @@ services:
   
   celery_scheduler:
     image: crawler
-    container_name: crawler_celery_scheduler
+    container_name: crawler_beat
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
@@ -49,7 +49,7 @@ services:
   
   chrome_browser:
     image: selenium/standalone-chrome
-    container_name: crawler_chrome_browser
+    container_name: crawler_chrome
     logging:
       driver: none
     restart: always
