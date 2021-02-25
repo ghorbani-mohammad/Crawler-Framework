@@ -1,10 +1,4 @@
 import os
-import environ
-
-env = environ.Env()
-
-# reading .env file
-environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,9 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n6ld+$-+#x(j7!vys)uvbscvsmm51nwn+(z#3zeqjx+a-!vt_@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = True
 
-ALLOWED_HOSTS = [env('server_ip')]
+ALLOWED_HOSTS = ['88.99.18.179']
 
 # sets paths to static files for widgets
 from djangoeditorwidgets.config import *
@@ -81,15 +75,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS': {
-            'options': '-c search_path={}'.format(env('postgres_schema'))
-        },
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'army',
-        'HOST': env('db_url'),
-        'PORT': env('db_port'),
-    },
+        'HOST': 'crawler_db',
+        'PORT': '5432',
+    }
 }
 
 
@@ -137,39 +127,4 @@ REST_FRAMEWORK = {
     # When you enable API versioning, the request.version attribute will contain a string
     # that corresponds to the version requested in the incoming client request.
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'info.log',
-            'formatter':'main_formatter'
-        },
-        'null': {
-            'class': 'logging.NullHandler',
-        },
-    },
-    'formatters': {
-        'main_formatter': {
-            'format': '(%(asctime)s; %(filename)s:%(lineno)d)'
-                      '%(levelname)s:%(name)s: %(message)s ',
-            'datefmt': "%Y-%m-%d %H:%M:%S",
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'django.server': {
-            'handlers': ['null'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    },
 }
