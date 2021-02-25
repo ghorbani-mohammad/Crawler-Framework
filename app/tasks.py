@@ -4,6 +4,7 @@ import logging, datetime, redis, json
 import telegram, time
 
 from .celery import crawler
+from app.settings import BOT_API_KEY
 from agency.models import Agency, Page, Report, Log
 from agency.serializer import AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
@@ -59,8 +60,7 @@ def page_crawl_repetitive(page_structure):
 
 @crawler.task(name='redis_exporter')
 def redis_exporter():
-    API_KEY = '1395437640:AAFZ1mkohxundOSBwBek1B8SPnApO4nIIMo'
-    bot = telegram.Bot(token=API_KEY)
+    bot = telegram.Bot(token=BOT_API_KEY)
     pages = Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
