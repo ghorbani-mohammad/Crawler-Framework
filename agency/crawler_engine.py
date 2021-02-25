@@ -13,11 +13,8 @@ class CrawlerEngine():
         # TODO: ip and port of webdriver must be dynamic
         
         options = Options()
-        # options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--enable-javascript")
-        # options.add_argument("--enable-automation"); 
-        # options.add_argument("--no-sandbox"); 
         self.driver = webdriver.Remote("http://crawler_chrome:4444/wd/hub",
                                         desired_capabilities=DesiredCapabilities.CHROME,
                                         options=options)
@@ -46,30 +43,21 @@ class CrawlerEngine():
         links = []
         self.driver.get(self.page.url)
         time.sleep(self.page.links_sleep)
-        # f = open('page_content_{}.html'.format(str(datetime.datetime.now())), 'w')
-        # f.write(self.driver.page_source)
-        # f.close()
         if self.page.take_picture:
             self.driver.get_screenshot_as_file('static/crawler/static/{}.png'.format(self.report.id))
             self.report.picture = 'static/crawler/static/{}.png'.format(self.report.id)
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page.structure.news_links_structure
-        # logger.info(type(attribute))
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        # logger.info(attribute)
         tag = attribute['tag']
         del attribute['tag']
         if 'code' in attribute.keys():
             del attribute['code']
-        # logger.info('specified tag for links was: {} *** and specified attributes for links were: {}'.format(tag, attribute))
         elements = doc.findAll(tag, attribute)
         if self.page.structure.news_links_code != '':
-            # logger.info("Executing code")
-            # logger.info(self.page.structure.news_links_code)
             exec(self.page.structure.news_links_code)
-            # logger.info("executed code")
         else:
             for element in elements:
                 links.append(element['href'])
@@ -147,13 +135,11 @@ class CrawlerEngine():
                             )
                     else:
                         article[key] = element.text
-        # article['source'] = str(self.page['agency'])
         logger.info(article)
         self.save_to_redis(article)
 
 
     def save_to_redis(self, article): 
-        # save to redis for 5 days
         # TODO: expiration must be dynamic
         self.redis_news.set(article['link'], json.dumps(article))
         self.redis_duplicate_checker.set(article['link'], "", ex=86400*20)
@@ -162,11 +148,9 @@ class CrawlerEngine():
         counter = self.fetched_links_count
         for link in self.fetched_links:
             if not self.repetitive and self.redis_duplicate_checker.exists(link):
-                # logger.info("duplicate")
                 counter -= 1
                 continue
             else:
-                # logger.info("Fetching news started for %s", link)
                 self.crawl_one_page(link, self.page.fetch_content)
         self.page.last_crawl = datetime.datetime.now()
         self.page.lock = False
