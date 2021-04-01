@@ -49,8 +49,6 @@ class CrawlerEngine():
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page.structure.news_links_structure
-        attribute = json.dumps(attribute)
-        attribute = json.loads(attribute)
         tag = attribute['tag']
         del attribute['tag']
         if 'code' in attribute.keys():
