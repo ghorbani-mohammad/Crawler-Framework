@@ -48,17 +48,20 @@ class CrawlerEngine():
             self.report.picture = 'static/crawler/static/{}.png'.format(self.report.id)
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
+        
         attribute = self.page.structure.news_links_structure
         tag = attribute['tag']
         del attribute['tag']
         if 'code' in attribute.keys():
             del attribute['code']
+        
         elements = doc.findAll(tag, attribute)
         if self.page.structure.news_links_code != '':
             exec(self.page.structure.news_links_code)
         else:
             for element in elements:
                 links.append(element['href'])
+        
         logger.info("Fetched links are:")
         logger.info(links)
         self.fetched_links = links
