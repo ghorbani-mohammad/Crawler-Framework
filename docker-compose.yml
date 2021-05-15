@@ -6,7 +6,7 @@ services:
     image: mdillon/postgis:11
     restart: unless-stopped
     volumes:
-      - /root/dbs/crawler:/var/lib/postgresql/data
+      - crawler_db:/var/lib/postgresql/data
   crawler:
     image: crawler
     container_name: crawler_django
@@ -53,3 +53,6 @@ services:
     logging:
       driver: none
     restart: always
+
+volumes:
+  crawler_db:
