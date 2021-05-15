@@ -157,7 +157,7 @@ class LogAdmin(admin.ModelAdmin):
     
     def short_description(self, obj):
         from django.template.defaultfilters import truncatechars  # or truncatewords
-        return truncatechars(obj.description, 100)
+        return truncatechars(obj.description, 50)
     
     def has_change_permission(self, request, obj=None):
         return False
