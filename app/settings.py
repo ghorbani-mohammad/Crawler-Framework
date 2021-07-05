@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # Our apps
     'rest_framework',
     'agency.apps.AgencyConfig',
+    'social',
     'notification',
     'clear_cache',
     'prettyjson',
