@@ -37,7 +37,9 @@ crawler.conf.beat_schedule = {
         'task': 'remove_obsolete_reports',
         'schedule': crontab(minute=0, hour=0),
     },
+    "crawl_linkedin": {"task": "crawl_linkedin", "schedule": crontab(minute=0, hour=0)},
 }
+
 
 if __name__ == '__main__':
     crawler.start()
