@@ -1,30 +1,36 @@
-"""
-    Required modules for requests and bs4
-"""
-import logging, redis, json, time, datetime, re, validators
+import logging, redis, json, time, datetime, validators
 from bs4 import BeautifulSoup
-
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
-from agency.models import Agency, AgencyPageStructure, CrawlReport
+from agency.models import AgencyPageStructure, CrawlReport
 
 logger = logging.getLogger('django')
 
-class CrawlerEngine():
+
+class CrawlerEngine:
     def __init__(self, page, header=None):
         # TODO: ip and port of webdriver must be dynamic
-        
+        # Initialize Chrome browser (connect to chrome container)
+
         self.log_messages = ''
+
+        # Increase speed by some tunning
         options = Options()
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--enable-automation")
         options.add_argument("--no-sandbox")
-        self.driver = webdriver.Remote("http://crawler_chrome:4444/wd/hub",
-                                        desired_capabilities=DesiredCapabilities.CHROME,
-                                        options=options)
+
+        # connect to chrome container
+        self.driver = webdriver.Remote(
+            "http://crawler_chrome:4444/wd/hub",
+            desired_capabilities=DesiredCapabilities.CHROME,
+            options=options,
+        )
+
+        # set headers to looks like a common user
         self.driver.header_overrides = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
             'AppleWebKit/537.11 (KHTML, like Gecko) '
@@ -33,25 +39,39 @@ class CrawlerEngine():
             'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
             'Accept-Encoding': 'none',
             'Accept-Language': 'en-US,en;q=0.8',
-            'Connection': 'keep-alive'
+            'Connection': 'keep-alive',
         }
+
         # TODO: ip and port of redis must be dynamic
+        # initialize redis_news memory for storing news
+        # initialize redis_duplicate_checker for checking duplicate links
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
-        self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
+        self.redis_duplicate_checker = redis.StrictRedis(
+            host='crawler_redis', port=6379, db=1
+        )
+
+        # locking webpage, so laters tasks can not crawl the page simultaneously
         self.page = page
         AgencyPageStructure.objects.filter(id=self.page['id']).update(lock=True)
+
+        # create report for this crawl
         self.page_structure = AgencyPageStructure.objects.get(id=self.page['id'])
-        self.report = CrawlReport.objects.create(page_id=self.page['id'], status='pending')
+        self.report = CrawlReport.objects.create(
+            page_id=self.page['id'], status='pending'
+        )
         self.header = header
 
     def fetch_links(self):
+        # fetch links from a webpage by structure that had specified by operator
         links = []
         self.driver.get(self.page['url'])
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         attribute = self.page['news_links_structure']
         attribute = json.dumps(attribute)
         attribute = json.loads(attribute)
-        self.custom_logging("\n\nstructure for fetching links are: \n{}\n\n".format(attribute))
+        self.custom_logging(
+            "\n\nstructure for fetching links are: \n{}\n\n".format(attribute)
+        )
         tag = attribute['tag']
         del attribute['tag']
         code = ''
@@ -73,25 +93,31 @@ class CrawlerEngine():
         links = list(set([link for link in links if validators.url(link)]))
         self.fetched_links = links
         self.fetched_links_count = len(links)
-    
-    # TODO: Maek crawl_news_page as task function
+
+    # TODO: Make crawl_news_page as task function
     def crawl_one_page(self, link):
+        # crawl a link and get data that specified by the structure of the page
         meta = self.page['news_meta_structure']
         article = {}
         article['link'] = link
         self.custom_logging("getting content of news: {}".format(link))
         self.driver.get(link)
         # TODO: sleep to page load must be dynamic
+        # do some sleep to all elements of page loaded completely
         time.sleep(4)
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
         for key in meta.keys():
             attribute = meta[key].copy()
             tag = attribute['tag']
-            
+
             del attribute['tag']
             if tag == 'value':
                 article[key] = attribute['value']
-                self.custom_logging("\tspecified tag get's value directly and it's value is: \n {}".format(attribute['value']))
+                self.custom_logging(
+                    "\tspecified tag get's value directly and it's value is: \n {}".format(
+                        attribute['value']
+                    )
+                )
                 continue
             if tag == 'code':
                 code = attribute['code']
@@ -131,7 +157,6 @@ class CrawlerEngine():
         logger.info(article)
         self.save_to_redis(article)
 
-
     def save_to_redis(self, article):
         article['agency_id'] = self.page_structure.agency.id
         article['source'] = self.page_structure.agency.name
@@ -140,7 +165,7 @@ class CrawlerEngine():
         self.redis_duplicate_checker.set(article['link'], "", ex=86400 * 30)
         if 'title' in article.keys() and 'body' in article.keys():
             self.redis_news.set(article['link'], json.dumps(article))
-    
+
     def check_links(self):
         counter = self.fetched_links_count
         print(len(self.fetched_links))
@@ -150,7 +175,7 @@ class CrawlerEngine():
                 continue
             else:
                 self.crawl_one_page(link)
-        
+
         self.page_structure.last_crawl = datetime.datetime.now()
         self.page_structure.save()
         AgencyPageStructure.objects.filter(id=self.page['id']).update(lock=False)
@@ -166,22 +191,29 @@ class CrawlerEngine():
         self.log_messages += '{} \n'.format(message)
 
     def run(self):
-        self.custom_logging("------> Fetching links from {} started".format(self.page['url']))
+        self.custom_logging(
+            "------> Fetching links from {} started".format(self.page['url'])
+        )
         self.fetch_links()
-        self.custom_logging("------> We found {} number of links: ".format(self.fetched_links_count))
+        self.custom_logging(
+            "------> We found {} number of links: ".format(self.fetched_links_count)
+        )
         self.check_links()
 
 
-class CrawlerEngineV2():
+# Crawler version 2
+class CrawlerEngineV2:
     def __init__(self, header=None):
         options = Options()
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--enable-automation")
         options.add_argument("--no-sandbox")
-        self.driver = webdriver.Remote("http://crawler_chrome_browser:4444/wd/hub",
-                                        desired_capabilities=DesiredCapabilities.CHROME,
-                                        options=options)
+        self.driver = webdriver.Remote(
+            "http://crawler_chrome_browser:4444/wd/hub",
+            desired_capabilities=DesiredCapabilities.CHROME,
+            options=options,
+        )
         self.driver.header_overrides = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
             'AppleWebKit/537.11 (KHTML, like Gecko) '
@@ -190,7 +222,7 @@ class CrawlerEngineV2():
             'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
             'Accept-Encoding': 'none',
             'Accept-Language': 'en-US,en;q=0.8',
-            'Connection': 'keep-alive'
+            'Connection': 'keep-alive',
         }
 
     def get_links(self, structure, url):
@@ -227,11 +259,15 @@ class CrawlerEngineV2():
         for key in structure.keys():
             attribute = structure[key].copy()
             tag = attribute['tag']
-            
+
             del attribute['tag']
             if tag == 'value':
                 article[key] = attribute['value']
-                print("\tspecified tag get's value directly and it's value is: \n {}".format(attribute['value']))
+                print(
+                    "\tspecified tag get's value directly and it's value is: \n {}".format(
+                        attribute['value']
+                    )
+                )
                 continue
             if tag == 'code':
                 code = attribute['code']
@@ -269,6 +305,3 @@ class CrawlerEngineV2():
             else:
                 article[key] = element.text
         return article
-
-
-    

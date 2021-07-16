@@ -16,6 +16,18 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 SERVER_IP = '5.9.166.243'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'OPTIONS': {'options': '-c search_path=army'},
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'army',
+        'HOST': SERVER_IP,
+        'PORT': '5433',
+    },
+}
+
 
 # Application definition
 
@@ -26,9 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rangefilter',
-
     # Our apps
     'rest_framework',
     'agency.apps.AgencyConfig',
@@ -71,20 +81,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS': {
-            'options': '-c search_path=army'
-        },
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'army',
-        'HOST': SERVER_IP,
-        'PORT': '5433',
-    },
-}
 
 
 # Password validation
@@ -140,7 +136,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'info.log',
-            'formatter':'main_formatter'
+            'formatter': 'main_formatter',
         },
         'null': {
             'class': 'logging.NullHandler',
@@ -149,7 +145,7 @@ LOGGING = {
     'formatters': {
         'main_formatter': {
             'format': '(%(asctime)s; %(filename)s:%(lineno)d)'
-                      '%(levelname)s:%(name)s: %(message)s ',
+            '%(levelname)s:%(name)s: %(message)s ',
             'datefmt': "%Y-%m-%d %H:%M:%S",
         },
     },
