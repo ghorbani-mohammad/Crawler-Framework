@@ -10,7 +10,7 @@ django==3.0.5
 djangorestframework==3.11.0
 gunicorn==20.0.4
 ipython==7.6.1
-linkedin-scraper==2.8.2
+linkedin-scraper==2.9.0
 Pillow==7.2.0
 psycopg2==2.8.5
 python-telegram-bot==12.7
