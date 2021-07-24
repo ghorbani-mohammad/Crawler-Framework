@@ -7,6 +7,12 @@ services:
     restart: unless-stopped
     volumes:
       - crawler_db:/var/lib/postgresql/data
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "5"
+          max-size: "10m"
+
   crawler:
     image: crawler
     container_name: crawler_django
@@ -21,6 +27,11 @@ services:
     restart: unless-stopped
     environment:
       DEBUG: 'True'
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "5"
+          max-size: "10m"
   
   redis:
     image: redis
@@ -29,7 +40,10 @@ services:
       - /root/dbs/crawler/redis:/data
     restart: always
     logging:
-      driver: none
+      driver: "json-file"
+      options:
+          max-file: "5"
+          max-size: "10m"
   
   celery_worker:
     image: crawler
@@ -38,6 +52,11 @@ services:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "5"
+          max-size: "10m"
   
   celery_scheduler:
     image: crawler
@@ -46,6 +65,11 @@ services:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "5"
+          max-size: "10m"
   
   chrome_browser:
     image: selenium/standalone-chrome
@@ -53,6 +77,11 @@ services:
     logging:
       driver: none
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "5"
+          max-size: "10m"
 
 volumes:
   crawler_db:
