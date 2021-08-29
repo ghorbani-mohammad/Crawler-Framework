@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     volumes:
       - .:/app
     ports: 
@@ -26,6 +28,8 @@ services:
   crawler_worker:
     image: crawler
     container_name: crawler_worker
+    env_file:
+      - .env
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
@@ -34,6 +38,8 @@ services:
   crawler_beat:
     image: crawler
     container_name: crawler_beat
+    env_file:
+      - .env
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
