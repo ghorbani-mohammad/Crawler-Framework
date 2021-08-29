@@ -1,3 +1,4 @@
+import re  # Don't remove this package, this package used dynamically in code
 import logging, redis, json, time, datetime, validators
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
