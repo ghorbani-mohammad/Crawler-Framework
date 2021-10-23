@@ -18,6 +18,7 @@ class Agency(models.Model):
     status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'agencies'
@@ -67,6 +68,7 @@ class Page(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.url
@@ -80,6 +82,7 @@ class Report(models.Model):
     picture = models.ImageField(upload_to='.static/crawler/static', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    log = models.TextField(blank=True)
 
     def __str__(self):
         return self.page.url
@@ -102,3 +105,8 @@ class Log(BaseModel):
 
     def __str__(self):
         return '{} {}'.format(self.id, self.page)
+class Option(models.Model):
+    key = models.CharField(max_length=70)
+    value = models.CharField(max_length=70)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

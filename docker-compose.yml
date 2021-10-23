@@ -13,13 +13,15 @@ services:
           max-file: "5"
           max-size: "10m"
 
-  crawler:
+  crawler_api:
     image: crawler
-    container_name: crawler_django
+    container_name: crawler_api
     command: ["python", "/app/manage.py", "runserver", "0.0.0.0:8200"]
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     volumes:
       - .:/app
     ports: 
@@ -45,25 +47,34 @@ services:
           max-file: "5"
           max-size: "10m"
   
-  celery_worker:
+  crawler_worker:
     image: crawler
     container_name: crawler_worker
+    env_file:
+      - .env
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
-    restart: always
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-          max-file: "5"
-          max-size: "10m"
+        max-file: '3'
+        max-size: 15m
+    restart: always
   
-  celery_scheduler:
+  crawler_beat:
     image: crawler
     container_name: crawler_beat
+    env_file:
+      - .env
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
     restart: always
     logging:
       driver: "json-file"
@@ -71,7 +82,7 @@ services:
           max-file: "5"
           max-size: "10m"
   
-  chrome_browser:
+  crawler_chrome:
     image: selenium/standalone-chrome
     container_name: crawler_chrome
     logging:

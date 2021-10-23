@@ -2,14 +2,10 @@
 
 PROJECT_NAME='crawler'
 
-API_CONTAINER_NAME=${PROJECT_NAME}'_django'
-WS_CONTAINER_NAME=${PROJECT_NAME}'_ws'
+API_CONTAINER_NAME=${PROJECT_NAME}'_api'
 DB_CONTAINER_NAME=${PROJECT_NAME}'_db'
 CELERY_CONTAINER_NAME=${PROJECT_NAME}'_celery'
 CELERY_BEAT_CONTAINER_NAME=${PROJECT_NAME}'_beat'
-
-COMPOSE_FILE='docker-compose-pro.yml'
-NGINX_FILE='baazigooshi_api_nginx.conf'
 
 
 function log() {

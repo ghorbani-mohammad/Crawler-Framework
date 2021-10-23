@@ -12,5 +12,11 @@ celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir
 celerybeat.pid
-README.md
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/sftp.json
 redis/dump.rdb
+.dockerignore
+.idea/*
+README.md
+app/asgi.py

@@ -1,6 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
+from celery.schedules import crontab
+from django.conf import settings
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
@@ -16,6 +18,10 @@ crawler = Celery('crawler',
 crawler.conf.update(
     result_expires=7200,
 )
+crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+
+# if you want to purge works queue
+# crawler.control.purge()
 
 # if you want to purge works queue
 crawler.control.purge()
@@ -29,7 +35,13 @@ crawler.conf.beat_schedule = {
         'task': 'redis_exporter',
         'schedule': 3 * 60,
     },
+    'remove_obsolete_reports': {
+        'task': 'remove_obsolete_reports',
+        'schedule': crontab(minute=0, hour=0),
+    },
+    "crawl_linkedin": {"task": "crawl_linkedin", "schedule": crontab(minute=0, hour=0)},
 }
+
 
 if __name__ == '__main__':
     crawler.start()

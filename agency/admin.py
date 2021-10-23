@@ -7,7 +7,10 @@ from django import forms
 from django.utils.html import format_html
 from django.contrib import messages
 from django.utils.translation import ngettext
+from rangefilter.filter import DateTimeRangeFilter
 
+from agency.models import Agency
+# from agency.models import AgencyPageStructure, CrawlReport
 from agency.models import Agency, Page, Report, Structure, Log
 from agency.serializer import AgencyPageStructureSerializer
 from reusable import jalali
@@ -23,22 +26,29 @@ class CrawlAdmin(admin.ModelAdmin):
     def url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
 
-    def agency(self, obj):
-        return obj.page.agency.name
 
-    def started_at(self, obj):
-        return obj.created_at
+# @admin.register(CrawlReport)
+# class CrawlReportAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'agency', 'page', 'fetched_links', 'new_links', 'started_at', 'duration', 'status')
+#     list_filter = (('created_at', DateTimeRangeFilter), 'page__agency')
+#     list_per_page = 50
+
+#     def agency(self, obj):
+#         return obj.page.agency.name
+
+#     def started_at(self, obj):
+#         return obj.created_at
     
-    def duration(self, obj):
-        x = round((obj.updated_at - obj.created_at).total_seconds())
-        return "{} sec".format(x)
+#     def duration(self, obj):
+#         x = round((obj.updated_at - obj.created_at).total_seconds())
+#         return "{} sec".format(x)
 
-    def image_tag(self, obj):
-        if obj.picture:
-            return format_html("<a href='{}'>Link</a>".format('https://www.mo-ghorbani.ir/static/'+obj.picture.path.split('/')[-1]))
-        return ""
+#     def image_tag(self, obj):
+#         if obj.picture:
+#             return format_html("<a href='{}'>Link</a>".format('https://www.mo-ghorbani.ir/static/'+obj.picture.path.split('/')[-1]))
+#         return ""
 
-    image_tag.short_description = 'Image'
+#     image_tag.short_description = 'Image'
 
 
 @admin.register(Agency)
@@ -123,16 +133,21 @@ class PageAdmin(admin.ModelAdmin):
     def last_crawl_count(self, obj):
         return 0
 
-    def page_url(self, obj):
-        return format_html("<a href='{url}'>Link</a>", url=obj.url)
+# @admin.register(AgencyPageStructure)
+# class AgencyPageStructureAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'agency', 'url2', 'crawl_interval', 'last_crawl', 'status', 'lock')
+#     list_filter = ('agency',)
 
-    readonly_fields = ("last_crawl",)
-    actions = [crawl_action, crawl_action_ignore_repetitive]
+#     def page_url(self, obj):
+#         return format_html("<a href='{url}'>Link</a>", url=obj.url)
 
-    def agency(self, obj):
-        return obj.page.agency.name
+#     readonly_fields = ("last_crawl",)
+#     actions = [crawl_action, crawl_action_ignore_repetitive]
 
-    form = PageAdminForm
+#     def agency(self, obj):
+#         return obj.page.agency.name
+
+    # form = PageAdminForm
 
 
 @admin.register(Log)
@@ -164,3 +179,5 @@ class LogAdmin(admin.ModelAdmin):
     
     def has_change_permission(self, request, obj=None):
         return False
+    def url2(self, obj):
+        return format_html("<a href='{url}' target='_blank'>{url}<a>", url=obj.url)

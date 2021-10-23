@@ -1,15 +1,20 @@
-import redis
+import redis, datetime
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.exceptions import NotAcceptable
 
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer, \
     ReportListSerializer
 from agency.models import Agency, Page, Report
+from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, ReportListSerializer
+from agency.models import Agency
+# from agency.models import AgencyPageStructure, CrawlReport
 from app.messages import *
 from app import tasks
 
@@ -77,7 +82,8 @@ class AgencyView(viewsets.ModelViewSet):
             agency = Agency.objects.get(pk=pk)
         except Agency.DoesNotExist:
             return Response({'status':'400', 'message':msg['fa']['agency']['agency_not_found']})
-        agency.delete()
+        agency.deleted_at= datetime.datetime.now()
+        agency.save()
         response_data = {
             "status": "200",
             "message": msg['fa']['agency']['success_agency_deleted'],
@@ -85,8 +91,7 @@ class AgencyView(viewsets.ModelViewSet):
         }
         return Response(response_data)
 
-    # pagination_class = PostPagination
-    queryset = Agency.objects.all().order_by('id')
+    queryset = Agency.objects.filter(deleted_at=None).order_by('id')
     serializer_class = AgencySerializer
 
 
@@ -155,7 +160,8 @@ class PageView(viewsets.ModelViewSet):
             page = Page.objects.get(pk=pk)
         except Page.DoesNotExist:
             return Response({'status':'400', 'message':msg['fa']['page']['page_not_found']})
-        page.delete()
+        page.deleted_at=datetime.datetime.now()
+        page.save()
         response_data = {
             "status": "200",
             "message": msg['fa']['page']['success_page_deleted'],
@@ -165,6 +171,7 @@ class PageView(viewsets.ModelViewSet):
     
     # pagination_class = PostPagination
     queryset = Page.objects.all().order_by('id')
+    # queryset = AgencyPageStructure.objects.filter(deleted_at=None).order_by('id')
     serializer_class = AgencyPageStructureSerializer
 
 @api_view(['GET'])
@@ -256,7 +263,7 @@ def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
 
 
 class ReportView(ReadOnlyModelViewSet):
-
+    pagination_class = PostPagination
     def list(self, request, version):
         queryset = Report.objects.all()
         # page = self.paginate_queryset(queryset)
@@ -268,6 +275,14 @@ class ReportView(ReadOnlyModelViewSet):
         # return self.get_paginated_response(serializer.data)
         serializer = ReportListSerializer(queryset, many=True)
         return Response(serializer.data)
+        # queryset = CrawlReport.objects.all().order_by('-id')
+        # page = self.paginate_queryset(queryset)
+        # serializer = ReportListSerializer(page, many=True)
+        # x = {}
+        # x['status'] = '200'
+        # x['message'] = msg['fa']['report']['report_found']
+        # x['data'] = serializer.data
+        # return self.get_paginated_response(serializer.data)
 
     def retrieve(self, request, version, pk=None):
         queryset = Report.objects.all()
@@ -282,3 +297,27 @@ class ReportView(ReadOnlyModelViewSet):
         x['data'] = serializer.data
         return Response(x)
 
+
+# class FetchLinks(APIView):
+#     def get(self, request, version):
+#         from agency.crawler_engine import CrawlerEngineV2
+#         page_id = request.GET.get('page_id', None)
+#         if page_id is None:
+#             raise NotAcceptable(detail='page_id is not acceptable')
+#         page = get_object_or_404(AgencyPageStructure, pk=page_id)
+#         crawler = CrawlerEngineV2()
+#         links = crawler.get_links(page.news_links_structure, page.url)
+#         return Response({'count': len(links), 'links': links})
+
+
+# class FetchContent(APIView):
+#     def get(self, request, version):
+#         from agency.crawler_engine import CrawlerEngineV2
+#         link = request.GET.get('link', None)
+#         page_id = request.GET.get('page_id', None)
+#         if link is None or page_id is None:
+#             raise NotAcceptable(detail='link or page_id is not acceptable')
+#         page = get_object_or_404(AgencyPageStructure, pk=page_id)
+#         crawler = CrawlerEngineV2()
+#         content = crawler.get_content(page.news_meta_structure, link)
+#         return Response({'page': page.id, 'content': content})   
