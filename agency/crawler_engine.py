@@ -12,8 +12,6 @@ logger = logging.getLogger('django')
 
 class CrawlerEngine():
     def __init__(self, page, repetitive= False, header=None):
-
-
         # Increase speed by some tunning
         # TODO: ip and port of webdriver must be dynamic
         # Initialize Chrome browser (connect to chrome container)
@@ -52,6 +50,7 @@ class CrawlerEngine():
         # initialize redis_duplicate_checker for checking duplicate links
         self.redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(host='crawler_redis', port=6379, db=1)
+        self.log_messages = ''
         self.page = Page.objects.get(id=page['id'])
         self.page.lock = True
         self.page.save()
