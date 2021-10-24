@@ -76,7 +76,6 @@ class PageAdminForm(forms.ModelForm):
     class Meta:
         model = Page
         fields = '__all__'
-
         widgets = {
             "message_code": MonacoEditorWidget(
                 attrs={"data-wordwrap": "on", "data-language": "python"}
