@@ -1,14 +1,6 @@
 import os
-import environ
-
-env = environ.Env()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 import environ
 env = environ.Env()
@@ -23,9 +15,7 @@ SERVER_IP = env('SERVER_IP')
 # sets paths to static files for widgets
 from djangoeditorwidgets.config import *
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -11,7 +11,7 @@ from rest_framework.exceptions import NotAcceptable
 
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, CrawlReportSerializer, \
     ReportListSerializer
-from agency.models import Agency, Page, Report
+from agency.models import Agency, Page, Report, Structure
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, ReportListSerializer
 from agency.models import Agency
 # from agency.models import AgencyPageStructure, CrawlReport
@@ -298,26 +298,27 @@ class ReportView(ReadOnlyModelViewSet):
         return Response(x)
 
 
-# class FetchLinks(APIView):
-#     def get(self, request, version):
-#         from agency.crawler_engine import CrawlerEngineV2
-#         page_id = request.GET.get('page_id', None)
-#         if page_id is None:
-#             raise NotAcceptable(detail='page_id is not acceptable')
-#         page = get_object_or_404(AgencyPageStructure, pk=page_id)
-#         crawler = CrawlerEngineV2()
-#         links = crawler.get_links(page.news_links_structure, page.url)
-#         return Response({'count': len(links), 'links': links})
+class FetchLinks(APIView):
+    def get(self, request, version):
+        from agency.crawler_engine import CrawlerEngineV2
+        structure_id = request.GET.get('structure_id', None)
+        link = request.GET.get('link', None)
+        if structure_id is None:
+            raise NotAcceptable(detail='structure_id is not acceptable')
+        structure = get_object_or_404(Structure, pk=structure_id)
+        crawler = CrawlerEngineV2()
+        links = crawler.get_links(structure.news_links_structure, link)
+        return Response({'count': len(links), 'links': links})
 
 
-# class FetchContent(APIView):
-#     def get(self, request, version):
-#         from agency.crawler_engine import CrawlerEngineV2
-#         link = request.GET.get('link', None)
-#         page_id = request.GET.get('page_id', None)
-#         if link is None or page_id is None:
-#             raise NotAcceptable(detail='link or page_id is not acceptable')
-#         page = get_object_or_404(AgencyPageStructure, pk=page_id)
-#         crawler = CrawlerEngineV2()
-#         content = crawler.get_content(page.news_meta_structure, link)
-#         return Response({'page': page.id, 'content': content})   
+class FetchContent(APIView):
+    def get(self, request, version):
+        from agency.crawler_engine import CrawlerEngineV2
+        structure_id = request.GET.get('structure_id', None)
+        link = request.GET.get('link', None)
+        if link is None or structure_id is None:
+            raise NotAcceptable(detail='link or structure_id is not acceptable')
+        structure = get_object_or_404(Structure, pk=structure_id)
+        crawler = CrawlerEngineV2()
+        content = crawler.get_content(structure.news_meta_structure, link)
+        return Response({'content': content})   
