@@ -14,16 +14,11 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
-
-# TELEGRAM BOT API KEY
-BOT_API_KEY = env('BOT_API_KEY')
-
+SECRET_KEY = env('SECRET_KEY') # SECURITY WARNING: keep the secret key used in production secret!
+DEBUG = env('DEBUG') # SECURITY WARNING: don't run with debug turned on in production!
+BOT_API_KEY = env('BOT_API_KEY') # TELEGRAM BOT API KEY
 ALLOWED_HOSTS = [env('SERVER_IP')]
+SERVER_IP = env('SERVER_IP')
 
 # sets paths to static files for widgets
 from djangoeditorwidgets.config import *
@@ -119,13 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Tehran'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = False
 
 
