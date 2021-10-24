@@ -1,4 +1,4 @@
-import logging, redis, json, time, datetime, time
+import logging, redis, json, time, datetime, time, traceback
 import re  # Don't remove this package, this package used dynamically in code
 import logging, redis, json, time, datetime, validators
 from bs4 import BeautifulSoup
@@ -12,19 +12,11 @@ logger = logging.getLogger('django')
 
 class CrawlerEngine():
     def __init__(self, page, repetitive= False, header=None):
-# from agency.models import AgencyPageStructure, CrawlReport
 
-# logger = logging.getLogger('django')
-
-
-# class CrawlerEngine:
-#     def __init__(self, page, header=None):
-        # TODO: ip and port of webdriver must be dynamic
-        # Initialize Chrome browser (connect to chrome container)
-
-        self.log_messages = ''
 
         # Increase speed by some tunning
+        # TODO: ip and port of webdriver must be dynamic
+        # Initialize Chrome browser (connect to chrome container)
         options = Options()
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--enable-javascript")
@@ -151,7 +143,7 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.info(e)
+                            logger.info(traceback.format_exc())
                             Log.objects.create(
                                 page=self.page,
                                 description="tag code, executing code maked error, the code was {}".format(temp_code),
@@ -182,7 +174,7 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.info(e)
+                            logger.info(traceback.format_exc())
                             Log.objects.create(
                                 page=self.page,
                                 description="tag code, executing code maked error, the code was {}".format(temp_code),
