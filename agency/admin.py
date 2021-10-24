@@ -136,22 +136,6 @@ class PageAdmin(admin.ModelAdmin):
     actions = [crawl_action, crawl_action_ignore_repetitive]
     form = PageAdminForm
 
-# @admin.register(AgencyPageStructure)
-# class AgencyPageStructureAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'agency', 'url2', 'crawl_interval', 'last_crawl', 'status', 'lock')
-#     list_filter = ('agency',)
-
-#     def page_url(self, obj):
-#         return format_html("<a href='{url}'>Link</a>", url=obj.url)
-
-#     readonly_fields = ("last_crawl",)
-#     actions = [crawl_action, crawl_action_ignore_repetitive]
-
-#     def agency(self, obj):
-#         return obj.page.agency.name
-
-    # form = PageAdminForm
-
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
