@@ -39,10 +39,7 @@ services:
       - /root/dbs/crawler/redis:/data
     restart: always
     logging:
-      driver: "json-file"
-      options:
-          max-file: "5"
-          max-size: "10m"
+      driver: none
   
   crawler_worker:
     image: crawler
