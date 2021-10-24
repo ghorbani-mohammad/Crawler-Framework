@@ -72,30 +72,6 @@ class StructureAdmin(admin.ModelAdmin):
     form = PageStructureForm
 
 
-def crawl_action(AgencyPageStructureAdmin, request, queryset):
-    from app.tasks import page_crawl
-    for page in queryset:
-        page_crawl.delay(AgencyPageStructureSerializer(page).data)
-    crawl_action.short_description = "Crawl page"
-    AgencyPageStructureAdmin.message_user(request, ngettext(
-        '%d page is in queue to crawl.',
-        '%d pages are in queue to crawl.',
-        len(queryset),
-    ) % len(queryset), messages.SUCCESS)
-
-
-def crawl_action_ignore_repetitive(AgencyPageStructureAdmin, request, queryset):
-    from app.tasks import page_crawl_repetitive
-    for page in queryset:
-        page_crawl_repetitive.delay(AgencyPageStructureSerializer(page).data)
-    crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
-    AgencyPageStructureAdmin.message_user(request, ngettext(
-        '%d page is in queue to crawl.',
-        '%d pages are in queue to crawl.',
-        len(queryset),
-    ) % len(queryset), messages.SUCCESS)
-
-
 class PageAdminForm(forms.ModelForm):
     class Meta:
         model = Page
@@ -109,9 +85,13 @@ class PageAdminForm(forms.ModelForm):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('agency', 'page_url', 'crawl_interval', 'last_crawl2', 'last_crawl_count', 'status', 'lock', 'fetch_content', 'take_picture')
+    list_display = (
+        'agency', 'page_url', 'crawl_interval', 'last_crawl2',
+        'last_crawl_count', 'status', 'lock', 'fetch_content', 'take_picture'
+    )
     list_editable = ('crawl_interval', 'status')
     list_filter = ['status', 'lock', 'agency']
+    readonly_fields = ("last_crawl",)
     fields = (
         'agency', 'url', 'structure',
         ('crawl_interval', 'load_sleep', 'links_sleep'),
@@ -130,6 +110,32 @@ class PageAdmin(admin.ModelAdmin):
 
     def last_crawl_count(self, obj):
         return 0
+
+    # actions
+    def crawl_action(modeladmin, request, queryset):
+        from app.tasks import page_crawl
+        for page in queryset:
+            page_crawl.delay(AgencyPageStructureSerializer(page).data)
+        modeladmin.message_user(request, ngettext(
+            '%d page is in queue to crawl.',
+            '%d pages are in queue to crawl.',
+            len(queryset),
+        ) % len(queryset), messages.SUCCESS)
+    crawl_action.short_description = "Crawl page"
+
+    def crawl_action_ignore_repetitive(modeladmin, request, queryset):
+        from app.tasks import page_crawl_repetitive
+        for page in queryset:
+            page_crawl_repetitive.delay(AgencyPageStructureSerializer(page).data)
+        modeladmin.message_user(request, ngettext(
+            '%d page is in queue to crawl.',
+            '%d pages are in queue to crawl.',
+            len(queryset),
+        ) % len(queryset), messages.SUCCESS)
+    crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
+
+    actions = [crawl_action, crawl_action_ignore_repetitive]
+    form = PageAdminForm
 
 # @admin.register(AgencyPageStructure)
 # class AgencyPageStructureAdmin(admin.ModelAdmin):
