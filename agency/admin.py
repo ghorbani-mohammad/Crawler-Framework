@@ -46,30 +46,6 @@ class ReportAdmin(admin.ModelAdmin):
     image_tag.short_description = 'Image'
 
 
-# @admin.register(CrawlReport)
-# class CrawlReportAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'agency', 'page', 'fetched_links', 'new_links', 'started_at', 'duration', 'status')
-#     list_filter = (('created_at', DateTimeRangeFilter), 'page__agency')
-#     list_per_page = 50
-
-#     def agency(self, obj):
-#         return obj.page.agency.name
-
-#     def started_at(self, obj):
-#         return obj.created_at
-    
-#     def duration(self, obj):
-#         x = round((obj.updated_at - obj.created_at).total_seconds())
-#         return "{} sec".format(x)
-
-#     def image_tag(self, obj):
-#         if obj.picture:
-#             return format_html("<a href='{}'>Link</a>".format('https://www.mo-ghorbani.ir/static/'+obj.picture.path.split('/')[-1]))
-#         return ""
-
-#     image_tag.short_description = 'Image'
-
-
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'country', 'website', 'status', 'alexa_global_rank')
@@ -88,7 +64,7 @@ class PageStructureForm(forms.ModelForm):
 
 
 @admin.register(Structure)
-class PageStructureAdmin(admin.ModelAdmin):
+class StructureAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     formfield_overrides = {
         fields.JSONField: {'widget': JSONEditorWidget(height="320px", width="40%")},
@@ -144,6 +120,9 @@ class PageAdmin(admin.ModelAdmin):
         'message_code',
         'last_crawl', 
     )
+
+    def page_url(self, obj):
+        return format_html("<a href='{url}'>Link</a>", url=obj.url)
 
     def last_crawl2(self, obj):
         if obj.last_crawl is not None:
