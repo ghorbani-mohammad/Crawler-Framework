@@ -43,6 +43,7 @@ Exporter_API_headers = {
 
 
 def check_must_crawl(page):
+    logger.info('5 ---> check must crawl')
     now = datetime.datetime.now()
     x = Report.objects.filter(page=page.id, status='pending')
     if x.count() == 0:
@@ -70,7 +71,8 @@ def check():
             check_must_crawl(page)
         else:
             diff_hour = int((now - page.last_crawl).total_seconds() / (3600))
-            logger.info(f'3 ---> {diff_hour}')
+            logger.info(f'3 diff_hour ---> {diff_hour}')
+            logger.info(f'4 crawl_interval ---> {page.crawl_interval}')
             if diff_hour >= page.crawl_interval:
                 check_must_crawl(page)
 
