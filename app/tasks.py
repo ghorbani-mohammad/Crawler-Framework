@@ -23,6 +23,8 @@ from agency.serializer import AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
 
+logger = logging.getLogger('django')
+
 # TODO: configs must be dynamic
 redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
 Exporter_API_URI = "http://{}:8888/crawler/news".format(settings.SERVER_IP)
@@ -57,10 +59,12 @@ def check_must_crawl(page):
 
 @crawler.task(name='check_agencies')
 def check():
+    logger.info('check_agencies started')
     agencies = Agency.objects.filter(status= True).values_list('id', flat= True)
     pages = Page.objects.filter(agency__in=agencies).filter(lock=False).filter(status=True)
     now = datetime.datetime.now()
     for page in pages:
+        logger.info(page)
         if page.last_crawl is None:
             check_must_crawl(page)
         else:
