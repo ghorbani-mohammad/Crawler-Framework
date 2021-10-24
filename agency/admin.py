@@ -17,14 +17,33 @@ from reusable import jalali
 
 
 @admin.register(Report)
-class CrawlAdmin(admin.ModelAdmin):
-    list_display = ('id', 'agency', 'url', 'fetched_links', 'new_links', 'started_at', 'duration', 'status', 'image_tag')
+class ReportAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'status', 'agency', 'page', 'url', 'fetched_links', 'new_links',
+        'started_at', 'duration', 'image_tag'
+    )
     list_per_page = 30
-    list_filter = [ 'status', 'page__agency',]
+    list_filter = [ 'status', 'page__agency',('created_at', DateTimeRangeFilter)]
     search_fields = ['page__url']
 
     def url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
+    
+    def agency(self, obj):
+        return obj.page.agency.name
+
+    def started_at(self, obj):
+        return obj.created_at
+    
+    def duration(self, obj):
+        x = round((obj.updated_at - obj.created_at).total_seconds())
+        return "{} sec".format(x)
+    
+    def image_tag(self, obj):
+        if obj.picture:
+            return format_html("<a href='{}'>Link</a>".format('https://www.mo-ghorbani.ir/static/'+obj.picture.path.split('/')[-1]))
+        return ""
+    image_tag.short_description = 'Image'
 
 
 # @admin.register(CrawlReport)
