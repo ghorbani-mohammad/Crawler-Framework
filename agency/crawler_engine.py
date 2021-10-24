@@ -77,7 +77,6 @@ class CrawlerEngine():
             self.report.picture = 'static/crawler/static/{}.png'.format(self.report.id)
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, 'html.parser')
-        
         attribute = self.page.structure.news_links_structure
     #     self.redis_duplicate_checker = redis.StrictRedis(
     #         host='crawler_redis', port=6379, db=1
@@ -152,6 +151,7 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
+                            logger.info(e)
                             Log.objects.create(
                                 page=self.page,
                                 description="tag code, executing code maked error, the code was {}".format(temp_code),
@@ -182,6 +182,7 @@ class CrawlerEngine():
                         try:
                             exec(temp_code)
                         except Exception as e:
+                            logger.info(e)
                             Log.objects.create(
                                 page=self.page,
                                 description="tag code, executing code maked error, the code was {}".format(temp_code),
