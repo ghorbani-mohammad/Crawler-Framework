@@ -19,7 +19,7 @@ from reusable import jalali
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'status', 'agency', 'page', 'url', 'fetched_links', 'new_links',
+        'id', 'status', 'agency', 'url', 'fetched_links', 'new_links',
         'started_at', 'duration', 'image_tag'
     )
     list_per_page = 30
