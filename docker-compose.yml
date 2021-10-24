@@ -8,10 +8,7 @@ services:
     volumes:
       - crawler_db:/var/lib/postgresql/data
     logging:
-      driver: "json-file"
-      options:
-          max-file: "5"
-          max-size: "10m"
+      driver: none
 
   crawler_api:
     image: crawler
@@ -70,11 +67,6 @@ services:
     volumes:
       - .:/app
     command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
     restart: always
     logging:
       driver: "json-file"
@@ -88,11 +80,6 @@ services:
     logging:
       driver: none
     restart: always
-    logging:
-      driver: "json-file"
-      options:
-          max-file: "5"
-          max-size: "10m"
 
 volumes:
   crawler_db:
