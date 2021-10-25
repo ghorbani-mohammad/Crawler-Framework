@@ -95,7 +95,12 @@ def redis_exporter():
     pages = Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
-        data = (redis_news.get(key).decode('utf-8'))
+        data = redis_news.get(key)
+        if data is None:
+            redis_news.delete(key)
+            continue
+        data = data.decode('utf-8')
+            
         page = None
         try:
             data = json.loads(data)
