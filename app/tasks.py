@@ -1,29 +1,24 @@
 from __future__ import absolute_import, unicode_literals
-import requests
-import logging, datetime, redis, requests, json
+import logging, datetime, redis, json, time, telegram
 from bs4 import BeautifulSoup
 from dateutil import relativedelta
 
-import logging, datetime, redis, json
-import telegram, time
-
 from .celery import crawler
-from app.settings import BOT_API_KEY
-from agency.models import Agency, Page, Report, Log
+from django.conf import settings
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 from celery.task.schedules import crontab
+from celery.utils.log import get_task_logger
 
 from .celery import crawler
-from django.conf import settings
-from agency.models import Agency,  Option
-# from agency.models import AgencyPageStructure, CrawlReport
+from app.settings import BOT_API_KEY
+from agency.models import Agency, Page, Report, Log
 from agency.serializer import AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
 
 
-logger = logging.getLogger('django')
+logger = get_task_logger(__name__)
 
 # TODO: configs must be dynamic
 redis_news = redis.StrictRedis(host='crawler_redis', port=6379, db=0)
