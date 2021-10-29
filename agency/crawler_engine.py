@@ -163,6 +163,7 @@ class CrawlerEngine():
             else:
                 self.crawl_one_page(link, self.page.fetch_content)
         self.page.last_crawl = datetime.datetime.now()
+        self.page.last_crawl_count = self.fetched_links_count
         self.page.lock = False
         self.page.save()
         self.report.new_links = counter

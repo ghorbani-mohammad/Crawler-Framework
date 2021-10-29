@@ -107,9 +107,6 @@ class PageAdmin(admin.ModelAdmin):
         if obj.last_crawl is not None:
             return obj.last_crawl.strftime("%h. %d %H:%M %p")
 
-    def last_crawl_count(self, obj):
-        return 0
-
     # actions
     def crawl_action(modeladmin, request, queryset):
         from app.tasks import page_crawl

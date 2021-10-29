@@ -56,6 +56,7 @@ class Page(models.Model):
     load_sleep = models.PositiveIntegerField(default=4, blank=True, help_text='each link sleep')
     links_sleep = models.PositiveIntegerField(default=1, blank=True, help_text='all links sleep')
     last_crawl = models.DateTimeField(null=True)
+    last_crawl_count = models.PositiveIntegerField(null=True, blank=True)
     status = models.BooleanField(default=1)
     fetch_content = models.BooleanField(default=1)
     structure = models.ForeignKey(Structure, on_delete=models.SET_NULL, null=True, blank=True)
