@@ -12,7 +12,6 @@ logger = logging.getLogger('django')
 
 class CrawlerEngine():
     def __init__(self, page, repetitive= False, header=None):
-        # Increase speed by some tunning
         # TODO: ip and port of webdriver must be dynamic
         # Initialize Chrome browser (connect to chrome container)
         options = Options()
@@ -86,7 +85,6 @@ class CrawlerEngine():
         article['page_id'] = self.page.id
         if fetch_contet:
             self.driver.get(link)
-            # TODO: sleep to page load must be dynamic
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, 'html.parser')
             if meta is not None:
@@ -154,7 +152,7 @@ class CrawlerEngine():
     def save_to_redis(self, article): 
         # TODO: expiration must be dynamic
         self.redis_news.set(article['link'], json.dumps(article))
-        self.redis_duplicate_checker.set(article['link'], "", ex=86400*20)
+        self.redis_duplicate_checker.set(article['link'], "", ex=self.page.days_to_keep * 60 * 60 * 24)
 
     def check_links(self):
         counter = self.fetched_links_count

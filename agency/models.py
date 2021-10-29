@@ -4,21 +4,21 @@ from django.contrib.postgres.fields import JSONField
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         abstract = True
 
 
-class Agency(models.Model):
+class Agency(BaseModel):
     name = models.CharField(max_length=20, null=False, unique=True)
     country = models.CharField(max_length=20, default='NA')
     website = models.CharField(max_length=100, null=False, unique=True)
     alexa_global_rank = models.IntegerField(default=0, null=True)
     crawl_headers = JSONField(null=True, blank=True, default=dict)
     status = models.BooleanField(default=1)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
+    link_keep_days = models.PositiveIntegerField(default=1, null=True, blank=True, help_text="how many days to keep the links of crawled page in redis")
 
     class Meta:
         verbose_name_plural = 'agencies'
@@ -72,6 +72,10 @@ class Page(models.Model):
 
     def __str__(self):
         return self.url
+
+    @property
+    def days_to_keep(self):
+        return self.agency.link_keep_days
 
 
 class Report(models.Model):
