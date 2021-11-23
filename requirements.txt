@@ -38,7 +38,6 @@ django==3.2.9
     #   -r requirements.in
     #   django-clear-cache
     #   django-editor-widgets
-    #   django-jsonfield
     #   django-prettyjson
     #   djangorestframework
 django-admin-rangefilter==0.6.3
@@ -50,8 +49,6 @@ django-editor-widgets==3.0
 django-environ==0.4.5
     # via -r requirements.in
 django-json-widget==1.0.1
-    # via -r requirements.in
-django-jsonfield==1.4.0
     # via -r requirements.in
 django-prettyjson==0.4.1
     # via -r requirements.in
@@ -129,7 +126,6 @@ selenium-wire==1.0.11
     # via -r requirements.in
 six==1.16.0
     # via
-    #   django-jsonfield
     #   django-prettyjson
     #   python-dateutil
     #   validators
