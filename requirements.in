@@ -5,7 +5,6 @@ django-admin-rangefilter
 django-clear-cache
 django-editor-widgets
 django-environ
-django-json-widget
 django-prettyjson
 djangorestframework
 envparse

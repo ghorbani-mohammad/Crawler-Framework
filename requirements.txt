@@ -48,8 +48,6 @@ django-editor-widgets==3.0
     # via -r requirements.in
 django-environ==0.4.5
     # via -r requirements.in
-django-json-widget==1.0.1
-    # via -r requirements.in
 django-prettyjson==0.4.1
     # via -r requirements.in
 djangorestframework==3.11.0
@@ -57,9 +55,7 @@ djangorestframework==3.11.0
 envparse==0.2.0
     # via -r requirements.in
 future==0.18.2
-    # via
-    #   django-json-widget
-    #   python-telegram-bot
+    # via python-telegram-bot
 gunicorn==20.0.4
     # via -r requirements.in
 idna==2.10
