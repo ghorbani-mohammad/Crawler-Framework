@@ -1,12 +1,11 @@
+from prettyjson import PrettyJSONWidget
 from rangefilter.filter import DateTimeRangeFilter
 
 from django import forms
 from django.contrib import admin
 from django.contrib import messages
 from django.utils.html import format_html
-from django.contrib.postgres import fields
 from django.utils.translation import ngettext
-from django_json_widget.widgets import JSONEditorWidget
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from agency.models import Agency
@@ -70,25 +69,22 @@ class AgencyAdmin(admin.ModelAdmin):
     )
 
 
-class PageStructureForm(forms.ModelForm):
+class StructureForm(forms.ModelForm):
     class Meta:
-        model = Page
+        model = Structure
         fields = "__all__"
-
         widgets = {
             "news_links_code": MonacoEditorWidget(
                 attrs={"data-wordwrap": "on", "data-language": "python"}
-            )
+            ),
+            "news_links_structure": PrettyJSONWidget(),
         }
 
 
 @admin.register(Structure)
 class StructureAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "created_at", "updated_at")
-    formfield_overrides = {
-        fields.JSONField: {"widget": JSONEditorWidget(height="320px", width="40%")},
-    }
-    form = PageStructureForm
+    form = StructureForm
 
 
 class PageAdminForm(forms.ModelForm):
@@ -172,7 +168,6 @@ class PageAdmin(admin.ModelAdmin):
         )
 
     crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
-
     actions = [crawl_action, crawl_action_ignore_repetitive]
     form = PageAdminForm
 
