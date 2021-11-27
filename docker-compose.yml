@@ -31,7 +31,7 @@ services:
       options:
           max-file: "5"
           max-size: "10m"
-  
+
   redis:
     image: redis
     container_name: crawler_redis
