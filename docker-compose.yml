@@ -32,11 +32,11 @@ services:
           max-file: "5"
           max-size: "10m"
 
-  redis:
+  crawler_redis:
     image: redis
     container_name: crawler_redis
     volumes: 
-      - /root/dbs/crawler/redis:/data
+      - crawler_redis:/data
     restart: always
     logging:
       driver: none
@@ -80,3 +80,4 @@ services:
 
 volumes:
   crawler_db:
+  crawler_redis:
