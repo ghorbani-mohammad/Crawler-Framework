@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PROJECT_NAME='crawler'
+COMPOSE_FILE='docker-compose.yml'
 
 API_CONTAINER_NAME=${PROJECT_NAME}'_api'
 DB_CONTAINER_NAME=${PROJECT_NAME}'_db'
