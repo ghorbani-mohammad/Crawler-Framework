@@ -103,7 +103,7 @@ def redis_exporter():
     pages = Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
-        if key == settings.REDIS_EXPORTER_LOCK_KEY:
+        if key.decode("utf-8") == settings.REDIS_EXPORTER_LOCK_KEY:
             continue
         data = redis_news.get(key)
         if data is None:
