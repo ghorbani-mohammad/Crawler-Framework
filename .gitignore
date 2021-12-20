@@ -1,7 +1,7 @@
 
 .dockerignore
 .env
-.idea/*
+.idea
 .vscode
 *.log
 *.pyc
@@ -12,11 +12,12 @@ celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir
 celerybeat.pid
-.vscode/tasks.json
-.vscode/launch.json
-.vscode/sftp.json
 redis/dump.rdb
-.dockerignore
-.idea/*
 README.md
 app/asgi.py
+
+
+crawler_db_volume/
+db_backup/
+redis_volume/
+static/

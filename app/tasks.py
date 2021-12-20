@@ -96,13 +96,11 @@ def page_crawl_repetitive(page_structure):
 
 @crawler.task(name="redis_exporter")
 def redis_exporter():
-    logging.info(f"---> Redis exporter is started --- > {cache.get('redis_exporter_lock')}")
-    print(f"---> Redis exporter is started --- > {cache.get('redis_exporter_lock')}")
-    if cache.get('redis_exporter_lock'):
+    lock = redis_news.get("redis_exporter_lock")
+    if lock:
         return
-    cache.set('redis_exporter_lock', True, 60*30)
-    print(f"---> Redis exporter is started --- > {cache.get('redis_exporter_lock')}")
-    bot = telegram.Bot(token=BOT_API_KEY)
+    redis_news.set("redis_exporter_lock", 1, 60 * 60 * 2)
+    bot = telegram.Bot(token=BOT_API_KEY) # this bot variable should not removed
     pages = Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
@@ -158,7 +156,7 @@ def redis_exporter():
             )
         finally:
             redis_news.delete(key)
-    cache.set('redis_exporter_lock', False)
+    redis_news.set("redis_exporter_lock", 0)
 
 
 @crawler.task(name="fetch_alexa_rank")
