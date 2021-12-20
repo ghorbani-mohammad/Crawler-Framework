@@ -2,12 +2,11 @@ from __future__ import absolute_import, unicode_literals
 from bs4 import BeautifulSoup
 from dateutil import relativedelta
 import logging, datetime, redis, json, time, telegram
+from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from django.core.cache import cache
 from django.conf import settings
-from seleniumwire import webdriver
 from .celery import crawler
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
