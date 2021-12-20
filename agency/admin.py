@@ -41,16 +41,12 @@ class ReportAdmin(admin.ModelAdmin):
 
     def duration(self, obj):
         x = round((obj.updated_at - obj.created_at).total_seconds())
-        return "{} sec".format(x)
+        return f"{x} sec"
 
     def image_tag(self, obj):
         if obj.picture:
-            return format_html(
-                "<a href='{}'>Link</a>".format(
-                    "https://www.mo-ghorbani.ir/static/"
-                    + obj.picture.path.split("/")[-1]
-                )
-            )
+            url = "https://www.mo-ghorbani.ir/static/" + obj.picture.path.split("/")[-1]
+            return format_html(f"<a href='{url}'>Link</a>")
         return ""
 
     image_tag.short_description = "Image"

@@ -134,7 +134,7 @@ class Log(BaseModel):
     phase = models.CharField(choices=PHASE_CHOICES, null=True, blank=True, max_length=3)
 
     def __str__(self):
-        return "{} {}".format(self.id, self.page)
+        return f"({self.pk} - {self.page})"
 
 
 class Option(models.Model):

@@ -14,7 +14,7 @@ logger = get_task_logger(__name__)
 )
 def remove_old_reports():
     past = timezone.datetime.today() - timezone.timedelta(days=10)
-    print('Deleted reports: {}'.format(age_models.Report.objects.filter(created_at__lte=past).delete()[0]))
+    print(f'Deleted reports: {age_models.Report.objects.filter(created_at__lte=past).delete()[0]}')
 
 
 @periodic_task(
@@ -22,7 +22,7 @@ def remove_old_reports():
 )
 def remove_old_logs():
     past = timezone.datetime.today() - timezone.timedelta(days=10)
-    print('Deleted reports: {}'.format(age_models.Report.objects.filter(created_at__lte=past).delete()[0]))
+    print(f'Deleted reports: {age_models.Report.objects.filter(created_at__lte=past).delete()[0]}')
 
 
 @periodic_task(
