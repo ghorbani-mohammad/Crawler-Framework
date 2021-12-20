@@ -96,6 +96,7 @@ def page_crawl_repetitive(page_structure):
 
 @crawler.task(name="redis_exporter")
 def redis_exporter():
+    logging.info(f"---> Redis exporter is started --- > {cache.get('redis_exporter_lock')}")
     if cache.get('redis_exporter_lock'):
         return
     cache.set('redis_exporter_lock', True, 60*30)
