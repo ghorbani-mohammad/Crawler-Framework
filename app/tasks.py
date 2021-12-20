@@ -1,13 +1,14 @@
 from __future__ import absolute_import, unicode_literals
-import logging, datetime, redis, json, time, telegram
 from bs4 import BeautifulSoup
 from dateutil import relativedelta
+import logging, datetime, redis, json, time, telegram
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from .celery import crawler
+from django.core.cache import cache
 from django.conf import settings
 from seleniumwire import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
+from .celery import crawler
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
 
@@ -95,6 +96,9 @@ def page_crawl_repetitive(page_structure):
 
 @crawler.task(name="redis_exporter")
 def redis_exporter():
+    if cache.get('redis_exporter_lock'):
+        return
+    cache.set('redis_exporter_lock', True, 60*30)
     bot = telegram.Bot(token=BOT_API_KEY)
     pages = Page.objects.all()
 
@@ -151,6 +155,7 @@ def redis_exporter():
             )
         finally:
             redis_news.delete(key)
+    cache.set('redis_exporter_lock', False)
 
 
 @crawler.task(name="fetch_alexa_rank")
