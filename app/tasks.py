@@ -101,6 +101,7 @@ def redis_exporter():
     if cache.get('redis_exporter_lock'):
         return
     cache.set('redis_exporter_lock', True, 60*30)
+    print(f"---> Redis exporter is started --- > {cache.get('redis_exporter_lock')}")
     bot = telegram.Bot(token=BOT_API_KEY)
     pages = Page.objects.all()
 
