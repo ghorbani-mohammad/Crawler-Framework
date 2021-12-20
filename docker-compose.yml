@@ -76,7 +76,3 @@ services:
     logging:
       driver: none
     restart: always
-
-volumes:
-  crawler_db:
-  crawler_redis:
