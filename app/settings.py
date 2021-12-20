@@ -8,7 +8,6 @@ BOT_API_KEY = env("BOT_API_KEY")
 ALLOWED_HOSTS = [env("SERVER_IP")]
 SERVER_IP = env("SERVER_IP")
 
-# sets paths to static files for widgets
 from djangoeditorwidgets.config import *
 
 # Application definition
