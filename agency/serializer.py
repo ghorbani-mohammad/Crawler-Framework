@@ -58,7 +58,7 @@ class ReportListSerializer(serializers.ModelSerializer):
 
     def is_named_bar(self, obj):
         x = round((obj.updated_at - obj.created_at).total_seconds())
-        return "{} sec".format(x)
+        return f"{x} sec"
 
     class Meta:
         model = Report

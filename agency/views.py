@@ -33,7 +33,6 @@ class AgencyView(viewsets.ModelViewSet):
                 "message": msg['fa']['agency']['success_agency_created'],
                 "data": serializer.data
             }
-            tasks.fetch_alexa_rank.delay(serializer.data['id'], serializer.data['website'])
             print(serializer.data['id'], serializer.data['website'])
         else:
             response_data = {
@@ -56,7 +55,6 @@ class AgencyView(viewsets.ModelViewSet):
                 "message": msg['fa']['agency']['success_agency_updated'],
                 "data": serializer.data
             }
-            tasks.fetch_alexa_rank.delay(serializer.data['id'], serializer.data['website'])
         else:
             response_data = {
                 "status": "400",
