@@ -5,7 +5,7 @@ services:
     image: mdillon/postgis:11
     restart: unless-stopped
     volumes:
-      - crawler_db:/var/lib/postgresql/data
+      - ./crawler_db_volume/:/var/lib/postgresql/data
     logging:
       driver: none
 
@@ -35,7 +35,7 @@ services:
     image: redis
     container_name: crawler_redis
     volumes: 
-      - crawler_redis:/data
+      - ./redis_volume/:/data
     restart: always
     logging:
       driver: none
