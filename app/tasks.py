@@ -157,7 +157,7 @@ def redis_exporter():
             )
         finally:
             redis_news.delete(key)
-    redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 0)
+    redis_news.delete(settings.REDIS_EXPORTER_LOCK_KEY)
 
 @crawler.task(name="remove_obsolete_reports")
 def remove_obsolete_reports():
