@@ -97,6 +97,7 @@ def page_crawl_repetitive(page_structure):
 def redis_exporter():
     lock = redis_news.get(settings.REDIS_EXPORTER_LOCK_KEY)
     if lock:
+        logging.info("---> Exporter is locked")
         return
     redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1, 60 * 60 * 2)
     bot = telegram.Bot(token=BOT_API_KEY) # this bot variable should not removed
