@@ -2,6 +2,7 @@
 
 PROJECT_NAME='crawler'
 COMPOSE_FILE='docker-compose.yml'
+NGINX_FILE='crawler_api_nginx.conf'
 
 API_CONTAINER_NAME=${PROJECT_NAME}'_api'
 DB_CONTAINER_NAME=${PROJECT_NAME}'_db'
@@ -49,7 +50,7 @@ function create_admin_user() {
 }
 
 function issue_https_certificate() {
-    sudo certbot --nginx certonly -d api.baazigooshi.com
+    sudo certbot --nginx certonly -d crawler.m-gh.com -d www.crawler.m-gh.com --nginx-server-root /etc/nginx/my_conf/
     sudo ln -s ${SERVER_PATH}${NGINX_FILE} /etc/nginx/sites-enabled/${NGINX_FILE}
     sudo service nginx restart
 }
