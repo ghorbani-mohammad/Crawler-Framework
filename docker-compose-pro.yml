@@ -6,6 +6,8 @@ services:
     container_name: crawler_db
     image: mdillon/postgis:11
     restart: unless-stopped
+    volumes:
+      - ./crawler_db_volume/:/var/lib/postgresql/data
 
   crawler_api:
     container_name: crawler_api
