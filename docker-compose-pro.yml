@@ -48,3 +48,10 @@ services:
     container_name : crawler_redis
     image: redis:5.0.14
     restart: unless-stopped
+
+  crawler_chrome:
+    image: selenium/standalone-chrome
+    container_name: crawler_chrome
+    logging:
+      driver: none
+    restart: always
