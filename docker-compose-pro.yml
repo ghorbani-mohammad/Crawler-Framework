@@ -13,6 +13,8 @@ services:
     restart: unless-stopped
     depends_on:
       - crawler_db
+    env_file:
+      - .env
     volumes:
       - /var/www/crawler/static:/app/crawler/static
     ports:
@@ -24,6 +26,8 @@ services:
     working_dir: /app/crawler
     command: ["celery", "-A", "crawler", "worker", "-l", "info"]
     restart: unless-stopped
+    env_file:
+      - .env
     depends_on:
       - crawler_db
       - crawler_redis
@@ -34,6 +38,8 @@ services:
     working_dir: /app/crawler
     command: ["celery", "-A", "crawler", "beat", "-l", "info", "--pidfile=/tmp/celeryd.pid"]
     restart: unless-stopped
+    env_file:
+      - .env
     depends_on:
       - crawler_db
       - crawler_redis
