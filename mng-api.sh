@@ -51,7 +51,7 @@ function create_admin_user() {
 }
 
 function issue_https_certificate() {
-    sudo certbot --nginx certonly -d crawler.m-gh.com -d www.crawler.m-gh.com --nginx-server-root /etc/nginx/my_conf/
+    sudo certbot --nginx -d crawler.m-gh.com -d www.crawler.m-gh.com --nginx-server-root /etc/nginx/my_conf/
     sudo ln -s ${SERVER_PATH}${NGINX_FILE} /etc/nginx/sites-enabled/${NGINX_FILE}
     sudo service nginx restart
 }
