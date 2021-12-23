@@ -1,20 +1,19 @@
-
-.dockerignore
-.env
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
 .idea
 .vscode
-*.log
-*.pyc
-*.sqlite3
-app/asgi.py
-celerybeat-schedule
-celerybeat-schedule.bak
-celerybeat-schedule.dat
-celerybeat-schedule.dir
-celerybeat.pid
-redis/dump.rdb
-README.md
-app/asgi.py
+venv
+db.sqlite3
+crypto_assets/static
+*.sql
+*.sql.gz
+todo
+app/celerybeat-schedule
+app/celerybeat.pid
 
 
 crawler_db_volume/
