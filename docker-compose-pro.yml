@@ -50,6 +50,8 @@ services:
     container_name : crawler_redis
     image: redis:5.0.14
     restart: unless-stopped
+    volumes: 
+      - ./redis_volume/:/data
 
   crawler_chrome:
     image: selenium/standalone-chrome
