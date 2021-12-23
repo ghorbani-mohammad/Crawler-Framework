@@ -5,7 +5,7 @@ from celery.schedules import crontab
 from django.conf import settings
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crawler.settings')
 
 # TODO: redis port and ip and db must be dynamic
 crawler = Celery('crawler',

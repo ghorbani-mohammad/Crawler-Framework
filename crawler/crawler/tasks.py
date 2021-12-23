@@ -12,7 +12,7 @@ from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
 
 from .celery import crawler
-from app.settings import BOT_API_KEY
+from crawler.settings import BOT_API_KEY
 from agency.models import Agency, Page, Report, Log
 from agency.serializer import AgencyPageStructureSerializer
 from agency.crawler_engine import CrawlerEngine
