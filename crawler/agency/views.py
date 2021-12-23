@@ -15,8 +15,8 @@ from agency.models import Agency, Page, Report, Structure
 from agency.serializer import AgencySerializer, AgencyPageStructureSerializer, ReportListSerializer
 from agency.models import Agency
 # from agency.models import AgencyPageStructure, CrawlReport
-from app.messages import *
-from app import tasks
+from crawler.messages import *
+from crawler import tasks
 
 
 class PostPagination(PageNumberPagination):

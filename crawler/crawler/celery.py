@@ -11,7 +11,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crawler.settings')
 crawler = Celery('crawler',
             broker='redis://crawler_redis:6379/10',
             backend='redis://crawler_redis:6379/10',
-            include=['app.tasks', 'agency.tasks']
+            include=['crawler.tasks', 'agency.tasks']
         )
 
 # Optional configuration, see the application user guide.
