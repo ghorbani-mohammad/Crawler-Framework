@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     "rangefilter",
     # Our apps
     "rest_framework",
-    "agency.apps.AgencyConfig",
+    "agency",
     "social",
     "notification",
     "clear_cache",
