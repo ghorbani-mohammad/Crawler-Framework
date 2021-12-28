@@ -48,7 +48,7 @@ services:
 
   crawler_redis:
     container_name : crawler_redis
-    image: redis:5.0.8
+    image: redis:6.2
     restart: unless-stopped
     volumes: 
       - ./redis_volume/:/data
