@@ -18,7 +18,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /var/www/crawler/static:/app/crawler/static
+      - ./static:/app/crawler/static
     ports:
       - "127.0.0.1:8205:80"
 
