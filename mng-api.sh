@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROJECT_NAME='crawler'
-SERVER_PATH='/var/www/crawler/'
+SERVER_PATH='/var/www/cra/'
 COMPOSE_FILE='docker-compose-pro.yml'
 NGINX_FILE='crawler_api_nginx.conf'
 
