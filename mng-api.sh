@@ -43,11 +43,11 @@ function populate_db() {
 
 function collectstatic() {
     echo -e "\n ... collect static files ... \n"
-    docker exec -i $1 ./manage.py collectstatic --noinput
+    docker exec -i $1 ./${PROJECT_NAME}/manage.py collectstatic --noinput
 }
 
 function create_admin_user() {
-    docker exec -it ${API_CONTAINER_NAME} ./manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('${1:-admin}', '', '${2:-test1234}')"
+    docker exec -it ${API_CONTAINER_NAME} ./${PROJECT_NAME}/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('${1:-admin}', '', '${2:-test1234}')"
 }
 
 function issue_https_certificate() {
