@@ -2,7 +2,7 @@
 
 - Server: **DigitalOcean**
 - Port: 8205
-- Server path: `/var/www/crawler/`
+- Server path: `/var/www/cra/`
 - Nginx log files:
     ```
     access: /var/log/nginx/api-crawler_access.log
