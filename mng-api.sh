@@ -16,12 +16,12 @@ function log() {
 }
 
 function make_migrations() {
-    docker exec -it ${API_CONTAINER_NAME} python ./manage.py makemigrations
+    docker exec -it ${API_CONTAINER_NAME} python ./${PROJECT_NAME}/manage.py makemigrations
 }
 
 function migrate() {
     echo -e "\n ... migrate db ... \n"
-    docker exec -t $1 python ./manage.py migrate
+    docker exec -t $1 python ./${PROJECT_NAME}/manage.py migrate
 }
 
 function bash() {
@@ -29,7 +29,7 @@ function bash() {
 }
 
 function shell() {
-    docker exec -it ${API_CONTAINER_NAME} python ./manage.py shell
+    docker exec -it ${API_CONTAINER_NAME} python ./${PROJECT_NAME}/manage.py shell
 }
 
 function drop_db() {
