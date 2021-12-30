@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.utils import timezone
 from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
@@ -13,7 +15,7 @@ logger = get_task_logger(__name__)
     run_every=(crontab(minute=0, hour=0)), name="remove_old_reports", ignore_result=True
 )
 def remove_old_reports():
-    before_time = timezone.localtime() - timezone.timedelta(days=7)
+    before_time = timezone.localtime() - timedelta(days=7)
     age_models.Report.objects.filter(created_at__lte=before_time).delete()[0]
 
 
@@ -21,7 +23,7 @@ def remove_old_reports():
     run_every=(crontab(minute=0, hour=0)), name="remove_old_logs", ignore_result=True
 )
 def remove_old_logs():
-    before_time = timezone.localtime() - timezone.timedelta(days=7)
+    before_time = timezone.localtime() - timedelta(days=7)
     age_models.Log.objects.filter(created_at__lte=before_time).delete()[0]
 
 
