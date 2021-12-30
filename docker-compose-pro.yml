@@ -19,6 +19,7 @@ services:
       - .env
     volumes:
       - ./static:/app/crawler/static
+      - /var/www/cra/log/api:/var/log/app
     ports:
       - "127.0.0.1:8205:80"
 
@@ -33,6 +34,8 @@ services:
     depends_on:
       - crawler_db
       - crawler_redis
+    volumes:
+      - /var/www/cra/log/api:/var/log/app
 
   crawler_beat:
     container_name: crawler_beat
