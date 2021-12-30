@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.conf import settings
+from django.utils import timezone
 from .celery import crawler
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
@@ -101,7 +102,7 @@ def redis_exporter():
         print("---> Exporter is locked")
         return
     redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1, 60 * 60 * 2)
-    bot = telegram.Bot(token=BOT_API_KEY) # this bot variable should not removed
+    bot = telegram.Bot(token=BOT_API_KEY)  # this bot variable should not removed
     pages = Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
@@ -159,11 +160,12 @@ def redis_exporter():
             redis_news.delete(key)
     redis_news.delete(settings.REDIS_EXPORTER_LOCK_KEY)
 
+
 @crawler.task(name="remove_obsolete_reports")
 def remove_obsolete_reports():
-    now = datetime.datetime.now()
-    past_month = now - relativedelta.relativedelta(months=1)
-    Report.objects.filter(created_at__lte=past_month).delete()
+    now = timezone.localtime()
+    before_time = now - relativedelta.relativedelta(days=7)
+    print(Report.objects.filter(created_at__lte=before_time).delete())
 
 
 @crawler.task(
