@@ -3,11 +3,11 @@ from envparse import env
 from djangoeditorwidgets.config import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = env("SECRET_KEY")
-DEBUG = env("DEBUG")
-BOT_API_KEY = env("BOT_API_KEY")
+SECRET_KEY = env.str("SECRET_KEY")
+DEBUG = env.bool("DEBUG")
+BOT_API_KEY = env.str("BOT_API_KEY")
 ALLOWED_HOSTS = ["crawler.m-gh.com"]
-SERVER_IP = env("SERVER_IP")
+SERVER_IP = env.str("SERVER_IP")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
