@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 BOT_API_KEY = env("BOT_API_KEY")
-ALLOWED_HOSTS = ['crawler.m-gh.com']
+ALLOWED_HOSTS = ["crawler.m-gh.com"]
 SERVER_IP = env("SERVER_IP")
 
 # Application definition
@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rangefilter",
-    # Our apps
     "rest_framework",
     "agency",
     "social",

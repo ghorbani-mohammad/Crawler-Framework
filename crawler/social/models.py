@@ -15,7 +15,7 @@ class Network(BaseModelAbstract):
     url = models.URLField()
 
     def __str__(self):
-        return f'{self.pk} - {self.name}'
+        return f'({self.pk} - {self.name})'
 
 
 class Post(BaseModelAbstract):
@@ -24,4 +24,4 @@ class Post(BaseModelAbstract):
     network = models.ForeignKey(Network, on_delete=models.CASCADE, related_name='posts', related_query_name='post')
 
     def __str__(self):
-        return f'{self.pk} - <{self.network}>'
+        return f'({self.pk} - {self.network})'
