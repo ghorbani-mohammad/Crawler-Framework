@@ -25,7 +25,7 @@ def remove_old_reports():
 def remove_old_logs():
     before_time = timezone.localtime() - timezone.timedelta(days=7)
     print(
-        f"Deleted reports: {age_models.Report.objects.filter(created_at__lte=before_time).delete()[0]}"
+        f"Deleted reports: {age_models.Log.objects.filter(created_at__lte=before_time).delete()[0]}"
     )
 
 
