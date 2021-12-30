@@ -19,7 +19,7 @@ services:
       - .env
     volumes:
       - ./static:/app/crawler/static
-      - /var/www/cra/log/api:/var/log/app
+      - ./log/api:/var/log/app
     ports:
       - "127.0.0.1:8205:80"
 
@@ -35,7 +35,7 @@ services:
       - crawler_db
       - crawler_redis
     volumes:
-      - /var/www/cra/log/celery:/var/log/app
+      - ./log/celery:/var/log/app
 
   crawler_beat:
     container_name: crawler_beat
