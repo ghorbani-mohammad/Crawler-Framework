@@ -35,7 +35,7 @@ services:
       - crawler_db
       - crawler_redis
     volumes:
-      - /var/www/cra/log/api:/var/log/app
+      - /var/www/cra/log/celery:/var/log/app
 
   crawler_beat:
     container_name: crawler_beat
