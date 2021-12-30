@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.utils import timezone
-from .celery import crawler
+from crawler.celery import crawler
 from celery.utils.log import get_task_logger
 
 from . import models as age_models
