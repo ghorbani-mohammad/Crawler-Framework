@@ -1,9 +1,8 @@
 from datetime import timedelta
 
 from django.utils import timezone
-from celery.decorators import periodic_task
+from .celery import crawler
 from celery.utils.log import get_task_logger
-from celery.task.schedules import crontab
 
 from . import models as age_models
 
@@ -11,24 +10,18 @@ from . import models as age_models
 logger = get_task_logger(__name__)
 
 
-@periodic_task(
-    run_every=(crontab(minute=0, hour=0)), name="remove_old_reports", ignore_result=True
-)
+@crawler.task(name="remove_old_reports")
 def remove_old_reports():
     before_time = timezone.localtime() - timedelta(days=7)
     age_models.Report.objects.filter(created_at__lte=before_time).delete()[0]
 
 
-@periodic_task(
-    run_every=(crontab(minute=0, hour=0)), name="remove_old_logs", ignore_result=True
-)
+@crawler.task(name="remove_old_logs")
 def remove_old_logs():
     before_time = timezone.localtime() - timedelta(days=7)
     age_models.Log.objects.filter(created_at__lte=before_time).delete()[0]
 
 
-@periodic_task(
-    run_every=(crontab(minute=0, hour=0)), name="reset_locks", ignore_result=True
-)
+@crawler.task(name="reset_locks")
 def reset_locks():
     age_models.Page.objects.update(lock=False)

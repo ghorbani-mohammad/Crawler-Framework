@@ -8,7 +8,6 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.conf import settings
 from django.utils import timezone
-from .celery import crawler
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
 
@@ -159,17 +158,3 @@ def redis_exporter():
         finally:
             redis_news.delete(key)
     redis_news.delete(settings.REDIS_EXPORTER_LOCK_KEY)
-
-
-@crawler.task(name="remove_obsolete_reports")
-def remove_obsolete_reports():
-    now = timezone.localtime()
-    before_time = now - relativedelta.relativedelta(days=7)
-    print(Report.objects.filter(created_at__lte=before_time).delete())
-
-
-@crawler.task(
-    run_every=(crontab(minute=0, hour=0)), name="reset_locks", ignore_result=True
-)
-def reset_locks():
-    Page.objects.update(lock=False)
