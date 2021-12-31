@@ -100,7 +100,7 @@ class PageAdmin(admin.ModelAdmin):
         "agency",
         "page_url",
         "crawl_interval",
-        "last_crawl2",
+        "get_last_crawl",
         "last_crawl_count",
         "status",
         "lock",
@@ -124,9 +124,11 @@ class PageAdmin(admin.ModelAdmin):
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
 
-    def last_crawl2(self, obj):
-        if obj.last_crawl is not None:
-            return obj.last_crawl.strftime("%h. %d %H:%M %p")
+    @admin.display(description="last-crawl")
+    def get_last_crawl(self, instance):
+        if instance.last_crawl:
+            return instance.last_crawl.strftime("%h  %d %H:%M %p")
+        return None
 
     # actions
     def crawl_action(modeladmin, request, queryset):
