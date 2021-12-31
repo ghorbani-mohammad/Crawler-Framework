@@ -8,7 +8,7 @@ from celery.utils.log import get_task_logger
 from .celery import crawler
 from crawler.settings import BOT_API_KEY
 from agency.models import Agency, Page, Report, Log
-from agency.serializer import AgencyPageStructureSerializer
+from agency.serializer import PageSerializer
 from agency.crawler_engine import CrawlerEngine
 
 
@@ -71,7 +71,7 @@ def check():
 
 def crawl(page):
     logging.info(f"---> Page {page.url} must be crawled")
-    serializer = AgencyPageStructureSerializer(page)
+    serializer = PageSerializer(page)
     page_crawl.delay(serializer.data)
 
 

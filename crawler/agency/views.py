@@ -129,7 +129,7 @@ class PageView(viewsets.ModelViewSet):
             return Response(
                 {"status": "400", "message": msg["fa"]["page"]["page_not_found"]}
             )
-        serializer = age_serializer.AgencyPageStructureSerializer(page)
+        serializer = age_serializer.PageSerializer(page)
         x = {}
         x["status"] = "200"
         x["message"] = msg["fa"]["page"]["page_found"]
@@ -177,13 +177,13 @@ class PageView(viewsets.ModelViewSet):
         return Response(response_data)
 
     queryset = Page.objects.all().order_by("id")
-    serializer_class = age_serializer.AgencyPageStructureSerializer
+    serializer_class = age_serializer.PageSerializer
 
 
 @api_view(["GET"])
 def agency_pages(request, version, agency_id):
     pages = Page.objects.filter(agency_id=agency_id)
-    serializer = age_serializer.AgencyPageStructureSerializer(pages, many=True)
+    serializer = age_serializer.PageSerializer(pages, many=True)
     x = {}
     x["status"] = "200"
     x["message"] = msg["fa"]["agency"]["retrieved_pages"]

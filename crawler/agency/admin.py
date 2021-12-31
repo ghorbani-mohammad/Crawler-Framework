@@ -10,7 +10,7 @@ from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from agency.models import Agency
 from agency.models import Agency, Page, Report, Structure, Log
-from agency.serializer import AgencyPageStructureSerializer
+from agency.serializer import PageSerializer
 
 
 @admin.register(Report)
@@ -145,7 +145,7 @@ class PageAdmin(admin.ModelAdmin):
         from crawler.tasks import page_crawl
 
         for page in queryset:
-            page_crawl.delay(AgencyPageStructureSerializer(page).data)
+            page_crawl.delay(PageSerializer(page).data)
         modeladmin.message_user(
             request,
             ngettext(
@@ -163,7 +163,7 @@ class PageAdmin(admin.ModelAdmin):
         from crawler.tasks import page_crawl_repetitive
 
         for page in queryset:
-            page_crawl_repetitive.delay(AgencyPageStructureSerializer(page).data)
+            page_crawl_repetitive.delay(PageSerializer(page).data)
         modeladmin.message_user(
             request,
             ngettext(
