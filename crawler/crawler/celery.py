@@ -42,7 +42,7 @@ crawler.conf.beat_schedule = {
     },
     "remove_old_logs": {
         "task": "remove_old_logs",
-        "schedule": crontab(minute="*/1"),
+        "schedule": crontab(minute=0, hour=0),
     },
     "reset_locks": {
         "task": "reset_locks",
