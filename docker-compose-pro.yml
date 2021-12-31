@@ -63,4 +63,4 @@ services:
     container_name: crawler_chrome
     logging:
       driver: none
-    restart: always
+    restart: unless-stopped

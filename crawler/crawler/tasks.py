@@ -65,12 +65,14 @@ def check():
     pages = (
         Page.objects.filter(agency__in=agencies).filter(lock=False).filter(status=True)
     )
-    now = datetime.datetime.now()
+    now = timezone.localtime()
+    logger.info(now)
     for page in pages:
         if page.last_crawl is None:
             check_must_crawl(page)
         else:
             diff_minute = int((now - page.last_crawl).total_seconds() / (60))
+            logger.info(diff_minute)
             if diff_minute >= page.crawl_interval:
                 check_must_crawl(page)
 
