@@ -22,7 +22,6 @@ Exporter_API_headers = {
     "User-Agent": "PostmanRuntime/7.17.1",
     "Accept": "*/*",
     "Cache-Control": "no-cache",
-    "Postman-Token": "4b465a23-1b28-4b86-981d-67ccf94dda70,4beba7c1-fd77-4b44-bb14-2ea60fbfa590",
     "Host": f"{settings.SERVER_IP}:8888",
     "Accept-Encoding": "gzip, deflate",
     "Content-Length": "2796",
