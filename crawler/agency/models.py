@@ -1,6 +1,9 @@
 from django.db import models
 
 
+from . import tasks
+
+
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,7 +35,7 @@ class Agency(BaseModel):
         self.pages.all().update(status=self.status)
 
     def __str__(self):
-        return self.name
+        return f"({self.pk} - {self.name})"
 
 
 class Structure(models.Model):
@@ -135,6 +138,14 @@ class Log(BaseModel):
 
     def __str__(self):
         return f"({self.pk} - {self.page})"
+
+    @property
+    def log_message(self):
+        return f"desc:\n{self.description}\n\nerror:\n{self.error}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        tasks.send_log_to_telegram(self.log_message)
 
 
 class Option(models.Model):

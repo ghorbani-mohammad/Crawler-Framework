@@ -19,9 +19,7 @@ def count_daily_news():
         )["new_links__sum"]
         or 0
     )
-    logger.info(new_links)
     message = f"Today we saw {new_links} new links"
     bot = models.TelegramBot.objects.first()
     account = models.TelegramAccount.objects.first()
-    res = utils.telegram_bot_sendtext(bot.telegram_token, account.chat_id, message)
-    logger.info(res)
+    utils.telegram_bot_sendtext(bot.telegram_token, account.chat_id, message)

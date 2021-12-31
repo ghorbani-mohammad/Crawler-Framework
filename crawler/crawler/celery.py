@@ -61,7 +61,7 @@ crawler.conf.beat_schedule = {
     },
     "count_daily_news": {
         "task": "count_daily_news",
-        "schedule": crontab(minute="*/1"),
+        "schedule": crontab(minute=0, hour=0),
     },
     "crawl_linkedin": {"task": "crawl_linkedin", "schedule": crontab(minute=0, hour=0)},
 }
