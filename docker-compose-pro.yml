@@ -48,6 +48,8 @@ services:
     depends_on:
       - crawler_db
       - crawler_redis
+    volumes:
+      - ./log/beat:/var/log/app
 
   crawler_redis:
     container_name : crawler_redis
