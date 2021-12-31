@@ -1,14 +1,8 @@
 from __future__ import absolute_import, unicode_literals
-from bs4 import BeautifulSoup
-from dateutil import relativedelta
-import logging, datetime, redis, json, time, telegram
-from seleniumwire import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import logging, redis, json, time, telegram
 
 from django.conf import settings
 from django.utils import timezone
-from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
 
 from .celery import crawler
@@ -66,13 +60,11 @@ def check():
         Page.objects.filter(agency__in=agencies).filter(lock=False).filter(status=True)
     )
     now = timezone.localtime()
-    logger.info(now)
     for page in pages:
         if page.last_crawl is None:
             check_must_crawl(page)
         else:
             diff_minute = int((now - page.last_crawl).total_seconds() / (60))
-            logger.info(diff_minute)
             if diff_minute >= page.crawl_interval:
                 check_must_crawl(page)
 
