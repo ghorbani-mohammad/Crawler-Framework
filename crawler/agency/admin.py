@@ -96,6 +96,10 @@ class PageAdminForm(forms.ModelForm):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super(PageAdmin, self).get_queryset(request)
+        return qs.filter(agency__status=True)
+
     list_display = (
         "agency",
         "page_url",
