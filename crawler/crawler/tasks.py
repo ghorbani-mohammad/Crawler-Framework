@@ -38,7 +38,7 @@ Exporter_API_headers = {
 
 
 def check_must_crawl(page):
-    now = datetime.datetime.now()
+    now = timezone.localtime()
     x = Report.objects.filter(page=page.id, status="pending")
     if x.count() == 0:
         crawl(page)
