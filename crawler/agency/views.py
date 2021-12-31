@@ -1,33 +1,19 @@
-import redis, datetime
+import redis
 
 from django.utils import timezone
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework.views import APIView
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import viewsets
-from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.exceptions import NotAcceptable
+from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.pagination import PageNumberPagination
 
-from agency.serializer import (
-    AgencySerializer,
-    AgencyPageStructureSerializer,
-    CrawlReportSerializer,
-    ReportListSerializer,
-)
-from agency.models import Agency, Page, Report, Structure
-from agency.serializer import (
-    AgencySerializer,
-    AgencyPageStructureSerializer,
-    ReportListSerializer,
-)
-from agency.models import Agency
-
-# from agency.models import AgencyPageStructure, CrawlReport
 from crawler.messages import *
-from crawler import tasks
+from agency import serializer as age_serializer
+from agency.models import Agency, Page, Report, Structure
 
 
 class PostPagination(PageNumberPagination):
@@ -83,7 +69,7 @@ class AgencyView(viewsets.ModelViewSet):
             return Response(
                 {"status": "400", "message": msg["fa"]["agency"]["agency_not_found"]}
             )
-        serializer = AgencySerializer(agency)
+        serializer = age_serializer.AgencySerializer(agency)
         x = {}
         x["status"] = "200"
         x["message"] = msg["fa"]["agency"]["agency_found"]
@@ -107,7 +93,7 @@ class AgencyView(viewsets.ModelViewSet):
         return Response(response_data)
 
     queryset = Agency.objects.filter(deleted_at=None).order_by("id")
-    serializer_class = AgencySerializer
+    serializer_class = age_serializer.AgencySerializer
 
 
 class PageView(viewsets.ModelViewSet):
@@ -143,7 +129,7 @@ class PageView(viewsets.ModelViewSet):
             return Response(
                 {"status": "400", "message": msg["fa"]["page"]["page_not_found"]}
             )
-        serializer = AgencyPageStructureSerializer(page)
+        serializer = age_serializer.AgencyPageStructureSerializer(page)
         x = {}
         x["status"] = "200"
         x["message"] = msg["fa"]["page"]["page_found"]
@@ -190,16 +176,14 @@ class PageView(viewsets.ModelViewSet):
         }
         return Response(response_data)
 
-    # pagination_class = PostPagination
     queryset = Page.objects.all().order_by("id")
-    # queryset = AgencyPageStructure.objects.filter(deleted_at=None).order_by('id')
-    serializer_class = AgencyPageStructureSerializer
+    serializer_class = age_serializer.AgencyPageStructureSerializer
 
 
 @api_view(["GET"])
 def agency_pages(request, version, agency_id):
     pages = Page.objects.filter(agency_id=agency_id)
-    serializer = AgencyPageStructureSerializer(pages, many=True)
+    serializer = age_serializer.AgencyPageStructureSerializer(pages, many=True)
     x = {}
     x["status"] = "200"
     x["message"] = msg["fa"]["agency"]["retrieved_pages"]
@@ -327,23 +311,8 @@ class ReportView(ReadOnlyModelViewSet):
 
     def list(self, request, version):
         queryset = Report.objects.all()
-        # page = self.paginate_queryset(queryset)
-        # serializer = ReportListSerializer(page, many=True)
-        # x = {}
-        # x['status'] = '200'
-        # x['message'] = msg['fa']['report']['report_found']
-        # x['data'] = serializer.data
-        # return self.get_paginated_response(serializer.data)
-        serializer = ReportListSerializer(queryset, many=True)
+        serializer = age_serializer.ReportListSerializer(queryset, many=True)
         return Response(serializer.data)
-        # queryset = CrawlReport.objects.all().order_by('-id')
-        # page = self.paginate_queryset(queryset)
-        # serializer = ReportListSerializer(page, many=True)
-        # x = {}
-        # x['status'] = '200'
-        # x['message'] = msg['fa']['report']['report_found']
-        # x['data'] = serializer.data
-        # return self.get_paginated_response(serializer.data)
 
     def retrieve(self, request, version, pk=None):
         queryset = Report.objects.all()
@@ -353,7 +322,7 @@ class ReportView(ReadOnlyModelViewSet):
             return Response(
                 {"status": "418", "message": msg["fa"]["report"]["report_not_found"]}
             )
-        serializer = ReportListSerializer(report)
+        serializer = age_serializer.ReportListSerializer(report)
         x = {}
         x["status"] = "200"
         x["message"] = msg["fa"]["report"]["report_found"]
