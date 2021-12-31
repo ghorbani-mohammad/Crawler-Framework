@@ -36,13 +36,13 @@ crawler.conf.beat_schedule = {
         "task": "redis_exporter",
         "schedule": 3 * 60,
     },
-    "remove_obsolete_reports": {
-        "task": "remove_obsolete_reports",
+    "remove_old_reports": {
+        "task": "remove_old_reports",
         "schedule": crontab(minute=0, hour=0),
     },
-    "remove_obsolete_logs": {
-        "task": "remove_obsolete_logs",
-        "schedule": crontab(minute=0, hour=0),
+    "remove_old_logs": {
+        "task": "remove_old_logs",
+        "schedule": crontab(minute="*/1"),
     },
     "reset_locks": {
         "task": "reset_locks",
