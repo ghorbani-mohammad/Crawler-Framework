@@ -1,7 +1,9 @@
+from pytz import timezone as tz
 from prettyjson import PrettyJSONWidget
 from rangefilter.filter import DateTimeRangeFilter
 
 from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 from django.utils.html import format_html
@@ -134,8 +136,9 @@ class PageAdmin(admin.ModelAdmin):
     @admin.display(description="L. Crawl")
     def get_last_crawl(self, instance):
         if instance.last_crawl:
-            return instance.last_crawl
-            return instance.last_crawl.strftime("%h %d %H:%M %p")
+            return instance.last_crawl.astimezone(tz(settings.TIME_ZONE)).strftime(
+                "%h %d %H:%M %p"
+            )
         return None
 
     @admin.display(description="L. Count")
