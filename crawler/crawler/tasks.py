@@ -76,13 +76,11 @@ def crawl(page):
 
 @crawler.task(name="page_crawl")
 def page_crawl(page_structure):
-    logger.info("---> Page crawling is started")
     CrawlerEngine(page_structure)
 
 
 @crawler.task(name="page_crawl_repetitive")
 def page_crawl_repetitive(page_structure):
-    logger.info("---> Page crawling repetitive is started")
     CrawlerEngine(page_structure, repetitive=True)
 
 

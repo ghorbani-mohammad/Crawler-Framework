@@ -38,11 +38,11 @@ class CrawlerEngine:
         self.header = header
         self.repetitive = repetitive
         logger.info(
-            f"CrawlerEngine initiated for page: {self.page} with repetitive: {self.repetitive}"
+            f"Crawl **started** for page: {self.page} with repetitive: {self.repetitive}"
         )
         self.run()
         logger.info(
-            f"CrawlerEngine finished for page: {self.page} with repetitive: {self.repetitive}"
+            f"Crawl **finished** for page: {self.page} with repetitive: {self.repetitive}"
         )
 
     def register_log(self, description, e, page, url):
