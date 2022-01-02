@@ -57,6 +57,8 @@ services:
     restart: unless-stopped
     volumes: 
       - ./redis_volume/:/data
+    logging:
+      driver: none
 
   crawler_chrome:
     image: selenium/standalone-chrome
