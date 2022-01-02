@@ -64,5 +64,5 @@ services:
     image: selenium/standalone-chrome
     container_name: crawler_chrome
     logging:
-      driver: none
+      driver: "none"
     restart: unless-stopped
