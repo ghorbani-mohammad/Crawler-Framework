@@ -82,7 +82,6 @@ class CrawlerEngine:
         meta = self.page.structure.news_meta_structure
         article = data
         article["page_id"] = self.page.id
-        logger.info(f"crawl_one_page: {article}")
         if fetch_contet:
             self.driver.get(data["link"])
             time.sleep(self.page.load_sleep)
@@ -133,7 +132,7 @@ class CrawlerEngine:
                             self.register_log(desc, e, self.page, data["link"])
                     else:
                         article[key] = element.text
-        logger.info(article)
+        logger.info(f"crawl_one_page: {article}")
         self.save_to_redis(article)
 
     def save_to_redis(self, article):
