@@ -89,7 +89,7 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Tehran"
 USE_I18N = True
 USE_L10N = False
-USE_TZ = False
+USE_TZ = True
 
 # CELERY
 BROKER_URL = "redis://crawler_redis:6379"
