@@ -193,7 +193,7 @@ class CrawlerEngine:
         logger.info(
             f"---> We found {self.fetched_links_count} number of links for {self.page}"
         )
-        self.check_links()
+        self.check_data()
 
 
 # Crawler version 2
