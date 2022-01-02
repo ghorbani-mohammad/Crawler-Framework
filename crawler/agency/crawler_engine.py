@@ -8,15 +8,13 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from django.utils import timezone
 from celery.utils.log import get_task_logger
 
-from agency.models import Page, Report, Log
+from . import models, utils
 
 logger = get_task_logger(__name__)
 
 
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
-        # TODO: ip and port of webdriver must be dynamic
-        # Initialize Chrome browser (connect to chrome container)
         options = Options()
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--enable-javascript")
@@ -26,29 +24,18 @@ class CrawlerEngine:
             options=options,
         )
         # set headers to looks like a common user
-        self.driver.header_overrides = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
-            "AppleWebKit/537.11 (KHTML, like Gecko) "
-            "Chrome/23.0.1271.64 Safari/537.11",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
-            "Accept-Encoding": "none",
-            "Accept-Language": "en-US,en;q=0.8",
-            "Connection": "keep-alive",
-        }
-
-        # TODO: ip and port of redis must be dynamic
-        # initialize redis_news memory for storing news
-        # initialize redis_duplicate_checker for checking duplicate links
+        self.driver.header_overrides = utils.DEFAULT_HEADER
         self.redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(
             host="crawler_redis", port=6379, db=1
         )
         self.log_messages = ""
-        self.page = Page.objects.get(id=page["id"])
+        self.page = models.Page.objects.get(id=page["id"])
         self.page.lock = True
         self.page.save()
-        self.report = Report.objects.create(page_id=self.page.id, status="pending")
+        self.report = models.Report.objects.create(
+            page_id=self.page.id, status="pending"
+        )
         self.header = header
         self.repetitive = repetitive
         self.run()
@@ -69,7 +56,6 @@ class CrawlerEngine:
         del attribute["tag"]
         if "code" in attribute.keys():
             del attribute["code"]
-
         elements = doc.findAll(tag, attribute)
         if self.page.structure.news_links_code != "":
             exec(self.page.structure.news_links_code)
@@ -109,7 +95,7 @@ class CrawlerEngine:
                             exec(temp_code)
                         except Exception as e:
                             logger.info(traceback.format_exc())
-                            Log.objects.create(
+                            models.Log.objects.create(
                                 page=self.page,
                                 description="tag code, executing code made error, the code was {}".format(
                                     temp_code
@@ -125,7 +111,7 @@ class CrawlerEngine:
                         del attribute["code"]
                     element = doc.find(tag, attribute)
                     if element is None:
-                        Log.objects.create(
+                        models.Log.objects.create(
                             page=self.page,
                             description="tag was: {} *** and attribute was {}".format(
                                 tag, attribute
@@ -144,7 +130,7 @@ class CrawlerEngine:
                             exec(temp_code)
                         except Exception as e:
                             logger.info(traceback.format_exc())
-                            Log.objects.create(
+                            models.Log.objects.create(
                                 page=self.page,
                                 description="tag code, executing code maked error, the code was {}".format(
                                     temp_code
@@ -209,16 +195,7 @@ class CrawlerEngineV2:
             desired_capabilities=DesiredCapabilities.CHROME,
             options=options,
         )
-        self.driver.header_overrides = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
-            "AppleWebKit/537.11 (KHTML, like Gecko) "
-            "Chrome/23.0.1271.64 Safari/537.11",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
-            "Accept-Encoding": "none",
-            "Accept-Language": "en-US,en;q=0.8",
-            "Connection": "keep-alive",
-        }
+        self.driver.header_overrides = utils.DEFAULT_HEADER
 
     def get_links(self, structure, url):
         links = []
