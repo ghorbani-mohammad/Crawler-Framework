@@ -146,9 +146,9 @@ class CrawlerEngine:
 
     def save_to_redis(self, article):
         # TODO: expiration must be dynamic
-        self.redis_news.set(article["link"], json.dumps(article))
+        self.redis_news.set(article["url"], json.dumps(article))
         self.redis_duplicate_checker.set(
-            article["link"], "", ex=self.page.days_to_keep * 60 * 60 * 24
+            article["url"], "", ex=self.page.days_to_keep * 60 * 60 * 24
         )
 
     def check_data(self):
