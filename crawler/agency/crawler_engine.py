@@ -23,7 +23,6 @@ class CrawlerEngine:
             desired_capabilities=DesiredCapabilities.CHROME,
             options=options,
         )
-        # set headers to looks like a common user
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
         self.redis_duplicate_checker = redis.StrictRedis(
@@ -77,7 +76,6 @@ class CrawlerEngine:
         self.report.fetched_links = self.fetched_links_count
         self.report.save()
 
-    # TODO: Make crawl_news_page as task function
     def crawl_one_page(self, data, fetch_contet):
         meta = self.page.structure.news_meta_structure
         article = data
@@ -96,17 +94,12 @@ class CrawlerEngine:
                         continue
                     if tag == "code":
                         code = attribute["code"]
-                        temp_code = """
-{0}
-                        """
-                        temp_code = temp_code.format(code)
+                        temp_code = utils.CODE.format(code)
                         try:
                             exec(temp_code)
                         except Exception as e:
                             logger.error(traceback.format_exc())
-                            desc = "tag code, executing code made error, the code was {}".format(
-                                temp_code
-                            )
+                            desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, e, self.page, data["link"])
                         continue
                     code = ""
@@ -120,10 +113,7 @@ class CrawlerEngine:
                         self.register_log(desc, error, self.page, data["link"])
                         break
                     if code != "":
-                        temp_code = """
-{0}
-                        """
-                        temp_code = temp_code.format(code)
+                        temp_code = utils.CODE.format(code)
                         try:
                             exec(temp_code)
                         except Exception as e:

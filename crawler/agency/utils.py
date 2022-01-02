@@ -8,3 +8,7 @@ DEFAULT_HEADER = {
     "Accept-Language": "en-US,en;q=0.8",
     "Connection": "keep-alive",
 }
+
+CODE = """
+{0}
+"""
