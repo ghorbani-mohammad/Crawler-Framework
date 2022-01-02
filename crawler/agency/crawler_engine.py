@@ -73,6 +73,7 @@ class CrawlerEngine:
         meta = self.page.structure.news_meta_structure
         article = data
         article["page_id"] = self.page.id
+        logger.info(f"crawl_one_page: {article}")
         if fetch_contet:
             self.driver.get(data["link"])
             time.sleep(self.page.load_sleep)
@@ -145,7 +146,6 @@ class CrawlerEngine:
         self.save_to_redis(article)
 
     def save_to_redis(self, article):
-        # TODO: expiration must be dynamic
         self.redis_news.set(article["link"], json.dumps(article))
         self.redis_duplicate_checker.set(
             article["link"], "", ex=self.page.days_to_keep * 60 * 60 * 24
