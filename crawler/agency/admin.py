@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.contrib import messages
 from django.utils.html import format_html
 from django.utils.translation import ngettext
+from django.template.defaultfilters import truncatechars
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from agency.models import Agency
@@ -207,7 +208,9 @@ class LogAdmin(admin.ModelAdmin):
         return ""
 
     def created(self, obj):
-        return obj.created_at.strftime("%h. %d %H:%M %p")
+        return obj.created_at.astimezone(tz(settings.TIME_ZONE)).strftime(
+            "%h. %d %H:%M %p"
+        )
 
     def base(self, obj):
         if obj.url is not None:
@@ -220,8 +223,6 @@ class LogAdmin(admin.ModelAdmin):
         return ""
 
     def short_description(self, obj):
-        from django.template.defaultfilters import truncatechars  # or truncatewords
-
         return truncatechars(obj.description, 50)
 
     def has_change_permission(self, request, obj=None):
