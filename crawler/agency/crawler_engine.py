@@ -101,7 +101,7 @@ class CrawlerEngine:
                                     temp_code
                                 ),
                                 url=data["url"],
-                                phase=Log.CRAWLING,
+                                phase=models.Log.CRAWLING,
                                 error=e,
                             )
                         continue
@@ -117,7 +117,7 @@ class CrawlerEngine:
                                 tag, attribute
                             ),
                             url=data["url"],
-                            phase=Log.CRAWLING,
+                            phase=models.Log.CRAWLING,
                             error="element is null",
                         )
                         break
@@ -132,11 +132,11 @@ class CrawlerEngine:
                             logger.info(traceback.format_exc())
                             models.Log.objects.create(
                                 page=self.page,
-                                description="tag code, executing code maked error, the code was {}".format(
+                                description="tag code, executing code made error, the code was {}".format(
                                     temp_code
                                 ),
                                 url=data["url"],
-                                phase=Log.CRAWLING,
+                                phase=models.Log.CRAWLING,
                                 error=e,
                             )
                     else:
