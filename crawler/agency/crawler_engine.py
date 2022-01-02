@@ -74,7 +74,7 @@ class CrawlerEngine:
         article = data
         article["page_id"] = self.page.id
         if fetch_contet:
-            self.driver.get(data["url"])
+            self.driver.get(data["link"])
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
             if meta is not None:
@@ -100,7 +100,7 @@ class CrawlerEngine:
                                 description="tag code, executing code made error, the code was {}".format(
                                     temp_code
                                 ),
-                                url=data["url"],
+                                url=data["link"],
                                 phase=models.Log.CRAWLING,
                                 error=e,
                             )
@@ -116,7 +116,7 @@ class CrawlerEngine:
                             description="tag was: {} *** and attribute was {}".format(
                                 tag, attribute
                             ),
-                            url=data["url"],
+                            url=data["link"],
                             phase=models.Log.CRAWLING,
                             error="element is null",
                         )
@@ -135,7 +135,7 @@ class CrawlerEngine:
                                 description="tag code, executing code made error, the code was {}".format(
                                     temp_code
                                 ),
-                                url=data["url"],
+                                url=data["link"],
                                 phase=models.Log.CRAWLING,
                                 error=e,
                             )
@@ -146,15 +146,17 @@ class CrawlerEngine:
 
     def save_to_redis(self, article):
         # TODO: expiration must be dynamic
-        self.redis_news.set(article["url"], json.dumps(article))
+        self.redis_news.set(article["link"], json.dumps(article))
         self.redis_duplicate_checker.set(
-            article["url"], "", ex=self.page.days_to_keep * 60 * 60 * 24
+            article["link"], "", ex=self.page.days_to_keep * 60 * 60 * 24
         )
 
     def check_data(self):
         counter = self.fetched_links_count
         for data in self.fetched_links:
-            if not self.repetitive and self.redis_duplicate_checker.exists(data["url"]):
+            if not self.repetitive and self.redis_duplicate_checker.exists(
+                data["link"]
+            ):
                 counter -= 1
                 continue
             else:
