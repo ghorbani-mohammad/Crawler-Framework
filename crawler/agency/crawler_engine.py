@@ -40,6 +40,7 @@ class CrawlerEngine:
         self.run()
 
     def register_log(self, description, e, page, url):
+        logger.error(traceback.format_exc())
         models.Log.objects.create(
             page=page,
             description=description,
@@ -98,7 +99,6 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.error(traceback.format_exc())
                             desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, e, self.page, data["link"])
                         continue
@@ -117,7 +117,6 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.error(traceback.format_exc())
                             desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, e, self.page, data["link"])
                     else:
@@ -193,10 +192,7 @@ class CrawlerEngineV2:
             del attribute["code"]
         elements = doc.findAll(tag, attribute)
         if code != "":
-            temp_code = """
-{0}
-            """
-            temp_code = temp_code.format(code)
+            temp_code = utils.CODE.format(code)
             exec(temp_code)
         else:
             for element in elements:
@@ -225,10 +221,7 @@ class CrawlerEngineV2:
                 continue
             if tag == "code":
                 code = attribute["code"]
-                temp_code = """
-{0}
-                """
-                temp_code = temp_code.format(code)
+                temp_code = utils.CODE.format(code)
                 try:
                     exec(temp_code)
                 except Exception as e:
@@ -246,10 +239,7 @@ class CrawlerEngineV2:
                 print("element is null, attribute: {}".format(attribute))
                 break
             if code != "":
-                temp_code = """
-{0}
-                """
-                temp_code = temp_code.format(code)
+                temp_code = utils.CODE.format(code)
                 try:
                     exec(temp_code)
                 except Exception as e:
