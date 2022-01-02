@@ -176,7 +176,6 @@ class CrawlerEngine:
                 continue
             else:
                 self.crawl_one_page(link, self.page.fetch_content)
-        logger.error(timezone.localtime())
         self.page.last_crawl = timezone.localtime()
         self.page.last_crawl_count = self.fetched_links_count
         self.page.lock = False
@@ -192,9 +191,11 @@ class CrawlerEngine:
         self.log_messages += "{} \n".format(message)
 
     def run(self):
-        logger.info("------> Fetching links from %s started", self.page.url)
+        logger.info(f"---> Fetching links from {self.page} started")
         self.fetch_links()
-        logger.info("------> We found %s number of links: ", self.fetched_links_count)
+        logger.info(
+            f"---> We found {self.fetched_links_count} number of links for {self.page}"
+        )
         self.check_links()
 
 
