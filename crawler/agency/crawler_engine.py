@@ -40,6 +40,15 @@ class CrawlerEngine:
         self.repetitive = repetitive
         self.run()
 
+    def register_log(self, description, e, page, url):
+        models.Log.objects.create(
+            page=page,
+            description=description,
+            url=url,
+            phase=models.Log.CRAWLING,
+            error=e,
+        )
+
     def fetch_links(self):
         data = []
         self.driver.get(self.page.url)
@@ -95,16 +104,11 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.info(traceback.format_exc())
-                            models.Log.objects.create(
-                                page=self.page,
-                                description="tag code, executing code made error, the code was {}".format(
-                                    temp_code
-                                ),
-                                url=data["link"],
-                                phase=models.Log.CRAWLING,
-                                error=e,
+                            logger.error(traceback.format_exc())
+                            desc = "tag code, executing code made error, the code was {}".format(
+                                temp_code
                             )
+                            self.register_log(desc, e, self.page, data["link"])
                         continue
                     code = ""
                     if "code" in attribute.keys():
@@ -112,15 +116,9 @@ class CrawlerEngine:
                         del attribute["code"]
                     element = doc.find(tag, attribute)
                     if element is None:
-                        models.Log.objects.create(
-                            page=self.page,
-                            description="tag was: {} *** and attribute was {}".format(
-                                tag, attribute
-                            ),
-                            url=data["link"],
-                            phase=models.Log.CRAWLING,
-                            error="element is null",
-                        )
+                        desc = f"tag was: {tag} *** and attribute was {attribute}"
+                        error = "element is null"
+                        self.register_log(desc, error, self.page, data["link"])
                         break
                     if code != "":
                         temp_code = """
@@ -130,16 +128,9 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)
                         except Exception as e:
-                            logger.info(traceback.format_exc())
-                            models.Log.objects.create(
-                                page=self.page,
-                                description="tag code, executing code made error, the code was {}".format(
-                                    temp_code
-                                ),
-                                url=data["link"],
-                                phase=models.Log.CRAWLING,
-                                error=e,
-                            )
+                            logger.error(traceback.format_exc())
+                            desc = f"tag code, executing code made error, the code was {temp_code}"
+                            self.register_log(desc, e, self.page, data["link"])
                     else:
                         article[key] = element.text
         logger.info(article)
