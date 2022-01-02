@@ -54,7 +54,7 @@ class CrawlerEngine:
         self.run()
 
     def fetch_links(self):
-        links = []
+        data = []
         self.driver.get(self.page.url)
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
@@ -75,23 +75,20 @@ class CrawlerEngine:
             exec(self.page.structure.news_links_code)
         else:
             for element in elements:
-                links.append(element["href"])
-
-        logger.info("Fetched links are:")
-        logger.info(links)
-        self.fetched_links = links
-        self.fetched_links_count = len(links)
+                data.append(element["href"])
+        logger.info(f"Fetched data are: {data}")
+        self.fetched_links = data
+        self.fetched_links_count = len(data)
         self.report.fetched_links = self.fetched_links_count
         self.report.save()
 
     # TODO: Make crawl_news_page as task function
-    def crawl_one_page(self, link, fetch_contet):
+    def crawl_one_page(self, data, fetch_contet):
         meta = self.page.structure.news_meta_structure
-        article = {}
-        article["link"] = link
+        article = data
         article["page_id"] = self.page.id
         if fetch_contet:
-            self.driver.get(link)
+            self.driver.get(data["url"])
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
             if meta is not None:
@@ -114,10 +111,10 @@ class CrawlerEngine:
                             logger.info(traceback.format_exc())
                             Log.objects.create(
                                 page=self.page,
-                                description="tag code, executing code maked error, the code was {}".format(
+                                description="tag code, executing code made error, the code was {}".format(
                                     temp_code
                                 ),
-                                url=link,
+                                url=data["url"],
                                 phase=Log.CRAWLING,
                                 error=e,
                             )
@@ -133,7 +130,7 @@ class CrawlerEngine:
                             description="tag was: {} *** and attribute was {}".format(
                                 tag, attribute
                             ),
-                            url=link,
+                            url=data["url"],
                             phase=Log.CRAWLING,
                             error="element is null",
                         )
@@ -152,7 +149,7 @@ class CrawlerEngine:
                                 description="tag code, executing code maked error, the code was {}".format(
                                     temp_code
                                 ),
-                                url=link,
+                                url=data["url"],
                                 phase=Log.CRAWLING,
                                 error=e,
                             )
@@ -168,14 +165,14 @@ class CrawlerEngine:
             article["link"], "", ex=self.page.days_to_keep * 60 * 60 * 24
         )
 
-    def check_links(self):
+    def check_data(self):
         counter = self.fetched_links_count
-        for link in self.fetched_links:
-            if not self.repetitive and self.redis_duplicate_checker.exists(link):
+        for data in self.fetched_links:
+            if not self.repetitive and self.redis_duplicate_checker.exists(data["url"]):
                 counter -= 1
                 continue
             else:
-                self.crawl_one_page(link, self.page.fetch_content)
+                self.crawl_one_page(data, self.page.fetch_content)
         self.page.last_crawl = timezone.localtime()
         self.page.last_crawl_count = self.fetched_links_count
         self.page.lock = False
