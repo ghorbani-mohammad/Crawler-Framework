@@ -134,7 +134,7 @@ class PageAdmin(admin.ModelAdmin):
     @admin.display(description="L. Crawl")
     def get_last_crawl(self, instance):
         if instance.last_crawl:
-            return instance.last_crawl.strftime("%h  %d %H:%M %p")
+            return instance.last_crawl.strftime("%Y%m%d %H:%M")
         return None
 
     @admin.display(description="L. Count")
