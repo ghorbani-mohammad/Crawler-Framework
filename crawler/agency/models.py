@@ -51,7 +51,7 @@ class Structure(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name if self.name is not None else "None"
+        return f"({self.pk} - {self.name})"
 
 
 class Cookie(BaseModel):
@@ -96,7 +96,7 @@ class Page(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.url
+        return f"({self.pk} - {self.url})"
 
     @property
     def days_to_keep(self):
