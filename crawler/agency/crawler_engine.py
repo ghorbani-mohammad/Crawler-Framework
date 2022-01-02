@@ -176,6 +176,7 @@ class CrawlerEngine:
                 continue
             else:
                 self.crawl_one_page(link, self.page.fetch_content)
+        logger.error(timezone.localtime())
         self.page.last_crawl = timezone.localtime()
         self.page.last_crawl_count = self.fetched_links_count
         self.page.lock = False
