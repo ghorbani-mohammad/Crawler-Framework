@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils import timezone
 from celery.utils.log import get_task_logger
 
+from agency import utils
 from .celery import crawler
 from crawler.settings import BOT_API_KEY
 from agency.models import Agency, Page, Report, Log
@@ -124,10 +125,7 @@ def redis_exporter():
                 redis_news.delete(key)
                 continue
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
-            temp_code = """
-{0}
-            """
-            temp_code = temp_code.format(page.message_code)
+            temp_code = utils.CODE.format(page.message_code)
             try:
                 temp_code = (
                     temp_code
@@ -135,13 +133,13 @@ def redis_exporter():
                     + "bot.send_message(chat_id=page.telegram_channel, text=message)"
                 )
                 exec(temp_code)
-                time.sleep(3)
+                time.sleep(2)
             except Exception as e:
                 desc = f"code was: {temp_code}"
-                register_log(desc, str(e), page, data["link"])
+                register_log(desc, e, page, data["link"])
         except Exception as e:
             desc = f"key was: {key.decode('utf-8')}"
-            register_log(desc, str(e), page, data["link"])
+            register_log(desc, e, page, data["link"])
         finally:
             redis_news.delete(key)
     redis_news.delete(settings.REDIS_EXPORTER_LOCK_KEY)
