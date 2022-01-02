@@ -1,16 +1,16 @@
-import logging, redis, json, time, datetime, time, traceback
-import re  # Don't remove this package, this package used dynamically in code
-import logging, redis, json, time, datetime, validators
+# Don't remove re package, this package used dynamically in code
+import re, redis, json, time, traceback, validators
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.utils import timezone
+from celery.utils.log import get_task_logger
 
 from agency.models import Page, Report, Log
 
-logger = logging.getLogger("django")
+logger = get_task_logger(__name__)
 
 
 class CrawlerEngine:
