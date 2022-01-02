@@ -1,5 +1,5 @@
 from __future__ import absolute_import, unicode_literals
-import logging, redis, json, time, telegram
+import redis, json, time, telegram
 
 from django.conf import settings
 from django.utils import timezone
@@ -69,20 +69,20 @@ def check():
 
 
 def crawl(page):
-    logging.info(f"---> Page {page.url} must be crawled")
+    logger.info(f"---> Page {page.url} must be crawled")
     serializer = PageSerializer(page)
     page_crawl.delay(serializer.data)
 
 
 @crawler.task(name="page_crawl")
 def page_crawl(page_structure):
-    logging.info("---> Page crawling is started")
+    logger.info("---> Page crawling is started")
     CrawlerEngine(page_structure)
 
 
 @crawler.task(name="page_crawl_repetitive")
 def page_crawl_repetitive(page_structure):
-    logging.info("---> Page crawling is started")
+    logger.info("---> Page crawling is started")
     CrawlerEngine(page_structure, repetitive=True)
 
 
@@ -90,8 +90,7 @@ def page_crawl_repetitive(page_structure):
 def redis_exporter():
     lock = redis_news.get(settings.REDIS_EXPORTER_LOCK_KEY)
     if lock:
-        logging.info("---> Exporter is locked")
-        print("---> Exporter is locked")
+        logger.info("---> Exporter is locked")
         return
     redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1, 60 * 60 * 2)
     bot = telegram.Bot(token=BOT_API_KEY)  # this bot variable should not removed
