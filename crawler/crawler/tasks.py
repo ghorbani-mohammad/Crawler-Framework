@@ -1,5 +1,5 @@
 from __future__ import absolute_import, unicode_literals
-import redis, json, time, telegram
+import redis, json, time, telegram, traceback
 
 from django.conf import settings
 from django.utils import timezone
@@ -68,6 +68,17 @@ def check():
                 check_must_crawl(page)
 
 
+def register_log(description, e, page, url):
+    logger.error(traceback.format_exc())
+    Log.objects.create(
+        page=page,
+        description=description,
+        url=url,
+        phase=Log.SENDING,
+        error=e,
+    )
+
+
 def crawl(page):
     logger.info(f"---> Page {page.url} must be crawled")
     serializer = PageSerializer(page)
@@ -107,13 +118,9 @@ def redis_exporter():
             data = json.loads(data)
             page = pages.filter(pk=data["page_id"], status=True).first()
             if page is None:
-                Log.objects.create(
-                    page=page,
-                    url=data["link"],
-                    phase=Log.SENDING,
-                    error="page is None",
-                    description=f"data is: {data}",
-                )
+                desc = f"data is: {data}"
+                e = "page is None"
+                register_log(desc, e, page, data["link"])
                 redis_news.delete(key)
                 continue
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
@@ -130,21 +137,11 @@ def redis_exporter():
                 exec(temp_code)
                 time.sleep(3)
             except Exception as e:
-                Log.objects.create(
-                    page=page,
-                    url=data["link"],
-                    phase=Log.SENDING,
-                    error=str(e),
-                    description=f"code was: {temp_code}",
-                )
+                desc = f"code was: {temp_code}"
+                register_log(desc, str(e), page, data["link"])
         except Exception as e:
-            Log.objects.create(
-                page=page,
-                url=data["link"],
-                phase=Log.SENDING,
-                error=str(e),
-                description=f"key was: {key.decode('utf-8')}",
-            )
+            desc = f"key was: {key.decode('utf-8')}"
+            register_log(desc, str(e), page, data["link"])
         finally:
             redis_news.delete(key)
     redis_news.delete(settings.REDIS_EXPORTER_LOCK_KEY)
