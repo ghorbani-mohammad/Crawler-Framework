@@ -100,6 +100,9 @@ class PageAdmin(admin.ModelAdmin):
         qs = super(PageAdmin, self).get_queryset(request)
         return qs.filter(agency__status=True)
 
+    def get_ordering(self, request):
+        return ["-last_crawl"]
+
     list_display = (
         "agency",
         "page_url",
