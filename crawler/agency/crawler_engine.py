@@ -37,7 +37,9 @@ class CrawlerEngine:
         )
         self.header = header
         self.repetitive = repetitive
+        logger.info(f"CrawlerEngine initiated for page: {self.page}")
         self.run()
+        logger.info(f"CrawlerEngine finished for page: {self.page}")
 
     def register_log(self, description, e, page, url):
         logger.error(traceback.format_exc())
