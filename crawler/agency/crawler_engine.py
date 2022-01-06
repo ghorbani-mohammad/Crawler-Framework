@@ -60,10 +60,9 @@ class CrawlerEngine:
         self.driver.get(self.page.url)
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
-            self.driver.get_screenshot_as_file(
-                "static/crawler/static/{}.png".format(self.report.id)
-            )
-            self.report.picture = "static/crawler/static/{}.png".format(self.report.id)
+            file_path = f"static/crawler/static/{self.report.id}.png"
+            self.driver.get_screenshot_as_file(file_path)
+            self.report.picture = file_path
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, "html.parser")
         attribute = self.page.structure.news_links_structure
