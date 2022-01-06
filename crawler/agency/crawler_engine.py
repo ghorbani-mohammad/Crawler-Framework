@@ -33,7 +33,7 @@ class CrawlerEngine:
         self.page.lock = True
         self.page.save()
         self.report = models.Report.objects.create(
-            page_id=self.page.id, status="pending"
+            page_id=self.page.id, status=models.Report.PENDING
         )
         self.header = header
         self.repetitive = repetitive
