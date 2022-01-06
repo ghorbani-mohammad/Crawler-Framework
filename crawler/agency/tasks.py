@@ -18,7 +18,6 @@ def remove_old_reports():
 
 @crawler.task(name="remove_old_logs")
 def remove_old_logs():
-    logger.info("hello")
     before_time = timezone.localtime() - timezone.timedelta(days=7)
     age_models.Log.objects.filter(created_at__lte=before_time).delete()[0]
 
