@@ -32,16 +32,18 @@ Exporter_API_headers = {
 
 def check_must_crawl(page):
     now = timezone.localtime()
-    x = age_models.Report.objects.filter(page=page.id, status=age_models.Report.PENDING)
-    if x.count() == 0:
+    reports = age_models.Report.objects.filter(
+        page=page.id, status=age_models.Report.PENDING
+    )
+    if reports.count() == 0:
         crawl(page)
     else:
-        last_report = x.last()
+        last_report = reports.last()
         if (
             int((now - last_report.created_at).total_seconds() / (60))
             >= page.crawl_interval
         ):
-            x.update(status=age_models.Report.FAILED)
+            reports.update(status=age_models.Report.FAILED)
         if (
             int((now - last_report.created_at).total_seconds() / (3600))
             >= page.crawl_interval
