@@ -150,7 +150,7 @@ class CrawlerEngine:
         self.page.lock = False
         self.page.save()
         self.report.new_links = counter
-        self.report.status = "complete"
+        self.report.status = models.Report.COMPLETED
         self.report.log = self.log_messages
         self.report.save()
         self.driver.quit()
