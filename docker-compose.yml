@@ -12,10 +12,10 @@ services:
   crawler_api:
     image: crawler
     container_name: crawler_api
-    command: ["python", "/app/manage.py", "runserver", "0.0.0.0:8205"]
     build:
       context: .
       dockerfile: Dockerfile
+    command: ["python", "/app/crawler/manage.py", "runserver", "0.0.0.0:8205"]
     env_file:
       - .env
     volumes:
