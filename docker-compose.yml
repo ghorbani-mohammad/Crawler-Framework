@@ -43,11 +43,12 @@ services:
   crawler_worker:
     image: crawler
     container_name: crawler_worker
+    working_dir: /app/crawler
+    command: ["celery", "-A", "crawler", "worker", "-l", "info", "--pidfile="]
     env_file:
       - .env
     volumes:
       - .:/app
-    command: ["celery", "-A", "app", "worker", "-l", "info", "--pidfile="]
     logging:
       driver: json-file
       options:
@@ -58,11 +59,12 @@ services:
   crawler_beat:
     image: crawler
     container_name: crawler_beat
+    working_dir: /app/crawler
+    command: ["celery", "-A", "crawler", "beat", "-l", "info", "--pidfile="]
     env_file:
       - .env
     volumes:
       - .:/app
-    command: ["celery", "-A", "app", "beat", "-l", "info", "--pidfile="]
     restart: always
     logging:
       driver: "json-file"
