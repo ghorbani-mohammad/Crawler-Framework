@@ -33,7 +33,7 @@ Exporter_API_headers = {
 
 def check_must_crawl(page):
     now = timezone.localtime()
-    x = Report.objects.filter(page=page.id, status="pending")
+    x = Report.objects.filter(page=page.id, status=Report.PENDING)
     if x.count() == 0:
         crawl(page)
     else:
@@ -42,12 +42,12 @@ def check_must_crawl(page):
             int((now - last_report.created_at).total_seconds() / (60))
             >= page.crawl_interval
         ):
-            x.update(status="failed")
+            x.update(status=Report.FAILED)
         if (
             int((now - last_report.created_at).total_seconds() / (3600))
             >= page.crawl_interval
         ):
-            last_report.status = "failed"
+            last_report.status = Report.FAILED
             last_report.save()
             crawl(page)
 

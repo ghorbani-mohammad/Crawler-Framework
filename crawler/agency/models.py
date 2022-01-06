@@ -115,7 +115,9 @@ class Report(models.Model):
     log = models.TextField(blank=True)
 
     PENDING = "pending"
-    STATUS_CHOICES = ((PENDING, "Pending"),)
+    COMPLETE = "complete"
+    FAILED = "failed"
+    STATUS_CHOICES = ((PENDING, "Pending"), (COMPLETE, "Complete"), (FAILED, "Failed"))
     status = models.CharField(max_length=300, choices=STATUS_CHOICES, null=True)
 
     def __str__(self):
