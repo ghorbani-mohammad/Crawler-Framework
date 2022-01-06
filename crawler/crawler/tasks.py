@@ -8,14 +8,13 @@ from celery.utils.log import get_task_logger
 from agency import utils
 from .celery import crawler
 from crawler.settings import BOT_API_KEY
-from agency.models import Agency, Page, Report, Log
-from agency.serializer import PageSerializer
+from agency import models as age_models
+from agency import serializer as age_serializer
 from agency.crawler_engine import CrawlerEngine
 
 
 logger = get_task_logger(__name__)
 
-# TODO: configs must be dynamic
 redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
 Exporter_API_URI = f"http://{settings.SERVER_IP}:8888/crawler/news"
 Exporter_API_headers = {
@@ -33,7 +32,7 @@ Exporter_API_headers = {
 
 def check_must_crawl(page):
     now = timezone.localtime()
-    x = Report.objects.filter(page=page.id, status=Report.PENDING)
+    x = age_models.Report.objects.filter(page=page.id, status=age_models.Report.PENDING)
     if x.count() == 0:
         crawl(page)
     else:
@@ -42,12 +41,12 @@ def check_must_crawl(page):
             int((now - last_report.created_at).total_seconds() / (60))
             >= page.crawl_interval
         ):
-            x.update(status=Report.FAILED)
+            x.update(status=age_models.Report.FAILED)
         if (
             int((now - last_report.created_at).total_seconds() / (3600))
             >= page.crawl_interval
         ):
-            last_report.status = Report.FAILED
+            last_report.status = age_models.Report.FAILED
             last_report.save()
             crawl(page)
 
@@ -55,9 +54,13 @@ def check_must_crawl(page):
 @crawler.task(name="check_agencies")
 def check():
     logger.info("check_agencies started")
-    agencies = Agency.objects.filter(status=True).values_list("id", flat=True)
+    agencies = age_models.Agency.objects.filter(status=True).values_list(
+        "id", flat=True
+    )
     pages = (
-        Page.objects.filter(agency__in=agencies).filter(lock=False).filter(status=True)
+        age_models.Page.objects.filter(agency__in=agencies)
+        .filter(lock=False)
+        .filter(status=True)
     )
     now = timezone.localtime()
     for page in pages:
@@ -71,18 +74,18 @@ def check():
 
 def register_log(description, e, page, url):
     logger.error(traceback.format_exc())
-    Log.objects.create(
+    age_models.Log.objects.create(
         page=page,
         description=description,
         url=url,
-        phase=Log.SENDING,
+        phase=age_models.Log.SENDING,
         error=e,
     )
 
 
 def crawl(page):
     logger.info(f"---> Page {page.url} must be crawled")
-    serializer = PageSerializer(page)
+    serializer = age_serializer.PageSerializer(page)
     page_crawl.delay(serializer.data)
 
 
@@ -104,7 +107,7 @@ def redis_exporter():
         return
     redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1, 60 * 60 * 2)
     bot = telegram.Bot(token=BOT_API_KEY)  # this bot variable should not removed
-    pages = Page.objects.all()
+    pages = age_models.Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
         if key.decode("utf-8") == settings.REDIS_EXPORTER_LOCK_KEY:
