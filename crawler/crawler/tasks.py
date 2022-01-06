@@ -86,7 +86,6 @@ def register_log(description, e, page, url):
 
 
 def crawl(page):
-    logger.info(f"---> Page {page.url} must be crawled")
     serializer = age_serializer.PageSerializer(page)
     page_crawl.delay(serializer.data)
 
