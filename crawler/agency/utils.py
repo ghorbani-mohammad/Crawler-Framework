@@ -1,3 +1,11 @@
+from os import path
+
+from django.utils import timezone
+from django.core.exceptions import ValidationError
+
+IMAGE_FILE_TYPES = ["jpeg", "jpg", "png", "bmp"]
+
+
 DEFAULT_HEADER = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
     "AppleWebKit/537.11 (KHTML, like Gecko) "
@@ -12,3 +20,20 @@ DEFAULT_HEADER = {
 CODE = """
 {0}
 """
+
+
+def is_image(ext):
+    if ext.lower() not in IMAGE_FILE_TYPES:
+        raise ValidationError("unknown file format")
+    return True
+
+
+def report_image_path(instance, filename):
+    ext = filename.split(".")[-1].lower()
+    if is_image(ext):
+        return path.join(
+            ".",
+            "report",
+            "images",
+            "{}.{}".format(int(timezone.now().timestamp()), ext),
+        )

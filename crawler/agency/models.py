@@ -1,7 +1,7 @@
 from django.db import models
 
 
-from . import tasks
+from . import tasks, utils
 
 
 class BaseModel(models.Model):
@@ -105,18 +105,21 @@ class Page(models.Model):
 
 class Report(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="report")
-    status = models.CharField(max_length=300, null=True)
     fetched_links = models.IntegerField(default=0)
     new_links = models.IntegerField(default=0)
     picture = models.ImageField(
-        upload_to=".static/crawler/static", blank=True, null=True
+        upload_to=utils.report_image_path, blank=True, null=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     log = models.TextField(blank=True)
 
+    PENDING = "pending"
+    STATUS_CHOICES = ((PENDING, "Pending"),)
+    status = models.CharField(max_length=300, choices=STATUS_CHOICES, null=True)
+
     def __str__(self):
-        return f"{self.pk} - {self.page.url}"
+        return f"({self.pk} - {self.page.url})"
 
 
 class Log(BaseModel):
