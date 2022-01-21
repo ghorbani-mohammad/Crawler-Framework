@@ -29,8 +29,9 @@ class Publisher(BaseModel):
 
 class Post(BaseModel):
     body = models.CharField(max_length=100)
-    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, related_name='posts', null=True)
-
+    publisher = models.ForeignKey(
+        Publisher, on_delete=models.CASCADE, related_name='posts', null=True
+    )
 
     def __str__(self):
-        return f'({self.pk} - {self.network})'
+        return f'({self.pk} - {self.publisher})'
