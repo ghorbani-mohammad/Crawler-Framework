@@ -106,7 +106,7 @@ def redis_exporter():
     if lock:
         logger.info("---> Exporter is locked")
         return
-    redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1, 60 * 60 * 2)
+    redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1)
     bot = telegram.Bot(token=BOT_API_KEY)  # this bot variable should not removed
     pages = age_models.Page.objects.all()
 
