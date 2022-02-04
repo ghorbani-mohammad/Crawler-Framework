@@ -55,8 +55,6 @@ services:
   crawler_redis:
     container_name : crawler_redis
     image: redis:6.2
-    volumes: 
-      - ./redis_volume/:/data
     logging:
       driver: none
     restart: unless-stopped

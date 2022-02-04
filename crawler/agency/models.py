@@ -90,7 +90,6 @@ class Page(models.Model):
         Cookie, related_name="pages", on_delete=models.CASCADE, null=True
     )
     lock = models.BooleanField(default=False)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
