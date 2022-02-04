@@ -1,11 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 import os
-from logging.config import dictConfig
 
 from django.conf import settings
 from celery import Celery
 from celery.schedules import crontab
-from celery.signals import setup_logging
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crawler.settings")
@@ -29,13 +27,6 @@ crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 # if you want to purge works queue
 crawler.control.purge()
-
-
-if not settings.DEBUG:
-
-    @setup_logging.connect
-    def config_loggers(*args, **kwags):
-        dictConfig(settings.LOGGING)
 
 
 crawler.conf.beat_schedule = {
