@@ -77,7 +77,4 @@ services:
     container_name: crawler_chrome
     logging:
       driver: none
-      options:
-        max-file: "10"
-        max-size: "200k"
     restart: unless-stopped
