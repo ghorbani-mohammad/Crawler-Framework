@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     "rangefilter",
     "rest_framework",
     "agency",
-    "social",
     "notification",
     "clear_cache",
     "prettyjson",

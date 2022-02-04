@@ -41,7 +41,7 @@ services:
     container_name: crawler_beat
     build: .
     working_dir: /app/crawler
-    command: ["celery", "-A", "crawler", "beat", "-l", "info", "--pidfile=/tmp/celeryd.pid"]
+    command: ["celery", "-A", "crawler", "beat", "-l", "info", "--pidfile="]
     restart: unless-stopped
     env_file:
       - .env
