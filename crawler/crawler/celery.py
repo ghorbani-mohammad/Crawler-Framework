@@ -30,11 +30,11 @@ crawler.control.purge()
 
 
 crawler.conf.beat_schedule = {
-    "check-agencies-60-seconds": {
+    "check-agencies-300-seconds": {
         "task": "check_agencies",
-        "schedule": 2 * 60,
+        "schedule": 5 * 60,
     },
-    "redis-exporter-300-seconds": {
+    "redis-exporter-180-seconds": {
         "task": "redis_exporter",
         "schedule": 3 * 60,
     },
@@ -54,7 +54,6 @@ crawler.conf.beat_schedule = {
         "task": "count_daily_news",
         "schedule": crontab(minute=0, hour=0),
     },
-    "crawl_linkedin": {"task": "crawl_linkedin", "schedule": crontab(minute=0, hour=0)},
 }
 
 
