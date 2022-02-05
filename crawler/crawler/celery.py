@@ -17,9 +17,7 @@ crawler = Celery(
 )
 
 # Optional configuration, see the application user guide.
-crawler.conf.update(
-    result_expires=7200,
-)
+crawler.conf.update(result_expires=7200)
 crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 # if you want to purge works queue
