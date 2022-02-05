@@ -20,12 +20,6 @@ crawler = Celery(
 crawler.conf.update(result_expires=7200)
 crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
-# if you want to purge works queue
-# crawler.control.purge()
-
-# if you want to purge works queue
-crawler.control.purge()
-
 
 crawler.conf.beat_schedule = {
     "check-agencies-300-seconds": {
