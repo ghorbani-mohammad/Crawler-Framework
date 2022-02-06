@@ -120,7 +120,12 @@ class PageAdmin(admin.ModelAdmin):
     )
     list_editable = ("crawl_interval", "status")
     list_filter = ["status", "lock", "agency"]
-    readonly_fields = ("last_crawl",)
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "deleted_at",
+        "last_crawl",
+    )
     fields = (
         "agency",
         "url",
