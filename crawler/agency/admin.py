@@ -66,6 +66,7 @@ class AgencyAdmin(admin.ModelAdmin):
         "alexa_global_rank",
         "link_keep_days",
     )
+    readonly_fields = ("created_at", "updated_at", "deleted_at")
 
 
 class StructureForm(forms.ModelForm):
@@ -120,12 +121,6 @@ class PageAdmin(admin.ModelAdmin):
     )
     list_editable = ("crawl_interval", "status")
     list_filter = ["status", "lock", "agency"]
-    readonly_fields = (
-        "created_at",
-        "updated_at",
-        "deleted_at",
-        "last_crawl",
-    )
     fields = (
         "agency",
         "url",
@@ -136,6 +131,7 @@ class PageAdmin(admin.ModelAdmin):
         "message_code",
         "last_crawl",
     )
+    readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
