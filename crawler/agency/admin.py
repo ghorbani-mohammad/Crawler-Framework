@@ -63,7 +63,6 @@ class AgencyAdmin(admin.ModelAdmin):
         "country",
         "website",
         "status",
-        "alexa_global_rank",
         "link_keep_days",
     )
     readonly_fields = ("created_at", "updated_at", "deleted_at")
@@ -130,6 +129,7 @@ class PageAdmin(admin.ModelAdmin):
         ("telegram_channel", "iv_code"),
         "message_code",
         "last_crawl",
+        ("created_at", "updated_at", "deleted_at"),
     )
     readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
 

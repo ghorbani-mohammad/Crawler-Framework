@@ -17,7 +17,6 @@ class Agency(BaseModel):
     name = models.CharField(max_length=20, null=False, unique=True)
     country = models.CharField(max_length=20, default="NA")
     website = models.CharField(max_length=100, null=False, unique=True)
-    alexa_global_rank = models.IntegerField(default=0, null=True)
     crawl_headers = models.JSONField(null=True, blank=True, default=dict)
     status = models.BooleanField(default=1)
     link_keep_days = models.PositiveIntegerField(

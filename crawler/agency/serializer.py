@@ -11,7 +11,6 @@ class AgencySerializer(serializers.ModelSerializer):
             "name",
             "country",
             "website",
-            "alexa_global_rank",
             "crawl_headers",
             "status",
             "created_at",
