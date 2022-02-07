@@ -59,4 +59,9 @@ services:
   crawler_chrome:
     image: selenium/standalone-chrome
     container_name: crawler_chrome
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
     restart: unless-stopped
