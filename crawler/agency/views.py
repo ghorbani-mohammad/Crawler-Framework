@@ -338,6 +338,8 @@ class FetchLinks(APIView):
         link = request.GET.get("link", None)
         if structure_id is None:
             raise NotAcceptable(detail="structure_id is not acceptable")
+        if link is None:
+            raise NotAcceptable(detail="link is not acceptable")
         structure = get_object_or_404(Structure, pk=structure_id)
         crawler = CrawlerEngineV2()
         links = crawler.get_links(structure.news_links_structure, link)
