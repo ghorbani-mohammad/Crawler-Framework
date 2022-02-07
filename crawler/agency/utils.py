@@ -4,8 +4,11 @@ from selenium.webdriver.chrome.options import Options
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
-IMAGE_FILE_TYPES = ["jpeg", "jpg", "png", "bmp"]
+CODE = """
+{0}
+"""
 
+IMAGE_FILE_TYPES = ["jpeg", "jpg", "png", "bmp"]
 
 DEFAULT_HEADER = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
@@ -17,10 +20,6 @@ DEFAULT_HEADER = {
     "Accept-Language": "en-US,en;q=0.8",
     "Connection": "keep-alive",
 }
-
-CODE = """
-{0}
-"""
 
 
 def is_image(ext):
