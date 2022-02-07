@@ -1,4 +1,5 @@
 from os import path
+from selenium.webdriver.chrome.options import Options
 
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -37,3 +38,12 @@ def report_image_path(instance, filename):
             "images",
             "{}.{}".format(int(timezone.now().timestamp()), ext),
         )
+
+
+def get_browser_options():
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--enable-automation")
+    options.add_argument("--no-sandbox")
+    return options

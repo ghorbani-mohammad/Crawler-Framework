@@ -2,7 +2,7 @@
 import re, redis, json, time, traceback, validators
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
-from selenium.webdriver.chrome.options import Options
+
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.utils import timezone
@@ -15,13 +15,10 @@ logger = get_task_logger(__name__)
 
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
-        options = Options()
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--enable-javascript")
         self.driver = webdriver.Remote(
             "http://crawler_chrome:4444/wd/hub",
             desired_capabilities=DesiredCapabilities.CHROME,
-            options=options,
+            options=utils.get_browser_options(),
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
@@ -171,15 +168,10 @@ class CrawlerEngine:
 # Crawler version 2
 class CrawlerEngineV2:
     def __init__(self, header=None):
-        options = Options()
-        options.add_argument("--disable-gpu")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--enable-automation")
-        options.add_argument("--no-sandbox")
         self.driver = webdriver.Remote(
             "http://crawler_chrome:4444/wd/hub",
             desired_capabilities=DesiredCapabilities.CHROME,
-            options=options,
+            options=utils.get_browser_options(),
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
 
