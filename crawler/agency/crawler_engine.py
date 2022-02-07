@@ -195,6 +195,7 @@ class CrawlerEngineV2:
             for element in elements:
                 links.append(element["href"])
         links = set([link for link in links if validators.url(link)])
+        self.driver.quit()
         return links
 
     def get_content(self, structure, url):
@@ -245,4 +246,5 @@ class CrawlerEngineV2:
                     print("Error was:\n {}".format(str(e)))
             else:
                 article[key] = element.text
+        self.driver.quit()
         return article
