@@ -17,7 +17,7 @@ class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
         self.driver = webdriver.Remote(
             "http://crawler_chrome:4444/wd/hub",
-            desired_capabilities=DesiredCapabilities.CHROME,
+            desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
@@ -170,7 +170,7 @@ class CrawlerEngineV2:
     def __init__(self, header=None):
         self.driver = webdriver.Remote(
             "http://crawler_chrome:4444/wd/hub",
-            desired_capabilities=DesiredCapabilities.CHROME,
+            desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
