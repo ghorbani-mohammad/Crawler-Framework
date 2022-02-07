@@ -57,8 +57,12 @@ services:
     restart: unless-stopped
 
   crawler_chrome:
-    image: selenium/standalone-chrome
-    container_name: crawler_chrome
+    container_name : social_firefox
+    image: selenium/standalone-firefox:4.1.1-20220121
+    ports:
+      - 4444:4444
+      - 7900:7900
+    shm_size: 2g
     logging:
       driver: json-file
       options:
