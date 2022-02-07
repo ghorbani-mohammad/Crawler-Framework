@@ -56,8 +56,8 @@ services:
       driver: none
     restart: unless-stopped
 
-  crawler_chrome:
-    container_name : social_firefox
+  crawler_firefox:
+    container_name : crawler_firefox
     image: selenium/standalone-firefox:4.1.1-20220121
     ports:
       - 4444:4444
