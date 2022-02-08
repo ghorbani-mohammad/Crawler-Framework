@@ -41,5 +41,8 @@ def report_image_path(instance, filename):
 
 def get_browser_options():
     options = Options()
-    options.add_argument("--enable-javascript")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--enable-automation")
+    options.add_argument("--no-sandbox")
     return options
