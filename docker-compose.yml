@@ -69,17 +69,26 @@ services:
       options:
           max-file: "5"
           max-size: "10m"
-  
-  crawler_firefox:
-    container_name : crawler_firefox
-    image: selenium/standalone-firefox:4.1.1-20220121
+  node-docker:
+    image: selenium/node-docker:4.1.2-20220131
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./assets:/opt/selenium/assets
+      - ./config.toml:/opt/bin/config.toml
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  selenium-hub:
+    image: selenium/hub:4.1.2-20220131
+    container_name: selenium-hub
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 4444:4444
-      - 7900:7900
-    shm_size: 2g
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
-    restart: unless-stopped
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+  

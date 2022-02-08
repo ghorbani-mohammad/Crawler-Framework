@@ -16,7 +16,7 @@ logger = get_task_logger(__name__)
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
         self.driver = webdriver.Remote(
-            "http://crawler_firefox:4444/wd/hub",
+            "http://selenium-hub:4444",
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )
@@ -169,7 +169,7 @@ class CrawlerEngine:
 class CrawlerEngineV2:
     def __init__(self, header=None):
         self.driver = webdriver.Remote(
-            "http://crawler_firefox:4444/wd/hub",
+            "http://selenium-hub:4444",
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )
