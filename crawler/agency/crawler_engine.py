@@ -23,6 +23,7 @@ class CrawlerEngine:
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
+        self.fetched_links_count = 0
         self.page = models.Page.objects.get(id=page["id"])
         self.page.lock = True
         self.page.save()
