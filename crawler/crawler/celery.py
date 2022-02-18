@@ -33,7 +33,7 @@ crawler.conf.beat_schedule = {
     },
     "reset_locks": {
         "task": "reset_locks",
-        "schedule": crontab(hour="*/3"),
+        "schedule": crontab(minute=0, hour="*/1"),
     },
     "count_daily_news": {
         "task": "count_daily_news",
