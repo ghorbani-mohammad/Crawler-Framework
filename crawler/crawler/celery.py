@@ -9,15 +9,8 @@ from celery.schedules import crontab
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crawler.settings")
 
 # TODO: redis port and ip and db must be dynamic
-crawler = Celery(
-    "crawler",
-    broker="redis://crawler_redis:6379/10",
-    backend="redis://crawler_redis:6379/10",
-    include=["crawler.tasks", "agency.tasks"],
-)
-
-# Optional configuration, see the application user guide.
-crawler.conf.update(result_expires=7200)
+crawler = Celery("crawler")
+crawler.config_from_object("django.conf:settings")
 crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
@@ -47,7 +40,3 @@ crawler.conf.beat_schedule = {
         "schedule": crontab(minute=0, hour=0),
     },
 }
-
-
-if __name__ == "__main__":
-    crawler.start()
