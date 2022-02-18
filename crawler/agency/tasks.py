@@ -109,19 +109,12 @@ def page_crawl_repetitive(page_structure):
 
 @crawler.task(name="redis_exporter")
 def redis_exporter():
-    lock = redis_news.get(settings.REDIS_EXPORTER_LOCK_KEY)
-    if lock:
-        logger.error("---> Exporter is locked")
-        return
-    redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1)
     bot = telegram.Bot(
         token=settings.BOT_API_KEY
     )  # this bot variable should not removed
     pages = models.Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
-        if key.decode("utf-8") == settings.REDIS_EXPORTER_LOCK_KEY:
-            continue
         data = redis_news.get(key)
         if data is None:
             redis_news.delete(key)
@@ -155,4 +148,3 @@ def redis_exporter():
             register_log(desc, e, page, data["link"])
         finally:
             redis_news.delete(key)
-    redis_news.delete(settings.REDIS_EXPORTER_LOCK_KEY)

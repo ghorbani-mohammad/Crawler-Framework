@@ -109,4 +109,3 @@ REST_FRAMEWORK = {
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
 }
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-REDIS_EXPORTER_LOCK_KEY = "redis_exporter_lock"
