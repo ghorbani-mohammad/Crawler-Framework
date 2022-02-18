@@ -119,7 +119,7 @@ def redis_exporter():
     )  # this bot variable should not removed
     pages = models.Page.objects.all()
 
-    for key in redis_news.scan_iter("*"):
+    for key in redis_news.scan_iter("links_*"):
         data = redis_news.get(key)
         if data is None:
             redis_news.delete(key)
