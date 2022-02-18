@@ -10,10 +10,12 @@ from . import utils, serializer, models
 from .crawler_engine import CrawlerEngine
 from notification import models as not_models
 from notification import utils as not_utils
+from reusable.other import only_one_concurrency
 
 
 logger = get_task_logger(__name__)
-
+MINUTE = 60
+TASKS_TIMEOUT = 10 * MINUTE
 redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
 
 
@@ -63,7 +65,7 @@ def check_must_crawl(page):
 
 
 @crawler.task(name="check_agencies")
-def check():
+def check_agencies():
     logger.info("check_agencies started")
     agencies = models.Agency.objects.filter(status=True).values_list("id", flat=True)
     pages = (
@@ -98,11 +100,13 @@ def crawl(page):
 
 
 @crawler.task(name="page_crawl")
+@only_one_concurrency(key="page_crawl", timeout=TASKS_TIMEOUT)
 def page_crawl(page_structure):
     CrawlerEngine(page_structure)
 
 
 @crawler.task(name="page_crawl_repetitive")
+@only_one_concurrency(key="page_crawl_repetitive", timeout=TASKS_TIMEOUT)
 def page_crawl_repetitive(page_structure):
     CrawlerEngine(page_structure, repetitive=True)
 
