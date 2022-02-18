@@ -152,7 +152,7 @@ class PageAdmin(admin.ModelAdmin):
 
     # actions
     def crawl_action(modeladmin, request, queryset):
-        from crawler.tasks import page_crawl
+        from agency.tasks import page_crawl
 
         for page in queryset:
             page_crawl.delay(PageSerializer(page).data)
@@ -170,7 +170,7 @@ class PageAdmin(admin.ModelAdmin):
     crawl_action.short_description = "Crawl page"
 
     def crawl_action_ignore_repetitive(modeladmin, request, queryset):
-        from crawler.tasks import page_crawl_repetitive
+        from agency.tasks import page_crawl_repetitive
 
         for page in queryset:
             page_crawl_repetitive.delay(PageSerializer(page).data)
