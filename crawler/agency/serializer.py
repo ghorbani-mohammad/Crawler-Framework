@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from agency.models import Agency, Report, Page
 from rest_framework.fields import CharField
+
+from . import models
 
 
 class AgencySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Agency
+        model = models.Agency
         fields = [
             "id",
             "name",
@@ -21,7 +22,7 @@ class AgencySerializer(serializers.ModelSerializer):
 
 class CrawlReportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Report
+        model = models.Report
         fields = [
             "id",
             "page",
@@ -35,7 +36,7 @@ class CrawlReportSerializer(serializers.ModelSerializer):
 
 class PageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Page
+        model = models.Page
         fields = [
             "id",
             "agency",
@@ -60,7 +61,7 @@ class ReportListSerializer(serializers.ModelSerializer):
         return f"{x} sec"
 
     class Meta:
-        model = Report
+        model = models.Report
         fields = [
             "id",
             "page",
