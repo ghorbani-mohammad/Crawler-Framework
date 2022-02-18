@@ -2,7 +2,6 @@
 import re, redis, json, time, traceback, validators
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
-
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.utils import timezone
@@ -11,6 +10,8 @@ from celery.utils.log import get_task_logger
 from . import models, utils
 
 logger = get_task_logger(__name__)
+redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
+redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=1)
 
 
 class CrawlerEngine:
@@ -21,10 +22,6 @@ class CrawlerEngine:
             options=utils.get_browser_options(),
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
-        self.redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
-        self.redis_duplicate_checker = redis.StrictRedis(
-            host="crawler_redis", port=6379, db=1
-        )
         self.log_messages = ""
         self.page = models.Page.objects.get(id=page["id"])
         self.page.lock = True
@@ -127,17 +124,15 @@ class CrawlerEngine:
         self.save_to_redis(article)
 
     def save_to_redis(self, article):
-        self.redis_news.set(article["link"], json.dumps(article))
-        self.redis_duplicate_checker.set(
+        redis_news.set(article["link"], json.dumps(article))
+        redis_duplicate_checker.set(
             article["link"], "", ex=self.page.days_to_keep * 60 * 60 * 24
         )
 
     def check_data(self):
         counter = self.fetched_links_count
         for data in self.fetched_links:
-            if not self.repetitive and self.redis_duplicate_checker.exists(
-                data["link"]
-            ):
+            if not self.repetitive and redis_duplicate_checker.exists(data["link"]):
                 counter -= 1
                 continue
             else:
