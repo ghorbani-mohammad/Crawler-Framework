@@ -3,12 +3,11 @@ import redis, json, time, telegram, traceback
 
 from django.conf import settings
 from django.utils import timezone
-from celery.utils.log import get_task_logger
 from crawler.celery import crawler
+from celery.utils.log import get_task_logger
 
 from . import utils, serializer, models
 from .crawler_engine import CrawlerEngine
-from crawler.settings import BOT_API_KEY
 from notification import models as not_models
 from notification import utils as not_utils
 
@@ -115,7 +114,9 @@ def redis_exporter():
         logger.error("---> Exporter is locked")
         return
     redis_news.set(settings.REDIS_EXPORTER_LOCK_KEY, 1)
-    bot = telegram.Bot(token=BOT_API_KEY)  # this bot variable should not removed
+    bot = telegram.Bot(
+        token=settings.BOT_API_KEY
+    )  # this bot variable should not removed
     pages = models.Page.objects.all()
 
     for key in redis_news.scan_iter("*"):
