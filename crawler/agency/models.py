@@ -1,7 +1,7 @@
 from django.db import models
 
 
-from . import tasks, utils
+from . import utils
 
 
 class BaseModel(models.Model):
@@ -151,8 +151,10 @@ class Log(BaseModel):
         return f"id: {self.pk}\ndesc:\n{self.description}\n\nerror:\n{self.error}"
 
     def save(self, *args, **kwargs):
+        from . import tasks
+
         super().save(*args, **kwargs)
-        tasks.send_log_to_telegram(self.log_message)
+        tasks.send_log_to_telegram.delay(self.log_message)
 
 
 class Option(models.Model):
