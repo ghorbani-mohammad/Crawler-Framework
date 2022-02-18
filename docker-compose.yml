@@ -7,7 +7,10 @@ services:
     volumes:
       - ./crawler_db_volume/:/var/lib/postgresql/data
     logging:
-      driver: none
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
 
   crawler_api:
     image: crawler
@@ -36,7 +39,10 @@ services:
     container_name: crawler_redis
     restart: always
     logging:
-      driver: none
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
   
   crawler_worker:
     image: crawler
@@ -81,6 +87,11 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
 
   selenium-hub:
     image: selenium/hub:4.1.2-20220131
@@ -91,4 +102,9 @@ services:
       - "4442:4442"
       - "4443:4443"
       - "4444:4444"
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
   
