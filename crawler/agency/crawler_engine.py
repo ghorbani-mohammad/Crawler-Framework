@@ -21,7 +21,7 @@ class CrawlerEngine:
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )
-        self.driver.set_page_load_timeout(30)
+        self.driver.set_page_load_timeout(10)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
         self.fetched_links_count = 0
@@ -152,7 +152,6 @@ class CrawlerEngine:
         self.report.status = models.Report.COMPLETED
         self.report.log = self.log_messages
         self.report.save()
-        self.driver.quit()
 
     def custom_logging(self, message):
         logger.info(message)
@@ -168,6 +167,7 @@ class CrawlerEngine:
             f"---> We found {self.fetched_links_count} number of links for {self.page}"
         )
         self.check_data()
+        self.driver.quit()
 
 
 # Crawler version 2
