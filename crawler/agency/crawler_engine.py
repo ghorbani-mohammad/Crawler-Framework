@@ -16,10 +16,12 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=
 
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
+        options = {"exclude_hosts": ["divar.ir"]}
         self.driver = webdriver.Remote(
             "http://selenium-hub:4444",
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
+            seleniumwire_options=options,
         )
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
