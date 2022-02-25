@@ -54,9 +54,11 @@ class CrawlerEngine:
 
     def fetch_links(self):
         data = []
-        print("here")
-        self.driver.get(self.page.url)
-        print("here2")
+        try:
+            self.driver.get(self.page.url)
+        except Exception as e:
+            logger.error(e)
+            return
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
             file_path = f"static/crawler/static/{self.report.id}.png"
