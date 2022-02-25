@@ -12,6 +12,6 @@ from django.contrib.auth.models import Group
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
-admin.site.site_header = "Crawler Administration Panel"
+admin.site.site_header = "Crawler Django Administration Panel"
 admin.site.index_title = "Crawler"
-admin.site.site_title = "Crawler Admin"
+admin.site.site_title = "Crawler Django Admin"
