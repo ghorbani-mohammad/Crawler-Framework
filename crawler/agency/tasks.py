@@ -118,7 +118,6 @@ def redis_exporter():
         token=settings.BOT_API_KEY
     )  # this bot variable should not removed
     pages = models.Page.objects.all()
-
     for key in redis_news.scan_iter("links_*"):
         data = redis_news.get(key)
         if data is None:
@@ -144,7 +143,7 @@ def redis_exporter():
                     + "bot.send_message(chat_id=page.telegram_channel, text=message)"
                 )
                 exec(temp_code)
-                time.sleep(2)
+                time.sleep(4)
             except Exception as e:
                 desc = f"code was: {temp_code}"
                 register_log(desc, e, page, data["link"])
