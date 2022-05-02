@@ -138,6 +138,7 @@ class CrawlerEngine:
 
     def check_data(self):
         counter = self.fetched_links_count
+        print(self.fetched_links)
         for data in self.fetched_links:
             if not self.repetitive and redis_duplicate_checker.exists(data["link"]):
                 counter -= 1
