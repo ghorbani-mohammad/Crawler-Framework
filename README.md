@@ -26,7 +26,7 @@ own crawler.
 
 
 ## Crawler Framework
-In this framework we have 3 main entities:
+This is a framework for crawling data from websites. There are sometimes that we want to be first person that get notice about new post in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purpose. In this framework we have 3 main entities:
   - Agency
   - Page
   - Structure
@@ -39,10 +39,6 @@ Pages, are different pages of an agency or website. For example CNN website has 
 ### Structure
 Structures define how app should gather data from a page. When you defining a page, you should specify its structure.
 So you need define structure of a page, before creating the page.
-
-
-## What is structure?
-By using structure we define how we can get data within a page.
 
 
 ## How it works?
