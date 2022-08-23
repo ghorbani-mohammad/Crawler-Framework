@@ -15,7 +15,11 @@
 
 # Crawler Framework
 
-This is a Framework for crawling websites and social networks and send data to Telegram channel. First You should create agency. Agency means website or social network. For example you create CNN agency. Then you should create pages that you want must be crawled. For example you just want politics section of CNN. So you create CNN politics page. Each page has structure. 
+This is a Framework for crawling websites and social networks and send data to Telegram channel. First You should create agency. Agency means website or social network. For example you create CNN agency. Then you should create pages that you want must be crawled. For example you just want politics section of CNN. So you create CNN politics page. Each page has structure.
+
+
+## What is structure?
+By using structure we define how we can get data within a page.
 
 
 ## How it works?
