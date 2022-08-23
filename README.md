@@ -31,10 +31,14 @@ In this framework we have 3 main entities:
   - Page
   - Structure
 ### Agency
-Agencies are a website, like CNN and BBC. Before doing anything you should define agencies.
+Agencies are the websites, like CNN and BBC. Before doing anything you should define agencies.
 
 ### Page
-This is a Framework for crawling websites and social networks and send data to Telegram channel. First You should create agency. Agency means website or social network. For example you create CNN agency. Then you should create pages that you want must be crawled. For example you just want politics section of CNN. So you create CNN politics page. Each page has structure.
+Pages, are different pages of an agency or website. For example CNN website has political, entertainment ... pages in it. After defining your agencies you can specify pages of that website which you want crawl data.
+
+### Structure
+Structures define how app should gather data from a page. When you defining a page, you should specify its structure.
+So you need define structure of a page, before creating the page.
 
 
 ## What is structure?
