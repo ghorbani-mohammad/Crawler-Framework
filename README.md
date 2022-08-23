@@ -41,10 +41,6 @@ Structures define how app should gather data from a page. When you defining a pa
 So you need define structure of a page, before creating the page.
 
 
-## What is structure?
-By using structure we define how we can get data within a page.
-
-
 ## How it works?
 
 You can setup the project by docker-compose utility.
