@@ -10,12 +10,12 @@
     ```
 - Django Admin Panel:
     * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
+
 - Guest User Credential:
   ```
   username: guest
   password: RPxzsoen4O
   ```
-
 
 
 # Crawler Framework
