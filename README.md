@@ -38,7 +38,10 @@ Pages, are different pages of an agency or website. For example CNN website has 
 
 ### Structure
 Structures define how app should gather data from a page. When you defining a page, you should specify its structure.
-So you need define structure of a page, before creating the page.
+So you need define structure of a page, before creating the page. This model has three important field that probably you need fill those.
+
+![image](https://user-images.githubusercontent.com/12118217/186157990-260c1c86-0ebf-4859-8d32-018d1551f028.png)
+
 
 
 ## How it works?
