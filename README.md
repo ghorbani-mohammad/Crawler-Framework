@@ -40,6 +40,7 @@ Pages, are different pages of an agency or website. For example CNN website has 
 Structures define how app should gather data from a page. When you defining a page, you should specify its structure.
 So you need define structure of a page, before creating the page. This model has three important field that probably you need fill those.
 
+First one is news_links_structure. This fields specifies how we should get links of news or articles or anything that we want. At the below picture you can see an example. As you can see, we gather elements with tag **a** that has class atribute with value **c-jobListView__titleLink**
 ![image](https://user-images.githubusercontent.com/12118217/186157990-260c1c86-0ebf-4859-8d32-018d1551f028.png)
 
 
