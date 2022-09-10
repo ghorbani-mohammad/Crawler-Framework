@@ -1,4 +1,3 @@
-version: '3.4'
 services:
   crawler_db:
     container_name: crawler_db
@@ -13,70 +12,71 @@ services:
         max-size: 15m
 
   crawler_api:
-    image: crawler
     container_name: crawler_api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ["python", "/app/crawler/manage.py", "runserver", "0.0.0.0:8205"]
+    build: .
+    depends_on:
+      - crawler_db
     env_file:
       - .env
     volumes:
-      - .:/app
-    ports: 
-      - 8205:8205
+      - ./static:/app/crawler/static
+    ports:
+      - "127.0.0.1:8205:80"
     restart: unless-stopped
-    environment:
-      DEBUG: 'True'
-    logging:
-      driver: "json-file"
-      options:
-          max-file: "5"
-          max-size: "10m"
-
-  crawler_redis:
-    image: redis
-    container_name: crawler_redis
-    restart: always
     logging:
       driver: json-file
       options:
         max-file: '3'
         max-size: 15m
-    volumes:
-      - ./redis_volume:/data
-  
-  crawler_worker:
-    image: crawler
-    container_name: crawler_worker
+
+  crawler_celery:
+    container_name: crawler_celery
+    build: .
     working_dir: /app/crawler
-    command: ["celery", "-A", "crawler", "worker", "-l", "info", "--pidfile="]
+    command: ["celery", "-A", "crawler", "worker", "-l", "info", "--pidfile=", "--concurrency=1"]
     env_file:
       - .env
-    volumes:
-      - .:/app
+    depends_on:
+      - crawler_db
+      - crawler_redis
+    restart: unless-stopped
     logging:
       driver: json-file
       options:
         max-file: '3'
         max-size: 15m
-    restart: always
-  
+
   crawler_beat:
-    image: crawler
     container_name: crawler_beat
+    build: .
     working_dir: /app/crawler
     command: ["celery", "-A", "crawler", "beat", "-l", "info", "--pidfile="]
     env_file:
       - .env
+    depends_on:
+      - crawler_db
+      - crawler_redis
     volumes:
-      - .:/app
-    restart: always
+      - ./log/beat:/var/log/app
+    restart: unless-stopped
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-          max-file: "5"
-          max-size: "10m"
+        max-file: '3'
+        max-size: 15m
+
+  crawler_redis:
+    container_name : crawler_redis
+    image: redis:6.2
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 15m
+    volumes:
+      - ./redis_volume_pro:/data
+
   node-docker:
     image: selenium/node-docker:4.1.2-20220131
     volumes:
@@ -89,6 +89,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    shm_size: 2g
+    restart: unless-stopped
     logging:
       driver: json-file
       options:
@@ -104,9 +106,9 @@ services:
       - "4442:4442"
       - "4443:4443"
       - "4444:4444"
+    restart: unless-stopped
     logging:
       driver: json-file
       options:
         max-file: '3'
         max-size: 15m
-  
