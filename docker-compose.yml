@@ -1,15 +1,12 @@
 services:
   crawler_db:
     container_name: crawler_db
-    image: mdillon/postgis:11
+    image: postgres:14.5-alpine
     restart: unless-stopped
+    env_file:
+      - .env
     volumes:
       - ./crawler_db_volume/:/var/lib/postgresql/data
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
 
   crawler_api:
     container_name: crawler_api
@@ -23,11 +20,6 @@ services:
     ports:
       - "127.0.0.1:8205:80"
     restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
 
   crawler_celery:
     container_name: crawler_celery
@@ -40,11 +32,6 @@ services:
       - crawler_db
       - crawler_redis
     restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
 
   crawler_beat:
     container_name: crawler_beat
@@ -59,21 +46,11 @@ services:
     volumes:
       - ./log/beat:/var/log/app
     restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
 
   crawler_redis:
     container_name : crawler_redis
     image: redis:6.2
     restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
     volumes:
       - ./redis_volume_pro:/data
 
@@ -91,11 +68,6 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     shm_size: 2g
     restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m
 
   selenium-hub:
     image: selenium/hub:4.1.2-20220131
@@ -107,8 +79,3 @@ services:
       - "4443:4443"
       - "4444:4444"
     restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '3'
-        max-size: 15m

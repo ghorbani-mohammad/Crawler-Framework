@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = env.bool("DEBUG")
 SECRET_KEY = env.str("SECRET_KEY")
 BOT_API_KEY = env.str("BOT_API_KEY")
-ALLOWED_HOSTS = ["crawler.m-gh.com"]
+ALLOWED_HOSTS = ["localhost", "crawler.m-gh.com"]
 SERVER_IP = env.str("SERVER_IP")
 
 INSTALLED_APPS = [
