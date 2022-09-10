@@ -5,6 +5,7 @@ __pycache__/
 *.log
 *.pot
 *.pyc
+*.rdb
 *.sql
 *.sql.gz
 app/celerybeat-schedule
