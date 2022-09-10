@@ -19,6 +19,7 @@ services:
       - ./static:/app/crawler/static
     ports:
       - "127.0.0.1:8205:80"
+    command: ["python", "/app/crawler/manage.py", "runserver", "0:80"]
     restart: unless-stopped
 
   crawler_celery:
