@@ -1,11 +1,12 @@
 beautifulsoup4
 celery
-django==3.2.9
 django-admin-rangefilter
 django-clear-cache
 django-editor-widgets
 django-environ
 django-prettyjson
+django-sendgrid-v5
+django==3.2.9
 djangorestframework
 envparse
 gunicorn

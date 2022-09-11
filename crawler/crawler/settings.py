@@ -112,3 +112,6 @@ REST_FRAMEWORK = {
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
 }
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
+SENDGRID_API_KEY = env("DB_PORT", default="")
