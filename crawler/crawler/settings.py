@@ -113,5 +113,38 @@ REST_FRAMEWORK = {
 }
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
+# Email Configs
+EMAIL_HOST = "smtp-mail.outlook.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default=None)
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default=None)
+EMAIL_USE_TLS = True
 
-SENDGRID_API_KEY = env("DB_PORT", default="")
+# Email Logging Configs
+ADMIN_EMAIL_LOG = env("ADMIN_EMAIL_LOG", default=None)
+ADMINS = (("Log Admin", ADMIN_EMAIL_LOG),)
+SERVER_EMAIL = EMAIL_HOST_USER
+
+# Logging (Just Email Handler)
+if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "simple": {"format": "%(levelname)s %(message)s"},
+        },
+        "handlers": {
+            "mail_admins": {
+                "level": "ERROR",
+                "class": "django.utils.log.AdminEmailHandler",
+                "formatter": "simple",
+            },
+        },
+        "loggers": {
+            "django.request": {
+                "handlers": ["mail_admins"],
+                "level": "ERROR",
+                "propagate": True,
+            },
+        },
+    }
