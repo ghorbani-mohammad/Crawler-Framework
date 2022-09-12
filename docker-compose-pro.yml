@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./crawler_db_volume_2/:/var/lib/postgresql/data
+      - ./crawler_db_volume/:/var/lib/postgresql/data
     logging:
       driver: json-file
       options:
