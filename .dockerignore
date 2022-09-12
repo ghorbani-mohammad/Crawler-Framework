@@ -1,0 +1,16 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+.idea
+.git
+venv
+db.sqlite3
+docker-compose.yml
+docker-compose-pro.yml
+crawler/static
+crawler/celerybeat-schedule
+crawler/celerybeat.pid
+*.sql.gz
