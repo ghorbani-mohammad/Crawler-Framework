@@ -14,6 +14,7 @@ urlpatterns = [
     path("crawl/", views.crawl),
     path("crawl/page/<int:page_id>/", views.crawl_page),
     path("fetch_links/", views.FetchLinks.as_view()),
+    path("test_error/", views.TestErrorView.as_view()),
     path("fetch_content/", views.FetchContent.as_view()),
     path("crawl/agency/active_all/", views.crawl_agency_activeAll),
     path("crawl/agency/disable_all/", views.crawl_agency_disableAll),

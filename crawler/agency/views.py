@@ -358,3 +358,8 @@ class FetchContent(APIView):
         crawler = CrawlerEngineV2()
         content = crawler.get_content(structure.news_meta_structure, link)
         return Response({"content": content})
+
+
+class TestErrorView(APIView):
+    def get(self, request, version):
+        raise Exception("Exception happened for test purposes!")
