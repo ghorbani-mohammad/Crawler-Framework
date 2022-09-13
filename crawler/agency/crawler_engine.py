@@ -17,7 +17,7 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
         self.driver = webdriver.Remote(
-            "http://selenium-hub:4444",
+            "http://crawler_selenium_hub:4444",
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )
@@ -174,7 +174,7 @@ class CrawlerEngine:
 class CrawlerEngineV2:
     def __init__(self, header=None):
         self.driver = webdriver.Remote(
-            "http://selenium-hub:4444",
+            "http://crawler_selenium_hub:4444",
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=utils.get_browser_options(),
         )

@@ -79,16 +79,17 @@ services:
     volumes:
       - ./redis_volume_pro:/data
 
-  node-docker:
+  crawler_node_docker:
     image: selenium/node-docker:4.1.2-20220131
+    container_name: crawler_node_docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./assets:/opt/selenium/assets
       - ./config.toml:/opt/bin/config.toml
     depends_on:
-      - selenium-hub
+      - crawler_selenium_hub
     environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_HOST=crawler_selenium_hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     shm_size: 2g
@@ -99,9 +100,9 @@ services:
         max-file: '3'
         max-size: 15m
 
-  selenium-hub:
+  crawler_selenium_hub:
     image: selenium/hub:4.1.2-20220131
-    container_name: selenium-hub
+    container_name: crawler_selenium_hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
