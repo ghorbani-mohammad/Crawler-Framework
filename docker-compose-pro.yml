@@ -54,8 +54,6 @@ services:
     depends_on:
       - crawler_db
       - crawler_redis
-    volumes:
-      - ./log/beat:/var/log/app
     restart: unless-stopped
     logging: *default-logging
 
@@ -63,9 +61,9 @@ services:
     container_name : crawler_redis
     image: redis:6.2
     restart: unless-stopped
-    logging: *default-logging
     volumes:
       - ./crawler_redis_volume:/data
+    logging: *default-logging
 
   crawler_node_docker:
     image: selenium/node-docker:4.1.2-20220131
