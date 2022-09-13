@@ -31,8 +31,8 @@ services:
         max-file: '3'
         max-size: 15m
 
-  crawler_celery:
-    container_name: crawler_celery
+  crawler_worker:
+    container_name: crawler_worker
     build: .
     working_dir: /app/crawler
     command: ["celery", "-A", "crawler", "worker", "-l", "info", "--pidfile=", "--concurrency=1"]
