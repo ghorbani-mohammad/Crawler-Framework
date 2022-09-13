@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v0.2.0...v1.3.0) (2022-09-13)
+
+
+### Features
+
+* use alpine distribution ([6a25f6b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6a25f6b8446a52dbd86190a98320e90ebdfcec9f))
+
+
+
 # [0.2.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v0.1.0...v0.2.0) (2022-09-12)
 
 
