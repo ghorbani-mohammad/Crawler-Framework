@@ -3,6 +3,7 @@ import re, redis, json, time, traceback, validators
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import SessionNotCreatedException
 
 from django.utils import timezone
 from celery.utils.log import get_task_logger
@@ -16,11 +17,15 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=
 
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
-        self.driver = webdriver.Remote(
-            "http://crawler_selenium_hub:4444",
-            desired_capabilities=DesiredCapabilities.FIREFOX,
-            options=utils.get_browser_options(),
-        )
+        try:
+            self.driver = webdriver.Remote(
+                "http://crawler_selenium_hub:4444",
+                desired_capabilities=DesiredCapabilities.FIREFOX,
+                options=utils.get_browser_options(),
+            )
+        except SessionNotCreatedException as e:
+            logger.error(e)
+            return
         self.driver.set_page_load_timeout(10)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
