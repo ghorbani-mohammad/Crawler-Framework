@@ -1,4 +1,5 @@
 import redis
+import logging
 
 from django.utils import timezone
 from django.http import JsonResponse
@@ -14,6 +15,9 @@ from rest_framework.pagination import PageNumberPagination
 from crawler.messages import *
 from agency import serializer as age_serializer
 from agency.models import Agency, Page, Report, Structure
+
+
+logger = logging.getLogger(__name__)
 
 
 class PostPagination(PageNumberPagination):
@@ -362,4 +366,5 @@ class FetchContent(APIView):
 
 class TestErrorView(APIView):
     def get(self, request, version):
+        logger.error("Exception Happened For Test Purposes!")
         raise Exception("Exception happened for test purposes!")

@@ -2,8 +2,8 @@
 import re, redis, json, time, traceback, validators
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import SessionNotCreatedException
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.utils import timezone
 from celery.utils.log import get_task_logger
