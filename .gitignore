@@ -11,6 +11,9 @@ __pycache__/
 app/celerybeat-schedule
 app/celerybeat.pid
 crawler_db_volume/
+redis_volume_pro/
+log/
+assets/
 crypto_assets/static
 db_backup/
 db.sqlite3
