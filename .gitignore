@@ -11,6 +11,7 @@ __pycache__/
 app/celerybeat-schedule
 app/celerybeat.pid
 assets/
+celerybeat-schedule
 crawler_db_volume/
 crawler_redis_volume/
 crawler/static
