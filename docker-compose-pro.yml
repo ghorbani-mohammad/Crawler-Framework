@@ -65,7 +65,7 @@ services:
     restart: unless-stopped
     logging: *default-logging
     volumes:
-      - ./redis_volume_pro:/data
+      - ./crawler_redis_volume:/data
 
   crawler_node_docker:
     image: selenium/node-docker:4.1.2-20220131
