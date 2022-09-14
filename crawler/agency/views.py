@@ -366,5 +366,5 @@ class FetchContent(APIView):
 
 class TestErrorView(APIView):
     def get(self, request, version):
-        logger.error("Exception Happened For Test Purposes!")
+        logger.error("Exception happened for test purposes!!!")
         raise Exception("Exception happened for test purposes!")
