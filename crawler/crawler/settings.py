@@ -141,7 +141,7 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
             },
         },
         "loggers": {
-            "django.request": {
+            "": {
                 "handlers": ["mail_admins"],
                 "level": "ERROR",
                 "propagate": True,
