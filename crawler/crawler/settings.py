@@ -141,6 +141,7 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
             },
         },
         "loggers": {
+            # all modules
             "": {
                 "handlers": ["mail_admins"],
                 "level": "ERROR",
