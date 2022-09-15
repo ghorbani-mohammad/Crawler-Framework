@@ -149,3 +149,15 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
             },
         },
     }
+
+
+from djangoeditorwidgets.config import init_web_editor_config
+from pathlib import Path
+
+BASE_DIR_ = Path(__file__).resolve().parent.parent
+WEB_EDITOR_DOWNLOAD, WEB_EDITOR_CONFIG = init_web_editor_config(
+    # set the directory where files are downloaded
+    BASE_DIR_ / "static",
+    # set static url prefix
+    STATIC_URL,
+)

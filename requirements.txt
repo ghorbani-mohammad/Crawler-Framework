@@ -6,7 +6,7 @@
 #
 amqp==2.6.1
     # via kombu
-asgiref==3.4.1
+asgiref==3.5.2
     # via django
 backcall==0.2.0
     # via ipython
@@ -35,7 +35,7 @@ decorator==5.1.0
     #   ipython
     #   python-telegram-bot
     #   validators
-django==3.2.9
+django==4.1
     # via
     #   -r requirements.in
     #   django-clear-cache
@@ -46,13 +46,13 @@ django-admin-rangefilter==0.6.3
     # via -r requirements.in
 django-clear-cache==0.3
     # via -r requirements.in
-django-editor-widgets==3.0
+django-editor-widgets==4.1
     # via -r requirements.in
 django-environ==0.4.5
     # via -r requirements.in
 django-prettyjson==0.4.1
     # via -r requirements.in
-djangorestframework==3.11.0
+djangorestframework==3.13.1
     # via -r requirements.in
 envparse==0.2.0
     # via -r requirements.in
@@ -82,7 +82,7 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pillow==7.2.0
+pillow==9.2.0
     # via
     #   -r requirements.in
     #   django-editor-widgets
@@ -107,12 +107,13 @@ python-telegram-bot==12.7
 pytz==2021.3
     # via
     #   celery
-    #   django
+    #   djangorestframework
 redis==3.4.1
     # via -r requirements.in
 requests==2.23.0
     # via
     #   -r requirements.in
+    #   django-editor-widgets
     #   linkedin-scraper
 selenium==3.141.0
     # via
