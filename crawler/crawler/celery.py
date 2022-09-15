@@ -1,9 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 import os
 
+from logging.config import dictConfig
 from django.conf import settings
 from celery import Celery
 from celery.schedules import crontab
+from celery.signals import setup_logging
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crawler.settings")
@@ -11,6 +13,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crawler.settings")
 crawler = Celery("crawler")
 crawler.config_from_object("django.conf:settings")
 crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+
+
+@setup_logging.connect
+def config_loggers(*args, **kwags):
+    dictConfig(settings.LOGGING)
+
 
 MINUTE = 60
 
