@@ -27,7 +27,7 @@ class CrawlerEngine:
         except SessionNotCreatedException as e:
             logger.error(e)
             return
-        self.driver.set_page_load_timeout(10)
+        self.driver.set_page_load_timeout(50)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
         self.fetched_links_count = 0
