@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.3.0...v1.4.0) (2022-09-15)
+
+
+### Features
+
+* update to django 4.1 ([b3b8d03](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b3b8d03f9009afc60fce8f11b56da4154e10c1d3))
+
+
+
 # [1.3.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v0.2.0...v1.3.0) (2022-09-13)
 
 
