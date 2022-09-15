@@ -6,6 +6,7 @@ from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from django.utils import timezone
+from django.conf import settings
 from celery.utils.log import get_task_logger
 
 from . import models, utils
@@ -66,7 +67,8 @@ class CrawlerEngine:
             return
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
-            file_path = f"static/crawler/static/{self.report.id}.png"
+            # in debug mode static_root is none
+            file_path = f"{settings.STATIC_ROOT or './static'}/{self.report.id}.png"
             self.driver.get_screenshot_as_file(file_path)
             self.report.picture = file_path
             self.report.save()
