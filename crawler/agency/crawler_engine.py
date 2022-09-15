@@ -90,11 +90,11 @@ class CrawlerEngine:
         self.report.fetched_links = self.fetched_links_count
         self.report.save()
 
-    def crawl_one_page(self, data, fetch_contet):
+    def crawl_one_page(self, data, fetch_content):
         meta = self.page.structure.news_meta_structure
         article = data
         article["page_id"] = self.page.id
-        if fetch_contet:
+        if fetch_content:
             self.driver.get(data["link"])
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
