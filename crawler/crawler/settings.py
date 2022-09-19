@@ -2,6 +2,9 @@ import os
 from envparse import env
 from djangoeditorwidgets.config import *
 
+from djangoeditorwidgets.config import init_web_editor_config
+from pathlib import Path
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = env.bool("DEBUG")
 SECRET_KEY = env.str("SECRET_KEY")
@@ -155,9 +158,6 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
         },
     }
 
-
-from djangoeditorwidgets.config import init_web_editor_config
-from pathlib import Path
 
 BASE_DIR_ = Path(__file__).resolve().parent.parent
 WEB_EDITOR_DOWNLOAD, WEB_EDITOR_CONFIG = init_web_editor_config(
