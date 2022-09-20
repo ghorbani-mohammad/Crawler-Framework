@@ -26,7 +26,7 @@ own crawler.
 
 
 ## Crawler Framework
-This is a framework for crawling data from websites. There are sometimes that we want to be first person that get notice about new post in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purpose. In this framework we have 3 main entities:
+This is a framework for crawling data from websites. There are sometimes that we want to be first person that get notice about new post in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purposes. In this framework we have 3 main entities:
   - Agency
   - Page
   - Structure
@@ -34,13 +34,13 @@ This is a framework for crawling data from websites. There are sometimes that we
 Agencies are the websites, like CNN and BBC. Before doing anything you should define agencies.
 
 ### Page
-Pages, are different pages of an agency or website. For example CNN website has political, entertainment ... pages in it. After defining your agencies you can specify pages of that website which you want crawl data.
+Pages, are different pages of an agency or website. For example CNN website has political, entertainment and etc pages in it. After defining your agencies you can specify pages of that website which you want crawl data.
 
 ### Structure
-Structures define how app should gather data from a page. When you defining a page, you should specify its structure.
-So you need define structure of a page, before creating the page. This model has three important field that probably you need fill those.
+Structures define how crawler should gather data from a page. When you defining a page, you should specify its structure.
+So you need define structure of a page, before creating the page. This model has three important fields that probably you need fill those.
 
-First one is news_links_structure. This fields specifies how we should get links of news or articles or anything that we want. At the below picture you can see an example. As you can see, we gather elements with tag **a** that has class atribute with value **c-jobListView__titleLink**
+First one is news_links_structure. This field specifies how we should get links of news or articles or anything that we want. At the below picture you can see an example. As you can see, we gather elements with tag **a** that has class atribute with value **c-jobListView__titleLink**
 ![image](https://user-images.githubusercontent.com/12118217/186157990-260c1c86-0ebf-4859-8d32-018d1551f028.png)
 
 
