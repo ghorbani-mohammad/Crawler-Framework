@@ -162,7 +162,7 @@ class CrawlerEngine:
 
     def custom_logging(self, message):
         logger.info(message)
-        self.log_messages += "{} \n".format(message)
+        self.log_messages += f"{message} \n"
 
     def run(self):
         logger.info(f"---> Fetching links from {self.page} started")
