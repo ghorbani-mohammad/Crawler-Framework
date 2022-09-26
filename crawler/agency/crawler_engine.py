@@ -5,8 +5,8 @@ from seleniumwire import webdriver
 from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from django.utils import timezone
 from django.conf import settings
+from django.utils import timezone
 from celery.utils.log import get_task_logger
 
 from . import models, utils
