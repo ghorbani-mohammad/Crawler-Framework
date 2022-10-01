@@ -12,7 +12,7 @@ class BaseModelAbstract(models.Model):
 
 class TelegramBot(BaseModelAbstract):
     name = models.CharField(max_length=50)
-    telegram_token =  models.CharField(max_length=100)
+    telegram_token = models.CharField(max_length=100)
 
 
 class TelegramAccount(BaseModelAbstract):
