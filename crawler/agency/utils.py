@@ -40,7 +40,7 @@ def report_image_path(instance, filename):
             ".",
             "report",
             "images",
-            "{}.{}".format(int(timezone.now().timestamp()), ext),
+            f"{int(timezone.now().timestamp())}.{ext}",
         )
 
 
