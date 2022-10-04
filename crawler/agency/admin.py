@@ -122,7 +122,11 @@ class PageAdmin(admin.ModelAdmin):
         "take_picture",
     )
     list_editable = ("crawl_interval", "status")
-    list_filter = ["status", "lock", "agency"]
+    list_filter = [
+        "status",
+        "lock",
+        "agency",
+    ]
     fields = (
         "agency",
         "url",
