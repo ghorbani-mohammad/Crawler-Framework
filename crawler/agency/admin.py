@@ -141,7 +141,12 @@ class PageAdmin(admin.ModelAdmin):
         "last_crawl",
         ("created_at", "updated_at", "deleted_at"),
     )
-    readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "deleted_at",
+        "last_crawl",
+    )
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
