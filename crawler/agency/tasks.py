@@ -152,3 +152,9 @@ def redis_exporter():
             register_log(desc, e, page, data["link"])
         finally:
             redis_news.delete(key)
+
+
+@crawler.task()
+def test_error():
+    logger.error("Test Error!")
+    raise Exception("hi")
