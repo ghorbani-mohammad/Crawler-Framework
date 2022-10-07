@@ -40,11 +40,11 @@ class CrawlerEngine:
         )
         self.header = header
         self.repetitive = repetitive
-        logger.info(
+        self.custom_logging(
             f"Crawl **started** for page: {self.page} with repetitive: {self.repetitive}"
         )
         self.run()
-        logger.info(
+        self.custom_logging(
             f"Crawl **finished** for page: {self.page} with repetitive: {self.repetitive}"
         )
 
@@ -161,6 +161,7 @@ class CrawlerEngine:
         self.report.save()
 
     def custom_logging(self, message):
+        #
         logger.info(message)
         self.log_messages += f"{message} \n"
 
