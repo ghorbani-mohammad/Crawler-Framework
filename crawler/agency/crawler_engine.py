@@ -5,8 +5,8 @@ from seleniumwire import webdriver
 from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from django.utils import timezone
 from django.conf import settings
+from django.utils import timezone
 from celery.utils.log import get_task_logger
 
 from . import models, utils
@@ -162,7 +162,7 @@ class CrawlerEngine:
 
     def custom_logging(self, message):
         logger.info(message)
-        self.log_messages += "{} \n".format(message)
+        self.log_messages += f"{message} \n"
 
     def run(self):
         logger.info(f"---> Fetching links from {self.page} started")
@@ -219,14 +219,11 @@ class CrawlerEngineV2:
         for key in structure.keys():
             attribute = structure[key].copy()
             tag = attribute["tag"]
-
             del attribute["tag"]
             if tag == "value":
                 article[key] = attribute["value"]
-                print(
-                    "\tspecified tag get's value directly and it's value is: \n {}".format(
-                        attribute["value"]
-                    )
+                logger.info(
+                    f"\tspecified tag get's value directly and it's value is: \n {attribute['value']}"
                 )
                 continue
             if tag == "code":
@@ -235,27 +232,27 @@ class CrawlerEngineV2:
                 try:
                     exec(temp_code)
                 except Exception as e:
-                    print("Getting attr {} got error".format(key))
-                    print("The code was:\n {} ".format(temp_code))
-                    print("Error was:\n {}".format(str(e)))
+                    logger.info(f"Getting attr {key} got error")
+                    logger.info(f"The code was:\n {temp_code}")
+                    logger.info(f"Error was:\n {str(e)}")
                 continue
             code = ""
             if "code" in attribute.keys():
                 code = attribute["code"]
                 del attribute["code"]
-            print("key: {} tag: {} attr: {}".format(key, tag, attribute))
+            logger.info(f"key: {key} tag: {tag} attr: {attribute}")
             element = doc.find(tag, attribute)
             if element is None:
-                print("element is null, attribute: {}".format(attribute))
+                logger.info(f"element is null, attribute: {attribute}")
                 break
             if code != "":
                 temp_code = utils.CODE.format(code)
                 try:
                     exec(temp_code)
                 except Exception as e:
-                    print("Getting attr {} got error".format(key))
-                    print("The code was:\n {} ".format(temp_code))
-                    print("Error was:\n {}".format(str(e)))
+                    logger.info(f"Getting attr {key} got error")
+                    logger.info(f"The code was:\n {temp_code}")
+                    logger.info(f"Error was:\n {str(e)}")
             else:
                 article[key] = element.text
         self.driver.exit()
