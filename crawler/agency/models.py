@@ -148,7 +148,7 @@ class Log(BaseModel):
 
     @property
     def log_message(self):
-        return f"id: {self.pk}\ndesc:\n{self.description}\n\nerror:\n{self.error}"
+        return f"(id: {self.pk}\ndesc:\n{self.description}\n\nerror:\n{self.error})"
 
     def save(self, *args, **kwargs):
         from . import tasks
