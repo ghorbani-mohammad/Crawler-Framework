@@ -8,12 +8,7 @@ CODE = """
 {0}
 """
 
-IMAGE_FILE_TYPES = [
-    "jpeg",
-    "jpg",
-    "png",
-    "bmp",
-]
+IMAGE_FILE_TYPES = ["jpeg", "jpg", "png", "bmp"]
 
 DEFAULT_HEADER = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
