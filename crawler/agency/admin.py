@@ -31,7 +31,9 @@ class ReportAdmin(admin.ModelAdmin):
     )
     list_per_page = 30
     list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
-    search_fields = ["page__url"]
+    search_fields = [
+        "page__url",
+    ]
 
     def url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
@@ -66,7 +68,11 @@ class AgencyAdmin(admin.ModelAdmin):
         "link_keep_days",
     )
     list_filter = ("status",)
-    readonly_fields = ("created_at", "updated_at", "deleted_at")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    )
 
 
 class StructureForm(forms.ModelForm):
@@ -216,7 +222,10 @@ class LogAdmin(admin.ModelAdmin):
         "created",
         "phase",
     )
-    list_filter = ["page__agency", "phase"]
+    list_filter = [
+        "page__agency",
+        "phase",
+    ]
 
     def source(self, obj):
         if obj.page is not None:
