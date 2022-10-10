@@ -84,7 +84,7 @@ class CrawlerEngine:
         else:
             for element in elements:
                 data.append(element["href"])
-        logger.info(f"Fetched data are: {data}")
+        self.custom_logging(f"Fetched data are: {data}")
         self.fetched_links = data
         self.fetched_links_count = len(data)
         self.report.fetched_links = self.fetched_links_count
@@ -134,7 +134,7 @@ class CrawlerEngine:
                             self.register_log(desc, e, self.page, data["link"])
                     else:
                         article[key] = element.text
-        logger.info(f"crawl_one_page: {article}")
+        self.custom_logging(f"crawl_one_page: {article}")
         self.save_to_redis(article)
 
     def save_to_redis(self, article):
