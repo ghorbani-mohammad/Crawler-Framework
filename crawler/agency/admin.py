@@ -120,10 +120,7 @@ class PageAdmin(admin.ModelAdmin):
         "fetch_content",
         "take_picture",
     )
-    list_editable = (
-        "crawl_interval",
-        "status",
-    )
+    list_editable = ("crawl_interval", "status")
     list_filter = [
         "status",
         "lock",
