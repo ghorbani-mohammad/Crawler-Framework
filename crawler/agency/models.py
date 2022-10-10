@@ -133,6 +133,10 @@ class Report(models.Model):
     def is_failed(self):
         return self.status == Report.FAILED
 
+    @property
+    def is_pending(self):
+        return self.status == Report.PENDING
+
 
 class Log(BaseModel):
     page = models.ForeignKey(
