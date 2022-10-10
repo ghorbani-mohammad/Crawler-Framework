@@ -129,6 +129,10 @@ class Report(models.Model):
     def is_completed(self):
         return self.status == Report.COMPLETED
 
+    @property
+    def is_failed(self):
+        return self.status == Report.FAILED
+
 
 class Log(BaseModel):
     page = models.ForeignKey(
