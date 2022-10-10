@@ -125,6 +125,10 @@ class Report(models.Model):
     def __str__(self):
         return f"({self.pk} - {self.page.url})"
 
+    @property
+    def is_completed(self):
+        return self.status == Report.COMPLETED
+
 
 class Log(BaseModel):
     page = models.ForeignKey(
@@ -136,7 +140,6 @@ class Log(BaseModel):
 
     CRAWLING = "cra"
     SENDING = "sen"
-
     PHASE_CHOICES = (
         (CRAWLING, "کرال"),
         (SENDING, "ارسال به تلگرام"),
@@ -162,6 +165,6 @@ class Option(models.Model):
     value = models.CharField(max_length=70)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"({self.pk} - {self.key})"
