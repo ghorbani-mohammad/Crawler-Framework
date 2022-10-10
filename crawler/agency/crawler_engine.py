@@ -161,7 +161,6 @@ class CrawlerEngine:
         self.report.save()
 
     def custom_logging(self, message):
-        #
         logger.info(message)
         self.log_messages += f"{message} \n"
 
