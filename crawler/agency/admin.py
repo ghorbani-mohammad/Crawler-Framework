@@ -203,10 +203,7 @@ class LogAdmin(admin.ModelAdmin):
         "created",
         "phase",
     )
-    list_filter = [
-        "page__agency",
-        "phase",
-    ]
+    list_filter = ["page__agency", "phase"]
 
     def source(self, obj):
         if obj.page is not None:
