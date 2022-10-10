@@ -165,12 +165,12 @@ class CrawlerEngine:
         self.log_messages += f"{message} \n"
 
     def run(self):
-        logger.info(f"---> Fetching links from {self.page} started")
+        self.custom_logging(f"---> Fetching links from {self.page} started")
         try:
             self.fetch_links()
         except Exception as e:
             logger.error(traceback.format_exc())
-        logger.info(
+        self.custom_logging(
             f"---> We found {self.fetched_links_count} number of links for {self.page}"
         )
         self.check_data()
