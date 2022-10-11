@@ -11,9 +11,8 @@ from django.utils.translation import ngettext
 from django.template.defaultfilters import truncatechars
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
-from agency.models import Agency
-from agency.models import Agency, Page, Report, Structure, Log
 from agency.serializer import PageSerializer
+from agency.models import Agency, Page, Report, Structure, Log
 
 
 @admin.register(Report)
