@@ -67,7 +67,11 @@ class AgencyAdmin(admin.ModelAdmin):
         "link_keep_days",
     )
     list_filter = ("status",)
-    readonly_fields = ("created_at", "updated_at", "deleted_at")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    )
 
 
 class StructureForm(forms.ModelForm):
