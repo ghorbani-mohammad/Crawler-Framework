@@ -48,6 +48,7 @@ class ReportAdmin(admin.ModelAdmin):
 
     def image_tag(self, obj):
         if obj.picture:
+            return "--"
             url = "https://www.mo-ghorbani.ir/static/" + obj.picture.path.split("/")[-1]
             return format_html(f"<a href='{url}'>Link</a>")
         return "-"
