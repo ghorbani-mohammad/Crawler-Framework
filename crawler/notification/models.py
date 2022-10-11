@@ -21,3 +21,6 @@ class TelegramBot(BaseModelAbstract):
 class TelegramAccount(BaseModelAbstract):
     name = models.CharField(max_length=50)
     chat_id = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"({self.pk} - {self.name})"
