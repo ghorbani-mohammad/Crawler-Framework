@@ -50,6 +50,7 @@ class ReportAdmin(admin.ModelAdmin):
         if obj.picture:
             url = "https://www.mo-ghorbani.ir/static/" + obj.picture.path.split("/")[-1]
             return format_html(f"<a href='{url}'>Link</a>")
+        return "-"
 
     image_tag.short_description = "Image"
 
