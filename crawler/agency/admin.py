@@ -30,8 +30,8 @@ class ReportAdmin(admin.ModelAdmin):
         "image_tag",
     )
     list_per_page = 30
-    list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
     search_fields = ["page__url"]
+    list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
     readonly_fields = ["page", "picture", "log", "fetched_links", "new_links", "status"]
 
     def url(self, obj):
