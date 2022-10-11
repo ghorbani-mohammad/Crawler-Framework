@@ -31,7 +31,7 @@ class Agency(BaseModel):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.pages.all().update(status=self.status)
+        self.pages.update(status=self.status)
 
     def __str__(self):
         return f"({self.pk} - {self.name})"
