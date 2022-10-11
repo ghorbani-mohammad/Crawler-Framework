@@ -20,4 +20,4 @@ jobs:
           script: >
             cd ${{ secrets.PROJECT_PATH }} 
             && git pull 
-            && ./mng-api.sh up
+            && docker-compose -f docker-compose-pro.yml up --build
