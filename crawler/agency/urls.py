@@ -4,8 +4,8 @@ from rest_framework import routers
 from agency import views
 
 router = routers.DefaultRouter()
-router.register("agency", views.AgencyView)
 router.register("page", views.PageView)
+router.register("agency", views.AgencyView)
 router.register("report", views.ReportView, basename="crawlreport")
 
 urlpatterns = [
