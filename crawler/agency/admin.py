@@ -107,6 +107,9 @@ class PageAdmin(admin.ModelAdmin):
     def get_ordering(self, request):
         return ["-last_crawl"]
 
+    list_filter = ("status", "lock", "agency")
+    list_editable = ("crawl_interval", "status")
+    readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
     list_display = (
         "agency",
         "page_url",
@@ -118,8 +121,6 @@ class PageAdmin(admin.ModelAdmin):
         "fetch_content",
         "take_picture",
     )
-    list_editable = ("crawl_interval", "status")
-    list_filter = ["status", "lock", "agency"]
     fields = (
         "agency",
         "url",
@@ -131,7 +132,6 @@ class PageAdmin(admin.ModelAdmin):
         "last_crawl",
         ("created_at", "updated_at", "deleted_at"),
     )
-    readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
