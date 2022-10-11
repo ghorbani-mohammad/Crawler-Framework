@@ -39,12 +39,12 @@ crawler.conf.beat_schedule = {
         "task": "remove_old_logs",
         "schedule": crontab(minute=0, hour=0),
     },
-    "reset_locks": {
-        "task": "reset_locks",
-        "schedule": crontab(minute=0, hour="*/1"),
-    },
     "count_daily_news": {
         "task": "count_daily_news",
         "schedule": crontab(minute=0, hour=0),
+    },
+    "reset_locks": {
+        "task": "reset_locks",
+        "schedule": crontab(minute=0, hour="*/1"),
     },
 }
