@@ -142,13 +142,11 @@ class PageAdmin(admin.ModelAdmin):
             return instance.last_crawl.astimezone(tz(settings.TIME_ZONE)).strftime(
                 "%h %d %H:%M %p"
             )
-        return None
 
     @admin.display(description="L. Count")
     def get_last_crawl_count(self, instance):
         if instance.last_crawl_count:
             return instance.last_crawl_count
-        return None
 
     # actions
     def crawl_action(modeladmin, request, queryset):
