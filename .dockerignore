@@ -13,4 +13,7 @@ docker-compose-pro.yml
 crawler/static
 crawler/celerybeat-schedule
 crawler/celerybeat.pid
+crawler_db_volume
+crawler_redis_volume
+db_backup
 *.sql.gz
