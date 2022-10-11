@@ -43,8 +43,8 @@ class ReportAdmin(admin.ModelAdmin):
         return obj.created_at
 
     def duration(self, obj):
-        x = round((obj.updated_at - obj.created_at).total_seconds())
-        return f"{x} sec"
+        elapsed_seconds = round((obj.updated_at - obj.created_at).total_seconds())
+        return f"{elapsed_seconds} sec"
 
     def image_tag(self, obj):
         if obj.picture:
