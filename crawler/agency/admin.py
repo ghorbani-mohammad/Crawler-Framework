@@ -107,6 +107,7 @@ class PageAdmin(admin.ModelAdmin):
     def get_ordering(self, request):
         return ["-last_crawl"]
 
+    form = PageAdminForm
     list_filter = ("status", "lock", "agency")
     list_editable = ("crawl_interval", "status")
     readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
@@ -185,7 +186,6 @@ class PageAdmin(admin.ModelAdmin):
 
     crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
     actions = [crawl_action, crawl_action_ignore_repetitive]
-    form = PageAdminForm
 
 
 @admin.register(Log)
