@@ -213,7 +213,6 @@ class LogAdmin(admin.ModelAdmin):
     def base(self, obj):
         if obj.url is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.url)
-        return ""
 
     def agency(self, obj):
         if obj.page is not None:
