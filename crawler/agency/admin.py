@@ -204,7 +204,6 @@ class LogAdmin(admin.ModelAdmin):
     def source(self, obj):
         if obj.page is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
-        return ""
 
     def created(self, obj):
         return obj.created_at.astimezone(tz(settings.TIME_ZONE)).strftime(
