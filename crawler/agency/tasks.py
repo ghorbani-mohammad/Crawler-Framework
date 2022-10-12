@@ -95,8 +95,7 @@ def register_log(description, e, page, url):
 
 
 def crawl(page):
-    page_serializer = serializer.PageSerializer(page)
-    page_crawl.delay(page_serializer.data)
+    page_crawl.delay(serializer.PageSerializer(page).data)
 
 
 @crawler.task(name="page_crawl")
