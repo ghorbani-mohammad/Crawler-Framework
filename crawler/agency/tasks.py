@@ -8,8 +8,8 @@ from celery.utils.log import get_task_logger
 
 from . import utils, serializer, models
 from .crawler_engine import CrawlerEngine
-from notification import models as not_models
 from notification import utils as not_utils
+from notification import models as not_models
 from reusable.other import only_one_concurrency
 
 
