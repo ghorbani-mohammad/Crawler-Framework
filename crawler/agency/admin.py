@@ -217,7 +217,6 @@ class LogAdmin(admin.ModelAdmin):
     def agency(self, obj):
         if obj.page is not None:
             return obj.page.agency.name
-        return ""
 
     def short_description(self, obj):
         return truncatechars(obj.description, 50)
