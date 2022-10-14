@@ -191,6 +191,7 @@ class PageAdmin(admin.ModelAdmin):
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
     list_display = (
+        "pk",
         "agency",
         "base",
         "source",
