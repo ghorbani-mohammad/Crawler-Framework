@@ -180,5 +180,5 @@ if (dsn := env.str("SENTRY_DSN", default=None)) is not None:
         integrations=[DjangoIntegration()],
         traces_sample_rate=1.0,
         send_default_pii=True,
-        environment="ras-soc",
+        environment="crawler-prod",
     )
