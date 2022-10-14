@@ -25,7 +25,7 @@ class CrawlerEngine:
                 options=utils.get_browser_options(),
             )
         except SessionNotCreatedException as e:
-            logger.error(e)
+            logger.error(traceback.format_exc())
             return
         self.driver.set_page_load_timeout(50)
         self.driver.header_overrides = utils.DEFAULT_HEADER
@@ -63,7 +63,6 @@ class CrawlerEngine:
         try:
             self.driver.get(self.page.url)
         except Exception as e:
-            logger.error(e)
             logger.error(traceback.format_exc())
             return
         time.sleep(self.page.links_sleep)
