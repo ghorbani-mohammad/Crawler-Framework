@@ -19,9 +19,11 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
         try:
+            caps = DesiredCapabilities().FIREFOX
+            caps["pageLoadStrategy"] = "eager"  #  interactive
             self.driver = webdriver.Remote(
                 "http://crawler_selenium_hub:4444",
-                desired_capabilities=DesiredCapabilities.FIREFOX,
+                desired_capabilities=caps,
                 options=utils.get_browser_options(),
             )
         except SessionNotCreatedException as e:
