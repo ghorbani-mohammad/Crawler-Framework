@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.4.0...v1.5.0) (2022-10-14)
+
+
+### Features
+
+* add sentry-sdk ([7023ceb](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7023ceb2ec292ad71df545eb55dd4a4a5620ee7b))
+
+
+
 # [1.4.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.3.0...v1.4.0) (2022-09-15)
 
 
