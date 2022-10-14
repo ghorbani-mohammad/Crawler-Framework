@@ -17,7 +17,8 @@ psycopg2
 python-dateutil
 python-telegram-bot
 redis
-requests
+requests>=2.28.1
 selenium
 selenium-wire
+sentry-sdk
 validators
