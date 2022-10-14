@@ -1,6 +1,8 @@
 import os
+import sentry_sdk
 from envparse import env
 from djangoeditorwidgets.config import *
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from djangoeditorwidgets.config import init_web_editor_config
 from pathlib import Path
@@ -171,3 +173,12 @@ WEB_EDITOR_DOWNLOAD, WEB_EDITOR_CONFIG = init_web_editor_config(
 )
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+if (dsn := env.str("SENTRY_DSN", default=None)) is not None:
+    sentry_sdk.init(
+        dsn=dsn,
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True,
+        environment="ras-soc",
+    )
