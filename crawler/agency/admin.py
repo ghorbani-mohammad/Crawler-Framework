@@ -29,7 +29,9 @@ class ReportAdmin(admin.ModelAdmin):
         "fetched_links",
     )
     list_per_page = 30
-    search_fields = ["page__url"]
+    search_fields = [
+        "page__url",
+    ]
     list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
     readonly_fields = ["page", "picture", "log", "fetched_links", "new_links", "status"]
 
