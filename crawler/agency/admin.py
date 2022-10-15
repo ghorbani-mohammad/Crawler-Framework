@@ -17,6 +17,7 @@ from agency.models import Agency, Page, Report, Structure, Log
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
+    list_per_page = 30
     list_display = (
         "id",
         "url",
@@ -28,7 +29,6 @@ class ReportAdmin(admin.ModelAdmin):
         "started_at",
         "fetched_links",
     )
-    list_per_page = 30
     search_fields = [
         "page__url",
     ]
