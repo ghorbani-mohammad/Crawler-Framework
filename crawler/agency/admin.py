@@ -216,8 +216,8 @@ class LogAdmin(admin.ModelAdmin):
         "phase",
     )
     list_filter = [
-        "page__agency",
         "phase",
+        "page__agency",
     ]
 
     def source(self, obj):
