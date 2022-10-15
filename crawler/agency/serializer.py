@@ -10,13 +10,13 @@ class AgencySerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "status",
             "country",
             "website",
-            "crawl_headers",
-            "status",
             "created_at",
             "updated_at",
             "deleted_at",
+            "crawl_headers",
         ]
 
 
