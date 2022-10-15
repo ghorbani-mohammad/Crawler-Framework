@@ -39,15 +39,15 @@ class PageSerializer(serializers.ModelSerializer):
         model = models.Page
         fields = [
             "id",
-            "agency",
             "url",
-            "crawl_interval",
-            "last_crawl",
+            "agency",
             "status",
             "structure",
+            "last_crawl",
             "created_at",
             "updated_at",
             "deleted_at",
+            "crawl_interval",
         ]
 
 
