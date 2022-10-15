@@ -109,8 +109,8 @@ class PageAdmin(admin.ModelAdmin):
 
     form = PageAdminForm
     list_filter = (
-        "status",
         "lock",
+        "status",
         "agency",
     )
     list_editable = (
