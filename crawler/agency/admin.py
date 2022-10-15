@@ -19,14 +19,14 @@ from agency.models import Agency, Page, Report, Structure, Log
 class ReportAdmin(admin.ModelAdmin):
     list_display = (
         "id",
+        "url",
         "status",
         "agency",
-        "url",
-        "fetched_links",
-        "new_links",
-        "started_at",
         "duration",
+        "new_links",
         "image_tag",
+        "started_at",
+        "fetched_links",
     )
     list_per_page = 30
     search_fields = ["page__url"]
