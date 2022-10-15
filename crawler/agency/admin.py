@@ -32,7 +32,11 @@ class ReportAdmin(admin.ModelAdmin):
     search_fields = [
         "page__url",
     ]
-    list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
+    list_filter = [
+        "status",
+        "page__agency",
+        ("created_at", DateTimeRangeFilter),
+    ]
     readonly_fields = [
         "log",
         "page",
