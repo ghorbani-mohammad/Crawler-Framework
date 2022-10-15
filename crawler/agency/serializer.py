@@ -64,13 +64,13 @@ class ReportListSerializer(serializers.ModelSerializer):
         model = models.Report
         fields = [
             "id",
+            "log",
             "page",
             "agency",
-            "duration",
-            "fetched_links",
-            "new_links",
             "status",
+            "duration",
+            "new_links",
             "created_at",
             "updated_at",
-            "log",
+            "fetched_links",
         ]
