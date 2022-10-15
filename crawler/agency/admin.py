@@ -93,8 +93,8 @@ class StructureForm(forms.ModelForm):
             "news_links_code": MonacoEditorWidget(
                 attrs={"data-wordwrap": "on", "data-language": "python"}
             ),
-            "news_links_structure": PrettyJSONWidget(),
             "news_meta_structure": PrettyJSONWidget(),
+            "news_links_structure": PrettyJSONWidget(),
         }
 
 
