@@ -26,11 +26,11 @@ class CrawlReportSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "page",
-            "fetched_links",
             "new_links",
-            "last_crawl_status",
             "created_at",
             "updated_at",
+            "fetched_links",
+            "last_crawl_status",
         ]
 
 
