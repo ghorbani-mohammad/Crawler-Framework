@@ -219,13 +219,13 @@ class PageAdmin(admin.ModelAdmin):
 class LogAdmin(admin.ModelAdmin):
     list_display = (
         "pk",
-        "agency",
         "base",
-        "source",
-        "error",
-        "short_description",
-        "created",
         "phase",
+        "error",
+        "agency",
+        "source",
+        "created",
+        "short_description",
     )
     list_filter = ["phase", "page__agency"]
 
