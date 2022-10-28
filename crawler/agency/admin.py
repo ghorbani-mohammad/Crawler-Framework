@@ -197,7 +197,7 @@ class PageAdmin(admin.ModelAdmin):
         )
 
     crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
-    actions = [crawl_action, crawl_action_ignore_repetitive]
+    actions = (crawl_action, crawl_action_ignore_repetitive)
 
 
 @admin.register(Log)
