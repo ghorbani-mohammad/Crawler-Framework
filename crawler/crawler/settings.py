@@ -1,4 +1,5 @@
 import os
+import django
 import sentry_sdk
 from envparse import env
 from djangoeditorwidgets.config import *
@@ -130,39 +131,6 @@ ADMIN_EMAIL_LOG = env("ADMIN_EMAIL_LOG", default=None)
 ADMINS = (("Log Admin", ADMIN_EMAIL_LOG),)
 SERVER_EMAIL = EMAIL_HOST_USER
 
-# Logging (Just Email Handler)
-if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "formatters": {
-            "simple": {"format": "%(levelname)s %(message)s"},
-        },
-        "handlers": {
-            "mail_admins": {
-                "level": "ERROR",
-                "class": "django.utils.log.AdminEmailHandler",
-                "formatter": "simple",
-            },
-            "console": {
-                "class": "logging.StreamHandler",
-            },
-        },
-        "loggers": {
-            # all modules
-            "": {
-                "handlers": ["mail_admins", "console"],
-                "level": "ERROR",
-                "propagate": False,
-            },
-            "celery": {
-                "handlers": ["mail_admins", "console"],
-                "level": "ERROR",
-                "propagate": False,
-            },
-        },
-    }
-
 
 BASE_DIR_ = Path(__file__).resolve().parent.parent
 WEB_EDITOR_DOWNLOAD, WEB_EDITOR_CONFIG = init_web_editor_config(
@@ -182,3 +150,41 @@ if (dsn := env.str("SENTRY_DSN", default=None)) is not None:
         send_default_pii=True,
         environment="crawler-prod",
     )
+
+
+django.setup()  # we need setup django to have access to apps
+# Logging (Just Email Handler)
+if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "simple": {"format": "%(levelname)s %(message)s"},
+        },
+        "handlers": {
+            "mail_admins": {
+                "level": "ERROR",
+                "class": "django.utils.log.AdminEmailHandler",
+                "formatter": "simple",
+            },
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+            "log_db": {
+                "class": "agency.models.DBHandler",
+            },
+        },
+        "loggers": {
+            # all modules
+            "": {
+                "handlers": ["mail_admins", "console", "log_db"],
+                "level": "ERROR",
+                "propagate": False,
+            },
+            "celery": {
+                "handlers": ["mail_admins", "console", "log_db"],
+                "level": "ERROR",
+                "propagate": False,
+            },
+        },
+    }
