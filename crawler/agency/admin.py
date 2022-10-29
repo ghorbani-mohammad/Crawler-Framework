@@ -12,7 +12,7 @@ from django.template.defaultfilters import truncatechars
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from agency.serializer import PageSerializer
-from agency.models import Agency, Page, Report, Structure, Log
+from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry
 
 
 @admin.register(Report)
@@ -239,3 +239,8 @@ class LogAdmin(admin.ModelAdmin):
 
     def url2(self, obj):
         return format_html("<a href='{url}' target='_blank'>{url}<a>", url=obj.url)
+
+
+@admin.register(DBLogEntry)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ("pk", "time")
