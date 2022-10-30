@@ -129,7 +129,12 @@ class PageAdmin(admin.ModelAdmin):
         "status",
         "crawl_interval",
     )
-    readonly_fields = ("created_at", "updated_at", "deleted_at", "last_crawl")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "deleted_at",
+        "last_crawl",
+    )
     list_display = (
         "agency",
         "page_url",
