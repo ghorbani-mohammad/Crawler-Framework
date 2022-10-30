@@ -1,3 +1,12 @@
+# [1.7.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.6.0...v1.7.0) (2022-10-29)
+
+
+### Features
+
+* add DbLogHandler to settings ([c7086fd](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c7086fdc2e0195b40df2a4543268b10e7d4b87e2))
+
+
+
 # [1.6.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.5.0...v1.6.0) (2022-10-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * use alpine distribution ([6a25f6b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6a25f6b8446a52dbd86190a98320e90ebdfcec9f))
-
-
-
-# [0.2.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v0.1.0...v0.2.0) (2022-09-12)
-
-
-### Features
-
-* add email logging settings ([003a11b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/003a11b749c5ce2ba21a79a783227fa0fdb1aa87))
 
 
 
