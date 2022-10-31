@@ -1,3 +1,12 @@
+# [1.8.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.7.0...v1.8.0) (2022-10-31)
+
+
+### Features
+
+* add short-message to DBLogEntry ([3e9c6a9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3e9c6a97e1bca5fe78a27f3ef0d0cab0fb9d614d))
+
+
+
 # [1.7.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.6.0...v1.7.0) (2022-10-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * update to django 4.1 ([b3b8d03](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b3b8d03f9009afc60fce8f11b56da4154e10c1d3))
-
-
-
-# [1.3.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v0.2.0...v1.3.0) (2022-09-13)
-
-
-### Features
-
-* use alpine distribution ([6a25f6b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6a25f6b8446a52dbd86190a98320e90ebdfcec9f))
 
 
 
