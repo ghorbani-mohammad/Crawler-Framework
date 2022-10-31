@@ -250,4 +250,7 @@ class LogAdmin(admin.ModelAdmin):
 
 @admin.register(DBLogEntry)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ("pk", "time")
+    list_display = (
+        "pk",
+        "time",
+    )
