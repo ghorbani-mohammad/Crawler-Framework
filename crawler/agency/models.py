@@ -2,6 +2,7 @@ import json
 from logging import Handler
 
 from django.db import models
+from django.template.defaultfilters import truncatechars
 
 
 from . import utils
@@ -177,6 +178,10 @@ class DBLogEntry(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     level = models.CharField(max_length=10)
     message = models.TextField()
+
+    @property
+    def short_message(self):
+        return truncatechars(self.message, 50)
 
 
 class DBHandler(Handler, object):
