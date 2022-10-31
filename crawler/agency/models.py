@@ -185,16 +185,8 @@ class DBLogEntry(models.Model):
 
 
 class DBHandler(Handler, object):
-    """
-    This handler will add logs to a database model defined in settings.py
-    If log message (pre-format) is a json string, it will try to apply the array onto the log event object
-    """
-
-    model_name = None
-
-    def __init__(self, model=""):
+    def __init__(self):
         super(DBHandler, self).__init__()
-        self.model_name = model
 
     def emit(self, record):
         try:
