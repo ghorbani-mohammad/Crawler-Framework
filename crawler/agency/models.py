@@ -1,6 +1,3 @@
-import json
-from logging import Handler
-
 from django.db import models
 from django.template.defaultfilters import truncatechars
 
@@ -182,15 +179,3 @@ class DBLogEntry(models.Model):
     @property
     def short_message(self):
         return truncatechars(self.message, 50)
-
-
-class DBHandler(Handler, object):
-    def __init__(self):
-        super(DBHandler, self).__init__()
-
-    def emit(self, record):
-        try:
-            log_entry = DBLogEntry(level=record.levelname, message=self.format(record))
-            log_entry.save()
-        except:
-            pass

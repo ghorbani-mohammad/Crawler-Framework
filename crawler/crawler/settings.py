@@ -171,7 +171,7 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
                 "class": "logging.StreamHandler",
             },
             "log_db": {
-                "class": "agency.models.DBHandler",
+                "class": "reusable.logging.DBHandler",
             },
         },
         "loggers": {
