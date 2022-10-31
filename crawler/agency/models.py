@@ -199,10 +199,7 @@ class DBHandler(Handler, object):
     def emit(self, record):
         # big try block here to exit silently if exception occurred
         try:
-            # instantiate the model
-            from .models import DBLogEntry as model
-
-            log_entry = model(level=record.levelname, message=self.format(record))
+            log_entry = DBLogEntry(level=record.levelname, message=self.format(record))
             # test if msg is json and apply to log record object
             try:
                 data = json.loads(record.msg)
