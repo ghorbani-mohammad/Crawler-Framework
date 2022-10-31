@@ -197,21 +197,8 @@ class DBHandler(Handler, object):
         self.model_name = model
 
     def emit(self, record):
-        # big try block here to exit silently if exception occurred
         try:
             log_entry = DBLogEntry(level=record.levelname, message=self.format(record))
-            # test if msg is json and apply to log record object
-            try:
-                data = json.loads(record.msg)
-                for key, value in data.items():
-                    if hasattr(log_entry, key):
-                        try:
-                            setattr(log_entry, key, value)
-                        except:
-                            pass
-            except:
-                pass
             log_entry.save()
-
         except:
             pass
