@@ -245,5 +245,5 @@ class LogAdmin(admin.ModelAdmin):
 
 
 @admin.register(DBLogEntry)
-class LogAdmin(admin.ModelAdmin):
-    list_display = ("pk", "time", "short_message")
+class DBLogEntryAdmin(admin.ModelAdmin):
+    list_display = ("pk", "level", "short_message", "time")
