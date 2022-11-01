@@ -254,6 +254,7 @@ class LogAdmin(admin.ModelAdmin):
 
 @admin.register(DBLogEntry)
 class DBLogEntryAdmin(admin.ModelAdmin):
+    list_filter = ("level",)
     list_display = (
         "pk",
         "level",
