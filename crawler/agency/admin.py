@@ -77,11 +77,11 @@ class StructureForm(forms.ModelForm):
         model = Structure
         fields = "__all__"
         widgets = {
+            "news_meta_structure": PrettyJSONWidget(),
+            "news_links_structure": PrettyJSONWidget(),
             "news_links_code": MonacoEditorWidget(
                 attrs={"data-wordwrap": "on", "data-language": "python"}
             ),
-            "news_meta_structure": PrettyJSONWidget(),
-            "news_links_structure": PrettyJSONWidget(),
         }
 
 
