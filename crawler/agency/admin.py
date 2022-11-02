@@ -263,9 +263,4 @@ class DBLogEntryAdmin(admin.ModelAdmin):
         "level",
         "message",
     )
-    list_display = (
-        "pk",
-        "level",
-        "short_message",
-        "time",
-    )
+    list_display = ("pk", "level", "short_message", "time")
