@@ -50,17 +50,11 @@ def check_must_crawl(page):
         crawl(page)
     else:
         last_report = reports.last()
-        if (
-            int((now - last_report.created_at).total_seconds() / (60))
-            >= page.crawl_interval
-        ):
-            reports.update(status=models.Report.FAILED)
-        if (
-            int((now - last_report.created_at).total_seconds() / (3600))
-            >= page.crawl_interval
-        ):
-            last_report.status = models.Report.FAILED
-            last_report.save()
+        diff_in_secs = (now - last_report.created_at).total_seconds()
+        diff_in_min = int(diff_in_secs / (60))
+        if diff_in_min >= page.crawl_interval:
+            if last_report.status == models.Report.PENDING:
+                last_report.status = models.Report.FAILED
             crawl(page)
 
 
