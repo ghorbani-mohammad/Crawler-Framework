@@ -67,7 +67,9 @@ class CrawlerEngine:
         try:
             self.driver.get(self.page.url)
         except Exception as e:
-            logger.error(traceback.format_exc())
+            error = f"{e}\n\n\n{traceback.format_exc()}"
+            logger.error(error)
+            self.driver.exit()
             return
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
