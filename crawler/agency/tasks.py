@@ -51,7 +51,11 @@ def check_must_crawl(page):
     else:
         last_report = reports.last()
         diff_in_secs = (now - last_report.created_at).total_seconds()
+        print(diff_in_secs)
+        logger.info(diff_in_secs)
         diff_in_min = int(diff_in_secs / (60))
+        logger.info(diff_in_min)
+        print(diff_in_min)
         if diff_in_min >= page.crawl_interval:
             if last_report.status == models.Report.PENDING:
                 last_report.status = models.Report.FAILED
