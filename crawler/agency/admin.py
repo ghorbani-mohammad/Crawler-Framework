@@ -64,8 +64,8 @@ class ReportAdmin(admin.ModelAdmin):
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
     list_filter = ("status",)
-    list_display = ("id", "name", "country", "website", "status", "link_keep_days")
     readonly_fields = ("created_at", "updated_at", "deleted_at")
+    list_display = ("id", "name", "country", "website", "status", "link_keep_days")
 
 
 class StructureForm(forms.ModelForm):
