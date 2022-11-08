@@ -21,7 +21,7 @@ class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
         try:
             caps = DesiredCapabilities().FIREFOX
-            caps["pageLoadStrategy"] = "eager"  #  interactive
+            caps["pageLoadStrategy"] = "eager"  # interactive
             self.driver = webdriver.Remote(
                 "http://crawler_selenium_hub:4444",
                 desired_capabilities=caps,

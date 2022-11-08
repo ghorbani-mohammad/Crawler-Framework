@@ -129,6 +129,7 @@ class PageAdmin(admin.ModelAdmin):
         "take_picture",
     )
     fields = (
+        "name",
         "agency",
         "url",
         "structure",
