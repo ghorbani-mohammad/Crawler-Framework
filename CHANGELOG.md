@@ -1,3 +1,12 @@
+# [1.9.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.8.0...v1.9.0) (2022-11-08)
+
+
+### Features
+
+* add field name to Page ([4d02ec2](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4d02ec27b5330b7cb56949cfb5823b3c6a78c7b8))
+
+
+
 # [1.8.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.7.0...v1.8.0) (2022-10-31)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add sentry-sdk ([7023ceb](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7023ceb2ec292ad71df545eb55dd4a4a5620ee7b))
-
-
-
-# [1.4.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.3.0...v1.4.0) (2022-09-15)
-
-
-### Features
-
-* update to django 4.1 ([b3b8d03](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b3b8d03f9009afc60fce8f11b56da4154e10c1d3))
 
 
 
