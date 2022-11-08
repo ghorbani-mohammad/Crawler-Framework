@@ -117,7 +117,7 @@ class PageAdmin(admin.ModelAdmin):
         "last_crawl",
     )
     list_display = (
-        "name",
+        "masked_name",
         "agency",
         "page_url",
         "crawl_interval",
