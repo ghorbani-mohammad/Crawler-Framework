@@ -94,6 +94,11 @@ class Page(models.Model):
     def days_to_keep(self):
         return self.agency.link_keep_days
 
+    @property
+    def masked_name(self):
+        if self.name is None:
+            return "NA"
+
 
 class Report(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="report")
