@@ -19,7 +19,3 @@ def only_one_concurrency(function=None, key="", timeout=None):
         return _caller
 
     return _dec(function) if function is not None else _dec
-
-
-class ReadOnlyAdminDateFields:
-    readonly_fields = ("created_at", "updated_at", "deleted_at")
