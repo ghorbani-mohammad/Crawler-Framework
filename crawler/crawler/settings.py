@@ -1,12 +1,12 @@
 import os
 import django
 import sentry_sdk
+from pathlib import Path
 from envparse import env
 from djangoeditorwidgets.config import *
 from sentry_sdk.integrations.django import DjangoIntegration
-
 from djangoeditorwidgets.config import init_web_editor_config
-from pathlib import Path
+
 
 DEBUG = env.bool("DEBUG")
 SERVER_IP = env.str("SERVER_IP")
