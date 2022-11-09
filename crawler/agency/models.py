@@ -98,6 +98,7 @@ class Page(models.Model):
     def masked_name(self):
         if self.name is None:
             return "NA"
+        return self.name
 
 
 class Report(models.Model):
