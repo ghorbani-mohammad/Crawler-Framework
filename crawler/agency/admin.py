@@ -22,6 +22,7 @@ class ReportAdmin(admin.ModelAdmin):
     search_fields = ("page__url",)
     list_display = (
         "id",
+        "page_name",
         "url",
         "status",
         "agency",

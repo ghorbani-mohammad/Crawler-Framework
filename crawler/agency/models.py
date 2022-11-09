@@ -137,6 +137,11 @@ class Report(models.Model):
     def is_pending(self):
         return self.status == Report.PENDING
 
+    @property
+    def page_name(self):
+        if self.page:
+            return self.page.masked_name
+
 
 class Log(BaseModel):
     page = models.ForeignKey(
