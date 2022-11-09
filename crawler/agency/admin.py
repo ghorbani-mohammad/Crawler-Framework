@@ -12,6 +12,7 @@ from django.template.defaultfilters import truncatechars
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from agency.serializer import PageSerializer
+from reusable.admins import ReadOnlyAdminDateFields
 from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry
 
 
@@ -116,6 +117,7 @@ class PageAdmin(admin.ModelAdmin):
         "deleted_at",
         "last_crawl",
     )
+    readonly_fields = ("last_crawl",) + ReadOnlyAdminDateFields
     list_display = (
         "masked_name",
         "agency",

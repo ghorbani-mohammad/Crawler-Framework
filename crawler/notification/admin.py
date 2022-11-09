@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reusable.other import ReadOnlyAdminDateFields
+from reusable.admins import ReadOnlyAdminDateFields
 
 from . import models
 
