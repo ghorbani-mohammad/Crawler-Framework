@@ -1,3 +1,12 @@
+## [1.9.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.1...v1.9.2) (2022-11-09)
+
+
+### Bug Fixes
+
+* masked-name in Page ([d0e1caf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d0e1caf9823a1aa3ae4ae303334a723da606320d))
+
+
+
 ## [1.9.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.0...v1.9.1) (2022-11-09)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add DbLogHandler to settings ([c7086fd](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c7086fdc2e0195b40df2a4543268b10e7d4b87e2))
-
-
-
-# [1.6.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.5.0...v1.6.0) (2022-10-29)
-
-
-### Features
-
-* add LogAdmin ([45f0a91](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/45f0a917c0daa6f7648b5caa339e5c5de0a45079))
 
 
 
