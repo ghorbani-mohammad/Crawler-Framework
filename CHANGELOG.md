@@ -1,3 +1,12 @@
+## [1.9.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.0...v1.9.1) (2022-11-09)
+
+
+### Bug Fixes
+
+* PageAdmin read_only fields ([c582dff](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c582dffba165bdef603a0ab465b21893b902a2b6))
+
+
+
 # [1.9.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.8.0...v1.9.0) (2022-11-08)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add LogAdmin ([45f0a91](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/45f0a917c0daa6f7648b5caa339e5c5de0a45079))
-
-
-
-# [1.5.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.4.0...v1.5.0) (2022-10-14)
-
-
-### Features
-
-* add sentry-sdk ([7023ceb](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7023ceb2ec292ad71df545eb55dd4a4a5620ee7b))
 
 
 
