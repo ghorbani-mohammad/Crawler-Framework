@@ -121,6 +121,7 @@ class PageAdmin(admin.ModelAdmin):
         "get_last_crawl",
         "get_last_crawl_count",
         "status",
+        "today_crawl_count",
         "lock",
         "fetch_content",
         "take_picture",
