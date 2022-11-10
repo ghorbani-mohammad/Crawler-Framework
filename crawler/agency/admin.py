@@ -114,7 +114,7 @@ class PageAdmin(admin.ModelAdmin):
     list_editable = ("status", "crawl_interval")
     readonly_fields = ("last_crawl",) + ReadOnlyAdminDateFields.readonly_fields
     list_display = (
-        "masked_name",
+        "get_masked_name",
         "agency",
         "page_url",
         "crawl_interval",
@@ -140,6 +140,10 @@ class PageAdmin(admin.ModelAdmin):
 
     def page_url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.url)
+
+    @admin.display(description="NAME")
+    def get_masked_name(self, instance):
+        return instance.masked_name
 
     @admin.display(description="L. Crawl")
     def get_last_crawl(self, instance):
