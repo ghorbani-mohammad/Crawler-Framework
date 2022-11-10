@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.template.defaultfilters import truncatechars
 
 
@@ -99,6 +100,11 @@ class Page(models.Model):
         if self.name is None:
             return "NA"
         return self.name
+
+    @property
+    def today_crawl_count(self):
+        today = timezone.localtime().replace(hour=0)
+        return self.report.filter(created_at__gte=today).count()
 
 
 class Report(models.Model):
