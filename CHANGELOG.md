@@ -1,3 +1,12 @@
+# [1.10.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.2...v1.10.0) (2022-11-10)
+
+
+### Features
+
+* add today-crawl-count property to Page ([e517b26](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e517b2689c68a0cb0fe603acf02c67a92ab38009))
+
+
+
 ## [1.9.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.1...v1.9.2) (2022-11-09)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add short-message to DBLogEntry ([3e9c6a9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3e9c6a97e1bca5fe78a27f3ef0d0cab0fb9d614d))
-
-
-
-# [1.7.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.6.0...v1.7.0) (2022-10-29)
-
-
-### Features
-
-* add DbLogHandler to settings ([c7086fd](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c7086fdc2e0195b40df2a4543268b10e7d4b87e2))
 
 
 
