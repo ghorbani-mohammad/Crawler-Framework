@@ -172,11 +172,9 @@ class Log(BaseModel):
         tasks.send_log_to_telegram.delay(self.log_message)
 
 
-class Option(models.Model):
+class Option(BaseModel):
     key = models.CharField(max_length=70)
     value = models.CharField(max_length=70)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"({self.pk} - {self.key})"
