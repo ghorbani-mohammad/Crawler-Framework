@@ -102,15 +102,13 @@ class Page(BaseModel):
         return self.report.filter(created_at__gte=today).count()
 
 
-class Report(models.Model):
+class Report(BaseModel):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="report")
     fetched_links = models.IntegerField(default=0)
     new_links = models.IntegerField(default=0)
     picture = models.ImageField(
         upload_to=utils.report_image_path, blank=True, null=True
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     log = models.TextField(blank=True)
 
     PENDING = "pending"
