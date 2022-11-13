@@ -31,7 +31,7 @@ class Agency(BaseModel):
         return f"({self.pk} - {self.name})"
 
 
-class Structure(models.Model):
+class Structure(BaseModel):
     name = models.CharField(max_length=20, null=True)
     news_links_structure = models.JSONField()
     news_links_code = models.TextField(
@@ -40,8 +40,6 @@ class Structure(models.Model):
         help_text='like: for el in elements: try: links.append(el["href"]) except: continue',
     )
     news_meta_structure = models.JSONField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"({self.pk} - {self.name})"
