@@ -49,7 +49,7 @@ class Cookie(BaseModel):
     key_values = models.JSONField()
 
 
-class Page(models.Model):
+class Page(BaseModel):
     name = models.CharField(max_length=50, null=True, blank=True)
     agency = models.ForeignKey(Agency, related_name="pages", on_delete=models.CASCADE)
     url = models.CharField(max_length=2000, null=False, unique=True)
@@ -82,9 +82,6 @@ class Page(models.Model):
         Cookie, related_name="pages", on_delete=models.CASCADE, null=True
     )
     lock = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"({self.pk} - {self.url})"
