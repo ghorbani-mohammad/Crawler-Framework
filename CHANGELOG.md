@@ -1,3 +1,12 @@
+## [1.11.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.0...v1.11.1) (2022-11-14)
+
+
+### Bug Fixes
+
+* add -d parameter to dcu command ([3158f9e](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3158f9e1e66e39119e399923461cae46d77eeb40))
+
+
+
 # [1.11.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.10.0...v1.11.0) (2022-11-14)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * PageAdmin read_only fields ([c582dff](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c582dffba165bdef603a0ab465b21893b902a2b6))
-
-
-
-# [1.9.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.8.0...v1.9.0) (2022-11-08)
-
-
-### Features
-
-* add field name to Page ([4d02ec2](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4d02ec27b5330b7cb56949cfb5823b3c6a78c7b8))
 
 
 
