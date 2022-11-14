@@ -13,11 +13,11 @@ jobs:
       - name: deploy to server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.IP }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSHKEY }}
+          host: ${{secrets.IP}}
+          port: ${{secrets.PORT}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.SSHKEY}}
           script: >
-            cd ${{ secrets.PROJECT_PATH }} 
+            cd ${{secrets.PROJECT_PATH}} 
             && git pull 
             && docker-compose -f docker-compose-pro.yml up --build
