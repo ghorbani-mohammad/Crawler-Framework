@@ -30,6 +30,10 @@ class Agency(BaseModel):
     def __str__(self):
         return f"({self.pk} - {self.name})"
 
+    @property
+    def pages_count(self):
+        return self.pages.count()
+
 
 class Structure(BaseModel):
     name = models.CharField(max_length=20, null=True)
