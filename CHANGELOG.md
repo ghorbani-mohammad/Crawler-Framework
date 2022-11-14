@@ -1,3 +1,12 @@
+# [1.11.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.10.0...v1.11.0) (2022-11-14)
+
+
+### Features
+
+* add pages_count to Agency ([36642da](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/36642daca8a39a0cbffeaa59326db3ca29a822c1))
+
+
+
 # [1.10.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.2...v1.10.0) (2022-11-10)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add field name to Page ([4d02ec2](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4d02ec27b5330b7cb56949cfb5823b3c6a78c7b8))
-
-
-
-# [1.8.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.7.0...v1.8.0) (2022-10-31)
-
-
-### Features
-
-* add short-message to DBLogEntry ([3e9c6a9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3e9c6a97e1bca5fe78a27f3ef0d0cab0fb9d614d))
 
 
 
