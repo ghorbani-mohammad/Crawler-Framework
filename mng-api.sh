@@ -2,7 +2,7 @@
 
 PROJECT_NAME='crawler'
 SERVER_PATH='/var/www/cra/'
-COMPOSE_FILE='docker-compose-pro.yml'
+COMPOSE_FILE='docker-compose.yml'
 NGINX_FILE='crawler_api_nginx.conf'
 
 API_CONTAINER_NAME=${PROJECT_NAME}'_api'
