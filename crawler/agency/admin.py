@@ -76,6 +76,7 @@ class AgencyAdmin(admin.ModelAdmin):
         "link_keep_days",
         "pages_count",
         "created_at",
+        "get_created_at",
     )
 
 
