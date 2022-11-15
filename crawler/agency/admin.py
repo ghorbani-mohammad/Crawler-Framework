@@ -1,9 +1,7 @@
-from pytz import timezone as tz
 from prettyjson import PrettyJSONWidget
 from rangefilter.filter import DateTimeRangeFilter
 
 from django import forms
-from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 from django.utils.html import format_html
