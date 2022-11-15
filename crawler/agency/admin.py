@@ -211,7 +211,7 @@ class LogAdmin(admin.ModelAdmin):
         "error",
         "agency",
         "source",
-        "created",
+        "created_at",
         "short_description",
     )
     list_filter = ("phase", "page__agency")
@@ -220,7 +220,7 @@ class LogAdmin(admin.ModelAdmin):
         if obj.page is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
 
-    def created(self, obj):
+    def created_at(self, obj):
         return obj.created_at.astimezone(tz(settings.TIME_ZONE)).strftime(
             "%h. %d %H:%M %p"
         )
