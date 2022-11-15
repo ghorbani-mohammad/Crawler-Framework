@@ -40,9 +40,7 @@ class Agency(BaseModel):
     @property
     def get_created_at(self):
         if self.created_at:
-            return self.created_at.astimezone(tz(settings.TIME_ZONE)).strftime(
-                "%h %d %H:%M %p"
-            )
+            return self.created_at.strftime("%h %d %H:%M %p")
 
 
 class Structure(BaseModel):
