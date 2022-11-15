@@ -37,11 +37,6 @@ class Agency(BaseModel):
     def pages_count(self):
         return self.pages.count()
 
-    @property
-    def get_created_at(self):
-        if self.created_at:
-            return self.created_at.strftime("%h %d %H:%M %p")
-
 
 class Structure(BaseModel):
     name = models.CharField(max_length=20, null=True)
