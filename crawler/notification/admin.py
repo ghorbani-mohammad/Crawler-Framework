@@ -6,16 +6,9 @@ from . import models
 
 @admin.register(models.TelegramBot)
 class TelegramBotAdmin(ReadOnlyAdminDateFields, admin.ModelAdmin):
-    list_display = (
-        "pk",
-        "name",
-    )
+    list_display = ("pk", "name")
 
 
 @admin.register(models.TelegramAccount)
 class TelegramAccountAdmin(ReadOnlyAdminDateFields, admin.ModelAdmin):
-    list_display = (
-        "pk",
-        "name",
-        "chat_id",
-    )
+    list_display = ("pk", "name", "chat_id")
