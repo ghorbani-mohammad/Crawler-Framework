@@ -222,9 +222,7 @@ class LogAdmin(admin.ModelAdmin):
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
 
     def created_at(self, obj):
-        return obj.created_at.astimezone(tz(settings.TIME_ZONE)).strftime(
-            "%h. %d %H:%M %p"
-        )
+        return obj.created_at.strftime("%h. %d %H:%M %p")
 
     def base(self, obj):
         if obj.url is not None:
