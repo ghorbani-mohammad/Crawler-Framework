@@ -1,7 +1,4 @@
-from pytz import timezone as tz
-
 from django.db import models
-from django.conf import settings
 from django.utils import timezone
 from django.template.defaultfilters import truncatechars
 
@@ -111,9 +108,7 @@ class Page(BaseModel):
     @property
     def get_last_crawl_at(self):
         if self.last_crawl:
-            return self.last_crawl.astimezone(tz(settings.TIME_ZONE)).strftime(
-                "%h %d %H:%M %p"
-            )
+            return self.last_crawl.strftime("%h %d %H:%M %p")
 
 
 class Report(BaseModel):
