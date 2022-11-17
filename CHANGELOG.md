@@ -1,3 +1,12 @@
+## [1.11.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.1...v1.11.2) (2022-11-17)
+
+
+### Bug Fixes
+
+* driver.exit to driver.quit ([b7d71d3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b7d71d3aea15f0e4d5629f32380f70e8674ad173))
+
+
+
 ## [1.11.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.0...v1.11.1) (2022-11-14)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * masked-name in Page ([d0e1caf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d0e1caf9823a1aa3ae4ae303334a723da606320d))
-
-
-
-## [1.9.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.0...v1.9.1) (2022-11-09)
-
-
-### Bug Fixes
-
-* PageAdmin read_only fields ([c582dff](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c582dffba165bdef603a0ab465b21893b902a2b6))
 
 
 
