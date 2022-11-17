@@ -69,7 +69,7 @@ class CrawlerEngine:
         except Exception as e:
             error = f"{e}\n\n\n{traceback.format_exc()}"
             logger.error(error)
-            self.driver.exit()
+            self.driver.quit()
             return
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
