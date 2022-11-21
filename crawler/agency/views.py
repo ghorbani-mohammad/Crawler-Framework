@@ -134,11 +134,11 @@ class PageView(viewsets.ModelViewSet):
                 {"status": "400", "message": msg["fa"]["page"]["page_not_found"]}
             )
         serializer = age_serializer.PageSerializer(page)
-        x = {}
-        x["status"] = "200"
-        x["message"] = msg["fa"]["page"]["page_found"]
-        x["data"] = serializer.data
-        return Response(x)
+        data = {}
+        data["status"] = "200"
+        data["message"] = msg["fa"]["page"]["page_found"]
+        data["data"] = serializer.data
+        return Response(data)
 
     def update(self, request, version, pk=None):
         try:
