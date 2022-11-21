@@ -238,9 +238,8 @@ class CrawlerEngineV2:
                 try:
                     exec(temp_code)
                 except Exception as e:
-                    logger.info(f"Getting attr {key} got error")
-                    logger.info(f"The code was:\n {temp_code}")
-                    logger.info(f"Error was:\n {str(e)}")
+                    message = f"Getting attr {key} got error\nThe code was:\n {temp_code}\nError was:\n {str(e)}"
+                    logger.info(message)
                 continue
             code = ""
             if "code" in attribute.keys():
