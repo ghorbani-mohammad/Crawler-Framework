@@ -188,11 +188,11 @@ class PageView(viewsets.ModelViewSet):
 def agency_pages(request, version, agency_id):
     pages = Page.objects.filter(agency_id=agency_id)
     serializer = age_serializer.PageSerializer(pages, many=True)
-    x = {}
-    x["status"] = "200"
-    x["message"] = msg["fa"]["agency"]["retrieved_pages"]
-    x["data"] = serializer.data
-    return Response(x)
+    result = {}
+    result["status"] = "200"
+    result["message"] = msg["fa"]["agency"]["retrieved_pages"]
+    result["data"] = serializer.data
+    return Response(result)
 
 
 @api_view(["GET"])
