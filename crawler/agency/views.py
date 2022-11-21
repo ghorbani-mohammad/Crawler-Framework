@@ -327,11 +327,11 @@ class ReportView(ReadOnlyModelViewSet):
                 {"status": "418", "message": msg["fa"]["report"]["report_not_found"]}
             )
         serializer = age_serializer.ReportListSerializer(report)
-        x = {}
-        x["status"] = "200"
-        x["message"] = msg["fa"]["report"]["report_found"]
-        x["data"] = serializer.data
-        return Response(x)
+        result = {}
+        result["status"] = "200"
+        result["message"] = msg["fa"]["report"]["report_found"]
+        result["data"] = serializer.data
+        return Response(result)
 
 
 class FetchLinks(APIView):
