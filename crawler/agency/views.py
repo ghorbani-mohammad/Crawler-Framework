@@ -319,7 +319,6 @@ class ReportView(ReadOnlyModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, version, pk=None):
-        queryset = Report.objects.all()
         try:
             report = Report.objects.get(pk=pk)
         except Report.DoesNotExist:
