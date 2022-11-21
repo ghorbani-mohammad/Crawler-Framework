@@ -101,6 +101,9 @@ class AgencyView(viewsets.ModelViewSet):
 
 
 class PageView(viewsets.ModelViewSet):
+    queryset = Page.objects.all().order_by("id")
+    serializer_class = age_serializer.PageSerializer
+
     def create(self, request, *args, **kwargs):
         try:
             serializer = self.get_serializer(data=request.data)
@@ -179,9 +182,6 @@ class PageView(viewsets.ModelViewSet):
             "data": "",
         }
         return Response(response_data)
-
-    queryset = Page.objects.all().order_by("id")
-    serializer_class = age_serializer.PageSerializer
 
 
 @api_view(["GET"])
