@@ -69,8 +69,7 @@ class CrawlerEngine:
         except Exception as e:
             error = f"{e}\n\n\n{traceback.format_exc()}"
             logger.error(error)
-            self.driver.quit()
-            exit()
+            return
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
             # in debug mode static_root is none
@@ -172,10 +171,7 @@ class CrawlerEngine:
 
     def run(self):
         self.custom_logging(f"---> Fetching links from {self.page} started")
-        try:
-            self.fetch_links()
-        except Exception as e:
-            logger.error(traceback.format_exc())
+        self.fetch_links()
         self.custom_logging(
             f"---> We found {self.fetched_links_count} number of links for {self.page}"
         )
