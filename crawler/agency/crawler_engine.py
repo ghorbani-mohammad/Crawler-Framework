@@ -70,7 +70,7 @@ class CrawlerEngine:
             error = f"{e}\n\n\n{traceback.format_exc()}"
             logger.error(error)
             self.driver.quit()
-            return
+            exit()
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
             # in debug mode static_root is none
