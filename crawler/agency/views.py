@@ -335,32 +335,32 @@ class ReportView(ReadOnlyModelViewSet):
 
 class FetchLinks(APIView):
     def get(self, request, version):
-        from agency.crawler_engine import CrawlerEngineV2
-
-        structure_id = request.GET.get("structure_id", None)
-        link = request.GET.get("link", None)
-        if structure_id is None:
-            raise NotAcceptable(detail="structure_id is not acceptable")
-        if link is None:
-            raise NotAcceptable(detail="link is not acceptable")
-        structure = get_object_or_404(Structure, pk=structure_id)
-        crawler = CrawlerEngineV2()
-        links = crawler.get_links(structure.news_links_structure, link)
-        return Response({"count": len(links), "links": links})
+        return Response({"count": 0, "links": 0})
+        # from agency.crawler_engine import CrawlerEngineV2
+        # structure_id = request.GET.get("structure_id", None)
+        # link = request.GET.get("link", None)
+        # if structure_id is None:
+        #     raise NotAcceptable(detail="structure_id is not acceptable")
+        # if link is None:
+        #     raise NotAcceptable(detail="link is not acceptable")
+        # structure = get_object_or_404(Structure, pk=structure_id)
+        # crawler = CrawlerEngineV2()
+        # links = crawler.get_links(structure.news_links_structure, link)
+        # return Response({"count": len(links), "links": links})
 
 
 class FetchContent(APIView):
     def get(self, request, version):
-        from agency.crawler_engine import CrawlerEngineV2
-
-        structure_id = request.GET.get("structure_id", None)
-        link = request.GET.get("link", None)
-        if link is None or structure_id is None:
-            raise NotAcceptable(detail="link or structure_id is not acceptable")
-        structure = get_object_or_404(Structure, pk=structure_id)
-        crawler = CrawlerEngineV2()
-        content = crawler.get_content(structure.news_meta_structure, link)
-        return Response({"content": content})
+        return Response({"content": ""})
+        # from agency.crawler_engine import CrawlerEngineV2
+        # structure_id = request.GET.get("structure_id", None)
+        # link = request.GET.get("link", None)
+        # if link is None or structure_id is None:
+        #     raise NotAcceptable(detail="link or structure_id is not acceptable")
+        # structure = get_object_or_404(Structure, pk=structure_id)
+        # crawler = CrawlerEngineV2()
+        # content = crawler.get_content(structure.news_meta_structure, link)
+        # return Response({"content": content})
 
 
 class TestErrorView(APIView):
