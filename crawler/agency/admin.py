@@ -31,11 +31,7 @@ class ReportAdmin(admin.ModelAdmin):
         "fetched_links",
     )
     readonly_fields = ("log", "page", "status", "picture", "new_links", "fetched_links")
-    list_filter = [
-        "status",
-        "page__agency",
-        ("created_at", DateTimeRangeFilter),
-    ]
+    list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
 
     def url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
