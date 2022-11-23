@@ -1,3 +1,12 @@
+# [1.12.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.2...v1.12.0) (2022-11-22)
+
+
+### Features
+
+* remove old crawler engine version ([0306c1c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0306c1c8a20e58dcb8bebc5ba97f735c255d9042))
+
+
+
 ## [1.11.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.1...v1.11.2) (2022-11-17)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add today-crawl-count property to Page ([e517b26](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e517b2689c68a0cb0fe603acf02c67a92ab38009))
-
-
-
-## [1.9.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.1...v1.9.2) (2022-11-09)
-
-
-### Bug Fixes
-
-* masked-name in Page ([d0e1caf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d0e1caf9823a1aa3ae4ae303334a723da606320d))
 
 
 
