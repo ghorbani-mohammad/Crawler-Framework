@@ -111,10 +111,7 @@ class PageAdmin(admin.ModelAdmin):
 
     form = PageAdminForm
     list_filter = ("lock", "status", "agency")
-    list_editable = (
-        "status",
-        "crawl_interval",
-    )
+    list_editable = ("status", "crawl_interval")
     readonly_fields = ("last_crawl",) + ReadOnlyAdminDateFields.readonly_fields
     list_display = (
         "get_masked_name",
