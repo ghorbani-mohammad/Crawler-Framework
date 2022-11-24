@@ -2,8 +2,8 @@
 import re, redis, json, time, traceback
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
-from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import SessionNotCreatedException, TimeoutException
 
 from django.conf import settings
 from django.utils import timezone
@@ -65,6 +65,10 @@ class CrawlerEngine:
         data = []
         try:
             self.driver.get(self.page.url)
+        except TimeoutException as e:
+            error = f"{e}\n\n\n{traceback.format_exc()}"
+            logger.warning(error)
+            return
         except Exception as e:
             error = f"{e}\n\n\n{traceback.format_exc()}"
             logger.error(error)
