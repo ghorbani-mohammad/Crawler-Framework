@@ -1,6 +1,5 @@
 # Don't remove re package, this package used dynamically in code
-import re
-import redis, json, time, traceback, validators
+import re, redis, json, time, traceback
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.common.exceptions import SessionNotCreatedException
