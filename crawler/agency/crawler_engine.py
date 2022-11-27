@@ -106,8 +106,8 @@ class CrawlerEngine:
             try:
                 self.driver.get(data["link"])
             except TimeoutException as e:
-                error = f"{e}\n\n\n{traceback.format_exc()}"
-                logger.warning(error)
+                warning = f"{e}\n\n\n{traceback.format_exc()}"
+                logger.warning(warning)
                 return
             except Exception as e:
                 error = f"{e}\n\n\n{traceback.format_exc()}"
