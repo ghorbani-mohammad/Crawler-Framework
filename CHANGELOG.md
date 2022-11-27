@@ -1,3 +1,12 @@
+## [1.12.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.12.0...v1.12.1) (2022-11-27)
+
+
+### Bug Fixes
+
+* add try-except to crawl-one-page ([8f7c760](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/8f7c76077a4a36a4da3bac586c59cf91295f2180))
+
+
+
 # [1.12.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.2...v1.12.0) (2022-11-22)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add pages_count to Agency ([36642da](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/36642daca8a39a0cbffeaa59326db3ca29a822c1))
-
-
-
-# [1.10.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.9.2...v1.10.0) (2022-11-10)
-
-
-### Features
-
-* add today-crawl-count property to Page ([e517b26](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e517b2689c68a0cb0fe603acf02c67a92ab38009))
 
 
 
