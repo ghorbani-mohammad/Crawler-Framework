@@ -103,7 +103,16 @@ class CrawlerEngine:
         article = data
         article["page_id"] = self.page.id
         if fetch_content:
-            self.driver.get(data["link"])
+            try:
+                self.driver.get(data["link"])
+            except TimeoutException as e:
+                error = f"{e}\n\n\n{traceback.format_exc()}"
+                logger.warning(error)
+                return
+            except Exception as e:
+                error = f"{e}\n\n\n{traceback.format_exc()}"
+                logger.error(error)
+                return
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
             if meta is not None:
