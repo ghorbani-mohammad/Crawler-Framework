@@ -68,7 +68,11 @@ class ReportAdmin(admin.ModelAdmin):
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
     list_filter = ("status",)
-    readonly_fields = ("created_at", "updated_at", "deleted_at")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    )
     list_display = (
         "id",
         "name",
