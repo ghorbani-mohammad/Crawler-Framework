@@ -100,7 +100,12 @@ class StructureForm(forms.ModelForm):
 
 @admin.register(Structure)
 class StructureAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "created_at", "updated_at")
+    list_display = (
+        "id",
+        "name",
+        "created_at",
+        "updated_at",
+    )
     form = StructureForm
 
 
