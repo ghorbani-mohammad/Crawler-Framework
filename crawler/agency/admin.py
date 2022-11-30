@@ -143,7 +143,11 @@ class PageAdmin(admin.ModelAdmin):
         ("telegram_channel", "iv_code"),
         "message_code",
         "last_crawl",
-        ("created_at", "updated_at", "deleted_at"),
+        (
+            "created_at",
+            "updated_at",
+            "deleted_at",
+        ),
     )
 
     def page_url(self, obj):
