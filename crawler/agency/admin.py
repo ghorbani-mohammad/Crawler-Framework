@@ -139,12 +139,7 @@ class PageAdmin(admin.ModelAdmin):
         "url",
         "structure",
         ("crawl_interval", "load_sleep", "links_sleep"),
-        (
-            "status",
-            "fetch_content",
-            "take_picture",
-            "lock",
-        ),
+        ("status", "fetch_content", "take_picture", "lock"),
         (
             "telegram_channel",
             "iv_code",
