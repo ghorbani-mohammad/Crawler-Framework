@@ -138,11 +138,7 @@ class PageAdmin(admin.ModelAdmin):
         "agency",
         "url",
         "structure",
-        (
-            "crawl_interval",
-            "load_sleep",
-            "links_sleep",
-        ),
+        ("crawl_interval", "load_sleep", "links_sleep"),
         (
             "status",
             "fetch_content",
