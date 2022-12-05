@@ -172,6 +172,10 @@ class CrawlerEngine:
         )
 
     def check_data(self):
+        """Here we check each link that we crawled in the fetch-links function.
+        We call crawl-one-page on each link
+        We count not duplicate links
+        """
         counter = self.fetched_links_count
         for data in self.fetched_links:
             if not self.repetitive and redis_duplicate_checker.exists(data["link"]):
