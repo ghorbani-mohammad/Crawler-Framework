@@ -18,6 +18,13 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=
 
 class CrawlerEngine:
     def __init__(self, page, repetitive=False, header=None):
+        """Initialize engine for getting data from a page
+
+        Args:
+            page (page): Page object
+            repetitive (bool, optional): If true we will get data from the repetitive links in the page. Defaults to False.
+            header (json, optional): Custom header. Defaults to None.
+        """
         try:
             caps = DesiredCapabilities().FIREFOX
             caps["pageLoadStrategy"] = "eager"  # interactive
