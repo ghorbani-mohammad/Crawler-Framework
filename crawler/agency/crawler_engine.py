@@ -110,6 +110,12 @@ class CrawlerEngine:
         self.report.save()
 
     def crawl_one_page(self, data, fetch_content):
+        """Get data from crawled link based on defined structure
+
+        Args:
+            data (json): data where we have link
+            fetch_content (bool): wether we should open the link or not
+        """
         meta = self.page.structure.news_meta_structure
         article = data
         article["page_id"] = self.page.id
