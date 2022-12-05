@@ -193,6 +193,10 @@ class CrawlerEngine:
         self.log_messages += f"{message} \n"
 
     def run(self):
+        """Run the crawler engine
+        first: we get links from the specified page
+        second: we get data from each page
+        """
         self.custom_logging(f"---> Fetching links from {self.page} started")
         self.fetch_links()
         self.custom_logging(
