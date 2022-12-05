@@ -62,6 +62,9 @@ class CrawlerEngine:
         )
 
     def fetch_links(self):
+        """Fetch links from a page
+        this function get links based on the specified structure from a page
+        """
         data = []
         try:
             self.driver.get(self.page.url)
