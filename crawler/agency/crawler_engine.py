@@ -166,6 +166,12 @@ class CrawlerEngine:
         self.save_to_redis(article)
 
     def save_to_redis(self, article):
+        """We store each link information as a json into Redis
+        We also store link into duplicate checker for avoiding duplicate links
+
+        Args:
+            article (json): information about link
+        """
         redis_news.set(f'links_{article["link"]}', json.dumps(article))
         redis_duplicate_checker.set(
             article["link"], "", ex=self.page.days_to_keep * 60 * 60 * 24
