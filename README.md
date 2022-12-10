@@ -31,12 +31,6 @@ First one is news_links_structure. This field specifies how we should get links 
 - Django Admin Panel:
     * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
 
-- Guest User Credential:
-  ```
-  username: guest
-  password: RPxzsoen4O
-  ```
-
 
 ## Guest User
 Guest user have read-only access to some models, So using that, you can login into Django admin and 
@@ -44,8 +38,11 @@ see what potential can have this project. By login into Django admin you can see
 of websites that I get their new posts periodically. These are some examples that help you to create your
 own crawler.
 
-
-
+- Guest User Credential:
+  ```
+  **Username**: guest
+  **Password**: RPxzsoen4O
+  ```
 
 
 ## How it works?
