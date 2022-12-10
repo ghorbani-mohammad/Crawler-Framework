@@ -22,10 +22,7 @@ First one is news_links_structure. This field specifies how we should get links 
 ***
 
 ### Information
-
-- Server: **DigitalOcean**
 - Port: 8205
-- Server path: `/var/www/cra/`
 - Nginx log files:
     ```
     access: /var/log/nginx/api-crawler_access.log
