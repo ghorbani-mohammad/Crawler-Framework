@@ -43,7 +43,7 @@ own crawler.
   * **Password**: RPxzsoen4O
 
 
-## How it works?
+## How To Setup?
 
 You can setup the project by docker-compose utility.
 
