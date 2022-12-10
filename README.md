@@ -1,5 +1,8 @@
+## Story Of This Project
+There are sometimes that we want to be first person that get notice about new post in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purposes.
+
 ## Crawler Framework
-This is a framework for crawling data from websites. There are sometimes that we want to be first person that get notice about new post in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purposes. In this framework we have 3 main entities:
+This is a framework for crawling data from websites. You define a website, then the pages of that website and in the last step you define the structure of those pages so the crawler can retrieve data from them.  In this framework we have 3 main entities:
   - Agency
   - Page
   - Structure
