@@ -30,7 +30,14 @@ class ReportAdmin(admin.ModelAdmin):
         "started_at",
         "fetched_links",
     )
-    readonly_fields = ("log", "page", "status", "picture", "new_links", "fetched_links")
+    readonly_fields = (
+        "log",
+        "page",
+        "status",
+        "picture",
+        "new_links",
+        "fetched_links",
+    )
     list_filter = [
         "status",
         "page__agency",
