@@ -239,7 +239,10 @@ class LogAdmin(admin.ModelAdmin):
 @admin.register(DBLogEntry)
 class DBLogEntryAdmin(admin.ModelAdmin):
     list_filter = ("level",)
-    readonly_fields = ("level", "message")
+    readonly_fields = (
+        "level",
+        "message",
+    )
     list_display = ("pk", "level", "short_message", "time")
 
     def delete_all_logs(modeladmin, request, queryset):
