@@ -115,7 +115,10 @@ class PageAdmin(admin.ModelAdmin):
         "status",
         "agency",
     )
-    list_editable = ("status", "crawl_interval")
+    list_editable = (
+        "status",
+        "crawl_interval",
+    )
     readonly_fields = ("last_crawl",) + ReadOnlyAdminDateFields.readonly_fields
     list_display = (
         "get_masked_name",
