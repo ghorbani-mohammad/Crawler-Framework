@@ -30,19 +30,8 @@ class ReportAdmin(admin.ModelAdmin):
         "started_at",
         "fetched_links",
     )
-    readonly_fields = (
-        "log",
-        "page",
-        "status",
-        "picture",
-        "new_links",
-        "fetched_links",
-    )
-    list_filter = [
-        "status",
-        "page__agency",
-        ("created_at", DateTimeRangeFilter),
-    ]
+    readonly_fields = ("log", "page", "status", "picture", "new_links", "fetched_links")
+    list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
 
     def url(self, obj):
         return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
@@ -68,11 +57,7 @@ class ReportAdmin(admin.ModelAdmin):
 @admin.register(Agency)
 class AgencyAdmin(admin.ModelAdmin):
     list_filter = ("status",)
-    readonly_fields = (
-        "created_at",
-        "updated_at",
-        "deleted_at",
-    )
+    readonly_fields = ("created_at", "updated_at", "deleted_at")
     list_display = (
         "id",
         "name",
@@ -100,12 +85,7 @@ class StructureForm(forms.ModelForm):
 
 @admin.register(Structure)
 class StructureAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "name",
-        "created_at",
-        "updated_at",
-    )
+    list_display = ("id", "name", "created_at", "updated_at")
     form = StructureForm
 
 
@@ -130,15 +110,8 @@ class PageAdmin(admin.ModelAdmin):
         return ["-last_crawl"]
 
     form = PageAdminForm
-    list_filter = (
-        "lock",
-        "status",
-        "agency",
-    )
-    list_editable = (
-        "status",
-        "crawl_interval",
-    )
+    list_filter = ("lock", "status", "agency")
+    list_editable = ("status", "crawl_interval")
     readonly_fields = ("last_crawl",) + ReadOnlyAdminDateFields.readonly_fields
     list_display = (
         "get_masked_name",
@@ -218,10 +191,7 @@ class PageAdmin(admin.ModelAdmin):
         )
 
     crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
-    actions = (
-        crawl_action,
-        crawl_action_ignore_repetitive,
-    )
+    actions = (crawl_action, crawl_action_ignore_repetitive)
 
 
 @admin.register(Log)
@@ -236,10 +206,7 @@ class LogAdmin(admin.ModelAdmin):
         "created_at",
         "short_description",
     )
-    list_filter = (
-        "phase",
-        "page__agency",
-    )
+    list_filter = ("phase", "page__agency")
 
     def source(self, obj):
         if obj.page is not None:
@@ -269,16 +236,8 @@ class LogAdmin(admin.ModelAdmin):
 @admin.register(DBLogEntry)
 class DBLogEntryAdmin(admin.ModelAdmin):
     list_filter = ("level",)
-    readonly_fields = (
-        "level",
-        "message",
-    )
-    list_display = (
-        "pk",
-        "level",
-        "short_message",
-        "time",
-    )
+    readonly_fields = ("level", "message")
+    list_display = ("pk", "level", "short_message", "time")
 
     def delete_all_logs(modeladmin, request, queryset):
         DBLogEntry.objects.all().delete()
