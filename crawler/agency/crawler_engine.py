@@ -135,7 +135,7 @@ class CrawlerEngine:
                 )
                 return
             except Exception as e:
-                logger.error(f"error:{e}\ntraceback:{traceback.format_exc()}")
+                logger.error(f"error: {e}\ntraceback: {traceback.format_exc()}")
                 return
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
