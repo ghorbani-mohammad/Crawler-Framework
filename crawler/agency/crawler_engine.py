@@ -130,10 +130,12 @@ class CrawlerEngine:
             try:
                 self.driver.get(data["link"])
             except TimeoutException as e:
-                logger.error(f"{e}\n\n\n{traceback.format_exc()}")
+                logger.error(
+                    f"error: {e}\nlink: {data['link']}\ntraceback: {traceback.format_exc()}"
+                )
                 return
             except Exception as e:
-                logger.error(f"{e}\n\n\n{traceback.format_exc()}")
+                logger.error(f"error:{e}\ntraceback:{traceback.format_exc()}")
                 return
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
