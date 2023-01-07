@@ -10,7 +10,7 @@ from django.template.defaultfilters import truncatechars
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from agency.serializer import PageSerializer
-from reusable.admins import ReadOnlyAdminDateFields
+from reusable.admins import ReadOnlyAdminDateFieldsMIXIN
 from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry
 
 
@@ -101,7 +101,7 @@ class PageAdminForm(forms.ModelForm):
 
 
 @admin.register(Page)
-class PageAdmin(admin.ModelAdmin):
+class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(PageAdmin, self).get_queryset(request)
         return qs.filter(agency__status=True)
@@ -112,7 +112,7 @@ class PageAdmin(admin.ModelAdmin):
     form = PageAdminForm
     list_filter = ("lock", "status", "agency")
     list_editable = ("status", "crawl_interval")
-    readonly_fields = ("last_crawl",) + ReadOnlyAdminDateFields.readonly_fields
+    readonly_fields = ("last_crawl",)
     list_display = (
         "get_masked_name",
         "agency",
