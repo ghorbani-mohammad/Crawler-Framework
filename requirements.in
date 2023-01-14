@@ -10,8 +10,7 @@ djangorestframework==3.13.1
 envparse
 gunicorn
 ipython
-Pillow
-pip-tools>=6.8.0
+pillow
 psycopg2
 python-dateutil
 python-telegram-bot
