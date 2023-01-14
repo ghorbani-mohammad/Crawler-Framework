@@ -10,7 +10,6 @@ djangorestframework==3.13.1
 envparse
 gunicorn
 ipython
-linkedin-scraper
 Pillow
 pip-tools>=6.8.0
 psycopg2

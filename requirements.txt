@@ -69,10 +69,6 @@ jedi==0.18.1
     # via ipython
 kombu==4.6.11
     # via celery
-linkedin-scraper==2.9.0
-    # via -r requirements.in
-lxml==4.6.4
-    # via linkedin-scraper
 packaging==21.3
     # via build
 parso==0.8.2
@@ -115,11 +111,9 @@ requests==2.28.1
     # via
     #   -r requirements.in
     #   django-editor-widgets
-    #   linkedin-scraper
 selenium==3.141.0
     # via
     #   -r requirements.in
-    #   linkedin-scraper
     #   selenium-wire
 selenium-wire==1.0.11
     # via -r requirements.in
