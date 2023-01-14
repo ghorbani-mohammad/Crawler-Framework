@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.12.1...v1.13.0) (2023-01-14)
+
+
+### Features
+
+* bump python version from 3.10 to 3.11 ([b1c2b05](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b1c2b0581302b7866c3f83fbee6187c7c802dfb5))
+
+
+
 ## [1.12.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.12.0...v1.12.1) (2022-11-27)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * add -d parameter to dcu command ([3158f9e](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3158f9e1e66e39119e399923461cae46d77eeb40))
-
-
-
-# [1.11.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.10.0...v1.11.0) (2022-11-14)
-
-
-### Features
-
-* add pages_count to Agency ([36642da](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/36642daca8a39a0cbffeaa59326db3ca29a822c1))
 
 
 
