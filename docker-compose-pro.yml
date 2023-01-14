@@ -61,8 +61,6 @@ services:
     container_name : crawler_redis
     image: redis:6.2
     restart: unless-stopped
-    volumes:
-      - ./crawler_redis_volume:/data
     logging: *default-logging
 
   crawler_node_docker:
