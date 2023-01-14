@@ -192,7 +192,7 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
 
 CACHES = {
     "default": {
-        "LOCATION": "redis://social_redis:6379/2",
+        "LOCATION": "redis://social_redis:6379",
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
     }
 }
