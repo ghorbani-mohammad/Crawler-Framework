@@ -1,8 +1,8 @@
 from os import path
-from selenium.webdriver.chrome.options import Options
 
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from selenium.webdriver.chrome.options import Options
 
 CODE = """
 {0}
