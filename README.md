@@ -3,7 +3,7 @@ There are sometimes that we want to be first person that get notice about new po
 
 ---
 ## How To Setup?
-You can setup the project by docker-compose utility.
+You can setup the project using docker-compose command.
 ```bash
   git clone git@github.com:ghorbani-mohammad/crawler-framework.git
   cd crawler-framework
