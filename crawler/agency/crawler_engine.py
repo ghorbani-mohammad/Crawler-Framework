@@ -44,16 +44,16 @@ class CrawlerEngine:
         self.driver.set_page_load_timeout(5)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
-        self.fetched_links_count = 0
+        self.header = header
+        self.repetitive = repetitive
         self.fetched_links = []
+        self.fetched_links_count = 0
         self.page = models.Page.objects.get(id=page["id"])
         self.page.lock = True
         self.page.save()
         self.report = models.Report.objects.create(
             page_id=self.page.id, status=models.Report.PENDING
         )
-        self.header = header
-        self.repetitive = repetitive
         self.custom_logging(
             f"Crawl **started** for page: {self.page} with repetitive: {self.repetitive}"
         )
