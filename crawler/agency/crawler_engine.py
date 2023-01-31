@@ -1,5 +1,9 @@
 # Don't remove re package, this package used dynamically in code
-import re, redis, json, time, traceback
+import re
+import json
+import time
+import redis
+import traceback
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
