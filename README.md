@@ -1,29 +1,32 @@
-## Story Of This Project
-There are sometimes that we want to be first person that get notice about new post in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purposes.
+### Story Of This Project
+There are sometimes that we want to be first person that get notice about new posts in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purposes.
 
 ---
-## How To Setup?
+### How To Setup?
 You can setup the project using docker-compose command.
 ```bash
   git clone git@github.com:ghorbani-mohammad/crawler-framework.git
   cd crawler-framework
   docker-compose up
 ```
+- For production we can use ```docker-compose -f docker-compose-prod.yml up```. 
+- We used gunicorn to served the requests.
+- For serving static files, we've used Nginx. Checkout crawler_api_nginx.conf configuration.
 
 ---
-## Crawler Framework
-This is a framework for crawling data from websites. You define a website, then the pages of that website and in the last step you define the structure of those pages so the crawler can retrieve data from them.  In this framework we have 3 main entities:
+### Crawler Framework
+This is a framework for crawling data from websites. You define a website, then the pages of that website and in the last step you define the structure of those pages so the crawler engine can retrieve data from them. In this framework we have 3 main entities:
   - Agency
   - Page
   - Structure
-### Agency
-Agencies are the websites, like CNN and BBC. Before doing anything you should define agencies.
+#### Agency
+Agencies are the websites, like CNN and BBC. First step is defining agencies.
 
-### Page
-Pages, are different pages of an agency or website. For example CNN website has political, entertainment and etc pages in it. After defining your agencies you can specify pages of that website which you want crawl data.
+#### Page
+Pages, are different pages of an agency or a website. For example CNN website has political, entertainment and etc pages in it. After defining your agencies you can specify pages of that website which you want crawl data.
 
-### Structure
-Structures define how crawler should gather data from a page. When you defining a page, you should specify its structure.
+#### Structure
+Structures define how crawler engine should gather data from a page. When you defining a page, you should specify its structure.
 So you need define structure of a page, before creating the page. This model has three important fields that probably you need fill those.
 
 First one is news_links_structure. This field specifies how we should get links of news or articles or anything that we want. At the below picture you can see an example. As you can see, we gather elements with tag **a** that has class attribute with value **c-jobListView__titleLink**
@@ -41,7 +44,7 @@ First one is news_links_structure. This field specifies how we should get links 
     * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
 
 ---
-## Guest User
+### Guest User
 Guest user have read-only access to some models, So using that, you can login into Django admin and 
 see what potentials can have this project. By login into Django admin you can see I have defined a bunch
 of websites that I get their new posts periodically. These are some examples that help you to create your
