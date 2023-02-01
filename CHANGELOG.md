@@ -1,3 +1,12 @@
+# [1.14.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.13.0...v1.14.0) (2023-02-01)
+
+
+### Features
+
+* Bump to python 3.11 and fix packages issues ([e415e1c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e415e1c09742f49a99ae488a9ca5156e1edccb33))
+
+
+
 # [1.13.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.12.1...v1.13.0) (2023-01-14)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * driver.exit to driver.quit ([b7d71d3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b7d71d3aea15f0e4d5629f32380f70e8674ad173))
-
-
-
-## [1.11.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.0...v1.11.1) (2022-11-14)
-
-
-### Bug Fixes
-
-* add -d parameter to dcu command ([3158f9e](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3158f9e1e66e39119e399923461cae46d77eeb40))
 
 
 
