@@ -33,17 +33,6 @@ First one is news_links_structure. This field specifies how we should get links 
 ![image](https://user-images.githubusercontent.com/12118217/186157990-260c1c86-0ebf-4859-8d32-018d1551f028.png)
 
 ---
-### Information
-- Port: 8205
-- Nginx log files:
-    ```
-    access: /var/log/nginx/api-crawler_access.log
-    error:  /var/log/nginx/api-crawler_error.log
-    ```
-- Django Admin Panel:
-    * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
-
----
 ### Guest User
 Guest user have read-only access to some models, So using that, you can login into Django admin and 
 see what potentials can have this project. By login into Django admin you can see I have defined a bunch
@@ -53,5 +42,7 @@ own crawler.
 - Guest User Credential:
   * **Username**: guest
   * **Password**: RPxzsoen4O
+- Django Admin Panel:
+  * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
 
 
