@@ -4,8 +4,8 @@ WORKDIR /app
 RUN apk update && \
     apk add --virtual .tmp build-base python3-dev \
     libpq postgresql-dev gcc jpeg-dev zlib-dev libffi-dev
-COPY requirements.in .
-RUN pip install pip-tools && pip-compile && pip install -r requirements.txt && \
+COPY requirements.txt .
+RUN pip install -r requirements.txt && \
     apk del .tmp && \
     apk add postgresql-dev jpeg-dev 
 
