@@ -88,7 +88,7 @@ class Page(BaseModel):
     lock = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"({self.pk} - {self.url})"
+        return f"({self.pk} - {self.name})"
 
     @property
     def days_to_keep(self):
