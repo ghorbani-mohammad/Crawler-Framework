@@ -12,7 +12,7 @@ You can setup the project using docker-compose command.
 - For production you can use ```docker-compose -f docker-compose-prod.yml up```. 
 - I've used gunicorn to served the requests.
 - For serving static files, I've used Nginx. Checkout crawler_api_nginx.conf configuration.
-- I've used selenium hub(grid) to provide multiple browser session at same time.
+- I've used selenium hub(grid) to provide multiple browser sessions at same time.
 
 ---
 ### Crawler Framework
