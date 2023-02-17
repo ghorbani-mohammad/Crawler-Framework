@@ -13,6 +13,7 @@ You can setup the project using docker-compose command.
 - I've used gunicorn to served the requests.
 - For serving static files, I've used Nginx. Checkout crawler_api_nginx.conf configuration.
 - I've used selenium hub(grid) to provide multiple browser sessions at same time.
+- You can configure smtp server credentials and set your email to get error logs in your email inbox
 
 ---
 ### Crawler Framework
