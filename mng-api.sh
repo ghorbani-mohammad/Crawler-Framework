@@ -77,15 +77,7 @@ function remove_unused_image() {
     docker image prune -af
 }
 
-function scp_conf() {
-    echo -e "\n ... copy conf files to server ... \n"
-    scp ${COMPOSE_FILE} ${NGINX_FILE} mng-api.sh .docpasswd doc.json ${SERVER_NAME}:${SERVER_PATH}
-}
-
 case $1 in
-scp_conf)
-    scp_conf
-;;
 up)
     pull
     up
