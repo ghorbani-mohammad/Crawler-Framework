@@ -15,6 +15,7 @@ You can setup the project using docker-compose command.
 - I've used selenium hub(grid) to provide multiple browser sessions at same time.
 - You can configure smtp server credentials and set your email to get error logs in your email inbox
 - You can also check all logs (all levels) in Django admin (DBLogEntry model)
+- You can use provided shell commands to easily manage the project (checkout mng-api.sh file)
 
 ---
 ### Crawler Framework
