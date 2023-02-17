@@ -14,6 +14,7 @@ You can setup the project using docker-compose command.
 - For serving static files, I've used Nginx. Checkout crawler_api_nginx.conf configuration.
 - I've used selenium hub(grid) to provide multiple browser sessions at same time.
 - You can configure smtp server credentials and set your email to get error logs in your email inbox
+- You can also check all logs (all levels) in Django admin (DBLogEntry model)
 
 ---
 ### Crawler Framework
