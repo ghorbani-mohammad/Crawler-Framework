@@ -104,8 +104,7 @@ class CrawlerEngine:
             self.report.save()
         doc = BeautifulSoup(self.driver.page_source, "html.parser")
         attribute = self.page.structure.news_links_structure
-        tag = attribute["tag"]
-        del attribute["tag"]
+        tag = attribute.pop("tag")
         if "code" in attribute.keys():
             del attribute["code"]
         elements = doc.findAll(tag, attribute)
@@ -146,8 +145,7 @@ class CrawlerEngine:
             if meta is not None:
                 for key in meta.keys():
                     attribute = meta[key].copy()
-                    tag = attribute["tag"]
-                    del attribute["tag"]
+                    tag = attribute.pop("tag")
                     if tag == "value":
                         article[key] = attribute["value"]
                         continue
@@ -162,8 +160,7 @@ class CrawlerEngine:
                         continue
                     code = ""
                     if "code" in attribute.keys():
-                        code = attribute["code"]
-                        del attribute["code"]
+                        code = attribute.pop("code")
                     element = doc.find(tag, attribute)
                     if element is None:
                         desc = f"tag was: {tag} *** and attribute was {attribute}"
