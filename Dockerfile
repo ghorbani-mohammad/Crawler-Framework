@@ -8,8 +8,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt && \
     apk del .tmp && \
     apk add postgresql-dev jpeg-dev 
-
 COPY . .
+
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
