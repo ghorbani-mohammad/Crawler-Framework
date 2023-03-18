@@ -50,3 +50,4 @@ own crawler.
   * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
 
 
+### Postman collection
