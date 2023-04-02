@@ -4,7 +4,7 @@
 __pycache__/
 .idea
 .git
-venv
+.venv
 db.sqlite3
 docker-compose.yml
 docker-compose-pro.yml
