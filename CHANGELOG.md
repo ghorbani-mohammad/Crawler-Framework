@@ -1,3 +1,12 @@
+# [1.15.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.14.0...v1.15.0) (2023-04-08)
+
+
+### Features
+
+* add code linters utilities ([c70ef24](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c70ef24d3dcc891dd4b277b2f247d0466e7576a1))
+
+
+
 # [1.14.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.13.0...v1.14.0) (2023-02-01)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * remove old crawler engine version ([0306c1c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0306c1c8a20e58dcb8bebc5ba97f735c255d9042))
-
-
-
-## [1.11.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.1...v1.11.2) (2022-11-17)
-
-
-### Bug Fixes
-
-* driver.exit to driver.quit ([b7d71d3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b7d71d3aea15f0e4d5629f32380f70e8674ad173))
 
 
 
