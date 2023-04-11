@@ -9,8 +9,8 @@ from django.utils.translation import ngettext
 from django.template.defaultfilters import truncatechars
 from djangoeditorwidgets.widgets import MonacoEditorWidget
 
-from agency.serializer import PageSerializer
 from reusable.admins import ReadOnlyAdminDateFieldsMIXIN
+from agency.serializer import PageSerializer
 from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry
 
 
@@ -226,7 +226,7 @@ class LogAdmin(admin.ModelAdmin):
     def short_description(self, obj):
         return truncatechars(obj.description, 50)
 
-    def has_change_permission(self, request, obj=None):
+    def has_change_permission(self, _request, _obj=None):
         return False
 
     def url2(self, obj):
@@ -239,7 +239,7 @@ class DBLogEntryAdmin(admin.ModelAdmin):
     readonly_fields = ("level", "message")
     list_display = ("pk", "level", "short_message", "time")
 
-    def delete_all_logs(modeladmin, request, queryset):
+    def delete_all_logs(self, _modeladmin, _request, _queryset):
         DBLogEntry.objects.all().delete()
 
     actions = (delete_all_logs,)
