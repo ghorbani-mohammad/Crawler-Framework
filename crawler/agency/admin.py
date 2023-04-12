@@ -50,6 +50,7 @@ class ReportAdmin(admin.ModelAdmin):
         if obj.picture:
             url = "https://www.mo-ghorbani.ir/static/" + obj.picture.path.split("/")[-1]
             return format_html(f"<a href='{url}'>Link</a>")
+        return None
 
     image_tag.short_description = "Image"
 
@@ -103,7 +104,7 @@ class PageAdminForm(forms.ModelForm):
 @admin.register(Page)
 class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     def get_queryset(self, request):
-        qs = super(PageAdmin, self).get_queryset(request)
+        qs = super().get_queryset(request)
         return qs.filter(agency__status=True)
 
     def get_ordering(self, request):
@@ -154,9 +155,10 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     def get_last_crawl_count(self, instance):
         if instance.last_crawl_count:
             return instance.last_crawl_count
+        return None
 
     # actions
-    def crawl_action(modeladmin, request, queryset):
+    def crawl_action(self, modeladmin, request, queryset):
         from agency.tasks import page_crawl
 
         for page in queryset:
@@ -174,7 +176,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
     crawl_action.short_description = "Crawl page"
 
-    def crawl_action_ignore_repetitive(modeladmin, request, queryset):
+    def crawl_action_ignore_repetitive(self, modeladmin, request, queryset):
         from agency.tasks import page_crawl_repetitive
 
         for page in queryset:
@@ -211,6 +213,7 @@ class LogAdmin(admin.ModelAdmin):
     def source(self, obj):
         if obj.page is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
+        return None
 
     def created_at(self, obj):
         return obj.created_at.strftime("%h. %d %H:%M %p")
@@ -218,10 +221,12 @@ class LogAdmin(admin.ModelAdmin):
     def base(self, obj):
         if obj.url is not None:
             return format_html("<a href='{url}'>Link</a>", url=obj.url)
+        return None
 
     def agency(self, obj):
         if obj.page is not None:
             return obj.page.agency.name
+        return None
 
     def short_description(self, obj):
         return truncatechars(obj.description, 50)

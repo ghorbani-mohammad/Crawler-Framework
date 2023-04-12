@@ -28,7 +28,7 @@ def is_image(ext):
     return True
 
 
-def report_image_path(instance, filename):
+def report_image_path(_instance, filename):
     ext = filename.split(".")[-1].lower()
     if is_image(ext):
         return path.join(
@@ -37,6 +37,7 @@ def report_image_path(instance, filename):
             "images",
             f"{int(timezone.now().timestamp())}.{ext}",
         )
+    return None
 
 
 def get_browser_options():
