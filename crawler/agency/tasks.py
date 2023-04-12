@@ -1,16 +1,20 @@
 from __future__ import absolute_import, unicode_literals
-import redis, json, time, telegram, traceback
+import json
+import time
+import traceback
+import redis
+import telegram
 
 from django.conf import settings
 from django.utils import timezone
-from crawler.celery import crawler
 from celery.utils.log import get_task_logger
-
-from . import utils, serializer, models
-from .crawler_engine import CrawlerEngine
 from notification import utils as not_utils
 from notification import models as not_models
 from reusable.other import only_one_concurrency
+
+from crawler.celery import crawler
+from .crawler_engine import CrawlerEngine
+from . import utils, serializer, models
 
 
 logger = get_task_logger(__name__)
