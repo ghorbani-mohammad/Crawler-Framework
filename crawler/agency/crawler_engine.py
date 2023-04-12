@@ -2,8 +2,8 @@
 import re
 import json
 import time
-import redis
 import traceback
+import redis
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -37,8 +37,8 @@ class CrawlerEngine:
                 desired_capabilities=caps,
                 options=utils.get_browser_options(),
             )
-        except SessionNotCreatedException as e:
-            error = f"{e}\n\n\n{traceback.format_exc()}"
+        except SessionNotCreatedException as error:
+            error = f"{error}\n\n\n{traceback.format_exc()}"
             logger.info(error)
             return
         self.driver.set_page_load_timeout(5)
@@ -62,12 +62,12 @@ class CrawlerEngine:
             f"Crawl **finished** for page: {self.page} with repetitive: {self.repetitive}"
         )
 
-    def register_log(self, description, e, page, url):
+    def register_log(self, description, error, page, url):
         """Custom registering logs. Logs are stored into the db.
 
         Args:
             description (str): extra description of the error
-            e (str): exception
+            error (str): exception
             page (page): which page we have encountered error
             url (url): link of page
         """
@@ -77,7 +77,7 @@ class CrawlerEngine:
             description=description,
             url=url,
             phase=models.Log.CRAWLING,
-            error=e,
+            error=error,
         )
 
     def fetch_links(self):
@@ -87,12 +87,12 @@ class CrawlerEngine:
         data = []
         try:
             self.driver.get(self.page.url)
-        except TimeoutException as e:
-            warning = f"{e}\n\n\n{traceback.format_exc()}"
+        except TimeoutException as error:
+            warning = f"{error}\n\n\n{traceback.format_exc()}"
             logger.warning(warning)
             return
-        except Exception as e:
-            error = f"{e}\n\n\n{traceback.format_exc()}"
+        except Exception as error:
+            error = f"{error}\n\n\n{traceback.format_exc()}"
             logger.error(error)
             return
         time.sleep(self.page.links_sleep)
@@ -154,9 +154,9 @@ class CrawlerEngine:
                         temp_code = utils.CODE.format(code)
                         try:
                             exec(temp_code)
-                        except Exception as e:
+                        except Exception as error:
                             desc = f"tag code, executing code made error, the code was {temp_code}"
-                            self.register_log(desc, e, self.page, data["link"])
+                            self.register_log(desc, error, self.page, data["link"])
                         continue
                     code = ""
                     if "code" in attribute.keys():
