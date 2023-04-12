@@ -132,13 +132,13 @@ class CrawlerEngine:
         if fetch_content:
             try:
                 self.driver.get(data["link"])
-            except TimeoutException as e:
+            except TimeoutException as error:
                 logger.error(
-                    f"error: {e}\nlink: {data['link']}\ntraceback: {traceback.format_exc()}"
+                    f"error: {error}\nlink: {data['link']}\ntraceback: {traceback.format_exc()}"
                 )
                 return
-            except Exception as e:
-                logger.error(f"error: {e}\ntraceback: {traceback.format_exc()}")
+            except Exception as error:
+                logger.error(f"error: {error}\ntraceback: {traceback.format_exc()}")
                 return
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
@@ -171,9 +171,9 @@ class CrawlerEngine:
                         temp_code = utils.CODE.format(code)
                         try:
                             exec(temp_code)
-                        except Exception as e:
+                        except Exception as error:
                             desc = f"tag code, executing code made error, the code was {temp_code}"
-                            self.register_log(desc, e, self.page, data["link"])
+                            self.register_log(desc, error, self.page, data["link"])
                     else:
                         article[key] = element.text
         self.custom_logging(f"crawl_one_page: {article}")
@@ -201,8 +201,7 @@ class CrawlerEngine:
             if not self.repetitive and redis_duplicate_checker.exists(data["link"]):
                 counter -= 1
                 continue
-            else:
-                self.crawl_one_page(data, self.page.fetch_content)
+            self.crawl_one_page(data, self.page.fetch_content)
         self.page.last_crawl = timezone.localtime()
         self.page.last_crawl_count = self.fetched_links_count
         self.page.lock = False
