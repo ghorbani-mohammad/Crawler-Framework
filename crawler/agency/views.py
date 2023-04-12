@@ -239,7 +239,7 @@ def crawl_agency_none_lats_crawl(agency_id):
 
 
 @api_view(["GET"])
-def crawl_agency(request, version, agency_id):
+def crawl_agency(_request, _version, agency_id):
     crawl_agency_none_lats_crawl(agency_id)
     return Response(
         {"status": "200", "message": msg["fa"]["crawl"]["success_crawl_agency"]}
@@ -247,7 +247,7 @@ def crawl_agency(request, version, agency_id):
 
 
 @api_view(["GET"])
-def crawl_memory_reset(request, version):
+def crawl_memory_reset(_request, _version):
     redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
     redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=1)
     redis_duplicate_checker.flushall()
@@ -259,13 +259,13 @@ def crawl_memory_reset(request, version):
 
 
 @api_view(["GET"])
-def crawl_news_memory_list(request, version):
+def crawl_news_memory_list(_request, _version):
     redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
     return Response({"news_keys": redis_news.keys("*")})
 
 
 @api_view(["GET"])
-def crawl_links_memory_list(request, version):
+def crawl_links_memory_list(_request, _version):
     redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=1)
     return Response({"link_keys": redis_duplicate_checker.keys("*")})
 
@@ -286,7 +286,7 @@ def reset_agency_memory(agency_id):
 
 
 @api_view(["GET"])
-def crawl_agency_reset_memory(request, version, agency_id):
+def crawl_agency_reset_memory(_request, _version, agency_id):
     counter_links, counter_news = reset_agency_memory(agency_id)
     return Response(
         {
@@ -297,7 +297,7 @@ def crawl_agency_reset_memory(request, version, agency_id):
 
 
 @api_view(["GET"])
-def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
+def crawl_agency_reset_memory_and_crawl(_request, _version, agency_id):
     crawl_agency_none_lats_crawl(agency_id)
     counter_links, counter_news = reset_agency_memory(agency_id)
     return Response(
@@ -311,12 +311,12 @@ def crawl_agency_reset_memory_and_crawl(request, version, agency_id):
 class ReportView(ReadOnlyModelViewSet):
     pagination_class = PostPagination
 
-    def list(self, request, version):
+    def list(self, _request, _version):
         queryset = Report.objects.all()
         serializer = age_serializer.ReportListSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, version, pk=None):
+    def retrieve(self, _request, _version, pk=None):
         try:
             report = Report.objects.get(pk=pk)
         except Report.DoesNotExist:
@@ -332,7 +332,7 @@ class ReportView(ReadOnlyModelViewSet):
 
 
 class FetchLinks(APIView):
-    def get(self, request, version):
+    def get(self, _request, _version):
         return Response({"count": 0, "links": 0})
         # from agency.crawler_engine import CrawlerEngineV2
         # structure_id = request.GET.get("structure_id", None)
@@ -348,7 +348,7 @@ class FetchLinks(APIView):
 
 
 class FetchContent(APIView):
-    def get(self, request, version):
+    def get(self, _request, _version):
         return Response({"content": ""})
         # from agency.crawler_engine import CrawlerEngineV2
         # structure_id = request.GET.get("structure_id", None)
@@ -362,6 +362,6 @@ class FetchContent(APIView):
 
 
 class TestErrorView(APIView):
-    def get(self, request, version):
+    def get(self, _request, _version):
         logger.error("Exception happened for test purposes!!!")
         raise Exception("Exception happened for test purposes!")

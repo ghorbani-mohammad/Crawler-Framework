@@ -2,9 +2,9 @@ from django.db.models import Sum
 from django.utils import timezone
 from celery.utils.log import get_task_logger
 
-from . import models, utils
 from crawler.celery import crawler
 from agency import models as age_models
+from . import models, utils
 
 logger = get_task_logger(__name__)
 
