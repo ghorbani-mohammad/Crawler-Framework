@@ -81,14 +81,14 @@ def check_agencies():
                 check_must_crawl(page)
 
 
-def register_log(description, e, page, url):
+def register_log(description, error, page, url):
     logger.error(traceback.format_exc())
     models.Log.objects.create(
         page=page,
         description=description,
         url=url,
         phase=models.Log.SENDING,
-        error=e,
+        error=error,
     )
 
 
@@ -127,8 +127,8 @@ def redis_exporter():
             page = pages.filter(pk=data["page_id"], status=True).first()
             if page is None:
                 desc = f"data is: {data}"
-                e = "page is None"
-                register_log(desc, e, page, data["link"])
+                error = "page is None"
+                register_log(desc, error, page, data["link"])
                 redis_news.delete(key)
                 continue
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
@@ -141,12 +141,12 @@ def redis_exporter():
                 )
                 exec(temp_code)
                 time.sleep(4)
-            except Exception as e:
+            except Exception as error:
                 desc = f"code was: {temp_code}"
-                register_log(desc, e, page, data["link"])
-        except Exception as e:
+                register_log(desc, error, page, data["link"])
+        except Exception as error:
             desc = f"key was: {key.decode('utf-8')}"
-            register_log(desc, e, page, data["link"])
+            register_log(desc, error, page, data["link"])
         finally:
             redis_news.delete(key)
 
