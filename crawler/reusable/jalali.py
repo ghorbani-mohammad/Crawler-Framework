@@ -1,3 +1,4 @@
+# pylint: skip-file
 # In The Name Of Allah
 #
 # Jalali date converter
