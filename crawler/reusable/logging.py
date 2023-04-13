@@ -3,9 +3,9 @@ from logging import Handler
 from agency.models import DBLogEntry
 
 
-class DBHandler(Handler, object):
+class DBHandler(Handler):
     def __init__(self):
-        super(DBHandler, self).__init__()
+        super().__init__()
 
     def emit(self, record):
         try:

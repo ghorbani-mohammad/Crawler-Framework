@@ -4,8 +4,8 @@ import sentry_sdk
 from pathlib import Path
 from envparse import env
 from djangoeditorwidgets.config import *
-from sentry_sdk.integrations.django import DjangoIntegration
 from djangoeditorwidgets.config import init_web_editor_config
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 DEBUG = env.bool("DEBUG")
