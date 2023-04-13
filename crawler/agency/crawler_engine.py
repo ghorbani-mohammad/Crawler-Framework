@@ -26,7 +26,8 @@ class CrawlerEngine:
 
         Args:
             page (page): Page object
-            repetitive (bool, optional): If true we will get data from the repetitive links in the page. Defaults to False.
+            repetitive (bool, optional): If true we will get data from the \
+                repetitive links in the page. Defaults to False.
             header (json, optional): Custom header. Defaults to None.
         """
         try:
@@ -134,11 +135,14 @@ class CrawlerEngine:
                 self.driver.get(data["link"])
             except TimeoutException as error:
                 logger.error(
-                    f"error: {error}\nlink: {data['link']}\ntraceback: {traceback.format_exc()}"
+                    "error: %s\nlink: %s\ntraceback: %s",
+                    error,
+                    data["link"],
+                    traceback.format_exc(),
                 )
                 return
             except Exception as error:
-                logger.error(f"error: {error}\ntraceback: {traceback.format_exc()}")
+                logger.error("error: %s\ntraceback: %s", error, traceback.format_exc())
                 return
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
