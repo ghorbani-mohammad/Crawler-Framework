@@ -109,6 +109,7 @@ class Page(BaseModel):
     def get_last_crawl_at(self):
         if self.last_crawl:
             return self.last_crawl.strftime("%h %d %H:%M %p")
+        return None
 
 
 class Report(BaseModel):
@@ -149,6 +150,7 @@ class Report(BaseModel):
     def page_name(self):
         if self.page:
             return self.page.masked_name
+        return None
 
 
 class Log(BaseModel):
