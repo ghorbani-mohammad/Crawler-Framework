@@ -16,7 +16,7 @@ crawler.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
 @setup_logging.connect
-def config_loggers(*args, **kwags):
+def config_loggers(*_args, **_kwags):
     dictConfig(settings.LOGGING)
 
 
