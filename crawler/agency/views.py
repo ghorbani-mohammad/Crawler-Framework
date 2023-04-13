@@ -1,5 +1,5 @@
-import redis
 import logging
+import redis
 
 from django.utils import timezone
 from django.http import JsonResponse
@@ -10,9 +10,9 @@ from rest_framework.decorators import api_view
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.pagination import PageNumberPagination
 
-from crawler.messages import *
 from agency import serializer as age_serializer
 from agency.models import Agency, Page, Report
+from crawler.messages import *
 
 
 logger = logging.getLogger(__name__)
