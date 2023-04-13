@@ -210,7 +210,7 @@ def crawl_page(_request, _version, page_id):
 
 
 @api_view(["GET"])
-def crawl_agency_activeAll(_request, _version):
+def crawl_agency_active_all(_request, _version):
     Agency.objects.update(status=True)
     return Response(
         {
@@ -221,7 +221,7 @@ def crawl_agency_activeAll(_request, _version):
 
 
 @api_view(["GET"])
-def crawl_agency_disableAll(_request, _version):
+def crawl_agency_disable_all(_request, _version):
     Agency.objects.update(status=False)
     return Response(
         {
