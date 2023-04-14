@@ -86,16 +86,14 @@ class CrawlerEngine:
         this function get links based on the specified structure from a page
         """
         data = []
+
         try:
             self.driver.get(self.page.url)
         except TimeoutException as error:
             warning = f"{error}\n\n\n{traceback.format_exc()}"
             logger.warning(warning)
             return
-        except Exception as error:
-            error = f"{error}\n\n\n{traceback.format_exc()}"
-            logger.error(error)
-            return
+
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
             # in debug mode static_root is none
@@ -141,9 +139,7 @@ class CrawlerEngine:
                     traceback.format_exc(),
                 )
                 return
-            except Exception as error:
-                logger.error("error: %s\ntraceback: %s", error, traceback.format_exc())
-                return
+
             time.sleep(self.page.load_sleep)
             doc = BeautifulSoup(self.driver.page_source, "html.parser")
             if meta is not None:
