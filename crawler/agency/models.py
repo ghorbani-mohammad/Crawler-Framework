@@ -3,8 +3,8 @@ from django.utils import timezone
 from django.template.defaultfilters import truncatechars
 
 
-from . import utils
 from reusable.models import BaseModel
+from . import utils
 
 
 class Agency(BaseModel):
