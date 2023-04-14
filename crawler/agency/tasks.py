@@ -143,7 +143,7 @@ def redis_exporter():
                     + "\n"
                     + "bot.send_message(chat_id=page.telegram_channel, text=message)"
                 )
-                exec(temp_code)
+                exec(temp_code)  # pylint: disable=exec-used
                 time.sleep(4)
             except Exception as error:
                 desc = f"code was: {temp_code}"

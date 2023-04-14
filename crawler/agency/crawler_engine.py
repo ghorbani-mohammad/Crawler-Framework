@@ -108,7 +108,7 @@ class CrawlerEngine:
             del attribute["code"]
         elements = doc.findAll(tag, attribute)
         if self.page.structure.news_links_code != "":
-            exec(self.page.structure.news_links_code)
+            exec(self.page.structure.news_links_code)  # pylint: disable=exec-used
         else:
             for element in elements:
                 data.append(element["href"])
@@ -153,7 +153,7 @@ class CrawlerEngine:
                         code = attribute["code"]
                         temp_code = utils.CODE.format(code)
                         try:
-                            exec(temp_code)
+                            exec(temp_code)  # pylint: disable=exec-used
                         except Exception as error:
                             desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, error, self.page, data["link"])
@@ -170,7 +170,7 @@ class CrawlerEngine:
                     if code != "":
                         temp_code = utils.CODE.format(code)
                         try:
-                            exec(temp_code)
+                            exec(temp_code)  # pylint: disable=exec-used
                         except Exception as error:
                             desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, error, self.page, data["link"])
