@@ -311,7 +311,7 @@ def crawl_agency_reset_memory_and_crawl(_request, _version, agency_id):
 class ReportView(ReadOnlyModelViewSet):
     pagination_class = PostPagination
 
-    def list(self, _request, _version):
+    def list(self, *args, _request=None, _version=None, **kwargs):
         queryset = Report.objects.all()
         serializer = age_serializer.ReportListSerializer(queryset, many=True)
         return Response(serializer.data)
