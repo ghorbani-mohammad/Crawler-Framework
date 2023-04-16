@@ -145,10 +145,10 @@ def redis_exporter():
                 )
                 exec(temp_code)  # pylint: disable=exec-used
                 time.sleep(4)
-            except Exception as error:
+            except Exception as error:  # pylint: disable=broad-except
                 desc = f"code was: {temp_code}"
                 register_log(desc, error, page, data["link"])
-        except Exception as error:
+        except Exception as error:  # pylint: disable=broad-except
             desc = f"key was: {key.decode('utf-8')}"
             register_log(desc, error, page, data["link"])
         finally:
