@@ -64,7 +64,7 @@ class AgencyView(viewsets.ModelViewSet):
             }
         return Response(response_data)
 
-    def retrieve(self, _request, _version, pk=None):
+    def retrieve(self, *args, _request=None, _version=None, pk=None, **kwargs):
         try:
             agency = Agency.objects.get(pk=pk)
         except Agency.DoesNotExist:
@@ -127,7 +127,7 @@ class PageView(viewsets.ModelViewSet):
             }
         return Response(response_data)
 
-    def retrieve(self, _request, _version, pk=None):
+    def retrieve(self, *args, _request=None, _version=None, pk=None, **kwargs):
         try:
             page = Page.objects.get(pk=pk)
         except Page.DoesNotExist:
@@ -316,7 +316,7 @@ class ReportView(ReadOnlyModelViewSet):
         serializer = age_serializer.ReportListSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, _request, _version, pk=None):
+    def retrieve(self, *args, _request=None, _version=None, pk=None, **kwargs):
         try:
             report = Report.objects.get(pk=pk)
         except Report.DoesNotExist:
