@@ -154,7 +154,7 @@ class CrawlerEngine:
                         temp_code = utils.CODE.format(code)
                         try:
                             exec(temp_code)  # pylint: disable=exec-used
-                        except Exception as error:
+                        except Exception as error:  # pylint: disable=broad-except
                             desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, error, self.page, data["link"])
                         continue
@@ -171,7 +171,7 @@ class CrawlerEngine:
                         temp_code = utils.CODE.format(code)
                         try:
                             exec(temp_code)  # pylint: disable=exec-used
-                        except Exception as error:
+                        except Exception as error:  # pylint: disable=broad-except
                             desc = f"tag code, executing code made error, the code was {temp_code}"
                             self.register_log(desc, error, self.page, data["link"])
                     else:
