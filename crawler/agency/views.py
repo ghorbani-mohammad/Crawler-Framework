@@ -78,7 +78,7 @@ class AgencyView(viewsets.ModelViewSet):
         data["data"] = serializer.data
         return Response(data)
 
-    def destroy(self, _request, _version, pk=None):
+    def destroy(self, *args, _request=None, _version=None, pk=None, **kwargs):
         try:
             agency = Agency.objects.get(pk=pk)
         except Agency.DoesNotExist:
@@ -165,7 +165,7 @@ class PageView(viewsets.ModelViewSet):
             }
         return Response(response_data)
 
-    def destroy(self, _request, _version, pk=None):
+    def destroy(self, *args, _request=None, _version=None, pk=None, **kwargs):
         try:
             page = Page.objects.get(pk=pk)
         except Page.DoesNotExist:
