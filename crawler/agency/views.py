@@ -41,7 +41,7 @@ class AgencyView(viewsets.ModelViewSet):
             }
         return Response(response_data)
 
-    def update(self, request, _version, pk=None):
+    def update(self, request, *args, _version=None, pk=None, **kwargs):
         try:
             instance = self.queryset.get(pk=pk)
         except:
@@ -141,7 +141,7 @@ class PageView(viewsets.ModelViewSet):
         data["data"] = serializer.data
         return Response(data)
 
-    def update(self, request, _version, pk=None):
+    def update(self, request, *args, _version=None, pk=None, **kwargs):
         try:
             instance = self.queryset.get(pk=pk)
         except:
