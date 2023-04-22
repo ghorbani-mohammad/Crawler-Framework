@@ -1,3 +1,12 @@
+# [1.16.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.15.0...v1.16.0) (2023-04-22)
+
+
+### Features
+
+* add mapping for docker socket ([8e4e7c3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/8e4e7c3c2ef094072e9a5323c29455d733200a71))
+
+
+
 # [1.15.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.14.0...v1.15.0) (2023-04-08)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * add try-except to crawl-one-page ([8f7c760](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/8f7c76077a4a36a4da3bac586c59cf91295f2180))
-
-
-
-# [1.12.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.11.2...v1.12.0) (2022-11-22)
-
-
-### Features
-
-* remove old crawler engine version ([0306c1c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0306c1c8a20e58dcb8bebc5ba97f735c255d9042))
 
 
 
