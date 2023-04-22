@@ -2,7 +2,7 @@
 
 PROJECT_NAME='crawler'
 SERVER_PATH='/var/www/cra/'
-COMPOSE_FILE='docker-compose.yml'
+COMPOSE_FILE='docker-compose-pro.yml'
 NGINX_FILE='crawler_api_nginx.conf'
 
 API_CONTAINER_NAME=${PROJECT_NAME}'_api'
@@ -64,12 +64,12 @@ function dump_db() {
 
 function pull() {
     echo -e "\n ... pull images ... \n"
-    docker-compose -f ${COMPOSE_FILE} pull ${API_CONTAINER_NAME} ${WS_CONTAINER_NAME} ${CELERY_CONTAINER_NAME} ${CELERY_BEAT_CONTAINER_NAME}
+    docker compose -f ${COMPOSE_FILE} pull ${API_CONTAINER_NAME} ${WS_CONTAINER_NAME} ${CELERY_CONTAINER_NAME} ${CELERY_BEAT_CONTAINER_NAME}
 }
 
 function up() {
     echo -e "\n ... up containers ... \n"
-    docker-compose -f ${COMPOSE_FILE} up -d --build
+    docker compose -f ${COMPOSE_FILE} up -d --build
 }
 
 function remove_unused_image() {
@@ -116,7 +116,7 @@ dump_db)
     dump_db
 ;;
 down)
-    docker-compose down
+    docker compose down
 ;;
 *)
     echo "don't know what to do"
