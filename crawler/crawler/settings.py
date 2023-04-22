@@ -9,7 +9,6 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 
 DEBUG = env.bool("DEBUG")
-SERVER_IP = env.str("SERVER_IP")
 SECRET_KEY = env.str("SECRET_KEY")
 BOT_API_KEY = env.str("BOT_API_KEY")
 ALLOWED_HOSTS = ["localhost", "crawler.m-gh.com"]
