@@ -80,7 +80,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
+      - 4442:4442
+      - 4443:4443
+      - 4444:4444
     restart: unless-stopped
