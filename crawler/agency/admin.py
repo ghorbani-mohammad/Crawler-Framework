@@ -244,7 +244,7 @@ class DBLogEntryAdmin(admin.ModelAdmin):
     readonly_fields = ("level", "message")
     list_display = ("pk", "level", "short_message", "time")
 
-    def delete_all_logs(self, _modeladmin, _request, _queryset):
+    def delete_all_logs(self, _request, _queryset):
         DBLogEntry.objects.all().delete()
 
     actions = (delete_all_logs,)
