@@ -176,12 +176,12 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
     crawl_action.short_description = "Crawl page"
 
-    def crawl_action_ignore_repetitive(self, modeladmin, request, queryset):
+    def crawl_and_ignore_repetitive_action(self, request, queryset):
         from agency.tasks import page_crawl_repetitive
 
         for page in queryset:
             page_crawl_repetitive.delay(PageSerializer(page).data)
-        modeladmin.message_user(
+        self.message_user(
             request,
             ngettext(
                 "%d page is in queue to crawl.",
@@ -192,8 +192,8 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    crawl_action_ignore_repetitive.short_description = "Crawl page with repetitive"
-    actions = (crawl_action, crawl_action_ignore_repetitive)
+    crawl_and_ignore_repetitive_action.short_description = "Crawl page with repetitive"
+    actions = (crawl_action, crawl_and_ignore_repetitive_action)
 
 
 @admin.register(Log)
