@@ -1,3 +1,12 @@
+## [1.16.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.0...v1.16.1) (2023-04-25)
+
+
+### Bug Fixes
+
+* **agency:** solve crawl-action issue ([c88cc0d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c88cc0ddcb6e4c76b354ca0243d8087d65e2f536))
+
+
+
 # [1.16.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.15.0...v1.16.0) (2023-04-22)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * bump python version from 3.10 to 3.11 ([b1c2b05](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b1c2b0581302b7866c3f83fbee6187c7c802dfb5))
-
-
-
-## [1.12.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.12.0...v1.12.1) (2022-11-27)
-
-
-### Bug Fixes
-
-* add try-except to crawl-one-page ([8f7c760](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/8f7c76077a4a36a4da3bac586c59cf91295f2180))
 
 
 
