@@ -1,3 +1,12 @@
+## [1.16.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.1...v1.16.2) (2023-04-25)
+
+
+### Bug Fixes
+
+* **agency:** solve crawl-ignore-repetitive-action issue ([3c2fed3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3c2fed35faba494836520f2f762cd607cd42d137))
+
+
+
 ## [1.16.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.0...v1.16.1) (2023-04-25)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * Bump to python 3.11 and fix packages issues ([e415e1c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e415e1c09742f49a99ae488a9ca5156e1edccb33))
-
-
-
-# [1.13.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.12.1...v1.13.0) (2023-01-14)
-
-
-### Features
-
-* bump python version from 3.10 to 3.11 ([b1c2b05](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b1c2b0581302b7866c3f83fbee6187c7c802dfb5))
 
 
 
