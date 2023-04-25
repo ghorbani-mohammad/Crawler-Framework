@@ -1,6 +1,6 @@
 import redis
 
-REDIS_CLIENT = redis.Redis(host="crawler_redis", port=6379, db=5)
+REDIS_CLIENT = redis.Redis(host="crawler-redis", port=6379, db=5)
 
 
 def only_one_concurrency(function=None, key="", timeout=None):

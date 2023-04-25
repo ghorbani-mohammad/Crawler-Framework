@@ -20,7 +20,7 @@ from . import utils, serializer, models
 logger = get_task_logger(__name__)
 MINUTE = 60
 TASKS_TIMEOUT = 10 * MINUTE
-redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
+redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
 
 
 @crawler.task(name="remove_old_reports")
