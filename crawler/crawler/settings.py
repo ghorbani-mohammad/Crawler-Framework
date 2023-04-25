@@ -153,6 +153,8 @@ if (dsn := env.str("SENTRY_DSN", default=None)) is not None:
 
 django.setup()  # we need setup django to have access to apps
 # Logging (Just Email Handler)
+LOG_LEVEL = env("LOG_LEVEL", default="ERROR")
+
 if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
     LOGGING = {
         "version": 1,
@@ -162,7 +164,7 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
         },
         "handlers": {
             "mail_admins": {
-                "level": "ERROR",
+                "level": LOG_LEVEL,
                 "class": "django.utils.log.AdminEmailHandler",
                 "formatter": "simple",
             },
@@ -177,12 +179,12 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
             # all modules
             "": {
                 "handlers": ["mail_admins", "console", "log_db"],
-                "level": "ERROR",
+                "level": LOG_LEVEL,
                 "propagate": False,
             },
             "celery": {
                 "handlers": ["mail_admins", "console", "log_db"],
-                "level": "ERROR",
+                "level": LOG_LEVEL,
                 "propagate": False,
             },
         },
