@@ -1,3 +1,12 @@
+## [1.17.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.1...v1.17.2) (2023-04-25)
+
+
+### Bug Fixes
+
+* **docker:** solve issue related to docker-compose file ([9742162](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/97421620757ff7728e87bae60078c671cd32e1be))
+
+
+
 ## [1.17.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.0...v1.17.1) (2023-04-25)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **agency:** solve crawl-action issue ([c88cc0d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c88cc0ddcb6e4c76b354ca0243d8087d65e2f536))
-
-
-
-# [1.16.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.15.0...v1.16.0) (2023-04-22)
-
-
-### Features
-
-* add mapping for docker socket ([8e4e7c3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/8e4e7c3c2ef094072e9a5323c29455d733200a71))
 
 
 
