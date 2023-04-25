@@ -1,3 +1,12 @@
+## [1.17.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.0...v1.17.1) (2023-04-25)
+
+
+### Bug Fixes
+
+* **ci:** solve issues related to selenium-node ([b306b6e](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b306b6e35adf1905971c079b143ecc57cd116983))
+
+
+
 # [1.17.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.2...v1.17.0) (2023-04-25)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add mapping for docker socket ([8e4e7c3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/8e4e7c3c2ef094072e9a5323c29455d733200a71))
-
-
-
-# [1.15.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.14.0...v1.15.0) (2023-04-08)
-
-
-### Features
-
-* add code linters utilities ([c70ef24](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c70ef24d3dcc891dd4b277b2f247d0466e7576a1))
 
 
 
