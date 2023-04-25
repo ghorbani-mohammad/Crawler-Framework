@@ -1,3 +1,12 @@
+# [1.17.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.2...v1.17.0) (2023-04-25)
+
+
+### Features
+
+* **agency:** add log-level configuration ([4d09563](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4d0956369c08ea046d9827916b118adca7a40dd9))
+
+
+
 ## [1.16.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.1...v1.16.2) (2023-04-25)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add code linters utilities ([c70ef24](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c70ef24d3dcc891dd4b277b2f247d0466e7576a1))
-
-
-
-# [1.14.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.13.0...v1.14.0) (2023-02-01)
-
-
-### Features
-
-* Bump to python 3.11 and fix packages issues ([e415e1c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e415e1c09742f49a99ae488a9ca5156e1edccb33))
 
 
 
