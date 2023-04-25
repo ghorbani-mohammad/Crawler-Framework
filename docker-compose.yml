@@ -68,7 +68,7 @@ services:
     depends_on:
       - crawler_selenium_hub
     environment:
-      - SE_EVENT_BUS_HOST=crawler_selenium_hub
+      - SE_EVENT_BUS_HOST=crawler-selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     shm_size: 2g
@@ -76,7 +76,7 @@ services:
 
   crawler_selenium_hub:
     image: selenium/hub:latest
-    container_name: crawler_selenium_hub
+    container_name: crawler-selenium-hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:

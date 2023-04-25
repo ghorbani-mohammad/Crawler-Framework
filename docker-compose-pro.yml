@@ -1,10 +1,10 @@
+version: '3'
 x-logging: 
   &default-logging
   driver: json-file
   options:
     max-file: '3'
     max-size: 15m
-
 
 services:
   crawler_db:
@@ -16,6 +16,8 @@ services:
     volumes:
       - ./crawler_db_volume/:/var/lib/postgresql/data
     logging: *default-logging
+    networks:
+      - crawler_network
 
   crawler_api:
     container_name: crawler_api
@@ -26,11 +28,12 @@ services:
       - .env
     volumes:
       - ./static:/app/crawler/static
-      - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "127.0.0.1:8205:80"
+      - 127.0.0.1:8205:80
     restart: unless-stopped
     logging: *default-logging
+    networks:
+      - crawler_network
 
   crawler_worker:
     container_name: crawler_worker
@@ -44,9 +47,10 @@ services:
       - crawler_redis
     volumes:
       - .:/app
-      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
     logging: *default-logging
+    networks:
+      - crawler_network
 
   crawler_beat:
     container_name: crawler_beat
@@ -62,6 +66,8 @@ services:
       - .:/app
     restart: unless-stopped
     logging: *default-logging
+    networks:
+      - crawler_network
 
   crawler_redis:
     container_name : crawler_redis
@@ -70,27 +76,29 @@ services:
     volumes:
       - ./redis_volume_pro:/data
     logging: *default-logging
+    networks:
+      - crawler_network
 
   crawler_node_docker:
-    image: selenium/node-docker:latest
+    image: selenium/node-firefox:4.9.0-20230421
     container_name: crawler_node_docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./assets:/opt/selenium/assets
-      - ./config.toml:/opt/bin/config.toml
     depends_on:
       - crawler_selenium_hub
     environment:
-      - SE_EVENT_BUS_HOST=crawler_selenium_hub
+      - SE_EVENT_BUS_HOST=crawler-selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     shm_size: 2g
     restart: unless-stopped
-    logging: *default-logging
+    networks:
+      - crawler_network
 
   crawler_selenium_hub:
-    image: selenium/hub:latest
-    container_name: crawler_selenium_hub
+    image: selenium/hub:4.9.0-20230421
+    container_name: crawler-selenium-hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -98,4 +106,8 @@ services:
       - 4443:4443
       - 4444:4444
     restart: unless-stopped
-    logging: *default-logging
+    networks:
+      - crawler_network
+
+networks:
+  crawler_network:

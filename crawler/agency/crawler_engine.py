@@ -34,7 +34,7 @@ class CrawlerEngine:
             caps = DesiredCapabilities().FIREFOX
             caps["pageLoadStrategy"] = "eager"  # interactive
             self.driver = webdriver.Remote(
-                "http://crawler_selenium_hub:4444",
+                "http://crawler-selenium-hub:4444",
                 desired_capabilities=caps,
                 options=utils.get_browser_options(),
             )
