@@ -59,12 +59,11 @@ services:
       - ./redis_volume_pro:/data
 
   node-crawler_node_docker:
-    image: selenium/node-docker:latest
+    image: selenium/node-firefox:4.9.0-20230421
     container_name: crawler_node_docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./assets:/opt/selenium/assets
-      - ./config.toml:/opt/bin/config.toml
     depends_on:
       - crawler_selenium_hub
     environment:
@@ -75,7 +74,7 @@ services:
     restart: unless-stopped
 
   crawler_selenium_hub:
-    image: selenium/hub:latest
+    image: selenium/hub:4.9.0-20230421
     container_name: crawler-selenium-hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
