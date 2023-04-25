@@ -44,7 +44,7 @@ def reset_locks():
 def send_log_to_telegram(message):
     bot = not_models.TelegramBot.objects.first()
     account = not_models.TelegramAccount.objects.first()
-    not_utils.telegram_bot_sendtext(bot.telegram_token, account.chat_id, message)
+    not_utils.telegram_bot_send_text(bot.telegram_token, account.chat_id, message)
 
 
 def check_must_crawl(page):
