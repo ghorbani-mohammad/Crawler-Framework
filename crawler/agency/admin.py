@@ -158,12 +158,12 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         return None
 
     # actions
-    def crawl_action(self, modeladmin, request, queryset):
+    def crawl_action(self, request, queryset):
         from agency.tasks import page_crawl
 
         for page in queryset:
             page_crawl.delay(PageSerializer(page).data)
-        modeladmin.message_user(
+        self.message_user(
             request,
             ngettext(
                 "%d page is in queue to crawl.",
