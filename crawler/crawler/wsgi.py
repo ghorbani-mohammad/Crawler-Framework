@@ -17,6 +17,6 @@ try:
         f"***** {Report.objects.filter(status='pending').update(status='failed')} update: \
             status=failed *****"
     )
-    redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
+    redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
 except Exception:
     pass

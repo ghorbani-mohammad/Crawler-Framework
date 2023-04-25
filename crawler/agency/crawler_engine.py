@@ -16,8 +16,8 @@ from celery.utils.log import get_task_logger
 from . import models, utils
 
 logger = get_task_logger(__name__)
-redis_news = redis.StrictRedis(host="crawler_redis", port=6379, db=0)
-redis_duplicate_checker = redis.StrictRedis(host="crawler_redis", port=6379, db=1)
+redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
+redis_duplicate_checker = redis.StrictRedis(host="crawler-redis", port=6379, db=1)
 
 
 class CrawlerEngine:

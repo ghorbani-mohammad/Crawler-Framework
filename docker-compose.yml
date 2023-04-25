@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
 
   crawler_redis:
-    container_name : crawler_redis
+    container_name : crawler-redis
     image: redis:6.2
     restart: unless-stopped
     volumes:
