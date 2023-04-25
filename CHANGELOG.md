@@ -1,3 +1,12 @@
+## [1.17.3](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.2...v1.17.3) (2023-04-25)
+
+
+### Bug Fixes
+
+* **django-admin:** solve issue related to action function ([7969dce](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7969dce7f3ceb6f2805fee191a638c4e397683cd))
+
+
+
 ## [1.17.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.1...v1.17.2) (2023-04-25)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **agency:** solve crawl-ignore-repetitive-action issue ([3c2fed3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3c2fed35faba494836520f2f762cd607cd42d137))
-
-
-
-## [1.16.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.0...v1.16.1) (2023-04-25)
-
-
-### Bug Fixes
-
-* **agency:** solve crawl-action issue ([c88cc0d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c88cc0ddcb6e4c76b354ca0243d8087d65e2f536))
 
 
 
