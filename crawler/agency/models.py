@@ -4,6 +4,7 @@ from django.template.defaultfilters import truncatechars
 
 
 from reusable.models import BaseModel
+from .tasks import send_log_to_telegram
 from . import utils
 
 
@@ -177,10 +178,8 @@ class Log(BaseModel):
         return f"(id: {self.pk}\ndesc:\n{self.description}\n\nerror:\n{self.error})"
 
     def save(self, *args, **kwargs):
-        from . import tasks
-
         super().save(*args, **kwargs)
-        tasks.send_log_to_telegram.delay(self.log_message)
+        send_log_to_telegram.delay(self.log_message)
 
 
 class Option(BaseModel):
