@@ -45,7 +45,6 @@ class CrawlerEngine:
         self.driver.set_page_load_timeout(5)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
-        self.header = header
         self.repetitive = repetitive
         self.fetched_links = []
         self.fetched_links_count = 0
