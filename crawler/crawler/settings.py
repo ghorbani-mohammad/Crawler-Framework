@@ -1,7 +1,7 @@
 import os
+from pathlib import Path
 import django
 import sentry_sdk
-from pathlib import Path
 from envparse import env
 from djangoeditorwidgets.config import *
 from djangoeditorwidgets.config import init_web_editor_config
