@@ -104,15 +104,15 @@ def crawl(page):
 @crawler.task(name="page_crawl")
 @only_one_concurrency(key="page_crawl", timeout=TASKS_TIMEOUT)
 def page_crawl(page_structure):
-    CrawlerEngine = importlib.import_module(".crawler_engine.CrawlerEngine")
-    CrawlerEngine(page_structure)
+    crawler_engine = importlib.import_module(".crawler_engine.CrawlerEngine")
+    crawler_engine(page_structure)
 
 
 @crawler.task(name="page_crawl_repetitive")
 @only_one_concurrency(key="page_crawl_repetitive", timeout=TASKS_TIMEOUT)
 def page_crawl_repetitive(page_structure):
-    CrawlerEngine = importlib.import_module(".crawler_engine.CrawlerEngine")
-    CrawlerEngine(page_structure, repetitive=True)
+    crawler_engine = importlib.import_module(".crawler_engine.CrawlerEngine")
+    crawler_engine(page_structure, repetitive=True)
 
 
 @crawler.task(name="redis_exporter")
