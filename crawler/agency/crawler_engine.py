@@ -21,7 +21,7 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler-redis", port=6379, db=
 
 
 class CrawlerEngine:
-    def __init__(self, page, repetitive=False, header=None):
+    def __init__(self, page, repetitive=False):
         """Initialize engine for getting data from a page
 
         Args:
