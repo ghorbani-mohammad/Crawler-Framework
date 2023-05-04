@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import json
 import time
+import importlib
 import traceback
 import redis
 import telegram
@@ -13,8 +14,7 @@ from notification import models as not_models
 from reusable.other import only_one_concurrency
 
 from crawler.celery import crawler
-from .crawler_engine import CrawlerEngine
-from . import utils, serializer, models
+from . import utils, models
 
 
 logger = get_task_logger(__name__)
@@ -97,18 +97,21 @@ def register_log(description, error, page, url):
 
 
 def crawl(page):
+    serializer = importlib.import_module(".serializer")
     page_crawl.delay(serializer.PageSerializer(page).data)
 
 
 @crawler.task(name="page_crawl")
 @only_one_concurrency(key="page_crawl", timeout=TASKS_TIMEOUT)
 def page_crawl(page_structure):
+    CrawlerEngine = importlib.import_module(".crawler_engine.CrawlerEngine")
     CrawlerEngine(page_structure)
 
 
 @crawler.task(name="page_crawl_repetitive")
 @only_one_concurrency(key="page_crawl_repetitive", timeout=TASKS_TIMEOUT)
 def page_crawl_repetitive(page_structure):
+    CrawlerEngine = importlib.import_module(".crawler_engine.CrawlerEngine")
     CrawlerEngine(page_structure, repetitive=True)
 
 
