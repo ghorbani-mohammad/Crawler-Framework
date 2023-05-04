@@ -178,7 +178,7 @@ class Log(BaseModel):
         return f"(id: {self.pk}\ndesc:\n{self.description}\n\nerror:\n{self.error})"
 
     def save(self, *args, **kwargs):
-        send_log_to_telegram = importlib.import_module(".tasks.send_log_to_telegram")
+        send_log_to_telegram = importlib.import_module("agency.tasks.send_log_to_telegram")
         super().save(*args, **kwargs)
         send_log_to_telegram.delay(self.log_message)
 

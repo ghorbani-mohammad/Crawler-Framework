@@ -93,21 +93,21 @@ def register_log(description, error, page, url):
 
 
 def crawl(page):
-    serializer = importlib.import_module(".serializer")
+    serializer = importlib.import_module("agency.serializer")
     page_crawl.delay(serializer.PageSerializer(page).data)
 
 
 @crawler.task(name="page_crawl")
 @only_one_concurrency(key="page_crawl", timeout=TASKS_TIMEOUT)
 def page_crawl(page_structure):
-    crawler_engine = importlib.import_module(".crawler_engine.CrawlerEngine")
+    crawler_engine = importlib.import_module("agency.crawler_engine.CrawlerEngine")
     crawler_engine(page_structure)
 
 
 @crawler.task(name="page_crawl_repetitive")
 @only_one_concurrency(key="page_crawl_repetitive", timeout=TASKS_TIMEOUT)
 def page_crawl_repetitive(page_structure):
-    crawler_engine = importlib.import_module(".crawler_engine.CrawlerEngine")
+    crawler_engine = importlib.import_module("agency.crawler_engine.CrawlerEngine")
     crawler_engine(page_structure, repetitive=True)
 
 
