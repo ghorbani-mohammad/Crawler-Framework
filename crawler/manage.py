@@ -9,9 +9,8 @@ def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crawler.settings")
     execute_from_command_line = None
     try:
-        execute_from_command_line = importlib.import_module(
-            "django.core.management.execute_from_command_line"
-        )
+        management_module = importlib.import_module("django.core.management")
+        execute_from_command_line = management_module.execute_from_command_line
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "
