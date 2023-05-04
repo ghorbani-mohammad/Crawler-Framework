@@ -12,7 +12,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from agency import serializer as age_serializer
 from agency.models import Agency, Page, Report
-from crawler.messages import *
+from crawler.messages import msg
 
 
 logger = logging.getLogger(__name__)
