@@ -1,3 +1,12 @@
+## [1.18.3](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.2...v1.18.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* **agency:** solve relative import issues ([ac8c6c1](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/ac8c6c106b2d290c9f1731daabcb8cc17069bcf7))
+
+
+
 ## [1.18.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.1...v1.18.2) (2023-05-04)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **django-admin:** solve issue related to action function ([7969dce](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7969dce7f3ceb6f2805fee191a638c4e397683cd))
-
-
-
-## [1.17.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.1...v1.17.2) (2023-04-25)
-
-
-### Bug Fixes
-
-* **docker:** solve issue related to docker-compose file ([9742162](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/97421620757ff7728e87bae60078c671cd32e1be))
 
 
 
