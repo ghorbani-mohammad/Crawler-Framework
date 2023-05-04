@@ -1,5 +1,5 @@
-class ReadOnlyAdminDateFieldsMIXIN:
-    def __init__(self) -> None:
+class ReadOnlyAdminDateFieldsMIXIN(object):
+    def __init__(self, *args, **kwargs) -> None:
         self.readonly_fields = None
 
     base_readonly_fields = ("created_at", "updated_at", "deleted_at")
