@@ -1,3 +1,4 @@
+import importlib
 from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import truncatechars
@@ -177,10 +178,9 @@ class Log(BaseModel):
         return f"(id: {self.pk}\ndesc:\n{self.description}\n\nerror:\n{self.error})"
 
     def save(self, *args, **kwargs):
-        from . import tasks
-
+        send_log_to_telegram = importlib.import_module(".tasks.send_log_to_telegram")
         super().save(*args, **kwargs)
-        tasks.send_log_to_telegram.delay(self.log_message)
+        send_log_to_telegram.delay(self.log_message)
 
 
 class Option(BaseModel):
