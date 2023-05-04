@@ -1,3 +1,12 @@
+## [1.18.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.0...v1.18.1) (2023-05-04)
+
+
+### Bug Fixes
+
+* ReadOnlyAdminDateFieldsMIXIN initialization func ([0c159bf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0c159bf2d3350494adf9665d540c8bcba1f1ff60))
+
+
+
 # [1.18.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.3...v1.18.0) (2023-04-25)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **ci:** solve issues related to selenium-node ([b306b6e](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b306b6e35adf1905971c079b143ecc57cd116983))
-
-
-
-# [1.17.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.16.2...v1.17.0) (2023-04-25)
-
-
-### Features
-
-* **agency:** add log-level configuration ([4d09563](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4d0956369c08ea046d9827916b118adca7a40dd9))
 
 
 
