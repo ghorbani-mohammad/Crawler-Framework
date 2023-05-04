@@ -1,3 +1,4 @@
+import importlib
 from prettyjson import PrettyJSONWidget
 from rangefilter.filter import DateTimeRangeFilter
 
@@ -159,7 +160,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
     # actions
     def crawl_action(self, request, queryset):
-        from agency.tasks import page_crawl
+        page_crawl = importlib.import_module("agency.tasks.page_crawl")
 
         for page in queryset:
             page_crawl.delay(PageSerializer(page).data)
@@ -177,7 +178,9 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     crawl_action.short_description = "Crawl page"
 
     def crawl_and_ignore_repetitive_action(self, request, queryset):
-        from agency.tasks import page_crawl_repetitive
+        page_crawl_repetitive = importlib.import_module(
+            "agency.tasks.page_crawl_repetitive"
+        )
 
         for page in queryset:
             page_crawl_repetitive.delay(PageSerializer(page).data)
