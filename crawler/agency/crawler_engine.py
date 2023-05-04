@@ -1,5 +1,5 @@
 # Don't remove re package, this package used dynamically in code
-import re
+import re  # pylint: disable=unused-import
 import json
 import time
 import traceback
