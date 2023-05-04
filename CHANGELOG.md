@@ -1,3 +1,12 @@
+## [1.18.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.1...v1.18.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* ReadOnlyAdminDateFieldsMIXIN properties ([28b0604](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/28b0604184127b85c262c7584d415388507159e6))
+
+
+
 ## [1.18.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.0...v1.18.1) (2023-05-04)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **docker:** solve issue related to docker-compose file ([9742162](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/97421620757ff7728e87bae60078c671cd32e1be))
-
-
-
-## [1.17.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.17.0...v1.17.1) (2023-04-25)
-
-
-### Bug Fixes
-
-* **ci:** solve issues related to selenium-node ([b306b6e](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b306b6e35adf1905971c079b143ecc57cd116983))
 
 
 
