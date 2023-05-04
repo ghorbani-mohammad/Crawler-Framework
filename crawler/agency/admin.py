@@ -160,10 +160,10 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
     # actions
     def crawl_action(self, request, queryset):
-        page_crawl = importlib.import_module("agency.tasks.page_crawl")
+        tasks_module = importlib.import_module("agency.tasks")
 
         for page in queryset:
-            page_crawl.delay(PageSerializer(page).data)
+            tasks_module.page_crawl.delay(PageSerializer(page).data)
         self.message_user(
             request,
             ngettext(
@@ -178,12 +178,10 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     crawl_action.short_description = "Crawl page"
 
     def crawl_and_ignore_repetitive_action(self, request, queryset):
-        page_crawl_repetitive = importlib.import_module(
-            "agency.tasks.page_crawl_repetitive"
-        )
+        tasks_module = importlib.import_module("agency.tasks")
 
         for page in queryset:
-            page_crawl_repetitive.delay(PageSerializer(page).data)
+            tasks_module.page_crawl_repetitive.delay(PageSerializer(page).data)
         self.message_user(
             request,
             ngettext(
