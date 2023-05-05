@@ -99,15 +99,7 @@ class PageView(viewsets.ModelViewSet):
     serializer_class = age_serializer.PageSerializer
 
     def create(self, request, *_args, **_kwargs):
-        try:
-            serializer = self.get_serializer(data=request.data)
-        except:
-            response_data = {
-                "status": "400",
-                "message": msg["fa"]["page"]["failed_page_created"],
-                "data": msg["fa"]["app"]["json_validation_error"],
-            }
-            return Response(response_data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             self.perform_create(serializer)
             response_data = {
