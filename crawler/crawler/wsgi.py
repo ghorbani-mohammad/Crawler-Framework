@@ -18,5 +18,5 @@ try:
             status=failed *****"
     )
     redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
-except Exception:
+except ImportError:
     pass
