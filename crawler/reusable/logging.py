@@ -8,8 +8,5 @@ class DBHandler(Handler):
         super().__init__()
 
     def emit(self, record):
-        try:
-            log_entry = DBLogEntry(level=record.levelname, message=self.format(record))
-            log_entry.save()
-        except:
-            pass
+        log_entry = DBLogEntry(level=record.levelname, message=self.format(record))
+        log_entry.save()
