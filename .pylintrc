@@ -624,5 +624,8 @@ init-import=no
 # builtins.
 redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
 
-
+[MASTER]
 load-plugins=pylint_django
+
+[pylint.plugins]
+django=pylint_django
