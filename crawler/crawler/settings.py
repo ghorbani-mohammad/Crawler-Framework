@@ -3,7 +3,6 @@ from pathlib import Path
 import django
 import sentry_sdk
 from envparse import env
-from djangoeditorwidgets.config import *
 from djangoeditorwidgets.config import init_web_editor_config
 from sentry_sdk.integrations.django import DjangoIntegration
 
