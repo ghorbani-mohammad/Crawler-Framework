@@ -3,6 +3,7 @@ import redis
 
 from django.utils import timezone
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -42,12 +43,7 @@ class AgencyView(viewsets.ModelViewSet):
         return Response(response_data)
 
     def update(self, request, *args, _version=None, pk=None, **kwargs):
-        try:
-            instance = self.queryset.get(pk=pk)
-        except:
-            return Response(
-                {"status": "400", "message": msg["fa"]["agency"]["agency_not_found"]}
-            )
+        instance = get_object_or_404(self.get_queryset(), pk=pk)
         serializer = self.serializer_class(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -142,13 +138,7 @@ class PageView(viewsets.ModelViewSet):
         return Response(data)
 
     def update(self, request, *args, _version=None, pk=None, **kwargs):
-        try:
-            instance = self.queryset.get(pk=pk)
-        except:
-            return Response(
-                {"status": "400", "message": msg["fa"]["page"]["page_not_found"]}
-            )
-
+        instance = get_object_or_404(self.get_queryset(), pk=pk)
         serializer = self.serializer_class(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
