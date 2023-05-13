@@ -99,18 +99,18 @@ def crawl(page: models.Page):
 
 @crawler.task(name="page_crawl")
 @only_one_concurrency(key="page_crawl", timeout=TASKS_TIMEOUT)
-def page_crawl(page_structure):
+def page_crawl(page):
     crawler_module = importlib.import_module("agency.crawler_engine")
     crawler_engine = crawler_module.CrawlerEngine
-    crawler_engine(page_structure)
+    crawler_engine(page)
 
 
 @crawler.task(name="page_crawl_repetitive")
 @only_one_concurrency(key="page_crawl_repetitive", timeout=TASKS_TIMEOUT)
-def page_crawl_repetitive(page_structure):
+def page_crawl_repetitive(page):
     crawler_module = importlib.import_module("agency.crawler_engine")
     crawler_engine = crawler_module.CrawlerEngine
-    crawler_engine(page_structure, repetitive=True)
+    crawler_engine(page, repetitive=True)
 
 
 @crawler.task(name="redis_exporter")
