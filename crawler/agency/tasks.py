@@ -81,7 +81,7 @@ def check_agencies():
                 check_must_crawl(page)
 
 
-def register_log(description, error, page, url):
+def register_log(description: str, error: str, page: models.Page, url: str):
     logger.error(traceback.format_exc())
     models.Log.objects.create(
         page=page,
