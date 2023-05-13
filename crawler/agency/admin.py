@@ -1,4 +1,6 @@
 import importlib
+from typing import Optional
+from datetime import datetime
 from prettyjson import PrettyJSONWidget
 from rangefilter.filter import DateTimeRangeFilter
 
@@ -34,20 +36,20 @@ class ReportAdmin(admin.ModelAdmin):
     readonly_fields = ("log", "page", "status", "picture", "new_links", "fetched_links")
     list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
 
-    def url(self, obj):
+    def url(self, obj: Report) -> str:
         return format_html("<a href='{url}'>Link</a>", url=obj.page.url)
 
-    def agency(self, obj):
+    def agency(self, obj: Report) -> str:
         return obj.page.agency.name
 
-    def started_at(self, obj):
+    def started_at(self, obj: Report) -> datetime:
         return obj.created_at
 
-    def duration(self, obj):
+    def duration(self, obj: Report) -> str:
         elapsed_seconds = round((obj.updated_at - obj.created_at).total_seconds())
         return f"{elapsed_seconds} sec"
 
-    def image_tag(self, obj):
+    def image_tag(self, obj: Report) -> Optional[str]:
         if obj.picture:
             url = "https://www.mo-ghorbani.ir/static/" + obj.picture.path.split("/")[-1]
             return format_html(f"<a href='{url}'>Link</a>")
