@@ -47,7 +47,7 @@ def send_log_to_telegram(message):
     not_utils.telegram_bot_send_text(bot.telegram_token, account.chat_id, message)
 
 
-def check_must_crawl(page):
+def check_must_crawl(page: models.Page):
     now = timezone.localtime()
     reports = models.Report.objects.filter(page=page.id, status=models.Report.PENDING)
     if reports.count() == 0:
@@ -92,7 +92,7 @@ def register_log(description: str, error: str, page: models.Page, url: str):
     )
 
 
-def crawl(page):
+def crawl(page: models.Page):
     serializer = importlib.import_module("agency.serializer")
     page_crawl.delay(serializer.PageSerializer(page).data)
 
