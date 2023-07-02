@@ -124,10 +124,12 @@ def redis_exporter():
         if data is None:
             redis_news.delete(key)
             continue
+
         data = data.decode("utf-8")
         page = None
         try:
             data = json.loads(data)
+
             page = pages.filter(pk=data["page_id"], status=True).first()
             if page is None:
                 desc = f"data is: {data}"
@@ -135,6 +137,7 @@ def redis_exporter():
                 register_log(desc, error, page, data["link"])
                 redis_news.delete(key)
                 continue
+
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
             temp_code = utils.CODE.format(page.message_code)
             try:
@@ -146,14 +149,26 @@ def redis_exporter():
                 exec(temp_code)  # pylint: disable=exec-used
                 time.sleep(4)
             except KeyError as error:
-                desc = f"redis-exporter, key-error, code was: {temp_code}"
-                register_log(desc, error, page, data["link"])
+                register_log(
+                    f"redis-exporter, key-error, code was: {temp_code}",
+                    error,
+                    page,
+                    data["link"],
+                )
             except Exception as error:  # pylint: disable=broad-except
-                desc = f"redis-exporter, general-error, code was: {temp_code}"
-                register_log(desc, error, page, data["link"])
+                register_log(
+                    f"redis-exporter, general-error, code was: {temp_code}",
+                    error,
+                    page,
+                    data["link"],
+                )
         except Exception as error:  # pylint: disable=broad-except
-            desc = f"key was: {key.decode('utf-8')}"
-            register_log(desc, error, page, data["link"])
+            register_log(
+                f"redis-exporter, general-error, key was: {key.decode('utf-8')}",
+                error,
+                page,
+                data["link"],
+            )
         finally:
             redis_news.delete(key)
 
