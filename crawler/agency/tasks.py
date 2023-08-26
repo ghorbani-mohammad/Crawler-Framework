@@ -17,9 +17,10 @@ from crawler.celery import crawler
 from . import utils, models
 
 
-logger = get_task_logger(__name__)
 MINUTE = 60
 TASKS_TIMEOUT = 10 * MINUTE
+
+logger = get_task_logger(__name__)
 redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
 
 
