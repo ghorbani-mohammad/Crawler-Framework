@@ -1,3 +1,12 @@
+# [1.20.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.19.0...v1.20.0) (2023-08-27)
+
+
+### Features
+
+* decrease the time sleep in the redis-exporter ([c864374](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c86437497b41a3ed1bb56cddcdba4db958582ed0))
+
+
+
 # [1.19.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.4...v1.19.0) (2023-07-02)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * ReadOnlyAdminDateFieldsMIXIN properties ([28b0604](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/28b0604184127b85c262c7584d415388507159e6))
-
-
-
-## [1.18.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.0...v1.18.1) (2023-05-04)
-
-
-### Bug Fixes
-
-* ReadOnlyAdminDateFieldsMIXIN initialization func ([0c159bf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0c159bf2d3350494adf9665d540c8bcba1f1ff60))
 
 
 
