@@ -18,7 +18,7 @@ def count_daily_news():
         )["new_links__sum"]
         or 0
     )
-    message = f"Today we saw {new_links} new links in Crawler project"
+    message = f"Today we crawled {new_links} new links in the Crawler project."
     bot = models.TelegramBot.objects.first()
     account = models.TelegramAccount.objects.first()
     utils.telegram_bot_send_text(bot.telegram_token, account.chat_id, message)
