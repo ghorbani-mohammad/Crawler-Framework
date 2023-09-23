@@ -176,5 +176,9 @@ def redis_exporter():
 
 @crawler.task()
 def test_error():
+    """
+    This function is useful to check whether the sentry module, registers
+    errors correctly or not?
+    """
     logger.error("Test Error!")
     raise Exception("hi")
