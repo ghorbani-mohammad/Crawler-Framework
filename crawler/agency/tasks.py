@@ -114,6 +114,17 @@ def page_crawl_repetitive(page):
     crawler_engine(page, repetitive=True)
 
 
+def check_page(pages, data, key):
+    page = pages.filter(pk=data["page_id"], status=True).first()
+    if page is None:
+        desc = f"data is: {data}"
+        error = "page is None"
+        register_log(desc, error, page, data["link"])
+        redis_news.delete(key)
+        return False
+    return page
+
+
 @crawler.task(name="redis_exporter")
 @only_one_concurrency(key="redis_exporter", timeout=TASKS_TIMEOUT)
 def redis_exporter():
@@ -135,12 +146,8 @@ def redis_exporter():
         try:
             data = json.loads(data)
 
-            page = pages.filter(pk=data["page_id"], status=True).first()
-            if page is None:
-                desc = f"data is: {data}"
-                error = "page is None"
-                register_log(desc, error, page, data["link"])
-                redis_news.delete(key)
+            page = check_page(pages, data, key)
+            if not page:
                 continue
 
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
