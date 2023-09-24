@@ -117,6 +117,10 @@ def page_crawl_repetitive(page):
 @crawler.task(name="redis_exporter")
 @only_one_concurrency(key="redis_exporter", timeout=TASKS_TIMEOUT)
 def redis_exporter():
+    """
+    It will be used to extract news in the redis,
+    and send them to the telegram bot.
+    """
     # this bot variable should not removed
     bot = telegram.Bot(token=settings.BOT_API_KEY)  # pylint: disable=unused-variable
     pages = models.Page.objects.all()
