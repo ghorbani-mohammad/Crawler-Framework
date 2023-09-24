@@ -161,26 +161,14 @@ def redis_exporter():
                 exec(temp_code)  # pylint: disable=exec-used
                 time.sleep(3)
             except KeyError as error:
-                register_log(
-                    f"redis-exporter, key-error, code was: {temp_code}",
-                    error,
-                    page,
-                    data["link"],
-                )
+                message = f"redis-exporter, key-error, code was: {temp_code}"
+                register_log(message, error, page, data["link"])
             except Exception as error:  # pylint: disable=broad-except
-                register_log(
-                    f"redis-exporter, general-error, code was: {temp_code}",
-                    error,
-                    page,
-                    data["link"],
-                )
+                message = f"redis-exporter, general-error, code was: {temp_code}"
+                register_log(message, error, page, data["link"])
         except Exception as error:  # pylint: disable=broad-except
-            register_log(
-                f"redis-exporter, general-error, key was: {key.decode('utf-8')}",
-                error,
-                page,
-                data["link"],
-            )
+            message = f"redis-exporter, general-error, key was: {key.decode('utf-8')}"
+            register_log(message, error, page, data["link"])
         finally:
             redis_news.delete(key)
 
