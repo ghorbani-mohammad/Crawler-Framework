@@ -100,6 +100,14 @@ class CrawlerEngine:
         self.report.picture = file_path
         self.report.save()
 
+    def retrieve_links(self):
+        doc = BeautifulSoup(self.driver.page_source, "html.parser")
+        attribute = self.page.structure.news_links_structure
+        tag = attribute.pop("tag")
+        if "code" in attribute.keys():
+            del attribute["code"]
+        return doc.findAll(tag, attribute)
+
     def fetch_links(self):
         """Fetch links from a page.
         this function get links using the specified structure from a page
@@ -114,12 +122,7 @@ class CrawlerEngine:
         if self.page.take_picture:
             self.take_picture()
 
-        doc = BeautifulSoup(self.driver.page_source, "html.parser")
-        attribute = self.page.structure.news_links_structure
-        tag = attribute.pop("tag")
-        if "code" in attribute.keys():
-            del attribute["code"]
-        elements = doc.findAll(tag, attribute)
+        elements = self.retrieve_links()
         self.custom_logging(f"length of elements is: {len(elements)}")
         if self.page.structure.news_links_code != "":
             exec(self.page.structure.news_links_code)  # pylint: disable=exec-used
