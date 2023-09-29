@@ -93,6 +93,12 @@ class CrawlerEngine:
             return False
         return True
 
+    def take_picture(self):
+        # in debug mode static_root is none
+        file_path = f"{settings.STATIC_ROOT or './static'}/{self.report.id}.png"
+        self.driver.get_screenshot_as_file(file_path)
+        self.report.picture = file_path
+        self.report.save()
 
     def fetch_links(self):
         """Fetch links from a page.
@@ -106,11 +112,8 @@ class CrawlerEngine:
 
         time.sleep(self.page.links_sleep)
         if self.page.take_picture:
-            # in debug mode static_root is none
-            file_path = f"{settings.STATIC_ROOT or './static'}/{self.report.id}.png"
-            self.driver.get_screenshot_as_file(file_path)
-            self.report.picture = file_path
-            self.report.save()
+            self.take_picture()
+
         doc = BeautifulSoup(self.driver.page_source, "html.parser")
         attribute = self.page.structure.news_links_structure
         tag = attribute.pop("tag")
