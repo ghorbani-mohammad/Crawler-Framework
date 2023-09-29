@@ -91,6 +91,7 @@ class CrawlerEngine:
         except TimeoutException as error:
             warning = f"{error}\n\n\n{traceback.format_exc()}"
             logger.warning(warning)
+            self.custom_logging(warning)
             return
 
         time.sleep(self.page.links_sleep)
