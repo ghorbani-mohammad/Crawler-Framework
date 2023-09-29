@@ -107,6 +107,7 @@ class CrawlerEngine:
         if "code" in attribute.keys():
             del attribute["code"]
         elements = doc.findAll(tag, attribute)
+        self.custom_logging(f"length of elements is: {len(elements)}")
         if self.page.structure.news_links_code != "":
             exec(self.page.structure.news_links_code)  # pylint: disable=exec-used
         else:
