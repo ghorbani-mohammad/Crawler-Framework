@@ -1,3 +1,12 @@
+# [1.21.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.20.0...v1.21.0) (2023-09-29)
+
+
+### Features
+
+* **crawler:** improves the logging ([026941c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/026941c78024b9061f332c300b3a7a430fc94f4f))
+
+
+
 # [1.20.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.19.0...v1.20.0) (2023-08-27)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **agency:** solve relative import issues ([ac8c6c1](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/ac8c6c106b2d290c9f1731daabcb8cc17069bcf7))
-
-
-
-## [1.18.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.1...v1.18.2) (2023-05-04)
-
-
-### Bug Fixes
-
-* ReadOnlyAdminDateFieldsMIXIN properties ([28b0604](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/28b0604184127b85c262c7584d415388507159e6))
 
 
 
