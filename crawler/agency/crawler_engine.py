@@ -80,18 +80,28 @@ class CrawlerEngine:
             error=error,
         )
 
-    def fetch_links(self):
-        """Fetch links from a page
-        this function get links based on the specified structure from a page
+    def land_page(self) -> bool:
         """
-        data = []
-
+        Lands on the page.
+        """
         try:
             self.driver.get(self.page.url)
         except TimeoutException as error:
-            warning = f"{error}\n\n\n{traceback.format_exc()}"
-            logger.warning(warning)
-            self.custom_logging(warning)
+            error = f"{error}\n\n\n{traceback.format_exc()}"
+            logger.error(error)
+            self.custom_logging(error)
+            return False
+        return True
+
+
+    def fetch_links(self):
+        """Fetch links from a page.
+        this function get links using the specified structure from a page
+        """
+        data = []
+
+        success = self.land_page()
+        if not success:
             return
 
         time.sleep(self.page.links_sleep)
