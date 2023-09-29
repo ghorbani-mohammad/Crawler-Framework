@@ -118,7 +118,7 @@ def check_page(pages, data, key):
     page = pages.filter(pk=data["page_id"], status=True).first()
     if page is None:
         desc = f"data is: {data}"
-        error = "page is None"
+        error = "page is None or is not active"
         register_log(desc, error, page, data["link"])
         redis_news.delete(key)
         return False
