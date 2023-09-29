@@ -1,3 +1,12 @@
+# [1.22.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.21.0...v1.22.0) (2023-09-29)
+
+
+### Features
+
+* **crawler:** improves the logging in fetching links ([e94631c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e94631c257af0095a1d1f39e2ab538bf92e021e0))
+
+
+
 # [1.21.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.20.0...v1.21.0) (2023-09-29)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * solve import issues ([5b77c46](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5b77c466009de8975519d48a30e9f5eda52bd9f5))
-
-
-
-## [1.18.3](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.2...v1.18.3) (2023-05-04)
-
-
-### Bug Fixes
-
-* **agency:** solve relative import issues ([ac8c6c1](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/ac8c6c106b2d290c9f1731daabcb8cc17069bcf7))
 
 
 
