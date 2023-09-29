@@ -1,3 +1,12 @@
+## [1.22.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.22.0...v1.22.1) (2023-09-29)
+
+
+### Bug Fixes
+
+* **exporter:** improves the msg 'page is none' ([f476de7](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/f476de7033270901a10381dafd559de755084aff))
+
+
+
 # [1.22.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.21.0...v1.22.0) (2023-09-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **redis-exporter:** adds explicit error handler ([fc31f09](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/fc31f09969e2e44757d5651ae46f5e658a712824))
-
-
-
-## [1.18.4](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.3...v1.18.4) (2023-05-04)
-
-
-### Bug Fixes
-
-* solve import issues ([5b77c46](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5b77c466009de8975519d48a30e9f5eda52bd9f5))
 
 
 
