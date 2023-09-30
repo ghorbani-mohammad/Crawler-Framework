@@ -1,7 +1,7 @@
-## The Most Sophisticated Crawler Framework
+## Websites Crawler Framework
 
 ### Story Of This Project
-There are sometimes that we want to be first person that get notice about new posts in a website. For example when you're looking for a job, you want to be first person that apply to the new jobs and by this way you want to increase your chance in the hiring process. Or you want to get new articles from your favorite websites daily. This framework is designed specifically for these purposes.
+There are sometimes that we want to be first person that get notice about new posts in a website. For example when you're looking for a house, you want to be first person that apply to its advertisement and by this way you want to increase your chance in getting it. Besides, sometime you may want to get new articles from your favorite websites on a daily. This framework is designed specifically for these goals.
 
 ---
 ### How To Setup?
