@@ -107,6 +107,13 @@ class CrawlerEngine:
         if "code" in attribute.keys():
             del attribute["code"]
         return doc.findAll(tag, attribute)
+    
+    def post_crawling(self, data):
+        self.custom_logging(f"Fetched data are: {data}")
+        self.fetched_links = data
+        self.fetched_links_count = len(data)
+        self.report.fetched_links = self.fetched_links_count
+        self.report.save()
 
     def fetch_links(self):
         """Fetch links from a page.
@@ -119,21 +126,20 @@ class CrawlerEngine:
             return
 
         time.sleep(self.page.links_sleep)
+
         if self.page.take_picture:
             self.take_picture()
 
         elements = self.retrieve_links()
         self.custom_logging(f"length of elements is: {len(elements)}")
+
         if self.page.structure.news_links_code != "":
             exec(self.page.structure.news_links_code)  # pylint: disable=exec-used
         else:
             for element in elements:
                 data.append(element["href"])
-        self.custom_logging(f"Fetched data are: {data}")
-        self.fetched_links = data
-        self.fetched_links_count = len(data)
-        self.report.fetched_links = self.fetched_links_count
-        self.report.save()
+
+        self.post_crawling(data)
 
     def crawl_one_page(self, data, fetch_content):
         """Get data from crawled link based on defined structure
