@@ -93,20 +93,24 @@ class CrawlerEngine:
             return False
         return True
 
-    def take_picture(self):
+    def taking_picture(self):
+        if not self.page.take_picture:
+            return
         # in debug mode static_root is none
         file_path = f"{settings.STATIC_ROOT or './static'}/{self.report.id}.png"
         self.driver.get_screenshot_as_file(file_path)
         self.report.picture = file_path
         self.report.save()
 
-    def retrieve_links(self):
+    def get_elements(self):
         doc = BeautifulSoup(self.driver.page_source, "html.parser")
         attribute = self.page.structure.news_links_structure
         tag = attribute.pop("tag")
         if "code" in attribute.keys():
             del attribute["code"]
-        return doc.findAll(tag, attribute)
+        elements = doc.findAll(tag, attribute)
+        self.custom_logging(f"length of elements is: {len(elements)}")
+        return elements
     
     def post_crawling(self, data):
         self.custom_logging(f"Fetched data are: {data}")
@@ -115,30 +119,28 @@ class CrawlerEngine:
         self.report.fetched_links = self.fetched_links_count
         self.report.save()
 
+    def get_links(self, elements):
+        data = []
+        if self.page.structure.news_links_code != "":
+            exec(self.page.structure.news_links_code)  # pylint: disable=exec-used
+        else:
+            for element in elements:
+                data.append(element["href"])
+        return data
+
     def fetch_links(self):
         """Fetch links from a page.
         this function get links using the specified structure from a page
         """
-        data = []
-
         success = self.land_page()
         if not success:
             return
 
         time.sleep(self.page.links_sleep)
 
-        if self.page.take_picture:
-            self.take_picture()
-
-        elements = self.retrieve_links()
-        self.custom_logging(f"length of elements is: {len(elements)}")
-
-        if self.page.structure.news_links_code != "":
-            exec(self.page.structure.news_links_code)  # pylint: disable=exec-used
-        else:
-            for element in elements:
-                data.append(element["href"])
-
+        self.taking_picture()
+        elements = self.get_elements()
+        data = self.get_links(elements)
         self.post_crawling(data)
 
     def crawl_one_page(self, data, fetch_content):
