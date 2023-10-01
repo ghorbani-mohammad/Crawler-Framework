@@ -1,6 +1,6 @@
 ## Websites Crawler Framework
 
-### Story Of This Project
+### Story of This Project
 There are sometimes that we want to be first person that get notice about new posts in a website. For example when you're looking for a house, you want to be first person that apply to its advertisement and by this way you want to increase your chance in getting it. Besides, sometime you may want to get new articles from your favorite websites on a daily. This framework is designed specifically for these goals.
 
 ---
@@ -20,8 +20,8 @@ You can setup the project using docker-compose command.
 - You can use provided shell commands to easily manage the project (checkout mng-api.sh file)
 
 ---
-### Crawler Framework
-This is a framework for crawling data from websites. You define a website, then the pages of that website and in the last step you define the structure of those pages so the crawler engine can retrieve data from them. In this framework we have 3 main entities:
+### The Ingredients of This Project
+This is a framework for crawling data from websites. You define a website, then the pages of that website and in the last step you define the structure of those pages so the crawler engine can retrieve data from them. In this framework we have three main entities:
   - Agency
   - Page
   - Structure
@@ -29,7 +29,7 @@ This is a framework for crawling data from websites. You define a website, then 
 Agencies are the websites, like CNN and BBC. First step is defining agencies.
 
 #### Page
-Pages, are different pages of an agency or a website. For example CNN website has political, entertainment and etc pages in it. After defining your agencies you can specify pages of that website which you want crawl data.
+Pages, are different pages of an agency or a website. For instance, the CNN website has political, entertainment and etc pages in it. After defining your agencies you can specify pages of that website which you want crawl data from them.
 
 #### Structure
 Structures define how crawler engine should gather data from a page. When you defining a page, you should specify its structure.
@@ -41,7 +41,7 @@ First one is news_links_structure. This field specifies how we should get links 
 ---
 ### Guest User
 Guest user have read-only access to some models, So using that, you can login into Django admin and 
-see what potentials can have this project. By login into Django admin you can see I have defined a bunch
+see what potentials can have this project. By log in into the Django admin, you can see I have defined a bunch
 of websites that I get their new posts periodically. These are some examples that help you to create your
 own crawler.
 
