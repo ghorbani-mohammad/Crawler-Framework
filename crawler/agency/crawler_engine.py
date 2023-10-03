@@ -28,21 +28,13 @@ class CrawlerEngine:
             page (page): Page object
             repetitive (bool, optional): If true we will get data from the \
                 repetitive links in the page. Defaults to False.
-            header (json, optional): Custom header. Defaults to None.
         """
-        self.log_messages = ""
-        self.fetched_links = []
-        self.fetched_links_count = 0
-        self.initialize_driver()
-        self.driver.set_page_load_timeout(5)
-        self.driver.header_overrides = utils.DEFAULT_HEADER
-        self.repetitive = repetitive
-        self.page = models.Page.objects.get(id=page["id"])
-        self.page.lock = True
-        self.page.save()
-        self.report = models.Report.objects.create(
-            page_id=self.page.id, status=models.Report.PENDING
-        )
+        self.before_initialize_driver(repetitive)
+        success = self.initialize_driver()
+        if not success:
+            return
+        self.after_initialize_driver(page['id'])
+
         self.custom_logging(
             f"Crawl **started** for page: {self.page} with repetitive: {self.repetitive}"
         )
@@ -51,10 +43,16 @@ class CrawlerEngine:
             f"Crawl **finished** for page: {self.page} with repetitive: {self.repetitive}"
         )
 
-    def initialize_driver(self):
+    def before_initialize_driver(self, repetitive):
+        self.log_messages = ""
+        self.fetched_links = []
+        self.fetched_links_count = 0
+        self.repetitive = repetitive
+
+    def initialize_driver(self)->bool:
+        caps = DesiredCapabilities().FIREFOX
+        caps["pageLoadStrategy"] = "eager"  # interactive
         try:
-            caps = DesiredCapabilities().FIREFOX
-            caps["pageLoadStrategy"] = "eager"  # interactive
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
                 desired_capabilities=caps,
@@ -63,7 +61,18 @@ class CrawlerEngine:
         except SessionNotCreatedException as error:
             error = f"{error}\n\n\n{traceback.format_exc()}"
             self.custom_logging(error)
-            return
+            return False
+        self.driver.set_page_load_timeout(5)
+        self.driver.header_overrides = utils.DEFAULT_HEADER
+        return True
+
+    def after_initialize_driver(self, page_id):
+        self.page = models.Page.objects.get(id=page_id)
+        self.page.lock = True
+        self.page.save()
+        self.report = models.Report.objects.create(
+            page=self.page, status=models.Report.PENDING
+        )
 
     def register_log(self, description, error, page, url):
         """Custom registering logs. Logs are stored into the db.
