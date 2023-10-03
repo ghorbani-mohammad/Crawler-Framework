@@ -30,24 +30,13 @@ class CrawlerEngine:
                 repetitive links in the page. Defaults to False.
             header (json, optional): Custom header. Defaults to None.
         """
-        try:
-            caps = DesiredCapabilities().FIREFOX
-            caps["pageLoadStrategy"] = "eager"  # interactive
-            self.driver = webdriver.Remote(
-                "http://crawler-selenium-hub:4444",
-                desired_capabilities=caps,
-                options=utils.get_browser_options(),
-            )
-        except SessionNotCreatedException as error:
-            error = f"{error}\n\n\n{traceback.format_exc()}"
-            logger.info(error)
-            return
-        self.driver.set_page_load_timeout(5)
-        self.driver.header_overrides = utils.DEFAULT_HEADER
         self.log_messages = ""
-        self.repetitive = repetitive
         self.fetched_links = []
         self.fetched_links_count = 0
+        self.initialize_driver()
+        self.driver.set_page_load_timeout(5)
+        self.driver.header_overrides = utils.DEFAULT_HEADER
+        self.repetitive = repetitive
         self.page = models.Page.objects.get(id=page["id"])
         self.page.lock = True
         self.page.save()
@@ -61,6 +50,20 @@ class CrawlerEngine:
         self.custom_logging(
             f"Crawl **finished** for page: {self.page} with repetitive: {self.repetitive}"
         )
+
+    def initialize_driver(self):
+        try:
+            caps = DesiredCapabilities().FIREFOX
+            caps["pageLoadStrategy"] = "eager"  # interactive
+            self.driver = webdriver.Remote(
+                "http://crawler-selenium-hub:4444",
+                desired_capabilities=caps,
+                options=utils.get_browser_options(),
+            )
+        except SessionNotCreatedException as error:
+            error = f"{error}\n\n\n{traceback.format_exc()}"
+            self.custom_logging(error)
+            return
 
     def register_log(self, description, error, page, url):
         """Custom registering logs. Logs are stored into the db.
@@ -218,8 +221,8 @@ class CrawlerEngine:
 
     def check_data(self):
         """Here we check each link that we crawled in the fetch-links function.
-        We call crawl-one-page on each link
-        We count not duplicate links
+        We call crawl-one-page on each link.
+        We only count not-duplicate links.
         """
         counter = self.fetched_links_count
         for data in self.fetched_links:
