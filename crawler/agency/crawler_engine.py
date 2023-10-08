@@ -22,7 +22,7 @@ redis_duplicate_checker = redis.StrictRedis(host="crawler-redis", port=6379, db=
 
 class CrawlerEngine:
     def __init__(self, page: dict, repetitive: bool = False):
-        """Initialize engine for getting data from a page
+        """Initialize engine for getting data from a page.
 
         Args:
             page (page): Page object
@@ -59,6 +59,10 @@ class CrawlerEngine:
                 options=utils.get_browser_options(),
             )
         except SessionNotCreatedException as error:
+            error = f"Session not created,\n\n{error}\n\n\n{traceback.format_exc()}"
+            self.custom_logging(error)
+            return False
+        except Exception as error:
             error = f"{error}\n\n\n{traceback.format_exc()}"
             self.custom_logging(error)
             return False
