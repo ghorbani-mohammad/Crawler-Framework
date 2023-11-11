@@ -1,3 +1,12 @@
+# [1.23.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.22.1...v1.23.0) (2023-11-11)
+
+
+### Features
+
+* **ci:** bump up linter packages version ([131b329](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/131b3292a4c8694ce23fd070d88c769dfe6054bb))
+
+
+
 ## [1.22.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.22.0...v1.22.1) (2023-09-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * decrease the time sleep in the redis-exporter ([c864374](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c86437497b41a3ed1bb56cddcdba4db958582ed0))
-
-
-
-# [1.19.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.18.4...v1.19.0) (2023-07-02)
-
-
-### Features
-
-* **redis-exporter:** adds explicit error handler ([fc31f09](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/fc31f09969e2e44757d5651ae46f5e658a712824))
 
 
 
