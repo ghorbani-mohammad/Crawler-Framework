@@ -1,5 +1,5 @@
-beautifulsoup4
-celery
+beautifulsoup4==4.12.2
+celery==5.3.5
 django-admin-rangefilter
 django-clear-cache
 django-editor-widgets==4.1
