@@ -67,7 +67,7 @@ envparse==0.2.0
     # via -r requirements.in
 future==0.18.2
     # via python-telegram-bot
-gunicorn==20.0.4
+gunicorn==21.2.0
     # via -r requirements.in
 idna==2.10
     # via requests
@@ -77,6 +77,8 @@ jedi==0.18.1
     # via ipython
 kombu==5.3.3
     # via celery
+packaging==23.2
+    # via gunicorn
 parso==0.8.2
     # via jedi
 pexpect==4.8.0
