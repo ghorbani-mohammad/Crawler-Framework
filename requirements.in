@@ -14,7 +14,7 @@ pillow
 psycopg2
 python-dateutil
 python-telegram-bot
-redis
+redis==5.0.1
 requests>=2.28.1
 selenium==4.15.2
 selenium-wire==5.1.0
