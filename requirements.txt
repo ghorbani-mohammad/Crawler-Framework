@@ -8,28 +8,18 @@ amqp==5.1.1
     # via kombu
 asgiref==3.5.2
     # via django
-attrs==23.1.0
-    # via
-    #   outcome
-    #   trio
 backcall==0.2.0
     # via ipython
 beautifulsoup4==4.12.2
     # via -r requirements.in
 billiard==4.2.0
     # via celery
-blinker==1.7.0
-    # via selenium-wire
-brotli==1.1.0
-    # via selenium-wire
 celery==5.3.5
     # via -r requirements.in
 certifi==2021.10.8
     # via
     #   python-telegram-bot
     #   requests
-    #   selenium
-    #   selenium-wire
     #   sentry-sdk
 cffi==1.15.0
     # via cryptography
@@ -48,9 +38,7 @@ click-plugins==1.1.1
 click-repl==0.2.0
     # via celery
 cryptography==36.0.0
-    # via
-    #   pyopenssl
-    #   python-telegram-bot
+    # via python-telegram-bot
 decorator==5.1.0
     # via
     #   ipython
@@ -81,30 +69,14 @@ future==0.18.2
     # via python-telegram-bot
 gunicorn==21.2.0
     # via -r requirements.in
-h11==0.14.0
-    # via wsproto
-h2==4.1.0
-    # via selenium-wire
-hpack==4.0.0
-    # via h2
-hyperframe==6.0.1
-    # via
-    #   h2
-    #   selenium-wire
 idna==2.10
-    # via
-    #   requests
-    #   trio
+    # via requests
 ipython==7.19.0
     # via -r requirements.in
 jedi==0.18.1
     # via ipython
-kaitaistruct==0.10
-    # via selenium-wire
 kombu==5.3.3
     # via celery
-outcome==1.3.0.post0
-    # via trio
 packaging==23.2
     # via gunicorn
 parso==0.8.2
@@ -125,20 +97,10 @@ psycopg2==2.9.5
     # via -r requirements.in
 ptyprocess==0.7.0
     # via pexpect
-pyasn1==0.5.0
-    # via selenium-wire
 pycparser==2.21
     # via cffi
 pygments==2.10.0
     # via ipython
-pyopenssl==22.0.0
-    # via selenium-wire
-pyparsing==3.1.1
-    # via selenium-wire
-pysocks==1.7.1
-    # via
-    #   selenium-wire
-    #   urllib3
 python-dateutil==2.8.2
     # via
     #   -r requirements.in
@@ -153,11 +115,11 @@ requests==2.28.1
     # via
     #   -r requirements.in
     #   django-editor-widgets
-selenium==4.15.2
+selenium==3.141.0
     # via
     #   -r requirements.in
     #   selenium-wire
-selenium-wire==5.1.0
+selenium-wire==1.0.11
     # via -r requirements.in
 sentry-sdk==1.9.10
     # via -r requirements.in
@@ -167,10 +129,6 @@ six==1.16.0
     #   django-prettyjson
     #   python-dateutil
     #   validators
-sniffio==1.3.0
-    # via trio
-sortedcontainers==2.4.0
-    # via trio
 soupsieve==2.3.1
     # via beautifulsoup4
 sqlparse==0.4.2
@@ -181,15 +139,9 @@ tornado==6.1
     # via python-telegram-bot
 traitlets==5.1.1
     # via ipython
-trio==0.23.1
-    # via
-    #   selenium
-    #   trio-websocket
-trio-websocket==0.11.1
-    # via selenium
 tzdata==2023.3
     # via celery
-urllib3[socks]==1.26.12
+urllib3==1.26.12
     # via
     #   requests
     #   selenium
@@ -203,12 +155,6 @@ vine==5.1.0
     #   kombu
 wcwidth==0.2.5
     # via prompt-toolkit
-wsproto==1.2.0
-    # via
-    #   selenium-wire
-    #   trio-websocket
-zstandard==0.22.0
-    # via selenium-wire
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

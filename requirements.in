@@ -1,5 +1,5 @@
-beautifulsoup4==4.12.2
-celery==5.3.5
+beautifulsoup4
+celery
 django-admin-rangefilter
 django-clear-cache
 django-editor-widgets==4.1
@@ -8,15 +8,15 @@ django-prettyjson
 django==4.1
 djangorestframework==3.13.1
 envparse
-gunicorn==21.2.0
+gunicorn
 ipython
 pillow
 psycopg2
 python-dateutil
 python-telegram-bot
-redis==5.0.1
+redis
 requests>=2.28.1
-selenium==4.15.2
-selenium-wire==5.1.0
+selenium
+selenium-wire
 sentry-sdk
 validators
