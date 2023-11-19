@@ -50,7 +50,6 @@ class CrawlerEngine:
         self.repetitive = repetitive
 
     def initialize_driver(self)->bool:
-        print("initialize started")
         caps = DesiredCapabilities.FIREFOX
         caps["pageLoadStrategy"] = "eager" # interactive
         try:
@@ -69,7 +68,6 @@ class CrawlerEngine:
             print(error)
             self.custom_logging(error)
             return False
-        print("browser initialized")
         self.driver.set_page_load_timeout(5)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         return True
