@@ -6,7 +6,6 @@ import traceback
 import redis
 from bs4 import BeautifulSoup
 from seleniumwire import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import SessionNotCreatedException, TimeoutException
 
 from django.conf import settings
@@ -50,6 +49,7 @@ class CrawlerEngine:
         self.repetitive = repetitive
 
     def initialize_driver(self)->bool:
+        print("initialize started")
         try:
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
@@ -63,6 +63,7 @@ class CrawlerEngine:
             error = f"{error}\n\n\n{traceback.format_exc()}"
             self.custom_logging(error)
             return False
+        print("browser initialized")
         self.driver.set_page_load_timeout(5)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         return True
