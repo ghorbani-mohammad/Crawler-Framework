@@ -2,7 +2,7 @@ from os import path
 
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 CODE = """
 {0}
@@ -41,7 +41,6 @@ def report_image_path(_instance, filename):
 
 
 def get_browser_options():
-    from selenium.webdriver.firefox.options import Options as FirefoxOptions
     options = FirefoxOptions()
     options.page_load_strategy = 'eager'
     options.add_argument("--disable-gpu")
