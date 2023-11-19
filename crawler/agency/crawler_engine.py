@@ -56,10 +56,12 @@ class CrawlerEngine:
             )
         except SessionNotCreatedException as error:
             error = f"Session not created,\n\n{error}\n\n\n{traceback.format_exc()}"
+            print(error)
             self.custom_logging(error)
             return False
         except Exception as error:
             error = f"{error}\n\n\n{traceback.format_exc()}"
+            print(error)
             self.custom_logging(error)
             return False
         print("browser initialized")
