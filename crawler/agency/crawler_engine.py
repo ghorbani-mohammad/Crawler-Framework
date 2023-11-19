@@ -52,8 +52,7 @@ class CrawlerEngine:
         print("initialize started")
         try:
             self.driver = webdriver.Remote(
-                "http://crawler-selenium-hub:4444",
-                options=utils.get_browser_options(),
+                "http://crawler-selenium-hub:4444", options=utils.get_browser_options(),
             )
         except SessionNotCreatedException as error:
             error = f"Session not created,\n\n{error}\n\n\n{traceback.format_exc()}"
