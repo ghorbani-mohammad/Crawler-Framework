@@ -1,3 +1,12 @@
+## [1.23.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.23.0...v1.23.1) (2023-11-19)
+
+
+### Bug Fixes
+
+* **engine:** solve the issue of options ([7d546c1](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7d546c1569b536cd3591862658d04012e8c2b906))
+
+
+
 # [1.23.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.22.1...v1.23.0) (2023-11-11)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **crawler:** improves the logging ([026941c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/026941c78024b9061f332c300b3a7a430fc94f4f))
-
-
-
-# [1.20.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.19.0...v1.20.0) (2023-08-27)
-
-
-### Features
-
-* decrease the time sleep in the redis-exporter ([c864374](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c86437497b41a3ed1bb56cddcdba4db958582ed0))
 
 
 
