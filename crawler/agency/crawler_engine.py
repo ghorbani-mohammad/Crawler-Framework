@@ -50,12 +50,9 @@ class CrawlerEngine:
         self.repetitive = repetitive
 
     def initialize_driver(self)->bool:
-        caps = DesiredCapabilities().FIREFOX
-        caps["pageLoadStrategy"] = "eager"  # interactive
         try:
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
-                desired_capabilities=caps,
                 options=utils.get_browser_options(),
             )
         except SessionNotCreatedException as error:
