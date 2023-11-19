@@ -59,7 +59,7 @@ services:
       - ./redis_volume_pro:/data
 
   node-crawler_node_docker:
-    image: selenium/node-firefox:4.9.0-20230421
+    image: selenium/node-firefox:4.15.0-20231110
     container_name: crawler_node_docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -74,7 +74,7 @@ services:
     restart: unless-stopped
 
   crawler_selenium_hub:
-    image: selenium/hub:4.9.0-20230421
+    image: selenium/hub:4.15.0-20231110
     container_name: crawler-selenium-hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
