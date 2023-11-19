@@ -41,7 +41,9 @@ def report_image_path(_instance, filename):
 
 
 def get_browser_options():
-    options = Options()
+    from selenium.webdriver.firefox.options import Options as FirefoxOptions
+    options = FirefoxOptions()
+    options.page_load_strategy = 'eager'
     options.add_argument("--disable-gpu")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--enable-automation")
