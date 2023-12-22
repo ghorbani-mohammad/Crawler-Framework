@@ -28,6 +28,7 @@ services:
       - .env
     volumes:
       - ./static:/app/crawler/static
+      - ./logs:/app/crawler/logs
     ports:
       - 127.0.0.1:8205:80
     restart: unless-stopped
@@ -47,6 +48,7 @@ services:
       - crawler_redis
     volumes:
       - .:/app
+      - ./logs:/app/crawler/logs
     restart: unless-stopped
     logging: *default-logging
     networks:
