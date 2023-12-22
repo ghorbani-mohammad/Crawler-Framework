@@ -103,7 +103,7 @@ class CrawlerEngine:
         try:
             self.driver.get(self.page.url)
         except TimeoutException as error:
-            error = f"{error}\n\n\n{traceback.format_exc()}"
+            error = f"{error}\n{traceback.format_exc()}"
             logger.error(error)
             self.custom_logging(error)
             return False
