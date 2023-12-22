@@ -1,3 +1,12 @@
+# [1.24.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.23.2...v1.24.0) (2023-12-22)
+
+
+### Features
+
+* **logging:** improves logging ([9206664](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/920666408c989e19d0d65a801a0f0204e9820a2d))
+
+
+
 ## [1.23.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.23.1...v1.23.2) (2023-11-19)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **exporter:** improves the msg 'page is none' ([f476de7](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/f476de7033270901a10381dafd559de755084aff))
-
-
-
-# [1.22.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.21.0...v1.22.0) (2023-09-29)
-
-
-### Features
-
-* **crawler:** improves the logging in fetching links ([e94631c](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e94631c257af0095a1d1f39e2ab538bf92e021e0))
 
 
 
