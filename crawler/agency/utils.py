@@ -47,4 +47,8 @@ def get_browser_options():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--enable-automation")
     options.add_argument("--no-sandbox")
+
+    # Disable images
+    options.set_preference("permissions.default.image", 2)
+
     return options
