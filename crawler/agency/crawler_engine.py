@@ -33,7 +33,7 @@ class CrawlerEngine:
         success = self.initialize_driver()
         if not success:
             return
-        self.after_initialize_driver(page['id'])
+        self.after_initialize_driver(page["id"])
 
         self.custom_logging(
             f"Crawl **started** for page: {self.page} with repetitive: {self.repetitive}"
@@ -49,9 +49,9 @@ class CrawlerEngine:
         self.fetched_links_count = 0
         self.repetitive = repetitive
 
-    def initialize_driver(self)->bool:
+    def initialize_driver(self) -> bool:
         caps = DesiredCapabilities.FIREFOX
-        caps["pageLoadStrategy"] = "eager" # interactive
+        caps["pageLoadStrategy"] = "eager"  # interactive
         try:
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
@@ -129,7 +129,7 @@ class CrawlerEngine:
         elements = doc.findAll(tag, attribute)
         self.custom_logging(f"length of elements is: {len(elements)}")
         return elements
-    
+
     def post_crawling(self, data):
         self.custom_logging(f"Fetched data are: {data}")
         self.fetched_links = data
