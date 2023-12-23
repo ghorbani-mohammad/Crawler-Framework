@@ -65,7 +65,7 @@ class CrawlerEngine:
         except Exception:
             self.logging(traceback.format_exc())
             return False
-        self.driver.set_page_load_timeout(5)
+        self.driver.set_page_load_timeout(self.page.agency.load_timeout)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         return True
 
@@ -171,10 +171,9 @@ class CrawlerEngine:
         if fetch_content:
             try:
                 self.driver.get(data["link"])
-            except TimeoutException as error:
+            except TimeoutException:
                 logger.error(
-                    "error: %s\nlink: %s\ntraceback: %s",
-                    error,
+                    "link: %s\ntraceback: %s",
                     data["link"],
                     traceback.format_exc(),
                 )
