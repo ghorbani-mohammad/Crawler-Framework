@@ -69,6 +69,7 @@ class AgencyAdmin(admin.ModelAdmin):
         "website",
         "status",
         "link_keep_days",
+        "load_timeout",
         "pages_count",
         "created_at",
     )
