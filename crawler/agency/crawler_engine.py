@@ -65,12 +65,12 @@ class CrawlerEngine:
         except Exception:
             self.logging(traceback.format_exc())
             return False
-        self.driver.set_page_load_timeout(self.page.agency.load_timeout)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         return True
 
     def after_initialize_driver(self, page_id):
         self.page = models.Page.objects.get(id=page_id)
+        self.driver.set_page_load_timeout(self.page.agency.load_timeout)
         self.page.lock = True
         self.page.save()
         self.report = models.Report.objects.create(
