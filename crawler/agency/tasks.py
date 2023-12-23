@@ -85,7 +85,7 @@ def check_agencies():
 
 
 def register_log(description: str, error: str, page: models.Page, url: str):
-    logger.error(traceback.format_exc())
+    logger.error("desc: %s\ntrace: %s",description, traceback.format_exc())
     models.Log.objects.create(
         page=page,
         description=description,
