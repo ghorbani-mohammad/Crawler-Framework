@@ -45,6 +45,8 @@ def reset_locks():
 def send_log_to_telegram(message):
     bot = not_models.TelegramBot.objects.first()
     account = not_models.TelegramAccount.objects.first()
+    if not (bot and account):
+        return
     not_utils.telegram_bot_send_text(bot.telegram_token, account.chat_id, message)
 
 
