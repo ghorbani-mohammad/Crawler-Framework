@@ -58,15 +58,14 @@ class CrawlerEngine:
                 desired_capabilities=caps,
                 options=utils.get_browser_options(),
             )
-        except SessionNotCreatedException as error:
-            error = f"Session not created,\n\n{error}\n\n\n{traceback.format_exc()}"
-            self.logging(error)
+        except SessionNotCreatedException:
+            # TODO: Custom handling
+            self.logging(traceback.format_exc())
             return False
-        except Exception as error:
-            error = f"{error}\n\n\n{traceback.format_exc()}"
-            self.logging(error)
+        except Exception:
+            self.logging(traceback.format_exc())
             return False
-        self.driver.set_page_load_timeout(10)
+        self.driver.set_page_load_timeout(5)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         return True
 
@@ -103,7 +102,7 @@ class CrawlerEngine:
         try:
             self.driver.get(self.page.url)
         except TimeoutException as error:
-            error = f"{error}\n{traceback.format_exc()}"
+            error = traceback.format_exc()
             logger.error(error)
             self.logging(error)
             return False
