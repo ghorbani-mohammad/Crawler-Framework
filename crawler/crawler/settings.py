@@ -159,7 +159,10 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
         "version": 1,
         "disable_existing_loggers": False,
         "formatters": {
-            "simple": {"format": "%(levelname)s %(message)s"},
+            "simple": {
+                "format": "%(asctime)s %(levelname)s %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",  # Custom date/time format
+            }
         },
         "handlers": {
             "mail_admins": {
@@ -176,24 +179,29 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
                 "filename": "/app/crawler/logs/all_info.log",
                 "mode": "a",
                 "level": "INFO",
+                "formatter": "simple",
             },
             "log_all_error": {
                 "class": "logging.FileHandler",
                 "filename": "/app/crawler/logs/all_error.log",
                 "mode": "a",
                 "level": "ERROR",
+                "formatter": "simple",
             },
             "log_celery_info": {
                 "class": "logging.FileHandler",
                 "filename": "/app/crawler/logs/celery_info.log",
                 "mode": "a",
                 "level": "INFO",
+                "formatter": "simple",
+                
             },
             "log_celery_error": {
                 "class": "logging.FileHandler",
                 "filename": "/app/crawler/logs/celery_error.log",
                 "mode": "a",
                 "level": "ERROR",
+                "formatter": "simple",
             },
         },
         "loggers": {
