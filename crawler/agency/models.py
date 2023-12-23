@@ -15,7 +15,7 @@ class Agency(BaseModel):
     crawl_headers = models.JSONField(null=True, blank=True, default=dict)
     status = models.BooleanField(default=1)
     load_timeout = models.PositiveIntegerField(
-        default=30,
+        default=5,
         help_text="how many seconds to wait for page to load",
     )
     link_keep_days = models.PositiveIntegerField(
