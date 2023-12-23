@@ -62,6 +62,7 @@ class ReportAdmin(admin.ModelAdmin):
 class AgencyAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     readonly_fields = ("created_at", "updated_at", "deleted_at")
+    list_editable = ("status", "link_keep_days", "load_timeout")
     list_display = (
         "id",
         "name",
