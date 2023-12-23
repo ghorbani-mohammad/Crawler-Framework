@@ -194,7 +194,6 @@ if EMAIL_HOST_USER and ADMIN_EMAIL_LOG:
                 "mode": "a",
                 "level": "INFO",
                 "formatter": "simple",
-                
             },
             "log_celery_error": {
                 "class": "logging.FileHandler",

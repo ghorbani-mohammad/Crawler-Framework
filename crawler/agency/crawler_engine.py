@@ -35,11 +35,11 @@ class CrawlerEngine:
             return
         self.after_initialize_driver(page["id"])
 
-        self.custom_logging(
+        self.logging(
             f"Crawl **started** for page: {self.page} with repetitive: {self.repetitive}"
         )
         self.run()
-        self.custom_logging(
+        self.logging(
             f"Crawl **finished** for page: {self.page} with repetitive: {self.repetitive}"
         )
 
@@ -60,13 +60,13 @@ class CrawlerEngine:
             )
         except SessionNotCreatedException as error:
             error = f"Session not created,\n\n{error}\n\n\n{traceback.format_exc()}"
-            self.custom_logging(error)
+            self.logging(error)
             return False
         except Exception as error:
             error = f"{error}\n\n\n{traceback.format_exc()}"
-            self.custom_logging(error)
+            self.logging(error)
             return False
-        self.driver.set_page_load_timeout(5)
+        self.driver.set_page_load_timeout(10)
         self.driver.header_overrides = utils.DEFAULT_HEADER
         return True
 
@@ -105,7 +105,7 @@ class CrawlerEngine:
         except TimeoutException as error:
             error = f"{error}\n{traceback.format_exc()}"
             logger.error(error)
-            self.custom_logging(error)
+            self.logging(error)
             return False
         return True
 
@@ -125,11 +125,11 @@ class CrawlerEngine:
         if "code" in attribute.keys():
             del attribute["code"]
         elements = doc.findAll(tag, attribute)
-        self.custom_logging(f"length of elements is: {len(elements)}")
+        self.logging(f"length of elements is: {len(elements)}")
         return elements
 
     def post_crawling(self, data):
-        self.custom_logging(f"Fetched data are: {data}")
+        self.logging(f"Fetched data are: {data}")
         self.fetched_links = data
         self.fetched_links_count = len(data)
         self.report.fetched_links = self.fetched_links_count
@@ -217,7 +217,7 @@ class CrawlerEngine:
                             self.register_log(desc, error, self.page, data["link"])
                     else:
                         article[key] = element.text
-        self.custom_logging(f"crawl_one_page: {article}")
+        self.logging(f"crawl_one_page: {article}")
         self.save_to_redis(article)
 
     def save_to_redis(self, article):
@@ -252,7 +252,7 @@ class CrawlerEngine:
         self.report.log = self.log_messages
         self.report.save()
 
-    def custom_logging(self, message):
+    def logging(self, message):
         self.log_messages += f"{message} \n"
 
     def run(self):
@@ -260,9 +260,9 @@ class CrawlerEngine:
         first: we get links from the specified page
         second: we get data from each page
         """
-        self.custom_logging(f"---> Fetching links from {self.page} started")
+        self.logging(f"---> Fetching links from {self.page} started")
         self.fetch_links()
-        self.custom_logging(
+        self.logging(
             f"---> We found {self.fetched_links_count} number of links for {self.page}"
         )
         self.check_data()
