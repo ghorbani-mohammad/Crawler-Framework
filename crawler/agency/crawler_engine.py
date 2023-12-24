@@ -77,19 +77,19 @@ class CrawlerEngine:
             page=self.page, status=models.Report.PENDING
         )
 
-    def register_log(self, description, error, page, url):
+    def register_log(self, desc, error, page, url):
         """Custom registering logs. Logs are stored into the db.
 
         Args:
-            description (str): extra description of the error
+            desc (str): extra desc of the error
             error (str): exception
             page (page): which page we have encountered error
             url (url): link of page
         """
-        logger.error(traceback.format_exc())
+        logger.error("desc: %s\n traceback:%s", desc, traceback.format_exc())
         models.Log.objects.create(
             page=page,
-            description=description,
+            desc=desc,
             url=url,
             phase=models.Log.CRAWLING,
             error=error,
