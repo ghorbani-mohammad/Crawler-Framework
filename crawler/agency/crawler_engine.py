@@ -89,7 +89,7 @@ class CrawlerEngine:
         logger.error("desc: %s\n traceback:%s", desc, traceback.format_exc())
         models.Log.objects.create(
             page=page,
-            desc=desc,
+            description=desc,
             url=url,
             phase=models.Log.CRAWLING,
             error=error,
