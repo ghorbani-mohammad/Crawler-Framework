@@ -86,7 +86,9 @@ class CrawlerEngine:
             page (page): which page we have encountered error
             url (url): link of page
         """
-        logger.error("desc: %s\n traceback:%s", desc, traceback.format_exc())
+        logger.error(
+            "url: %s\ndesc: %s\n traceback:%s", url, desc, traceback.format_exc()
+        )
         models.Log.objects.create(
             page=page,
             description=desc,
