@@ -124,7 +124,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         "agency",
         "page_url",
         "crawl_interval",
-        "get_last_crawl",
+        "last_crawl",
         "get_last_crawl_count",
         "status",
         "today_crawl_count",
