@@ -110,10 +110,6 @@ class Page(BaseModel):
         today = timezone.localtime().replace(hour=0)
         return self.report.filter(created_at__gte=today).count()
 
-    @property
-    def get_last_crawl_at(self):
-        return self.last_crawl
-
 
 class Report(BaseModel):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="report")
