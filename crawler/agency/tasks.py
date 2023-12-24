@@ -127,6 +127,13 @@ def check_page(pages, data, key):
     return page
 
 
+# get info from data (gin)
+def gin(key: str, data: dict):
+    if key in data:
+        return data[key].strip()
+    return f"{key} isn't in data"
+
+
 @crawler.task(name="redis_exporter")
 @only_one_concurrency(key="redis_exporter", timeout=TASKS_TIMEOUT)
 def redis_exporter():
