@@ -112,9 +112,7 @@ class Page(BaseModel):
 
     @property
     def get_last_crawl_at(self):
-        if self.last_crawl:
-            return self.last_crawl.strftime("%h %d %H:%M %p")
-        return None
+        return self.last_crawl
 
 
 class Report(BaseModel):
