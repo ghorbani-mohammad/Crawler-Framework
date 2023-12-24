@@ -87,7 +87,7 @@ class CrawlerEngine:
             url (url): link of page
         """
         logger.error(
-            "url: %s\ndesc: %s\n traceback:%s", url, desc, traceback.format_exc()
+            "url: %s\ndesc: %s\ntraceback:%s", url, desc, traceback.format_exc()
         )
         models.Log.objects.create(
             page=page,
@@ -196,7 +196,7 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)  # pylint: disable=exec-used
                         except Exception as error:  # pylint: disable=broad-except
-                            desc = f"tag code, executing code made error, the code was {temp_code}"
+                            desc = f"executing code made error, the code was {temp_code}"
                             self.register_log(desc, error, self.page, data["link"])
                         continue
                     code = ""
@@ -204,7 +204,7 @@ class CrawlerEngine:
                         code = attribute.pop("code")
                     element = doc.find(tag, attribute)
                     if element is None:
-                        desc = f"tag was: {tag} *** and attribute was {attribute}"
+                        desc = f"tag was {tag} and attribute was {attribute}"
                         error = "element is null"
                         self.register_log(desc, error, self.page, data["link"])
                         break
