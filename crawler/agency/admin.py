@@ -18,7 +18,7 @@ from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry
 
 
 @admin.register(Report)
-class ReportAdmin(admin.ModelAdmin):
+class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     list_per_page = 30
     search_fields = ("page__url",)
     list_display = (
