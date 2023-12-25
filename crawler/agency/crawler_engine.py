@@ -215,7 +215,7 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)  # pylint: disable=exec-used
                         except Exception as error:  # pylint: disable=broad-except
-                            desc = f"tag code, executing code made error, the code was {temp_code}"
+                            desc = f"executing code made error, the code was {temp_code}"
                             self.register_log(desc, error, self.page, data["link"])
                     else:
                         article[key] = element.text
