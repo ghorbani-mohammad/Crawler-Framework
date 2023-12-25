@@ -67,6 +67,9 @@ def check_must_crawl(page: models.Page):
 
 @crawler.task(name="check_agencies")
 def check_agencies():
+    if settings.DEBUG:
+        logger.info("check_agencies is disabled in debug mode")
+        return
     logger.info("check_agencies started")
     agencies = models.Agency.objects.filter(status=True).values_list("id", flat=True)
     pages = (
