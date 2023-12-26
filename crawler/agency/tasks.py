@@ -1,4 +1,5 @@
 from __future__ import absolute_import, unicode_literals
+import re
 import json
 import time
 import importlib
@@ -136,6 +137,11 @@ def gin(key: str, data: dict):
         # remove extra spaces and new lines
         return data[key].strip().replace("\n", "")
     return f"{key} isn't in data"
+
+
+def limit_newlines(text: str) -> str:
+    # Replace any sequence of more than two '\n' with exactly two '\n'
+    return re.sub(r"\n{3,}", "\n\n", text)
 
 
 @crawler.task(name="redis_exporter")
