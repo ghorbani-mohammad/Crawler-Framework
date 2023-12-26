@@ -145,6 +145,9 @@ def redis_exporter():
     It will be used to extract news in the redis,
     and send them to the telegram bot.
     """
+    if settings.DEBUG:
+        logger.info("redis-exporter is disabled in debug mode")
+        return
     # this bot variable should not removed
     bot = telegram.Bot(token=settings.BOT_API_KEY)  # pylint: disable=unused-variable
     pages = models.Page.objects.all()
