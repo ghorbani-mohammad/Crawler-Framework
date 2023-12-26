@@ -189,8 +189,8 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         self.message_user(
             request,
             ngettext(
-                "%d page is in queue to crawl.",
-                "%d pages are in queue to crawl.",
+                "%d page is in queue to crawl. (repetitive)",
+                "%d pages are in queue to crawl. (repetitive)",
                 len(queryset),
             )
             % len(queryset),
