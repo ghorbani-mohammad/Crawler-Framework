@@ -131,6 +131,8 @@ def check_page(pages, data, key):
     return page
 
 
+# Don't remove this, it's used dynamically in
+# the page code section
 # get info from data (gin)
 def gin(key: str, data: dict):
     if key in data:
@@ -139,6 +141,9 @@ def gin(key: str, data: dict):
     return f"{key} isn't in data"
 
 
+# Don't remove this, it's used dynamically in
+# the page code section
+# can be used for removing extra new lines
 def limit_newlines(text: str) -> str:
     # Replace any sequence of more than two '\n' with exactly two '\n'
     return re.sub(r"\n{3,}", "\n\n", text)
