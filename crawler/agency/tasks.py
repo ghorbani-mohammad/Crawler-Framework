@@ -133,7 +133,8 @@ def check_page(pages, data, key):
 # get info from data (gin)
 def gin(key: str, data: dict):
     if key in data:
-        return data[key].strip()
+        # remove extra spaces and new lines
+        return data[key].strip().replace("\n", "")
     return f"{key} isn't in data"
 
 
