@@ -117,13 +117,15 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
     form = PageAdminForm
     list_filter = ("lock", "status", "agency")
-    list_editable = ("status", "crawl_interval")
+    list_editable = ("load_sleep", "links_sleep", "status", "crawl_interval")
     readonly_fields = ("last_crawl",)
     list_display = (
         "get_masked_name",
         "agency",
         "page_url",
         "crawl_interval",
+        "links_sleep",
+        "load_sleep",
         "last_crawl",
         "get_last_crawl_count",
         "status",
