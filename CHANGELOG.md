@@ -1,3 +1,12 @@
+# [1.27.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.26.0...v1.27.0) (2023-12-30)
+
+
+### Features
+
+* **engine:** removes etrust images ([f80e1e0](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/f80e1e051215ef9893b399629045267b1181cc97))
+
+
+
 # [1.26.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.25.0...v1.26.0) (2023-12-23)
 
 
@@ -31,15 +40,6 @@
 ### Reverts
 
 * **dependency:** rolls back some changes to versions ([c03d15a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c03d15a78422ec99cb40f8a5f72c774aed5e798b))
-
-
-
-## [1.23.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.23.0...v1.23.1) (2023-11-19)
-
-
-### Bug Fixes
-
-* **engine:** solve the issue of options ([7d546c1](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/7d546c1569b536cd3591862658d04012e8c2b906))
 
 
 
