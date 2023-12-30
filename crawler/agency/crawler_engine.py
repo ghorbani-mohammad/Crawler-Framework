@@ -49,6 +49,21 @@ class CrawlerEngine:
         self.fetched_links_count = 0
         self.repetitive = repetitive
 
+    def remove_some_images(self, driver):
+        # JavaScript to find and remove images
+        script = """
+        var images = document.getElementsByTagName('img');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].src.includes('.enamad.ir')) {
+                images[i].remove();  // Remove the image
+            }
+        }
+        """
+
+        # Execute the script
+        driver.execute_script(script)
+        return driver
+
     def initialize_driver(self) -> bool:
         caps = DesiredCapabilities.FIREFOX
         caps["pageLoadStrategy"] = "eager"  # interactive
@@ -103,6 +118,7 @@ class CrawlerEngine:
         """
         try:
             self.driver.get(self.page.url)
+            self.remove_some_images(self.driver)
         except TimeoutException as error:
             error = traceback.format_exc()
             logger.error(error)
@@ -150,13 +166,16 @@ class CrawlerEngine:
         this function get links using the specified structure from a page
         """
         success = self.land_page()
+        logger.info("land page success: %s", success)
         if not success:
             return
 
         time.sleep(self.page.links_sleep)
+        logger.info("sleep for %s success", self.page.links_sleep)
 
         self.taking_picture()
         elements = self.get_elements()
+        logger.info("get elements success and length is: %s", len(elements))
         data = self.get_links(elements)
         self.post_crawling(data)
 
@@ -215,7 +234,9 @@ class CrawlerEngine:
                         try:
                             exec(temp_code)  # pylint: disable=exec-used
                         except Exception as error:  # pylint: disable=broad-except
-                            desc = f"executing code made error, the code was {temp_code}"
+                            desc = (
+                                f"executing code made error, the code was {temp_code}"
+                            )
                             self.register_log(desc, error, self.page, data["link"])
                     else:
                         article[key] = element.text
@@ -255,6 +276,7 @@ class CrawlerEngine:
         self.report.save()
 
     def logging(self, message):
+        logger.info(message)
         self.log_messages += f"{message} \n"
 
     def run(self):
