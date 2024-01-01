@@ -8,7 +8,8 @@ RUN apk update && \
 COPY requirements.txt .
 RUN pip install -r requirements.txt && \
     apk del .tmp && \
-    apk add postgresql-dev jpeg-dev 
+    apk add postgresql-dev jpeg-dev && \
+    rm -rf /var/cache/apk/*
 COPY . .
 
 ENV PYTHONUNBUFFERED 1
