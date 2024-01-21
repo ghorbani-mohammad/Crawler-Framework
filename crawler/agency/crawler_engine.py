@@ -121,6 +121,7 @@ class CrawlerEngine:
             self.remove_some_images(self.driver)
         except TimeoutException as error:
             error = traceback.format_exc()
+            error = f"Page: {self.page.url}\n\nTimeoutException: {error}"
             logger.error(error)
             self.logging(error)
             return False
