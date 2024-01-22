@@ -59,3 +59,4 @@ own crawler.
 There are some TG channels that I use this crawler framework to keep them updated.
 Example:
   * [The New Yorker Agency News](https://t.me/newyorkercom)
+  * [Product Haunt](https://t.me/producthuntdaily)
