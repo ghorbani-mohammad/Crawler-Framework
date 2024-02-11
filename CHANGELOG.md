@@ -1,3 +1,12 @@
+# [1.28.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.27.0...v1.28.0) (2024-02-11)
+
+
+### Features
+
+* **notification:** adds message-template class ([416c45a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/416c45aabde9ac21557f6c0a4032eedc144c11f5))
+
+
+
 # [1.27.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.26.0...v1.27.0) (2023-12-30)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **logging:** improves logging ([9206664](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/920666408c989e19d0d65a801a0f0204e9820a2d))
-
-
-
-## [1.23.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.23.1...v1.23.2) (2023-11-19)
-
-
-### Reverts
-
-* **dependency:** rolls back some changes to versions ([c03d15a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c03d15a78422ec99cb40f8a5f72c774aed5e798b))
 
 
 
