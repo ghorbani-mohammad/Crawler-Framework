@@ -5,6 +5,7 @@ from django.template.defaultfilters import truncatechars
 
 
 from reusable.models import BaseModel
+from notification.models import MessageTemplate
 from . import utils
 
 
@@ -85,6 +86,9 @@ class Page(BaseModel):
         null=True,
         blank=True,
         help_text='message=data["link"] or data["iv_link"]',
+    )
+    message_template = models.ForeignKey(
+        MessageTemplate, on_delete=models.SET_NULL, null=True, blank=True
     )
     take_picture = models.BooleanField(default=False)
     cookie = models.ForeignKey(
