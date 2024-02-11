@@ -143,6 +143,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         ("status", "fetch_content", "take_picture", "lock"),
         ("telegram_channel", "iv_code"),
         "message_code",
+        "message_template",
         "last_crawl",
         ("created_at", "updated_at", "deleted_at"),
     )
