@@ -17,3 +17,11 @@ class TelegramAccount(BaseModel):
 
     def __str__(self):
         return f"({self.pk} - {self.name})"
+
+
+class MessageTemplate(BaseModel):
+    name = models.CharField(max_length=50)
+    text = models.TextField()
+
+    def __str__(self):
+        return f"({self.pk} - {self.name})"
