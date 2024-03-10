@@ -52,9 +52,6 @@ own crawler.
   * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
 
 
-### Postman collection
-Not available yet.
-
 ### Telegram Channels
 There are some TG channels that I use this crawler framework to keep them updated.
 Example:
