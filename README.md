@@ -46,8 +46,8 @@ of websites that I get their new posts periodically. These are some examples tha
 own crawler.
 
 - Guest User Credential:
-  * **Username**: guest
-  * **Password**: RPxzsoen4O
+  * **Username**: `guest`
+  * **Password**: `RPxzsoen4O`
 - Django Admin Panel:
   * [https://crawler.m-gh.com/secret-admin/](https://crawler.m-gh.com/secret-admin/)
 
