@@ -8,6 +8,10 @@ amqp==5.1.1
     # via kombu
 asgiref==3.5.2
     # via django
+attrs==23.2.0
+    # via
+    #   outcome
+    #   trio
 backcall==0.2.0
     # via ipython
 beautifulsoup4==4.12.2
@@ -20,6 +24,7 @@ certifi==2021.10.8
     # via
     #   python-telegram-bot
     #   requests
+    #   selenium
     #   sentry-sdk
 cffi==1.15.0
     # via cryptography
@@ -69,14 +74,20 @@ future==0.18.2
     # via python-telegram-bot
 gunicorn==21.2.0
     # via -r requirements.in
+h11==0.14.0
+    # via wsproto
 idna==2.10
-    # via requests
+    # via
+    #   requests
+    #   trio
 ipython==7.19.0
     # via -r requirements.in
 jedi==0.18.1
     # via ipython
 kombu==5.3.3
     # via celery
+outcome==1.3.0.post0
+    # via trio
 packaging==23.2
     # via gunicorn
 parso==0.8.2
@@ -101,6 +112,8 @@ pycparser==2.21
     # via cffi
 pygments==2.10.0
     # via ipython
+pysocks==1.7.1
+    # via urllib3
 python-dateutil==2.8.2
     # via
     #   -r requirements.in
@@ -115,7 +128,7 @@ requests==2.28.1
     # via
     #   -r requirements.in
     #   django-editor-widgets
-selenium==3.141.0
+selenium==4.21.0
     # via -r requirements.in
 sentry-sdk==1.9.10
     # via -r requirements.in
@@ -125,6 +138,10 @@ six==1.16.0
     #   django-prettyjson
     #   python-dateutil
     #   validators
+sniffio==1.3.1
+    # via trio
+sortedcontainers==2.4.0
+    # via trio
 soupsieve==2.3.1
     # via beautifulsoup4
 sqlparse==0.4.2
@@ -135,9 +152,17 @@ tornado==6.1
     # via python-telegram-bot
 traitlets==5.1.1
     # via ipython
+trio==0.25.1
+    # via
+    #   selenium
+    #   trio-websocket
+trio-websocket==0.11.1
+    # via selenium
+typing-extensions==4.11.0
+    # via selenium
 tzdata==2023.3
     # via celery
-urllib3==1.26.12
+urllib3[socks]==1.26.12
     # via
     #   requests
     #   selenium
@@ -151,6 +176,8 @@ vine==5.1.0
     #   kombu
 wcwidth==0.2.5
     # via prompt-toolkit
+wsproto==1.2.0
+    # via trio-websocket
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
