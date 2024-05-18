@@ -16,6 +16,6 @@ python-dateutil
 python-telegram-bot
 redis
 requests>=2.28.1
-selenium
+selenium==4.21.0 
 sentry-sdk
 validators
