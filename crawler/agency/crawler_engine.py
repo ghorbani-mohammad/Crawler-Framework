@@ -144,7 +144,7 @@ class CrawlerEngine:
         return elements
 
     def post_crawling(self, data):
-        self.logging(f"Fetched data are: {data}")
+        self.logging(f"Fetched links are: {data}")
         self.fetched_links = data
         self.fetched_links_count = len(data)
         self.report.fetched_links = self.fetched_links_count
