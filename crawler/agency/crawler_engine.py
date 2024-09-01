@@ -285,7 +285,7 @@ class CrawlerEngine:
         self.logging(f"---> Fetching links from {self.page} started")
         self.fetch_links()
         self.logging(
-            f"---> We found {self.fetched_links_count} number of links for {self.page}"
+            f"---> We've found {self.fetched_links_count} number of links for {self.page}"
         )
         self.check_data()
         self.driver.quit()
