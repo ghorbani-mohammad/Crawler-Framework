@@ -275,7 +275,7 @@ class CrawlerEngine:
 
     def logging(self, message):
         logger.info(message)
-        self.log_messages += f"{message} \n"
+        self.log_messages += f"{message} \n\n"
 
     def run(self):
         """Run the crawler engine
