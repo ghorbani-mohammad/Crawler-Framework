@@ -269,7 +269,11 @@ class CrawlerEngine:
         self.page.last_crawl_count = self.fetched_links_count
         self.page.lock = False
         self.page.save()
-        self.report.new_links = counter
+        self.finalize_report(counter)
+
+    def finalize_report(self, counted:int):
+        """Finalize the report after crawling the page."""
+        self.report.new_links = counted
         self.report.status = models.Report.COMPLETED
         self.report.log = self.log_messages
         self.report.save()
