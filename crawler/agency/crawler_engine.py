@@ -178,68 +178,68 @@ class CrawlerEngine:
         self.post_crawling(data)
 
     def crawl_one_page(self, data, fetch_content):
-        """Get data from crawled link based on defined structure
+        """Get data from crawled link based on defined structure.
 
         Args:
-            data (json): data where we have link
-            fetch_content (bool): wether we should open the link or not
+            data (json): data containing the link to crawl.
+            fetch_content (bool): whether we should open the link or not.
         """
         meta = self.page.structure.news_meta_structure
         article = data
         article["page_id"] = self.page.id
+
         if fetch_content:
+            # Fetch the content from the URL
             try:
                 self.driver.get(data["link"])
+                time.sleep(self.page.load_sleep)
+                doc = BeautifulSoup(self.driver.page_source, "html.parser")
             except TimeoutException:
-                logger.error(
-                    "link: %s\ntraceback: %s",
-                    data["link"],
-                    traceback.format_exc(),
-                )
+                logger.error(f"Timeout while loading {data['link']}", exc_info=True)
                 return
 
-            time.sleep(self.page.load_sleep)
-            doc = BeautifulSoup(self.driver.page_source, "html.parser")
-            if meta is not None:
-                for key in meta.keys():
-                    attribute = meta[key].copy()
-                    tag = attribute.pop("tag")
-                    if tag == "value":
-                        article[key] = attribute["value"]
-                        continue
-                    if tag == "code":
-                        code = attribute["code"]
-                        temp_code = utils.CODE.format(code)
-                        try:
-                            exec(temp_code)  # pylint: disable=exec-used
-                        except Exception as error:  # pylint: disable=broad-except
-                            desc = (
-                                f"executing code made error, the code was {temp_code}"
-                            )
-                            self.register_log(desc, error, self.page, data["link"])
-                        continue
-                    code = ""
-                    if "code" in attribute.keys():
-                        code = attribute.pop("code")
-                    element = doc.find(tag, attribute)
-                    if element is None:
-                        desc = f"tag was {tag} and attribute was {attribute}"
-                        error = "element is null"
-                        self.register_log(desc, error, self.page, data["link"])
-                        break
-                    if code != "":
-                        temp_code = utils.CODE.format(code)
-                        try:
-                            exec(temp_code)  # pylint: disable=exec-used
-                        except Exception as error:  # pylint: disable=broad-except
-                            desc = (
-                                f"executing code made error, the code was {temp_code}"
-                            )
-                            self.register_log(desc, error, self.page, data["link"])
-                    else:
-                        article[key] = element.text
-        self.logging(f"crawl_one_page: {article}")
+            if meta:
+                self.extract_meta_data(meta, doc, article, data["link"])
+
+        logger.info(f"crawl_one_page: {article}")
         self.save_to_redis(article)
+
+    def extract_meta_data(self, meta, doc, article, link):
+        """Extract meta data from the document and update the article."""
+        for key, attribute in meta.items():
+            attribute = attribute.copy()  # Prevent mutation of original attribute
+            tag = attribute.pop("tag")
+
+            if tag == "value":
+                article[key] = attribute.get("value")
+                continue
+            elif tag == "code":
+                self.execute_code(attribute.get("code"), article, key, link)
+                continue
+
+            element = doc.find(tag, attribute)
+            if not element:
+                self.log_missing_element(tag, attribute, link)
+                continue
+
+            code = attribute.get("code")
+            if code:
+                self.execute_code(code, article, key, link)
+            else:
+                article[key] = element.text.strip()
+
+    def execute_code(self, code, article, key, link):
+        """Safely execute custom code and handle errors."""
+        try:
+            exec(code, {"article": article, "key": key})  # Better context
+        except Exception as e:
+            logger.error(f"Error executing code: {code} for link {link}", exc_info=True)
+            self.register_log(f"Error in code execution: {code}", e, self.page, link)
+
+    def log_missing_element(self, tag, attribute, link):
+        """Log when a tag or element is missing from the document."""
+        logger.warning(f"Element with tag {tag} and attribute {attribute} not found in {link}")
+        self.register_log(f"Missing element: tag={tag}, attribute={attribute}", "element is null", self.page, link)
 
     def save_to_redis(self, article):
         """We store each link information as a json into Redis
