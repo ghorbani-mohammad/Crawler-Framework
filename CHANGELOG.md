@@ -1,3 +1,12 @@
+# [1.29.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.28.0...v1.29.0) (2024-09-08)
+
+
+### Features
+
+* adds ordering to structure admin ([fca2893](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/fca289330ad36e8363eb16b05f0a9732a6a38584))
+
+
+
 # [1.28.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.27.0...v1.28.0) (2024-02-11)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **engine:** disable images loading ([9626289](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/962628917382e07397af462f9a467babbc6b4662))
-
-
-
-# [1.24.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.23.2...v1.24.0) (2023-12-22)
-
-
-### Features
-
-* **logging:** improves logging ([9206664](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/920666408c989e19d0d65a801a0f0204e9820a2d))
 
 
 
