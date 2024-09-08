@@ -188,6 +188,7 @@ class CrawlerEngine:
         article = data
         article["page_id"] = self.page.id
 
+        doc = None
         if fetch_content:
             # Fetch the content from the URL
             try:
