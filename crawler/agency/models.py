@@ -84,7 +84,6 @@ class Page(BaseModel):
     message_code = models.TextField(
         default=None,
         null=True,
-        blank=True,
         help_text='message=data["link"] or data["iv_link"]',
     )
     message_template = models.ForeignKey(
