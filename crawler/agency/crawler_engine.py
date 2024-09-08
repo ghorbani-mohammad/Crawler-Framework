@@ -214,7 +214,7 @@ class CrawlerEngine:
                 article[key] = attribute.get("value")
                 continue
             elif tag == "code":
-                self.execute_code(attribute.get("code"), article, key, link)
+                self.execute_code(doc, attribute.get("code"), article, key, link)
                 continue
 
             element = doc.find(tag, attribute)
@@ -224,11 +224,11 @@ class CrawlerEngine:
 
             code = attribute.get("code")
             if code:
-                self.execute_code(code, article, key, link)
+                self.execute_code(doc, code, article, key, link)
             else:
                 article[key] = element.text.strip()
 
-    def execute_code(self, code, article, key, link):
+    def execute_code(self, doc, code, article, key, link):
         """Safely execute custom code and handle errors."""
         try:
             exec(code, {"article": article, "key": key})  # Better context
