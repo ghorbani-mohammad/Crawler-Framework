@@ -94,6 +94,7 @@ class StructureAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     list_display = ("id", "name", "created_at", "updated_at")
     form = StructureForm
     ordering = ("-updated_at",)
+    search_fields = ("name",)
 
 
 class PageAdminForm(forms.ModelForm):
