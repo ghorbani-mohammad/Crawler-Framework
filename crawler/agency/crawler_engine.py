@@ -215,7 +215,7 @@ class CrawlerEngine:
                 article[key] = attribute.get("value")
                 continue
             elif tag == "code":
-                self.execute_code(doc, attribute.get("code"), article, key, link)
+                self.execute_code(attribute.get("code"), article, key, link, doc)
                 continue
 
             element = doc.find(tag, attribute)
@@ -225,14 +225,15 @@ class CrawlerEngine:
 
             code = attribute.get("code")
             if code:
-                self.execute_code(doc, code, article, key, link)
+                self.execute_code(code, article, key, link, doc)
             else:
                 article[key] = element.text.strip()
 
-    def execute_code(self, doc, code, article, key, link):
+    def execute_code(self, code, article, key, link, doc):
         """Safely execute custom code and handle errors."""
         try:
-            exec(code, {"article": article, "key": key})  # Better context
+            # Execute the code, making 'article', 'key', and 'doc' available within the code
+            exec(code, {"article": article, "key": key, "doc": doc})
         except Exception as e:
             logger.error(f"Error executing code: {code} for link {link}", exc_info=True)
             self.register_log(f"Error in code execution: {code}", e, self.page, link)
@@ -241,6 +242,7 @@ class CrawlerEngine:
         """Log when a tag or element is missing from the document."""
         logger.warning(f"Element with tag {tag} and attribute {attribute} not found in {link}")
         self.register_log(f"Missing element: tag={tag}, attribute={attribute}", "element is null", self.page, link)
+
 
     def save_to_redis(self, article):
         """We store each link information as a json into Redis
