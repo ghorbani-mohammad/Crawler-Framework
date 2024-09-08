@@ -1,3 +1,12 @@
+# [1.30.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.29.0...v1.30.0) (2024-09-08)
+
+
+### Features
+
+* adds search on name to structure admin ([a85640b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/a85640b101069028b9e7090e0554584a45a65386))
+
+
+
 # [1.29.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.28.0...v1.29.0) (2024-09-08)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **engine:** adds page-timeout to agency ([5fa70ea](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5fa70ea29aaac8b7df8704e1229584df482d0d43))
-
-
-
-# [1.25.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.24.0...v1.25.0) (2023-12-22)
-
-
-### Features
-
-* **engine:** disable images loading ([9626289](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/962628917382e07397af462f9a467babbc6b4662))
 
 
 
