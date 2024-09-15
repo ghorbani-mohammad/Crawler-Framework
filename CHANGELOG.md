@@ -1,3 +1,12 @@
+# [1.31.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.30.0...v1.31.0) (2024-09-15)
+
+
+### Features
+
+* removes images ([c5fffc0](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c5fffc09b1681894e8ab6e8a08ffecca409b1df9))
+
+
+
 # [1.30.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.29.0...v1.30.0) (2024-09-08)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **engine:** removes etrust images ([f80e1e0](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/f80e1e051215ef9893b399629045267b1181cc97))
-
-
-
-# [1.26.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.25.0...v1.26.0) (2023-12-23)
-
-
-### Features
-
-* **engine:** adds page-timeout to agency ([5fa70ea](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5fa70ea29aaac8b7df8704e1229584df482d0d43))
 
 
 
