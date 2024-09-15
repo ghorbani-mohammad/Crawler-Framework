@@ -240,9 +240,15 @@ class CrawlerEngine:
 
     def log_missing_element(self, tag, attribute, link):
         """Log when a tag or element is missing from the document."""
-        logger.warning(f"Element with tag {tag} and attribute {attribute} not found in {link}")
-        self.register_log(f"Missing element: tag={tag}, attribute={attribute}", "element is null", self.page, link)
-
+        logger.warning(
+            f"Element with tag {tag} and attribute {attribute} not found in {link}"
+        )
+        self.register_log(
+            f"Missing element: tag={tag}, attribute={attribute}",
+            "element is null",
+            self.page,
+            link,
+        )
 
     def save_to_redis(self, article):
         """We store each link information as a json into Redis
@@ -274,7 +280,7 @@ class CrawlerEngine:
         self.page.save()
         self.finalize_report(counter)
 
-    def finalize_report(self, counted:int):
+    def finalize_report(self, counted: int):
         """Finalize the report after crawling the page."""
         self.report.new_links = counted
         self.report.status = models.Report.COMPLETED
