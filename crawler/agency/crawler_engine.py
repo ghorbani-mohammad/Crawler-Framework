@@ -8,12 +8,12 @@ from bs4 import BeautifulSoup
 
 from selenium import webdriver
 from selenium.common.exceptions import SessionNotCreatedException, TimeoutException
-
 from django.conf import settings
 from django.utils import timezone
 from celery.utils.log import get_task_logger
 
 from . import models, utils
+
 
 logger = get_task_logger(__name__)
 redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
@@ -54,9 +54,7 @@ class CrawlerEngine:
         script = """
         var images = document.getElementsByTagName('img');
         for (var i = 0; i < images.length; i++) {
-            if (images[i].src.includes('.enamad.ir')) {
-                images[i].remove();  // Remove the image
-            }
+            images[i].remove();  // Remove the image
         }
         """
 
@@ -240,9 +238,15 @@ class CrawlerEngine:
 
     def log_missing_element(self, tag, attribute, link):
         """Log when a tag or element is missing from the document."""
-        logger.warning(f"Element with tag {tag} and attribute {attribute} not found in {link}")
-        self.register_log(f"Missing element: tag={tag}, attribute={attribute}", "element is null", self.page, link)
-
+        logger.warning(
+            f"Element with tag {tag} and attribute {attribute} not found in {link}"
+        )
+        self.register_log(
+            f"Missing element: tag={tag}, attribute={attribute}",
+            "element is null",
+            self.page,
+            link,
+        )
 
     def save_to_redis(self, article):
         """We store each link information as a json into Redis
@@ -274,7 +278,7 @@ class CrawlerEngine:
         self.page.save()
         self.finalize_report(counter)
 
-    def finalize_report(self, counted:int):
+    def finalize_report(self, counted: int):
         """Finalize the report after crawling the page."""
         self.report.new_links = counted
         self.report.status = models.Report.COMPLETED

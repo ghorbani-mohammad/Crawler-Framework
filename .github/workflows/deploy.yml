@@ -7,26 +7,34 @@ on:
     branches: [ master ]
 
 jobs:
-  check_formatting:
+  lint_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      # Step 1: Set up the specific Python version
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.11'  # Specify your Python version here
+      
+      # Step 2: Install requirements from requirements.txt
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black
-      - name: Check formatting with black
+          pip install -r requirements.txt
+          pip install -r ./linters/requirements.txt
+      
+      # Step 3: Run the shell script that checks linting
+      - name: Run linting shell script
         run: |
-          black --check .
-
+          chmod +x ./linters/lint-python.sh
+          ./linters/lint-python.sh .
+          
   deploy:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    needs: check_formatting
+    needs: lint_check
     steps:
       - uses: actions/checkout@v1
       - name: deploy to server
