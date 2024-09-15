@@ -56,6 +56,11 @@ class CrawlerEngine:
         for (var i = 0; i < images.length; i++) {
             images[i].remove();  // Remove the image
         }
+
+        var divs = document.querySelectorAll('div.enamd');
+        divs.forEach(function(div) {
+            div.remove();
+        });
         """
 
         # Execute the script
