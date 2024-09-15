@@ -54,9 +54,7 @@ class CrawlerEngine:
         script = """
         var images = document.getElementsByTagName('img');
         for (var i = 0; i < images.length; i++) {
-            if (images[i].src.includes('.enamad.ir')) {
-                images[i].remove();  // Remove the image
-            }
+            images[i].remove();  // Remove the image
         }
         """
 
