@@ -31,10 +31,10 @@ services:
       - ./logs:/app/crawler/logs
     ports:
       - 127.0.0.1:8205:80
-    restart: unless-stopped
     logging: *default-logging
     networks:
       - crawler_network
+    restart: unless-stopped
 
   crawler_worker:
     container_name: crawler_worker
@@ -49,10 +49,10 @@ services:
     volumes:
       - .:/app
       - ./logs:/app/crawler/logs
-    restart: unless-stopped
     logging: *default-logging
     networks:
       - crawler_network
+    restart: unless-stopped
 
   crawler_beat:
     container_name: crawler_beat
@@ -74,12 +74,12 @@ services:
   crawler_redis:
     container_name : crawler-redis
     image: redis:6.2
-    restart: unless-stopped
     volumes:
       - ./redis_volume_pro:/data
     logging: *default-logging
     networks:
       - crawler_network
+    restart: unless-stopped
 
   crawler_node_docker:
     image: selenium/node-firefox:4.15.0-20231110
@@ -96,8 +96,6 @@ services:
     shm_size: 2g
     networks:
       - crawler_network
-    ports:
-      - 7900:7900
     restart: unless-stopped
 
   crawler_selenium_hub:
@@ -105,9 +103,9 @@ services:
     container_name: crawler-selenium-hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
     networks:
       - crawler_network
+    restart: unless-stopped
 
 networks:
   crawler_network:
