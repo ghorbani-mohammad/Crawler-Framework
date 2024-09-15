@@ -8,12 +8,12 @@ from bs4 import BeautifulSoup
 
 from selenium import webdriver
 from selenium.common.exceptions import SessionNotCreatedException, TimeoutException
-
 from django.conf import settings
 from django.utils import timezone
 from celery.utils.log import get_task_logger
 
 from . import models, utils
+
 
 logger = get_task_logger(__name__)
 redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
