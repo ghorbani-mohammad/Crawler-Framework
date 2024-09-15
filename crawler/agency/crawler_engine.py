@@ -167,16 +167,16 @@ class CrawlerEngine:
         this function get links using the specified structure from a page
         """
         success = self.land_page()
-        logger.info("land page success: %s", success)
+        self.logging("land page success: %s", success)
         if not success:
             return
 
         time.sleep(self.page.links_sleep)
-        logger.info("sleep for %s success", self.page.links_sleep)
+        self.logging("sleep for %s success", self.page.links_sleep)
 
         self.taking_picture()
         elements = self.get_elements()
-        logger.info("get elements success and length is: %s", len(elements))
+        self.logging("get elements success and length is: %s", len(elements))
         data = self.get_links(elements)
         self.post_crawling(data)
 
