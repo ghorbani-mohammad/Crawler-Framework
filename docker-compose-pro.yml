@@ -94,9 +94,11 @@ services:
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     shm_size: 2g
-    restart: unless-stopped
     networks:
       - crawler_network
+    ports:
+      - 7900:7900
+    restart: unless-stopped
 
   crawler_selenium_hub:
     image: selenium/hub:4.15.0-20231110
