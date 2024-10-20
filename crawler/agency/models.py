@@ -85,6 +85,7 @@ class Page(BaseModel):
         default=None,
         null=True,
         help_text='message=data["link"] or data["iv_link"]',
+        blank=True,
     )
     message_template = models.ForeignKey(
         MessageTemplate, on_delete=models.SET_NULL, null=True, blank=True
