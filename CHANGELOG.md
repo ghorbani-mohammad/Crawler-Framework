@@ -1,3 +1,12 @@
+# [1.32.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.31.0...v1.32.0) (2024-10-20)
+
+
+### Features
+
+* makes message-code blank-able ([a9e7414](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/a9e741476e7cb44ce864e8b8704bcbf074e51405))
+
+
+
 # [1.31.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.30.0...v1.31.0) (2024-09-15)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **notification:** adds message-template class ([416c45a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/416c45aabde9ac21557f6c0a4032eedc144c11f5))
-
-
-
-# [1.27.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.26.0...v1.27.0) (2023-12-30)
-
-
-### Features
-
-* **engine:** removes etrust images ([f80e1e0](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/f80e1e051215ef9893b399629045267b1181cc97))
 
 
 
