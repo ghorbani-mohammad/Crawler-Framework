@@ -1,6 +1,6 @@
 import time
 
-SCROLL_PAUSE_TIME = 2
+SCROLL_PAUSE_TIME = 10
 
 
 def scroll(driver, counter):
