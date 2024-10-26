@@ -13,6 +13,7 @@ from django.utils import timezone
 from celery.utils.log import get_task_logger
 
 from . import models, utils
+from reusable.browser import scroll
 
 
 logger = get_task_logger(__name__)
@@ -145,6 +146,14 @@ class CrawlerEngine:
         elements = doc.findAll(tag, attribute)
         self.logging(f"length of elements is: {len(elements)}")
         return elements
+    
+    def do_scroll(self):
+        """
+        Scroll the page based on the page.scroll value.
+        """
+        if not self.page.scroll:
+            return
+        scroll(self.driver, self.page.scroll)
 
     def post_crawling(self, data):
         self.logging(f"Fetched links are: {data}")
@@ -170,6 +179,8 @@ class CrawlerEngine:
         self.logging(f"land page success: {success}")
         if not success:
             return
+
+        self.do_scroll()
 
         time.sleep(self.page.links_sleep)
         self.logging(f"sleep for {self.page.links_sleep} success")
