@@ -62,6 +62,7 @@ class Cookie(BaseModel):
 class Page(BaseModel):
     name = models.CharField(max_length=50, null=True, blank=True)
     agency = models.ForeignKey(Agency, related_name="pages", on_delete=models.CASCADE)
+    scroll = models.PositiveIntegerField(default=0, help_text="how many times to scroll")
     url = models.CharField(max_length=2000, null=False, unique=True)
     crawl_interval = models.PositiveIntegerField(default=60, help_text="minute")
     load_sleep = models.PositiveIntegerField(
