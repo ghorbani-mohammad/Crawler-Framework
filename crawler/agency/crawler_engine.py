@@ -153,6 +153,7 @@ class CrawlerEngine:
         """
         if not self.page.scroll:
             return
+        self.logging(f"Scrolling {self.page.scroll} times")
         scroll(self.driver, self.page.scroll)
 
     def post_crawling(self, data):
