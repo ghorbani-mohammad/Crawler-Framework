@@ -40,13 +40,16 @@ def report_image_path(_instance, filename):
     return None
 
 
-def get_browser_options():
+def get_browser_options(use_proxy: bool =False):
     options = FirefoxOptions()
     options.set_capability("pageLoadStrategy", "eager")
     options.add_argument("--disable-gpu")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--enable-automation")
     options.add_argument("--no-sandbox")
+
+    if use_proxy:
+        pass
 
     # Disable images
     options.set_preference("permissions.default.image", 2)

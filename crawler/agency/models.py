@@ -96,6 +96,7 @@ class Page(BaseModel):
         Cookie, related_name="pages", on_delete=models.CASCADE, null=True
     )
     lock = models.BooleanField(default=False)
+    use_proxy = models.BooleanField(default=False)
 
     def __str__(self):
         return f"({self.pk} - {self.name})"

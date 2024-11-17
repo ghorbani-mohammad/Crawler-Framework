@@ -72,7 +72,7 @@ class CrawlerEngine:
         try:
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
-                options=utils.get_browser_options(),
+                options=utils.get_browser_options(self.page.use_proxy),
             )
         except SessionNotCreatedException:
             # TODO: Custom handling
