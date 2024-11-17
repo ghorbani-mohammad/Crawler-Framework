@@ -69,7 +69,8 @@ function pull() {
 
 function up() {
     echo -e "\n ... up containers ... \n"
-    docker compose -f ${COMPOSE_FILE} up -d --build
+    # docker compose -f ${COMPOSE_FILE} up -d --build
+    docker compose up 
 }
 
 function remove_unused_image() {
