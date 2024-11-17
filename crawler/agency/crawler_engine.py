@@ -31,7 +31,7 @@ class CrawlerEngine:
                 repetitive links in the page. Defaults to False.
         """
         self.before_initialize_driver(repetitive)
-        success = self.initialize_driver()
+        success = self.initialize_driver(page["use_proxy"])
         if not success:
             return
         self.after_initialize_driver(page["id"])
@@ -68,11 +68,11 @@ class CrawlerEngine:
         driver.execute_script(script)
         return driver
 
-    def initialize_driver(self) -> bool:
+    def initialize_driver(self, use_proxy:bool) -> bool:
         try:
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
-                options=utils.get_browser_options(self.page.use_proxy),
+                options=utils.get_browser_options(use_proxy),
             )
         except SessionNotCreatedException:
             # TODO: Custom handling
@@ -303,6 +303,7 @@ class CrawlerEngine:
         self.report.save()
 
     def logging(self, message):
+        print(f"logging: {message}")
         logger.info(message)
         self.log_messages += f"{message} \n\n"
 
