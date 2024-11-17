@@ -42,6 +42,7 @@ class PageSerializer(serializers.ModelSerializer):
             "url",
             "agency",
             "status",
+            "use_proxy",
             "structure",
             "last_crawl",
             "created_at",
