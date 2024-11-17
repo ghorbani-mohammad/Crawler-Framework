@@ -142,7 +142,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         "url",
         "structure",
         ("crawl_interval", "load_sleep", "links_sleep", "scroll"),
-        ("status", "fetch_content", "take_picture", "lock"),
+        ("status", "fetch_content", "take_picture", "lock", "use_proxy"),
         ("telegram_channel", "iv_code"),
         "message_code",
         "message_template",
