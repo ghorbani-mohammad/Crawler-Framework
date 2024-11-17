@@ -1,5 +1,6 @@
 from os import path
 
+from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -49,7 +50,30 @@ def get_browser_options(use_proxy: bool =False):
     options.add_argument("--no-sandbox")
 
     if use_proxy:
-        pass
+        # Set up the HTTP and HTTPS proxy for Firefox
+        options.set_preference("network.proxy.type", 1)
+        options.set_preference("network.proxy.http", settings.PROXY_HOST)
+        options.set_preference("network.proxy.http_port", settings.PROXY_PORT)
+        options.set_preference("network.proxy.ssl", settings.PROXY_HOST)
+        options.set_preference("network.proxy.ssl_port", settings.PROXY_PORT)
+
+        proxy_host = settings.PROXY_HOST
+        proxy_port = settings.PROXY_PORT
+        proxy_username = settings.PROXY_USER
+        proxy_password = settings.PROXY_PASS
+        proxy_with_credentials = f"{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}"
+
+        options.set_preference("network.proxy.http", proxy_host)
+        options.set_preference("network.proxy.http_port", int(proxy_port))
+        options.set_preference("network.proxy.ssl", proxy_host)
+        options.set_preference("network.proxy.ssl_port", int(proxy_port))
+        options.set_preference("network.proxy.type", 1)  # Enable manual proxy configuration
+        options.set_preference("network.proxy.http", proxy_with_credentials)
+
+        # Optional: Disable proxy for HTTPS and other protocols
+        options.set_preference("network.proxy.ssl", "")  # No HTTPS proxy
+        options.set_preference("network.proxy.ftp", "")  # No FTP proxy
+        options.set_preference("network.proxy.socks", "")  # No SOCKS proxy
 
     # Disable images
     options.set_preference("permissions.default.image", 2)

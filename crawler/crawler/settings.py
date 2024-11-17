@@ -236,3 +236,10 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
     }
 }
+
+
+# proxy settings
+PROXY_HOST = env("PROXY_HOST", default=None)
+PROXY_PORT = env("PROXY_PORT", default=None)
+PROXY_USER = env("PROXY_USER", default=None)
+PROXY_PASS = env("PROXY_PASS", default=None)
