@@ -72,6 +72,7 @@ services:
       - SE_EVENT_BUS_HOST=crawler-selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - JAVA_OPTS=-Dotel.traces.exporter=none
     shm_size: 2g
     ports:
       - 7900:7900
@@ -86,4 +87,6 @@ services:
       - 4442:4442
       - 4443:4443
       - 4444:4444
+    environment:
+      - JAVA_OPTS=-Dotel.traces.exporter=none
     restart: unless-stopped
