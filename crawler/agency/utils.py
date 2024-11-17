@@ -78,4 +78,7 @@ def get_browser_options(use_proxy: bool =False):
     # Disable images
     options.set_preference("permissions.default.image", 2)
 
+    # Disable JSON output formatting
+    options.set_preference("devtools.jsonview.enabled", False)
+
     return options
