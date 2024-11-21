@@ -42,7 +42,7 @@ def report_image_path(_instance, filename):
     return None
 
 
-def get_browser_options(use_proxy: bool =False):
+def get_browser_options(use_proxy: bool = False):
     options = FirefoxOptions()
     options.set_capability("pageLoadStrategy", "eager")
     options.add_argument("--disable-gpu")
