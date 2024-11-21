@@ -68,7 +68,7 @@ class CrawlerEngine:
         driver.execute_script(script)
         return driver
 
-    def initialize_driver(self, use_proxy:bool) -> bool:
+    def initialize_driver(self, use_proxy: bool) -> bool:
         try:
             self.driver = webdriver.Remote(
                 "http://crawler-selenium-hub:4444",
@@ -146,7 +146,7 @@ class CrawlerEngine:
         elements = doc.findAll(tag, attribute)
         self.logging(f"length of elements is: {len(elements)}")
         return elements
-    
+
     def do_scroll(self):
         """
         Scroll the page based on the page.scroll value.
