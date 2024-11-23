@@ -285,7 +285,6 @@ class CrawlerEngine:
         counter = self.fetched_links_count
         for data in self.fetched_links:
             if not self.repetitive and redis_duplicate_checker.exists(data["link"]):
-                self.logging(f"link {data['link']} is duplicate")
                 counter -= 1
                 continue
             self.crawl_one_page(data, self.page.fetch_content)
