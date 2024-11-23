@@ -37,7 +37,6 @@ services:
     restart: unless-stopped
 
   crawler_worker:
-    container_name: crawler_worker
     build: .
     working_dir: /app/crawler
     command: ["celery", "-A", "crawler", "worker", "-l", "info", "--pidfile=", "--concurrency=1"]
