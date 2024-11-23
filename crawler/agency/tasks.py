@@ -122,13 +122,14 @@ def page_crawl_repetitive(page):
 
 def check_page(pages, data, key):
     page = pages.filter(pk=data["page_id"], status=True).first()
-    if page is None:
-        desc = f"data is: {data}"
-        error = "page is None or is not active"
-        register_log(desc, error, page, data["link"])
-        redis_news.delete(key)
-        return False
-    return page
+    if page:
+        return page
+
+    desc = f"data is: {data}"
+    error = "page is None or is not active"
+    register_log(desc, error, page, data["link"])
+    redis_news.delete(key)
+    return False
 
 
 # Don't remove this, it's used dynamically in
