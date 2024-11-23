@@ -1,3 +1,12 @@
+# [1.35.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.34.1...v1.35.0) (2024-11-23)
+
+
+### Features
+
+* add logging for redis_exporter startup with container ID ([414ffe8](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/414ffe8aa5d02361dcd5757716fced90e750e86b))
+
+
+
 ## [1.34.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.34.0...v1.34.1) (2024-11-23)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * makes message-code blank-able ([a9e7414](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/a9e741476e7cb44ce864e8b8704bcbf074e51405))
-
-
-
-# [1.31.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.30.0...v1.31.0) (2024-09-15)
-
-
-### Features
-
-* removes images ([c5fffc0](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c5fffc09b1681894e8ab6e8a08ffecca409b1df9))
 
 
 
