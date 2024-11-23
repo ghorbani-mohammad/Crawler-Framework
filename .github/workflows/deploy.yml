@@ -47,5 +47,5 @@ jobs:
           script: >
             cd ${{secrets.PROJECT_PATH}} 
             && git pull 
-            && docker-compose -f docker-compose-pro.yml up -d --build
+            && docker-compose -f docker-compose-pro.yml up -d --build --scale crawler_worker=3
 
