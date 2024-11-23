@@ -1,3 +1,12 @@
+## [1.35.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.35.0...v1.35.1) (2024-11-23)
+
+
+### Bug Fixes
+
+* remove duplicate logging for existing links in crawler engine ([5e11499](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5e1149936ed5ffeee7fb6efeb6afdea198098a41))
+
+
+
 # [1.35.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.34.1...v1.35.0) (2024-11-23)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * adds scroll to page ([3672877](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3672877e5bc5d02757bf58f4cecbf9b755e328c6))
-
-
-
-# [1.32.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.31.0...v1.32.0) (2024-10-20)
-
-
-### Features
-
-* makes message-code blank-able ([a9e7414](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/a9e741476e7cb44ce864e8b8704bcbf074e51405))
 
 
 
