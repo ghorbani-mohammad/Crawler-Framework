@@ -2,10 +2,11 @@ from __future__ import absolute_import, unicode_literals
 import re
 import json
 import time
+import redis
+import socket
+import telegram
 import importlib
 import traceback
-import redis
-import telegram
 
 from django.conf import settings
 from django.utils import timezone
@@ -157,6 +158,8 @@ def redis_exporter():
     It will be used to extract news in the redis,
     and send them to the telegram bot.
     """
+    logger.info("redis-exporter started with container id: %s", socket.gethostname())
+
     if settings.DEBUG:
         logger.info("redis-exporter is disabled in debug mode")
         return
