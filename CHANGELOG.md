@@ -1,3 +1,12 @@
+## [1.34.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.34.0...v1.34.1) (2024-11-23)
+
+
+### Bug Fixes
+
+* improve page check logic to reduce nesting and enhance readability ([6511122](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6511122c8a89006aae7763b21466c2353c6f2f4f))
+
+
+
 # [1.34.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.33.0...v1.34.0) (2024-11-17)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * removes images ([c5fffc0](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c5fffc09b1681894e8ab6e8a08ffecca409b1df9))
-
-
-
-# [1.30.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.29.0...v1.30.0) (2024-09-08)
-
-
-### Features
-
-* adds search on name to structure admin ([a85640b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/a85640b101069028b9e7090e0554584a45a65386))
 
 
 
