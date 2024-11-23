@@ -186,7 +186,7 @@ def redis_exporter():
                     + "bot.send_message(chat_id=page.telegram_channel, text=message)"
                 )
                 exec(temp_code)  # pylint: disable=exec-used
-                time.sleep(3)
+                time.sleep(1.5)
             except KeyError as error:
                 message = f"redis-exporter, key-error, code was: {temp_code}"
                 register_log(message, error, page, data["link"])
