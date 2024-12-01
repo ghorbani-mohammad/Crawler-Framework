@@ -204,7 +204,6 @@ def redis_exporter():
             register_log(message, error, page, data["link"])
         finally:
             redis_news.delete(key)
-        link_keys = redis_news.scan_iter("links_*")
 
 
 @crawler.task()
