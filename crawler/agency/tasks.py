@@ -38,8 +38,8 @@ def remove_old_logs():
     _count = models.Log.objects.filter(created_at__lte=before_time).delete()[0]
 
 
-@crawler.task(name="reset_locks")
-def reset_locks():
+@crawler.task(name="reset_page_locks")
+def reset_page_locks():
     models.Page.objects.update(lock=False)
 
 
