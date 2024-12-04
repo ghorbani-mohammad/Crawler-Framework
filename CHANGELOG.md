@@ -1,3 +1,12 @@
+# [1.37.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.36.1...v1.37.0) (2024-12-04)
+
+
+### Features
+
+* add 'use_proxy' field to PageAdmin display list ([4ad3165](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4ad3165533215ec2b695d78d73c05d42b07b575f))
+
+
+
 ## [1.36.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.36.0...v1.36.1) (2024-12-01)
 
 
@@ -36,15 +45,6 @@
 ### Features
 
 * add logging for redis_exporter startup with container ID ([414ffe8](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/414ffe8aa5d02361dcd5757716fced90e750e86b))
-
-
-
-## [1.34.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.34.0...v1.34.1) (2024-11-23)
-
-
-### Bug Fixes
-
-* improve page check logic to reduce nesting and enhance readability ([6511122](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6511122c8a89006aae7763b21466c2353c6f2f4f))
 
 
 
