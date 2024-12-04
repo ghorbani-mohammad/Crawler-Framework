@@ -132,6 +132,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         "get_last_crawl_count",
         "status",
         "today_crawl_count",
+        "use_proxy",
         "lock",
         "fetch_content",
         "take_picture",
