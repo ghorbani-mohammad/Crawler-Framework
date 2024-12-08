@@ -1,3 +1,12 @@
+# [1.38.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.37.0...v1.38.0) (2024-12-08)
+
+
+### Features
+
+* add FilteringTag and FilteringToken models with migrations ([91263fd](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/91263fdd807f6e06e43a8dbada526ffff140a988))
+
+
+
 # [1.37.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.36.1...v1.37.0) (2024-12-04)
 
 
@@ -36,15 +45,6 @@
 ### Bug Fixes
 
 * remove duplicate logging for existing links in crawler engine ([5e11499](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5e1149936ed5ffeee7fb6efeb6afdea198098a41))
-
-
-
-# [1.35.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.34.1...v1.35.0) (2024-11-23)
-
-
-### Features
-
-* add logging for redis_exporter startup with container ID ([414ffe8](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/414ffe8aa5d02361dcd5757716fced90e750e86b))
 
 
 
