@@ -1,3 +1,12 @@
+## [1.38.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.0...v1.38.1) (2024-12-08)
+
+
+### Bug Fixes
+
+* remove print statement from logging method and enhance logging functionality ([b5a3ebf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b5a3ebfaa706d928d1bcb974a8782049b9b0e409))
+
+
+
 # [1.38.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.37.0...v1.38.0) (2024-12-08)
 
 
@@ -36,15 +45,6 @@
 ### Features
 
 * add logging for lock acquisition and release in concurrency decorator ([f7d4a04](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/f7d4a04ea7a34bfa8c2c0d09713f5a473a02d792))
-
-
-
-## [1.35.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.35.0...v1.35.1) (2024-11-23)
-
-
-### Bug Fixes
-
-* remove duplicate logging for existing links in crawler engine ([5e11499](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5e1149936ed5ffeee7fb6efeb6afdea198098a41))
 
 
 
