@@ -302,7 +302,6 @@ class CrawlerEngine:
         self.report.save()
 
     def logging(self, message):
-        print(f"logging: {message}")
         logger.info(message)
         self.log_messages += f"{message} \n\n"
 
