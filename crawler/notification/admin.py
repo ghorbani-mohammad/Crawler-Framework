@@ -17,3 +17,13 @@ class TelegramAccountAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 @admin.register(models.MessageTemplate)
 class MessageTemplateAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     list_display = ("pk", "name", "created_at", "updated_at")
+
+
+@admin.register(models.FilteringTag)
+class FilteringTagAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+    list_display = ("pk", "name")
+
+
+@admin.register(models.FilteringToken)
+class FilteringTokenAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+    list_display = ("pk", "token", "tag")
