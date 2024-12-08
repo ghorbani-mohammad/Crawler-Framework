@@ -55,14 +55,14 @@ def get_browser_options(use_proxy: bool = False):
 
         # Define the SOCKS proxy
         # first you should create a socks connection in the host
-        # like: ssh -D 0.0.0.0:9090 user-on-remote@remote-ip -p remote-port
+        # like: ssh -D 0.0.0.0:1080 user-on-remote@remote-ip -p remote-port
         # second you should find the gateway ip for your container
         # like: docker network inspect bridge, look for gateway keyword
         # third, be sure that you've allowed the port
-        # like: ufw allow 9090
+        # like: ufw allow 1080
         proxy = Proxy()
         proxy.proxy_type = ProxyType.MANUAL
-        proxy.socks_proxy = "172.17.0.1:9090"  # Your SOCKS proxy
+        proxy.socks_proxy = "172.17.0.1:1080"  # Your SOCKS proxy
         proxy.socks_version = 5  # SOCKS5
         proxy.no_proxy = ""  # No exceptions
         options.proxy = proxy
