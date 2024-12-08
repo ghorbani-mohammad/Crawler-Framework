@@ -25,3 +25,18 @@ class MessageTemplate(BaseModel):
 
     def __str__(self):
         return f"({self.pk} - {self.name})"
+
+
+class FilteringTag(BaseModel):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"({self.pk} - {self.name})"
+
+
+class FilteringToken(BaseModel):
+    token = models.CharField(max_length=50)
+    tag = models.ForeignKey(FilteringTag, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"({self.pk} - {self.token})"

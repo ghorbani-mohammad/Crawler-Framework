@@ -22,7 +22,7 @@ from . import utils, models
 MINUTE = 60
 # caveat: at most the redis-exporter task should take 30 minutes
 # otherwise, we would have duplication of messages
-TASKS_TIMEOUT = 30 * MINUTE 
+TASKS_TIMEOUT = 30 * MINUTE
 
 logger = get_task_logger(__name__)
 redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
