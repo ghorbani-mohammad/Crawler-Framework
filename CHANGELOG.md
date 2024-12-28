@@ -1,3 +1,12 @@
+# [1.41.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.40.0...v1.41.0) (2024-12-28)
+
+
+### Features
+
+* add checking_ignore_tags function to filter messages based on page ignore tags ([0a36fc9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0a36fc93dfb00e309be10d4358efe0e8f4ccc81b))
+
+
+
 # [1.40.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.39.1...v1.40.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * remove redundant variable in remove_old_logs task and add cleanup for DBLogEntry ([145e1de](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/145e1de9b9cfab5e607b7a23f40ef2bf62fd6b8d))
-
-
-
-## [1.38.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.0...v1.38.1) (2024-12-08)
-
-
-### Bug Fixes
-
-* remove print statement from logging method and enhance logging functionality ([b5a3ebf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b5a3ebfaa706d928d1bcb974a8782049b9b0e409))
 
 
 
