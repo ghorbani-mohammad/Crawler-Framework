@@ -1,3 +1,12 @@
+# [1.39.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.2...v1.39.0) (2024-12-28)
+
+
+### Features
+
+* add filtering_tags field to Page model and create migration ([fb0ad3b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/fb0ad3bd55a84b84bcc3f208fab0bb29929a4e86))
+
+
+
 ## [1.38.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.1...v1.38.2) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add 'use_proxy' field to PageAdmin display list ([4ad3165](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4ad3165533215ec2b695d78d73c05d42b07b575f))
-
-
-
-## [1.36.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.36.0...v1.36.1) (2024-12-01)
-
-
-### Bug Fixes
-
-* remove unused link_keys variable in redis_exporter function ([5e407ea](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/5e407eaff9fc8294151263ebe45210ccf57469de))
 
 
 
