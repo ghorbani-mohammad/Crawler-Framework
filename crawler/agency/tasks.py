@@ -160,6 +160,13 @@ def clear_redis_exporter_lock():
     REDIS_CLIENT.delete("redis_exporter")
 
 
+def clear_all_locks():
+    REDIS_CLIENT = redis.Redis(host="crawler-redis", port=6379, db=5)
+    REDIS_CLIENT.delete("redis_exporter")
+    REDIS_CLIENT.delete("page_crawl")
+    REDIS_CLIENT.delete("page_crawl_repetitive")
+
+
 def checking_ignore_tags(page: models.Page, message:str) -> bool:
     for tag in page.filtering_tags.all():
         tag_tokens = tag.filteringtoken_set.all()
