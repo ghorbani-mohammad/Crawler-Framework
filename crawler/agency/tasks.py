@@ -38,7 +38,7 @@ def remove_old_reports():
 def remove_old_logs():
     before_time = timezone.localtime() - timezone.timedelta(days=7)
     models.Log.objects.filter(created_at__lte=before_time).delete()
-    models.DBLogEntry.objects.filter(timestamp__lte=before_time).delete()
+    models.DBLogEntry.objects.filter(time__lte=before_time).delete()
 
 
 @crawler.task(name="reset_page_locks")
