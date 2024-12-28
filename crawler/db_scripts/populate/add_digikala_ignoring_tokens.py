@@ -1,4 +1,18 @@
+import os
+import sys
+import django
+
 from notification.models import FilteringTag, FilteringToken
+
+
+def initial():
+    sys.path.append("../..")
+    os.environ["DJANGO_SETTINGS_MODULE"] = "crawler.settings"
+    django.setup()
+
+
+initial()
+
 
 
 ignore_tokens = [
