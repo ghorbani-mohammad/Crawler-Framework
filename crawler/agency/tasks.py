@@ -161,7 +161,7 @@ def clear_redis_exporter_lock():
 
 
 def checking_ignore_tags(page: models.Page, message:str) -> bool:
-    for tag in page.ignore_tags.all():
+    for tag in page.filtering_tags.all():
         tag_tokens = tag.token_set.all()
         for token in tag_tokens:
             if token.token in message:
