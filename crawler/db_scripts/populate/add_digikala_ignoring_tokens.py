@@ -2,7 +2,6 @@ import os
 import sys
 import django
 
-from notification.models import FilteringTag, FilteringToken
 
 
 def initial():
@@ -13,6 +12,7 @@ def initial():
 
 initial()
 
+from notification.models import FilteringTag, FilteringToken
 
 
 ignore_tokens = [
