@@ -1,3 +1,12 @@
+# [1.40.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.39.1...v1.40.0) (2024-12-28)
+
+
+### Features
+
+* add clear_redis_exporter_lock function to manage Redis lock ([9e8620a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/9e8620a689be45fa4f947d4deba46a1e6b81d93d))
+
+
+
 ## [1.39.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.39.0...v1.39.1) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * remove print statement from logging method and enhance logging functionality ([b5a3ebf](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/b5a3ebfaa706d928d1bcb974a8782049b9b0e409))
-
-
-
-# [1.38.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.37.0...v1.38.0) (2024-12-08)
-
-
-### Features
-
-* add FilteringTag and FilteringToken models with migrations ([91263fd](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/91263fdd807f6e06e43a8dbada526ffff140a988))
 
 
 
