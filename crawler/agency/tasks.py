@@ -155,6 +155,11 @@ def limit_newlines(text: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", text)
 
 
+def clear_redis_exporter_lock():
+    REDIS_CLIENT = redis.Redis(host="crawler-redis", port=6379, db=5)
+    REDIS_CLIENT.delete("redis_exporter")
+
+
 @crawler.task(name="redis_exporter")
 @only_one_concurrency(key="redis_exporter", timeout=TASKS_TIMEOUT)
 def redis_exporter():
@@ -189,7 +194,7 @@ def redis_exporter():
             temp_code = utils.CODE.format(page.message_code)
             message = ""
             try:
-                local_vars = {}
+                local_vars = {"data":data}
                 # prepare the message
                 exec(temp_code, globals(), local_vars)  # pylint: disable=exec-used
                 # Retrieve the updated 'message' from local_vars
