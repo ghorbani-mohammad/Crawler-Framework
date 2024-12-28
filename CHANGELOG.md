@@ -1,3 +1,12 @@
+# [1.43.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.42.0...v1.43.0) (2024-12-28)
+
+
+### Features
+
+* add clear_redis_exporter_lock call to wsgi.py for improved Redis lock management ([6476b65](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6476b656f89951c70d1f47065ab267076c88cea6))
+
+
+
 # [1.42.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.41.0...v1.42.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * update redis_exporter to use local_vars for message retrieval ([22e24d6](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/22e24d6461264682c8accbab10e10beeeef2dd82))
-
-
-
-# [1.39.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.2...v1.39.0) (2024-12-28)
-
-
-### Features
-
-* add filtering_tags field to Page model and create migration ([fb0ad3b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/fb0ad3bd55a84b84bcc3f208fab0bb29929a4e86))
 
 
 
