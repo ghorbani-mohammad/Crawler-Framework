@@ -1,3 +1,12 @@
+# [1.42.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.41.0...v1.42.0) (2024-12-28)
+
+
+### Features
+
+* update checking_ignore_tags to use filtering_tags and add script for populating ignore tokens ([0bb2a8f](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0bb2a8fc9c0b8d3e91b93730a50d5a2b7b17c394))
+
+
+
 # [1.41.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.40.0...v1.41.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add filtering_tags field to Page model and create migration ([fb0ad3b](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/fb0ad3bd55a84b84bcc3f208fab0bb29929a4e86))
-
-
-
-## [1.38.2](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.1...v1.38.2) (2024-12-28)
-
-
-### Bug Fixes
-
-* remove redundant variable in remove_old_logs task and add cleanup for DBLogEntry ([145e1de](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/145e1de9b9cfab5e607b7a23f40ef2bf62fd6b8d))
 
 
 
