@@ -189,8 +189,11 @@ def redis_exporter():
             temp_code = utils.CODE.format(page.message_code)
             message = ""
             try:
+                local_vars = {}
                 # prepare the message
-                exec(temp_code)  # pylint: disable=exec-used
+                exec(temp_code, globals(), local_vars)  # pylint: disable=exec-used
+                # Retrieve the updated 'message' from local_vars
+                message = local_vars.get('message', '')
                 bot.send_message(chat_id=page.telegram_channel, text=message)
                 time.sleep(1.5)
             except KeyError as error:
