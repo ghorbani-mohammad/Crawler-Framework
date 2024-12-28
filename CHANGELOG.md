@@ -1,3 +1,12 @@
+# [1.44.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.43.0...v1.44.0) (2024-12-28)
+
+
+### Features
+
+* add filtering_tags to PageAdmin and update checking_ignore_tags to use filteringtoken_set ([d5bcb88](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d5bcb88c0f3874984a2315b7bee2f6728bdc30ac))
+
+
+
 # [1.43.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.42.0...v1.43.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add clear_redis_exporter_lock function to manage Redis lock ([9e8620a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/9e8620a689be45fa4f947d4deba46a1e6b81d93d))
-
-
-
-## [1.39.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.39.0...v1.39.1) (2024-12-28)
-
-
-### Bug Fixes
-
-* update redis_exporter to use local_vars for message retrieval ([22e24d6](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/22e24d6461264682c8accbab10e10beeeef2dd82))
 
 
 
