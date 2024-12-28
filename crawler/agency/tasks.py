@@ -124,7 +124,7 @@ def page_crawl_repetitive(page):
     crawler_engine(page, repetitive=True)
 
 
-def check_page(pages, data, key):
+def find_page(pages, data, key):
     page = pages.filter(pk=data["page_id"], status=True).first()
     if page:
         return page
@@ -181,19 +181,17 @@ def redis_exporter():
         try:
             data = json.loads(data)
 
-            page = check_page(pages, data, key)
+            page = find_page(pages, data, key)
             if not page:
                 continue
 
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
             temp_code = utils.CODE.format(page.message_code)
+            message = ""
             try:
-                temp_code = (
-                    temp_code
-                    + "\n"
-                    + "bot.send_message(chat_id=page.telegram_channel, text=message)"
-                )
+                # prepare the message
                 exec(temp_code)  # pylint: disable=exec-used
+                bot.send_message(chat_id=page.telegram_channel, text=message)
                 time.sleep(1.5)
             except KeyError as error:
                 message = f"redis-exporter, key-error, code was: {temp_code}"
