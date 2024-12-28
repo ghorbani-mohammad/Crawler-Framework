@@ -1,3 +1,12 @@
+# [1.45.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.44.0...v1.45.0) (2024-12-28)
+
+
+### Features
+
+* add clear_all_locks function to manage multiple Redis locks ([9ef656d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/9ef656d8f1549a9f78c1b161d8809d0051f34759))
+
+
+
 # [1.44.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.43.0...v1.44.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add checking_ignore_tags function to filter messages based on page ignore tags ([0a36fc9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0a36fc93dfb00e309be10d4358efe0e8f4ccc81b))
-
-
-
-# [1.40.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.39.1...v1.40.0) (2024-12-28)
-
-
-### Features
-
-* add clear_redis_exporter_lock function to manage Redis lock ([9e8620a](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/9e8620a689be45fa4f947d4deba46a1e6b81d93d))
 
 
 
