@@ -11,12 +11,13 @@ import traceback
 from django.conf import settings
 from django.utils import timezone
 from celery.utils.log import get_task_logger
+
+from . import utils, models
+from crawler.celery import crawler
 from notification import utils as not_utils
 from notification import models as not_models
 from reusable.other import only_one_concurrency
 
-from crawler.celery import crawler
-from . import utils, models
 
 
 MINUTE = 60
@@ -167,8 +168,7 @@ def redis_exporter():
         logger.info("redis-exporter is disabled in debug mode")
         return
 
-    # this bot variable should not removed
-    bot = telegram.Bot(token=settings.BOT_API_KEY)  # pylint: disable=unused-variable
+    bot = telegram.Bot(token=settings.BOT_API_KEY)
     pages = models.Page.objects.all()
     for key in redis_news.scan_iter("links_*"):
         data = redis_news.get(key)
