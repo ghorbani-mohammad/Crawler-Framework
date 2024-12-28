@@ -194,7 +194,7 @@ def redis_exporter():
             temp_code = utils.CODE.format(page.message_code)
             message = ""
             try:
-                local_vars = {"data":data}
+                local_vars = {"data":data, "page":page}
                 # prepare the message
                 exec(temp_code, globals(), local_vars)  # pylint: disable=exec-used
                 # Retrieve the updated 'message' from local_vars
