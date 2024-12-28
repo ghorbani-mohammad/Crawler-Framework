@@ -160,6 +160,15 @@ def clear_redis_exporter_lock():
     REDIS_CLIENT.delete("redis_exporter")
 
 
+def checking_ignore_tags(page: models.Page, message:str) -> bool:
+    for tag in page.ignore_tags.all():
+        tag_tokens = tag.token_set.all()
+        for token in tag_tokens:
+            if token.token in message:
+                return True
+    return False
+
+
 @crawler.task(name="redis_exporter")
 @only_one_concurrency(key="redis_exporter", timeout=TASKS_TIMEOUT)
 def redis_exporter():
@@ -199,6 +208,8 @@ def redis_exporter():
                 exec(temp_code, globals(), local_vars)  # pylint: disable=exec-used
                 # Retrieve the updated 'message' from local_vars
                 message = local_vars.get('message', '')
+                if checking_ignore_tags(page, message):
+                    continue
                 bot.send_message(chat_id=page.telegram_channel, text=message)
                 time.sleep(1.5)
             except KeyError as error:
