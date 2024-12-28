@@ -99,6 +99,9 @@ class Page(BaseModel):
     )
     lock = models.BooleanField(default=False)
     use_proxy = models.BooleanField(default=False)
+    filtering_tags = models.ManyToManyField(
+        "notification.FilteringTag", related_name="pages", blank=True
+    )
 
     def __str__(self):
         return f"({self.pk} - {self.name})"
