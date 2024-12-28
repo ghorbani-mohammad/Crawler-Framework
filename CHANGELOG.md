@@ -1,3 +1,12 @@
+## [1.39.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.39.0...v1.39.1) (2024-12-28)
+
+
+### Bug Fixes
+
+* update redis_exporter to use local_vars for message retrieval ([22e24d6](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/22e24d6461264682c8accbab10e10beeeef2dd82))
+
+
+
 # [1.39.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.38.2...v1.39.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add FilteringTag and FilteringToken models with migrations ([91263fd](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/91263fdd807f6e06e43a8dbada526ffff140a988))
-
-
-
-# [1.37.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.36.1...v1.37.0) (2024-12-04)
-
-
-### Features
-
-* add 'use_proxy' field to PageAdmin display list ([4ad3165](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/4ad3165533215ec2b695d78d73c05d42b07b575f))
 
 
 
