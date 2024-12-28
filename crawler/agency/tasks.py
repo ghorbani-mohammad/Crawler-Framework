@@ -31,7 +31,7 @@ redis_news = redis.StrictRedis(host="crawler-redis", port=6379, db=0)
 @crawler.task(name="remove_old_reports")
 def remove_old_reports():
     before_time = timezone.localtime() - timezone.timedelta(days=7)
-    _count = models.Report.objects.filter(created_at__lte=before_time).delete()[0]
+    models.Report.objects.filter(created_at__lte=before_time).delete()[0]
 
 
 @crawler.task(name="remove_old_logs")
