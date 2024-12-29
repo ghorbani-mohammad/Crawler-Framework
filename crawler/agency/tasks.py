@@ -155,11 +155,6 @@ def limit_newlines(text: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", text)
 
 
-def clear_redis_exporter_lock():
-    REDIS_CLIENT = redis.Redis(host="crawler-redis", port=6379, db=5)
-    REDIS_CLIENT.delete("redis_exporter")
-
-
 def clear_all_redis_locks():
     REDIS_CLIENT = redis.Redis(host="crawler-redis", port=6379, db=5)
     REDIS_CLIENT.delete("redis_exporter")
