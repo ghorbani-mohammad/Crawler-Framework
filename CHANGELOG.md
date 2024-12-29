@@ -1,3 +1,12 @@
+## [1.49.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.49.0...v1.49.1) (2024-12-29)
+
+
+### Bug Fixes
+
+* update token checking logic in checking_ignore_tags function for improved accuracy ([875f486](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/875f486acb6d22fc747e43c342b1e27b4b5ba497))
+
+
+
 # [1.49.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.48.0...v1.49.0) (2024-12-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * rename clear_all_locks to clear_all_redis_locks for clarity and update usage in wsgi.py ([3056e53](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3056e532e1bb911f5e49d728eb3579dc4a459a7d))
-
-
-
-# [1.45.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.44.0...v1.45.0) (2024-12-28)
-
-
-### Features
-
-* add clear_all_locks function to manage multiple Redis locks ([9ef656d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/9ef656d8f1549a9f78c1b161d8809d0051f34759))
 
 
 
