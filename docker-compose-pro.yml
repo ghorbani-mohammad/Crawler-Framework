@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 x-logging: 
   &default-logging
   driver: json-file
@@ -111,3 +111,7 @@ services:
 
 networks:
   crawler_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16 # necessary for socks proxy access via ufw to have a fixed ip range
