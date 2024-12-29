@@ -1,3 +1,12 @@
+# [1.46.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.45.0...v1.46.0) (2024-12-29)
+
+
+### Features
+
+* rename clear_all_locks to clear_all_redis_locks for clarity and update usage in wsgi.py ([3056e53](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3056e532e1bb911f5e49d728eb3579dc4a459a7d))
+
+
+
 # [1.45.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.44.0...v1.45.0) (2024-12-28)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * update checking_ignore_tags to use filtering_tags and add script for populating ignore tokens ([0bb2a8f](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0bb2a8fc9c0b8d3e91b93730a50d5a2b7b17c394))
-
-
-
-# [1.41.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.40.0...v1.41.0) (2024-12-28)
-
-
-### Features
-
-* add checking_ignore_tags function to filter messages based on page ignore tags ([0a36fc9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0a36fc93dfb00e309be10d4358efe0e8f4ccc81b))
 
 
 
