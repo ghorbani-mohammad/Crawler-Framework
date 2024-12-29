@@ -165,8 +165,8 @@ def clear_all_redis_locks():
 
 def checking_ignore_tags(page: models.Page, message:str, ig_tokens:Optional[list[str]]) -> bool:
     for token in ig_tokens:
-        if token.token in message:
-            message = f"message contains {token.token}"
+        if token in message:
+            message = f"message contains {token}"
             register_log(message, "ignored content", page, "")
             return True
     return False
