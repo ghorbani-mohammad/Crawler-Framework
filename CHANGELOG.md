@@ -1,3 +1,12 @@
+# [1.48.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.47.0...v1.48.0) (2024-12-29)
+
+
+### Features
+
+* add unique constraint on token and tag in FilteringToken model ([981dfe2](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/981dfe2e64477fcd9e5692aada228d0bed26e627))
+
+
+
 # [1.47.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.46.0...v1.47.0) (2024-12-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add filtering_tags to PageAdmin and update checking_ignore_tags to use filteringtoken_set ([d5bcb88](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d5bcb88c0f3874984a2315b7bee2f6728bdc30ac))
-
-
-
-# [1.43.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.42.0...v1.43.0) (2024-12-28)
-
-
-### Features
-
-* add clear_redis_exporter_lock call to wsgi.py for improved Redis lock management ([6476b65](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6476b656f89951c70d1f47065ab267076c88cea6))
 
 
 
