@@ -1,3 +1,12 @@
+# [1.47.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.46.0...v1.47.0) (2024-12-29)
+
+
+### Features
+
+* update SOCKS proxy configuration and enhance docker-compose version for improved networking ([e5360a9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e5360a9c0b07f7746cca3c9b0681f38082f0f9f1))
+
+
+
 # [1.46.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.45.0...v1.46.0) (2024-12-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add clear_redis_exporter_lock call to wsgi.py for improved Redis lock management ([6476b65](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/6476b656f89951c70d1f47065ab267076c88cea6))
-
-
-
-# [1.42.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.41.0...v1.42.0) (2024-12-28)
-
-
-### Features
-
-* update checking_ignore_tags to use filtering_tags and add script for populating ignore tokens ([0bb2a8f](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/0bb2a8fc9c0b8d3e91b93730a50d5a2b7b17c394))
 
 
 
