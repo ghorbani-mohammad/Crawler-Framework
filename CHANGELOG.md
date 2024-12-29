@@ -1,3 +1,12 @@
+# [1.49.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.48.0...v1.49.0) (2024-12-29)
+
+
+### Features
+
+* enhance tag checking by adding optional ignoring tokens parameter and refactor related functions ([32f5bed](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/32f5bed6da33af2ab1d7fc98ff8aba3747e99877))
+
+
+
 # [1.48.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.47.0...v1.48.0) (2024-12-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add clear_all_locks function to manage multiple Redis locks ([9ef656d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/9ef656d8f1549a9f78c1b161d8809d0051f34759))
-
-
-
-# [1.44.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.43.0...v1.44.0) (2024-12-28)
-
-
-### Features
-
-* add filtering_tags to PageAdmin and update checking_ignore_tags to use filteringtoken_set ([d5bcb88](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d5bcb88c0f3874984a2315b7bee2f6728bdc30ac))
 
 
 
