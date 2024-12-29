@@ -7,6 +7,7 @@ import socket
 import telegram
 import importlib
 import traceback
+from typing import Optional
 
 from django.conf import settings
 from django.utils import timezone
@@ -162,15 +163,21 @@ def clear_all_redis_locks():
     REDIS_CLIENT.delete("page_crawl_repetitive")
 
 
-def checking_ignore_tags(page: models.Page, message:str) -> bool:
+def checking_ignore_tags(page: models.Page, message:str, ig_tokens:Optional[list[str]]) -> bool:
+    for token in ig_tokens:
+        if token.token in message:
+            message = f"message contains {token.token}"
+            register_log(message, "ignored content", page, "")
+            return True
+    return False
+
+def get_page_ignoring_tokens(page: models.Page) -> list:
+    ignoring_tokens = []
     for tag in page.filtering_tags.all():
         tag_tokens = tag.filteringtoken_set.all()
         for token in tag_tokens:
-            if token.token in message:
-                message = f"message contains {token.token}"
-                register_log(message, "ignored content", page, "")
-                return True
-    return False
+            ignoring_tokens.append(token.token)
+    return ignoring_tokens
 
 
 @crawler.task(name="redis_exporter")
@@ -185,6 +192,8 @@ def redis_exporter():
     if settings.DEBUG:
         logger.info("redis-exporter is disabled in debug mode")
         return
+
+    ignoring_tokens = {}
 
     bot = telegram.Bot(token=settings.BOT_API_KEY)
     pages = models.Page.objects.all()
@@ -203,6 +212,9 @@ def redis_exporter():
             if not page:
                 continue
 
+            if page.id not in ignoring_tokens:
+                ignoring_tokens[page.id] = get_page_ignoring_tokens(page)
+
             data["iv_link"] = f"https://t.me/iv?url={data['link']}&rhash={page.iv_code}"
             temp_code = utils.CODE.format(page.message_code)
             message = ""
@@ -212,7 +224,7 @@ def redis_exporter():
                 exec(temp_code, globals(), local_vars)  # pylint: disable=exec-used
                 # Retrieve the updated 'message' from local_vars
                 message = local_vars.get('message', '')
-                if checking_ignore_tags(page, message):
+                if checking_ignore_tags(page, message, ignoring_tokens[page.id]):
                     continue
                 bot.send_message(chat_id=page.telegram_channel, text=message)
                 time.sleep(1.5)
