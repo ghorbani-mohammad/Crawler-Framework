@@ -1,3 +1,12 @@
+# [1.50.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.49.1...v1.50.0) (2025-01-04)
+
+
+### Features
+
+* add list filter and search fields to FilteringTokenAdmin for improved usability ([d7eabf9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d7eabf9734c2584a05a58da68f6345403be0b0ec))
+
+
+
 ## [1.49.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.49.0...v1.49.1) (2024-12-29)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * update SOCKS proxy configuration and enhance docker-compose version for improved networking ([e5360a9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e5360a9c0b07f7746cca3c9b0681f38082f0f9f1))
-
-
-
-# [1.46.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.45.0...v1.46.0) (2024-12-29)
-
-
-### Features
-
-* rename clear_all_locks to clear_all_redis_locks for clarity and update usage in wsgi.py ([3056e53](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/3056e532e1bb911f5e49d728eb3579dc4a459a7d))
 
 
 
