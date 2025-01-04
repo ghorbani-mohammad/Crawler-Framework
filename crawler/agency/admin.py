@@ -14,7 +14,7 @@ from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from reusable.admins import ReadOnlyAdminDateFieldsMIXIN
 from agency.serializer import PageSerializer
-from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry
+from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry, OffTime
 
 
 @admin.register(Report)
@@ -260,3 +260,7 @@ class DBLogEntryAdmin(admin.ModelAdmin):
         DBLogEntry.objects.all().delete()
 
     actions = (delete_all_logs,)
+
+@admin.register(OffTime)
+class OffTimeAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+    list_display = ("id", "day_of_week", "start", "end", "created_at", "updated_at")
