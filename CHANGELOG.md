@@ -1,3 +1,12 @@
+## [1.51.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.51.0...v1.51.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* update list_display fields in OffTimeAdmin for consistency ([ad70dc4](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/ad70dc467418c81176da698b03b99402e4843efa))
+
+
+
 # [1.51.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.50.0...v1.51.0) (2025-01-04)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * enhance tag checking by adding optional ignoring tokens parameter and refactor related functions ([32f5bed](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/32f5bed6da33af2ab1d7fc98ff8aba3747e99877))
-
-
-
-# [1.48.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.47.0...v1.48.0) (2024-12-29)
-
-
-### Features
-
-* add unique constraint on token and tag in FilteringToken model ([981dfe2](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/981dfe2e64477fcd9e5692aada228d0bed26e627))
 
 
 
