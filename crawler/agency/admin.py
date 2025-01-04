@@ -146,7 +146,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         ("status", "fetch_content", "take_picture", "lock", "use_proxy"),
         ("telegram_channel", "iv_code"),
         "message_code",
-        "filtering_tags",
+        ("filtering_tags", "off_times"),
         "message_template",
         "last_crawl",
         ("created_at", "updated_at", "deleted_at"),
