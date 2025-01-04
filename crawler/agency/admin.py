@@ -261,6 +261,14 @@ class DBLogEntryAdmin(admin.ModelAdmin):
 
     actions = (delete_all_logs,)
 
+
 @admin.register(OffTime)
 class OffTimeAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
-    list_display = ("id", "day_of_week", "start", "end", "created_at", "updated_at")
+    list_display = (
+        "id",
+        "day_of_week",
+        "start_time",
+        "end_time",
+        "created_at",
+        "updated_at",
+    )
