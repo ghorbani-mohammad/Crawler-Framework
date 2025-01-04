@@ -230,7 +230,7 @@ class DBLogEntry(models.Model):
         return truncatechars(self.message, 50)
 
 
-class OffTime(models.Model):
+class OffTime(BaseModel):
     DAYS_OF_WEEK = [
         (0, "Monday"),
         (1, "Tuesday"),
