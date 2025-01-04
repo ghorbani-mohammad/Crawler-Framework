@@ -67,7 +67,6 @@ def get_browser_options(use_proxy: bool = False):
         proxy.no_proxy = ""  # No exceptions
         options.proxy = proxy
 
-
     # Disable images
     options.set_preference("permissions.default.image", 2)
 

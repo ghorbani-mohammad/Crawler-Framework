@@ -20,7 +20,6 @@ from notification import models as not_models
 from reusable.other import only_one_concurrency
 
 
-
 MINUTE = 60
 # caveat: at most the redis-exporter task should take 30 minutes
 # otherwise, we would have duplication of messages
@@ -86,6 +85,8 @@ def check_agencies():
     )
     now = timezone.localtime()
     for page in pages:
+        if page.is_off_time:
+            continue
         if page.last_crawl is None:
             check_must_crawl(page)
         else:
@@ -163,13 +164,16 @@ def clear_all_redis_locks():
     REDIS_CLIENT.delete("page_crawl_repetitive")
 
 
-def checking_ignore_tags(page: models.Page, message:str, ig_tokens:Optional[list[str]]) -> bool:
+def checking_ignore_tags(
+    page: models.Page, message: str, ig_tokens: Optional[list[str]]
+) -> bool:
     for token in ig_tokens:
         if token in message:
             message = f"message contains {token}"
             register_log(message, "ignored content", page, "")
             return True
     return False
+
 
 def get_page_ignoring_tokens(page: models.Page) -> list:
     ignoring_tokens = []
@@ -219,11 +223,11 @@ def redis_exporter():
             temp_code = utils.CODE.format(page.message_code)
             message = ""
             try:
-                local_vars = {"data":data, "page":page}
+                local_vars = {"data": data, "page": page}
                 # prepare the message
                 exec(temp_code, globals(), local_vars)  # pylint: disable=exec-used
                 # Retrieve the updated 'message' from local_vars
-                message = local_vars.get('message', '')
+                message = local_vars.get("message", "")
                 if checking_ignore_tags(page, message, ignoring_tokens[page.id]):
                     continue
                 bot.send_message(chat_id=page.telegram_channel, text=message)

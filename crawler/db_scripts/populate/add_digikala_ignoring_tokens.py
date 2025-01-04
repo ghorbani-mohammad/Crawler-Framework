@@ -3,7 +3,6 @@ import sys
 import django
 
 
-
 def initial():
     sys.path.append("../..")
     os.environ["DJANGO_SETTINGS_MODULE"] = "crawler.settings"
@@ -118,8 +117,7 @@ for token in ignore_tokens:
         continue  # Skip empty tokens
 
     obj, created = FilteringToken.objects.get_or_create(
-        token=token,
-        defaults={'tag': tag}
+        token=token, defaults={"tag": tag}
     )
     if created:
         created_count += 1
