@@ -1,3 +1,12 @@
+# [1.51.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.50.0...v1.51.0) (2025-01-04)
+
+
+### Features
+
+* add OffTime model and integrate with Page for managing off-time periods ([103355d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/103355d3db0d9b8823accaed9cd208aafa0f829d))
+
+
+
 # [1.50.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.49.1...v1.50.0) (2025-01-04)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add unique constraint on token and tag in FilteringToken model ([981dfe2](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/981dfe2e64477fcd9e5692aada228d0bed26e627))
-
-
-
-# [1.47.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.46.0...v1.47.0) (2024-12-29)
-
-
-### Features
-
-* update SOCKS proxy configuration and enhance docker-compose version for improved networking ([e5360a9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e5360a9c0b07f7746cca3c9b0681f38082f0f9f1))
 
 
 
