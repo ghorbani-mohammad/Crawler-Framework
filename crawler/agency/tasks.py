@@ -175,13 +175,13 @@ def checking_ignore_tags(
     return False
 
 
-def get_page_ignoring_tokens(page: models.Page) -> list:
-    ignoring_tokens = []
-    for tag in page.filtering_tags.all():
-        tag_tokens = tag.filteringtoken_set.all()
-        for token in tag_tokens:
-            ignoring_tokens.append(token.token)
-    return ignoring_tokens
+def get_page_ignoring_tokens(page: models.Page) -> list["str"]:
+    tags_with_tokens = page.filtering_tags.prefetch_related('filteringtoken_set')
+    return list({
+        token.token
+        for tag in tags_with_tokens
+        for token in tag.filteringtoken_set.all()
+    })
 
 
 @crawler.task(name="redis_exporter")
