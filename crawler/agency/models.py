@@ -253,3 +253,26 @@ class OffTime(BaseModel):
     def __str__(self):
         day = dict(self.DAYS_OF_WEEK).get(self.day_of_week, "Unknown")
         return f"{day}: {self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}"
+
+
+class Day(BaseModel):
+    name = models.CharField(max_length=10)  # e.g., "Monday"
+    abbreviation = models.CharField(max_length=3)  # e.g., "MON"
+
+    def __str__(self):
+        return f"({self.pk} - {self.name})"
+
+
+class CrawlScheduling(BaseModel):
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="schedules")
+    days = models.CharField(max_length=50)  # e.g., "MON,TUE,WED"
+    start_times = models.TextField()  # e.g., "08:00,12:00,18:00"
+
+    def __str__(self):
+        return f"({self.pk} - {self.page})"
+
+    def get_days(self):
+        return self.days.split(",")
+
+    def get_start_times(self):
+        return self.start_times.split(",")
