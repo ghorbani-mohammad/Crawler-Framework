@@ -1,3 +1,12 @@
+# [1.53.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.52.0...v1.53.0) (2025-01-12)
+
+
+### Features
+
+* add help_text to days and start_times fields in CrawlScheduling model for better clarity ([68752fc](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/68752fc5409a7b732f32ae734ed62f589e4e422a))
+
+
+
 # [1.52.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.51.1...v1.52.0) (2025-01-12)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add list filter and search fields to FilteringTokenAdmin for improved usability ([d7eabf9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d7eabf9734c2584a05a58da68f6345403be0b0ec))
-
-
-
-## [1.49.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.49.0...v1.49.1) (2024-12-29)
-
-
-### Bug Fixes
-
-* update token checking logic in checking_ignore_tags function for improved accuracy ([875f486](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/875f486acb6d22fc747e43c342b1e27b4b5ba497))
 
 
 
