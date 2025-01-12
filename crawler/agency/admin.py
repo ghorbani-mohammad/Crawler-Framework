@@ -14,7 +14,7 @@ from djangoeditorwidgets.widgets import MonacoEditorWidget
 
 from reusable.admins import ReadOnlyAdminDateFieldsMIXIN
 from agency.serializer import PageSerializer
-from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry, OffTime
+from agency.models import Agency, Page, Report, Structure, Log, DBLogEntry, OffTime, Day, CrawlScheduling
 
 
 @admin.register(Report)
@@ -272,3 +272,12 @@ class OffTimeAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
+
+
+@admin.register(Day)
+class DayAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "abbreviation", "created_at")
+
+@admin.register(CrawlScheduling)
+class CrawlSchedulingAdmin(admin.ModelAdmin):
+    list_display = ("id", "page", "start_times", "days", "created_at")

@@ -76,21 +76,43 @@ def check_agencies():
     if settings.DEBUG:
         logger.info("check_agencies is disabled in debug mode")
         return
+
     logger.info("check_agencies started")
+    now = timezone.localtime()
+    task_interval_minutes = 5  # Adjust based on your Celery schedule
+    time_window_start = now - timezone.timedelta(minutes=task_interval_minutes)
+
+    current_day = now.strftime("%a").upper()  # Get current day abbreviation (e.g., "MON")
+    current_time_range = [
+        (time_window_start + timezone.timedelta(minutes=i)).strftime("%H:%M")
+        for i in range(task_interval_minutes)
+    ]  # Generate a range of times to check
+
+    # Get all pages with active schedules matching the current day and time range
+    schedules = models.CrawlScheduling.objects.all()
+
+    for schedule in schedules:
+        days = schedule.get_days()  # Split days into a list
+        times = schedule.get_start_times()  # Split times into a list
+
+        if current_day in days and any(time in current_time_range for time in times):
+            crawl(schedule.page)
+
+    # Filter pages based on the matched page IDs
     agencies = models.Agency.objects.filter(status=True).values_list("id", flat=True)
     pages = (
         models.Page.objects.filter(agency__in=agencies)
         .filter(lock=False)
         .filter(status=True)
     )
-    now = timezone.localtime()
+
     for page in pages:
         if page.is_off_time:
             continue
         if page.last_crawl is None:
             check_must_crawl(page)
         else:
-            diff_minute = int((now - page.last_crawl).total_seconds() / (60))
+            diff_minute = int((now - page.last_crawl).total_seconds() / 60)
             if diff_minute >= page.crawl_interval:
                 check_must_crawl(page)
 
