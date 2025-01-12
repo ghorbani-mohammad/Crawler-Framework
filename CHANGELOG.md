@@ -1,3 +1,12 @@
+# [1.52.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.51.1...v1.52.0) (2025-01-12)
+
+
+### Features
+
+* add Day and CrawlScheduling models with related fields and methods for scheduling functionality ([c2b6ba3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/c2b6ba30e0a186a1e326e6a4c11bf65eded89125))
+
+
+
 ## [1.51.1](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.51.0...v1.51.1) (2025-01-04)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * update token checking logic in checking_ignore_tags function for improved accuracy ([875f486](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/875f486acb6d22fc747e43c342b1e27b4b5ba497))
-
-
-
-# [1.49.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.48.0...v1.49.0) (2024-12-29)
-
-
-### Features
-
-* enhance tag checking by adding optional ignoring tokens parameter and refactor related functions ([32f5bed](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/32f5bed6da33af2ab1d7fc98ff8aba3747e99877))
 
 
 
