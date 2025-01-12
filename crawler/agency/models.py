@@ -265,8 +265,13 @@ class Day(BaseModel):
 
 class CrawlScheduling(BaseModel):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="schedules")
-    days = models.CharField(max_length=50, help_text="MON,TUE,WED,THU,FRI,SAT,SUN. You should use comma to separate.")
-    start_times = models.TextField(help_text="e.g., 08:00,12:00,18:00. You should use comma to separate.")
+    days = models.CharField(
+        max_length=50,
+        help_text="MON,TUE,WED,THU,FRI,SAT,SUN. You should use comma to separate.",
+    )
+    start_times = models.TextField(
+        help_text="e.g., 08:00,12:00,18:00. You should use comma to separate."
+    )
 
     def __str__(self):
         return f"({self.pk} - {self.page})"
