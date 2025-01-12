@@ -275,9 +275,9 @@ class OffTimeAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
 
 @admin.register(Day)
-class DayAdmin(admin.ModelAdmin):
+class DayAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     list_display = ("id", "name", "abbreviation", "created_at")
 
 @admin.register(CrawlScheduling)
-class CrawlSchedulingAdmin(admin.ModelAdmin):
+class CrawlSchedulingAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     list_display = ("id", "page", "start_times", "days", "created_at")
