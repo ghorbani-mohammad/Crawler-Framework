@@ -82,7 +82,9 @@ def check_agencies():
     task_interval_minutes = 5  # Adjust based on your Celery schedule
     time_window_start = now - timezone.timedelta(minutes=task_interval_minutes)
 
-    current_day = now.strftime("%a").upper()  # Get current day abbreviation (e.g., "MON")
+    current_day = now.strftime(
+        "%a"
+    ).upper()  # Get current day abbreviation (e.g., "MON")
     current_time_range = [
         (time_window_start + timezone.timedelta(minutes=i)).strftime("%H:%M")
         for i in range(task_interval_minutes)
@@ -198,12 +200,14 @@ def checking_ignore_tags(
 
 
 def get_page_ignoring_tokens(page: models.Page) -> list["str"]:
-    tags_with_tokens = page.filtering_tags.prefetch_related('filteringtoken_set')
-    return list({
-        token.token
-        for tag in tags_with_tokens
-        for token in tag.filteringtoken_set.all()
-    })
+    tags_with_tokens = page.filtering_tags.prefetch_related("filteringtoken_set")
+    return list(
+        {
+            token.token
+            for tag in tags_with_tokens
+            for token in tag.filteringtoken_set.all()
+        }
+    )
 
 
 @crawler.task(name="redis_exporter")
