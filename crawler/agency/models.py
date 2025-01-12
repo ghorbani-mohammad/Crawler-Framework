@@ -276,8 +276,8 @@ class CrawlScheduling(BaseModel):
     def __str__(self):
         return f"({self.pk} - {self.page})"
 
-    def get_days(self):
-        return self.days.split(",")
+    def get_days(self)->list["str"]:
+        return [day.strip() for day in self.days.split(",")]
 
-    def get_start_times(self):
-        return self.start_times.split(",")
+    def get_start_times(self)->list["str"]:
+        return [time.strip() for time in self.start_times.split(",")]
