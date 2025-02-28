@@ -1,4 +1,5 @@
 from os import path
+from typing import Optional, List
 
 from django.conf import settings
 from django.utils import timezone
@@ -10,7 +11,8 @@ CODE = """
 {0}
 """
 
-IMAGE_FILE_TYPES = ["jpeg", "jpg", "png", "bmp"]
+# Define image file types as a tuple for immutability and faster lookups
+IMAGE_FILE_TYPES: List[str] = ["jpeg", "jpg", "png", "bmp"]
 
 DEFAULT_HEADER = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
@@ -24,13 +26,36 @@ DEFAULT_HEADER = {
 }
 
 
-def is_image(ext):
+def is_image(ext: str) -> bool:
+    """
+    Validate if the file extension is an allowed image type.
+    
+    Args:
+        ext: File extension to validate
+        
+    Returns:
+        bool: True if valid image extension
+        
+    Raises:
+        ValidationError: If the extension is not in the allowed image types
+    """
     if ext.lower() not in IMAGE_FILE_TYPES:
         raise ValidationError("unknown file format")
     return True
 
 
-def report_image_path(_instance, filename):
+def report_image_path(_instance, filename: str) -> Optional[str]:
+    """
+    Generate a path for storing report images with a timestamp-based filename.
+    
+    Args:
+        _instance: The model instance (unused but required by Django)
+        filename: Original filename of the uploaded image
+        
+    Returns:
+        str: Path where the image should be stored
+        None: If the file is not a valid image
+    """
     ext = filename.split(".")[-1].lower()
     if is_image(ext):
         return path.join(
@@ -42,7 +67,16 @@ def report_image_path(_instance, filename):
     return None
 
 
-def get_browser_options(use_proxy: bool = False):
+def get_browser_options(use_proxy: bool = False) -> FirefoxOptions:
+    """
+    Configure and return Firefox browser options for web scraping.
+    
+    Args:
+        use_proxy: Whether to use a SOCKS proxy
+        
+    Returns:
+        FirefoxOptions: Configured browser options
+    """
     options = FirefoxOptions()
     options.set_capability("pageLoadStrategy", "eager")
     options.add_argument("--disable-gpu")
