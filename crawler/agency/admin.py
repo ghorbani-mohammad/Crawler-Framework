@@ -76,7 +76,7 @@ class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
 
 @admin.register(Agency)
-class AgencyAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class AgencyAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Agency model."""
     
     list_filter = ("status",)
