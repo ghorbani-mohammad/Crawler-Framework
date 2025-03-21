@@ -1,4 +1,7 @@
-class ReadOnlyAdminDateFieldsMIXIN:
+from django.contrib import admin
+
+
+class ReadOnlyAdminDateFieldsMIXIN(admin.ModelAdmin):
     """
     This mixin is used to make common date fields as
     readonly fields.
