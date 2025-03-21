@@ -28,7 +28,7 @@ from agency.models import (
 
 
 @admin.register(Report)
-class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Report model."""
     
     list_per_page = 30
