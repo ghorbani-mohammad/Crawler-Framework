@@ -25,7 +25,7 @@ class FilteringTagAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
 
 @admin.register(models.FilteringToken)
-class FilteringTokenAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class FilteringTokenAdmin(ReadOnlyAdminDateFieldsMIXIN):
     list_display = ("pk", "token", "tag", "created_at")
     list_filter = ("tag",)
     search_fields = ("token",)
