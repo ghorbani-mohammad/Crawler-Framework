@@ -133,7 +133,7 @@ class PageAdminForm(forms.ModelForm):
 
 
 @admin.register(Page)
-class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Page model."""
     
     form = PageAdminForm
