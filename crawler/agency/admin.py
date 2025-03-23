@@ -110,7 +110,7 @@ class StructureForm(forms.ModelForm):
 
 
 @admin.register(Structure)
-class StructureAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class StructureAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Structure model."""
     
     list_display = ("id", "name", "created_at", "updated_at")
