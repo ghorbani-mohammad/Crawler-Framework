@@ -245,7 +245,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
 
 @admin.register(Log)
-class LogAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class LogAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Log model."""
 
     list_display = (
