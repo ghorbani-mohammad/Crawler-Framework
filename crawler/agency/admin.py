@@ -133,7 +133,7 @@ class PageAdminForm(forms.ModelForm):
 
 
 @admin.register(Page)
-class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Page model."""
     
     form = PageAdminForm
@@ -245,7 +245,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
 
 @admin.register(Log)
-class LogAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class LogAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Log model."""
 
     list_display = (
