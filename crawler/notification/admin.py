@@ -20,7 +20,7 @@ class MessageTemplateAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 
 
 @admin.register(models.FilteringTag)
-class FilteringTagAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class FilteringTagAdmin(ReadOnlyAdminDateFieldsMIXIN):
     list_display = ("pk", "name")
 
 
