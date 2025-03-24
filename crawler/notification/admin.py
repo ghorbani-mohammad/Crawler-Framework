@@ -15,7 +15,7 @@ class TelegramAccountAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
 
 @admin.register(models.MessageTemplate)
-class MessageTemplateAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
+class MessageTemplateAdmin(ReadOnlyAdminDateFieldsMIXIN):
     list_display = ("pk", "name", "created_at", "updated_at")
 
 
