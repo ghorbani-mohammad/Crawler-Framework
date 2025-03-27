@@ -1,7 +1,7 @@
 from django.contrib import admin
-from reusable.admins import ReadOnlyAdminDateFieldsMIXIN
 
 from . import models
+from reusable.admins import ReadOnlyAdminDateFieldsMIXIN
 
 
 @admin.register(models.TelegramBot)
