@@ -119,15 +119,15 @@ class CrawlerEngine:
         """
         max_retries = 3
         retry_delay = 2  # seconds
-        
+
         for attempt in range(max_retries):
             try:
                 self.driver.get(self.page.url)
                 self.remove_some_images(self.driver)
-                
+
                 # Wait for page to be fully loaded
                 time.sleep(self.page.load_sleep)
-                
+
                 # Check if page is loaded by looking for a common element
                 if self.page.structure.news_links_structure:
                     tag = self.page.structure.news_links_structure.get("tag")
@@ -145,7 +145,7 @@ class CrawlerEngine:
                     logger.error(error)
                     self.logging(error)
                     return False
-                    
+
             except TimeoutException as error:
                 if attempt < max_retries - 1:
                     self.logging(f"Timeout on attempt {attempt + 1}, retrying in {retry_delay} seconds...")
