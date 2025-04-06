@@ -11,6 +11,7 @@ from selenium.common.exceptions import SessionNotCreatedException, TimeoutExcept
 from django.conf import settings
 from django.utils import timezone
 from celery.utils.log import get_task_logger
+from selenium.webdriver.common.by import By
 
 from . import models, utils
 from reusable.browser import scroll
@@ -119,20 +120,21 @@ class CrawlerEngine:
         """
         max_retries = 3
         retry_delay = 2  # seconds
-
+        
         for attempt in range(max_retries):
             try:
                 self.driver.get(self.page.url)
                 self.remove_some_images(self.driver)
-
+                
                 # Wait for page to be fully loaded
                 time.sleep(self.page.load_sleep)
-
+                
                 # Check if page is loaded by looking for a common element
                 if self.page.structure.news_links_structure:
                     tag = self.page.structure.news_links_structure.get("tag")
                     if tag:
-                        elements = self.driver.find_elements_by_tag_name(tag)
+                        # Using new Selenium syntax
+                        elements = self.driver.find_elements(By.TAG_NAME, tag)
                         if elements:
                             return True
                 
@@ -145,7 +147,7 @@ class CrawlerEngine:
                     logger.error(error)
                     self.logging(error)
                     return False
-
+                
             except TimeoutException as error:
                 if attempt < max_retries - 1:
                     self.logging(f"Timeout on attempt {attempt + 1}, retrying in {retry_delay} seconds...")
