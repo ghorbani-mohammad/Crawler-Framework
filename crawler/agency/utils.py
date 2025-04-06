@@ -29,13 +29,13 @@ DEFAULT_HEADER = {
 def is_image(ext: str) -> bool:
     """
     Validate if the file extension is an allowed image type.
-    
+
     Args:
         ext: File extension to validate
-        
+
     Returns:
         bool: True if valid image extension
-        
+
     Raises:
         ValidationError: If the extension is not in the allowed image types
     """
@@ -47,11 +47,11 @@ def is_image(ext: str) -> bool:
 def report_image_path(_instance, filename: str) -> Optional[str]:
     """
     Generate a path for storing report images with a timestamp-based filename.
-    
+
     Args:
         _instance: The model instance (unused but required by Django)
         filename: Original filename of the uploaded image
-        
+
     Returns:
         str: Path where the image should be stored
         None: If the file is not a valid image
@@ -70,10 +70,10 @@ def report_image_path(_instance, filename: str) -> Optional[str]:
 def get_browser_options(use_proxy: bool = False) -> FirefoxOptions:
     """
     Configure and return Firefox browser options for web scraping.
-    
+
     Args:
         use_proxy: Whether to use a SOCKS proxy
-        
+
     Returns:
         FirefoxOptions: Configured browser options
     """

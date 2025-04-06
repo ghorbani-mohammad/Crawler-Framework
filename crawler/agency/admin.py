@@ -30,7 +30,7 @@ from agency.models import (
 @admin.register(Report)
 class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Report model."""
-    
+
     list_per_page = 30
     search_fields = ("page__url",)
     list_display = (
@@ -45,7 +45,17 @@ class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN):
         "image_tag",
         "started_at",
     )
-    readonly_fields = ("log", "page", "status", "picture", "new_links", "fetched_links", "created_at", "updated_at", "deleted_at")
+    readonly_fields = (
+        "log",
+        "page",
+        "status",
+        "picture",
+        "new_links",
+        "fetched_links",
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    )
     list_filter = ["status", "page__agency", ("created_at", DateTimeRangeFilter)]
 
     def url(self, obj: Report) -> str:
@@ -78,7 +88,7 @@ class ReportAdmin(ReadOnlyAdminDateFieldsMIXIN):
 @admin.register(Agency)
 class AgencyAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Agency model."""
-    
+
     list_filter = ("status",)
     list_editable = ("status", "link_keep_days", "load_timeout")
     list_display = (
@@ -96,7 +106,7 @@ class AgencyAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
 class StructureForm(forms.ModelForm):
     """Form for Structure model with custom widgets."""
-    
+
     class Meta:
         model = Structure
         fields = "__all__"
@@ -112,7 +122,7 @@ class StructureForm(forms.ModelForm):
 @admin.register(Structure)
 class StructureAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Structure model."""
-    
+
     list_display = ("id", "name", "created_at", "updated_at")
     form = StructureForm
     ordering = ("-updated_at",)
@@ -121,7 +131,7 @@ class StructureAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
 class PageAdminForm(forms.ModelForm):
     """Form for Page model with custom widgets."""
-    
+
     class Meta:
         model = Page
         fields = "__all__"
@@ -135,7 +145,7 @@ class PageAdminForm(forms.ModelForm):
 @admin.register(Page)
 class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
     """Admin interface for Page model."""
-    
+
     form = PageAdminForm
     list_filter = ("lock", "status", "agency")
     list_editable = ("load_sleep", "links_sleep", "status", "crawl_interval")
@@ -170,7 +180,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
         "last_crawl",
         ("created_at", "updated_at", "deleted_at"),
     )
-    
+
     def get_queryset(self, request):
         """Filter queryset to only show pages from active agencies."""
         qs = super().get_queryset(request)
@@ -208,7 +218,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
         for page in queryset:
             tasks_module.page_crawl.delay(PageSerializer(page).data)
-        
+
         self.message_user(
             request,
             ngettext(
@@ -228,7 +238,7 @@ class PageAdmin(ReadOnlyAdminDateFieldsMIXIN):
 
         for page in queryset:
             tasks_module.page_crawl_repetitive.delay(PageSerializer(page).data)
-        
+
         self.message_user(
             request,
             ngettext(
@@ -295,7 +305,7 @@ class LogAdmin(ReadOnlyAdminDateFieldsMIXIN):
 @admin.register(DBLogEntry)
 class DBLogEntryAdmin(admin.ModelAdmin):
     """Admin interface for DBLogEntry model."""
-    
+
     list_filter = ("level",)
     readonly_fields = ("level", "message", "time")
     list_display = ("pk", "level", "short_message", "time")
@@ -310,7 +320,7 @@ class DBLogEntryAdmin(admin.ModelAdmin):
 @admin.register(OffTime)
 class OffTimeAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     """Admin interface for OffTime model."""
-    
+
     list_display = (
         "id",
         "day_of_week",
@@ -324,13 +334,13 @@ class OffTimeAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
 @admin.register(Day)
 class DayAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     """Admin interface for Day model."""
-    
+
     list_display = ("id", "name", "abbreviation", "created_at")
 
 
 @admin.register(CrawlScheduling)
 class CrawlSchedulingAdmin(ReadOnlyAdminDateFieldsMIXIN, admin.ModelAdmin):
     """Admin interface for CrawlScheduling model."""
-    
+
     list_display = ("id", "page", "start_times", "days", "created_at")
     search_fields = ("page__name", "page__url")
