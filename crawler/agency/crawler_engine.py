@@ -129,14 +129,32 @@ class CrawlerEngine:
                 # Wait for page to be fully loaded
                 time.sleep(self.page.load_sleep)
 
-                # Check if page is loaded by looking for a common element
+                # Check if page is loaded by looking for common elements
                 if self.page.structure.news_links_structure:
-                    tag = self.page.structure.news_links_structure.get("tag")
+                    structure = self.page.structure.news_links_structure
+
+                    # First check if we have a tag to find elements
+                    tag = structure.get("tag")
                     if tag:
-                        # Using new Selenium syntax
                         elements = self.driver.find_elements(By.TAG_NAME, tag)
                         if elements:
                             return True
+
+                    # If no tag or no elements found, check if there's custom code
+                    if "code" in structure:
+                        # If there's custom code, we assume the page structure is handled there
+                        return True
+
+                    # If no tag and no code, log a warning
+                    self.logging(
+                        "Warning: No tag or code found in news_links_structure. "
+                        "This may cause issues with link extraction."
+                    )
+
+                # As a last resort, check if the page has loaded at all
+                # by looking for basic HTML elements
+                if self.driver.find_elements(By.TAG_NAME, "body"):
+                    return True
 
                 if attempt < max_retries - 1:
                     self.logging(
