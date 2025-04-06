@@ -115,17 +115,48 @@ class CrawlerEngine:
 
     def land_page(self) -> bool:
         """
-        Lands on the page.
+        Lands on the page with retry mechanism.
         """
-        try:
-            self.driver.get(self.page.url)
-            self.remove_some_images(self.driver)
-        except TimeoutException as error:
-            error = traceback.format_exc()
-            error = f"Page: {self.page.url}\n\nTimeoutException: {error}"
-            logger.error(error)
-            self.logging(error)
-            return False
+        max_retries = 3
+        retry_delay = 2  # seconds
+        
+        for attempt in range(max_retries):
+            try:
+                self.driver.get(self.page.url)
+                self.remove_some_images(self.driver)
+                
+                # Wait for page to be fully loaded
+                time.sleep(self.page.load_sleep)
+                
+                # Check if page is loaded by looking for a common element
+                if self.page.structure.news_links_structure:
+                    tag = self.page.structure.news_links_structure.get("tag")
+                    if tag:
+                        elements = self.driver.find_elements_by_tag_name(tag)
+                        if elements:
+                            return True
+                
+                if attempt < max_retries - 1:
+                    self.logging(f"Page load attempt {attempt + 1} failed, retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                    retry_delay *= 2  # Exponential backoff
+                else:
+                    error = f"Page: {self.page.url}\n\nFailed to load after {max_retries} attempts"
+                    logger.error(error)
+                    self.logging(error)
+                    return False
+                    
+            except TimeoutException as error:
+                if attempt < max_retries - 1:
+                    self.logging(f"Timeout on attempt {attempt + 1}, retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                    retry_delay *= 2
+                else:
+                    error = traceback.format_exc()
+                    error = f"Page: {self.page.url}\n\nTimeoutException after {max_retries} attempts: {error}"
+                    logger.error(error)
+                    self.logging(error)
+                    return False
         return True
 
     def taking_picture(self):
@@ -221,28 +252,54 @@ class CrawlerEngine:
         self.save_to_redis(article)
 
     def extract_meta_data(self, meta, doc, article, link):
-        """Extract meta data from the document and update the article."""
+        """Extract meta data from the document with retry mechanism."""
+        max_retries = 2
+        retry_delay = 1  # seconds
+        
         for key, attribute in meta.items():
-            attribute = attribute.copy()  # Prevent mutation of original attribute
-            tag = attribute.pop("tag")
+            for attempt in range(max_retries):
+                try:
+                    attribute = attribute.copy()  # Prevent mutation of original attribute
+                    tag = attribute.pop("tag")
 
-            if tag == "value":
-                article[key] = attribute.get("value")
-                continue
-            elif tag == "code":
-                self.execute_code(attribute.get("code"), article, key, link, doc)
-                continue
+                    if tag == "value":
+                        article[key] = attribute.get("value", "")
+                        break
+                    elif tag == "code":
+                        self.execute_code(attribute.get("code"), article, key, link, doc)
+                        break
 
-            element = doc.find(tag, attribute)
-            if not element:
-                self.log_missing_element(tag, attribute, link)
-                continue
+                    element = doc.find(tag, attribute)
+                    if not element:
+                        if attempt < max_retries - 1:
+                            self.logging(f"Element not found for {key}, retrying in {retry_delay} seconds...")
+                            time.sleep(retry_delay)
+                            # Refresh the page source and try again
+                            doc = BeautifulSoup(self.driver.page_source, "html.parser")
+                            continue
+                        else:
+                            self.log_missing_element(tag, attribute, link)
+                            article[key] = ""
+                            break
 
-            code = attribute.get("code")
-            if code:
-                self.execute_code(code, article, key, link, doc)
-            else:
-                article[key] = element.text.strip()
+                    code = attribute.get("code")
+                    if code:
+                        self.execute_code(code, article, key, link, doc)
+                    else:
+                        article[key] = element.text.strip() if element.text else ""
+                    break
+
+                except Exception as e:
+                    if attempt < max_retries - 1:
+                        self.logging(f"Error extracting {key} on attempt {attempt + 1}, retrying in {retry_delay} seconds...")
+                        time.sleep(retry_delay)
+                        # Refresh the page source and try again
+                        doc = BeautifulSoup(self.driver.page_source, "html.parser")
+                    else:
+                        logger.error(f"Error extracting {key} from {link}: {str(e)}")
+                        self.register_log(f"Error extracting {key}", str(e), self.page, link)
+                        article[key] = ""
+                    retry_delay *= 2
 
     def execute_code(self, code, article, key, link, doc):
         """Safely execute custom code and handle errors."""

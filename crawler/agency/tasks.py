@@ -167,10 +167,14 @@ def find_page(pages, data, key):
 # the page code section
 # get info from data (gin)
 def gin(key: str, data: dict):
+    """Get info from data with improved error handling and default values."""
     if key in data:
+        value = data[key]
+        if value is None or value == "":
+            return "Unknown " + key
         # remove extra spaces and new lines
-        return data[key].strip().replace("\n", "")
-    return f"{key} isn't in data"
+        return str(value).strip().replace("\n", "")
+    return "Unknown " + key
 
 
 # Don't remove this, it's used dynamically in
