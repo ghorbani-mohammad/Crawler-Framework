@@ -8,6 +8,7 @@ import telegram
 import importlib
 import traceback
 from typing import Optional
+from datetime import timedelta
 
 from django.conf import settings
 from django.utils import timezone
@@ -283,3 +284,43 @@ def test_error():
     """
     logger.error("Test Error!")
     raise Exception("hi")
+
+
+@crawler.task(name="monitor_page_reports")
+@only_one_concurrency(key="monitor_page_reports", timeout=TASKS_TIMEOUT)
+def monitor_page_reports():
+    """
+    Monitor reports for all active pages and send warnings if there are consecutive zero counts.
+    """
+    if settings.DEBUG:
+        logger.info("monitor_page_reports is disabled in debug mode")
+        return
+
+    logger.info("monitor_page_reports started")
+    warning_threshold = 5  # Number of consecutive zero counts to trigger warning
+    time_threshold = timezone.localtime() - timedelta(days=1)  # Look at reports from last 24 hours
+    
+    for page in models.Page.objects.filter(status=True):  # Only check active pages
+        recent_reports = models.Report.objects.filter(
+            page=page,
+            created_at__gte=time_threshold
+        ).order_by('-created_at')[:warning_threshold]
+        
+        if len(recent_reports) == warning_threshold:
+            all_zero = all(report.new_links == 0 for report in recent_reports)
+            if all_zero and page.telegram_channel:
+                warning_message = (
+                    f"⚠️ Warning: Page '{page.name or page.url}' has had zero new links "
+                    f"for {warning_threshold} consecutive crawls. Please check the crawling configuration.\n\n"
+                    f"Last {warning_threshold} crawl results:\n"
+                )
+                
+                # Add details of each report
+                for i, report in enumerate(recent_reports, 1):
+                    warning_message += (
+                        f"{i}. Crawl at {report.created_at.strftime('%Y-%m-%d %H:%M:%S')} - "
+                        f"Fetched: {report.fetched_links}, New: {report.new_links}\n"
+                    )
+                
+                # Send warning using the existing send_log_to_telegram task
+                send_log_to_telegram.delay(warning_message)
