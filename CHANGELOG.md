@@ -1,3 +1,12 @@
+# [1.54.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.53.0...v1.54.0) (2025-04-07)
+
+
+### Features
+
+* add monitor_page_reports task to check for consecutive zero counts in page reports ([1c659f4](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/1c659f40c0f16679674f5010c778b025ddb11892))
+
+
+
 # [1.53.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.52.0...v1.53.0) (2025-01-12)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * add OffTime model and integrate with Page for managing off-time periods ([103355d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/103355d3db0d9b8823accaed9cd208aafa0f829d))
-
-
-
-# [1.50.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.49.1...v1.50.0) (2025-01-04)
-
-
-### Features
-
-* add list filter and search fields to FilteringTokenAdmin for improved usability ([d7eabf9](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/d7eabf9734c2584a05a58da68f6345403be0b0ec))
 
 
 
