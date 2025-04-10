@@ -139,7 +139,7 @@ class PageAdminForm(forms.ModelForm):
             "message_code": MonacoEditorWidget(
                 attrs={"data-wordwrap": "on", "data-language": "python"}
             ),
-            "url": forms.URLInput(attrs={"style": "width: 100%;"})
+            "url": forms.URLInput(attrs={"style": "width: 80%;"})
         }
 
     def __init__(self, *args, **kwargs):
