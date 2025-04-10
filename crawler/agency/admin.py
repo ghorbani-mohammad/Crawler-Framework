@@ -146,7 +146,7 @@ class PageAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.url:
             self.fields["url"].help_text = format_html(
-                '<a href="{url}" target="_blank" style="margin-left: 10px;">Link</a>',
+                '<a href="{url}" target="_blank" style="margin-left: 0px;">Link</a>',
                 url=self.instance.url
             )
 
