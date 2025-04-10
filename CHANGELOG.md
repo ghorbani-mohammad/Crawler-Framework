@@ -1,3 +1,12 @@
+# [1.55.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.54.0...v1.55.0) (2025-04-10)
+
+
+### Features
+
+* enhance PageAdminForm to include URL field with clickable link ([e8940e3](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/e8940e3adcf9e1a6e1d568721e6ee5c245ef3c29))
+
+
+
 # [1.54.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.53.0...v1.54.0) (2025-04-07)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * update list_display fields in OffTimeAdmin for consistency ([ad70dc4](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/ad70dc467418c81176da698b03b99402e4843efa))
-
-
-
-# [1.51.0](https://github.com/ghorbani-mohammad/Crawler-Framework/compare/v1.50.0...v1.51.0) (2025-01-04)
-
-
-### Features
-
-* add OffTime model and integrate with Page for managing off-time periods ([103355d](https://github.com/ghorbani-mohammad/Crawler-Framework/commit/103355d3db0d9b8823accaed9cd208aafa0f829d))
 
 
 
