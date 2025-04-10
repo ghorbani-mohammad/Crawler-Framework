@@ -145,9 +145,10 @@ class PageAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.url:
-            self.fields["url"].widget.attrs["value"] = self.instance.url
-            self.fields["url"].widget.attrs["onclick"] = f"window.open('{self.instance.url}', '_blank')"
-            self.fields["url"].widget.attrs["style"] = "width: 100%; cursor: pointer;"
+            self.fields["url"].help_text = format_html(
+                '<a href="{url}" target="_blank" style="margin-left: 10px;">Link</a>',
+                url=self.instance.url
+            )
 
 
 @admin.register(Page)
