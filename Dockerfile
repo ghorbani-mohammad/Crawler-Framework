@@ -12,7 +12,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps
 
 # Stage 2: Run stage
-FROM python:3.11-alpine
+FROM python:3.12-alpine
 WORKDIR /app
 
 # Copy installed python packages from builder
